@@ -11,6 +11,7 @@ import {
   Switch,
 } from "@mantine/core";
 import { DndListHandle } from "./DndListHandle";
+import TaskCard from "./features/Tasks/TaskCard";
 
 function App() {
   return (
@@ -25,22 +26,7 @@ function App() {
       </Flex>
 
       <Box>
-        <Card withBorder radius="lg" w={500}>
-          <Flex justify="space-between" align="center" py={16}>
-            <Group align="center" gap={8}>
-              <Text  c="dimmed">
-                0/5
-              </Text>
-              <Text size="0.5rem" c="dimmed">
-                •
-              </Text>
-              <Text fw={600}>Shopping List</Text>
-            </Group>
-
-
-          </Flex>
-          <DndListHandle />
-        </Card>
+        <TaskCard />
       </Box>
     </Container>
   );
