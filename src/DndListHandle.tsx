@@ -1,6 +1,6 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import cx from "clsx";
-import { Box, Checkbox, Flex, Group, Paper, Stack, Text } from "@mantine/core";
+import { Box, Checkbox, Flex, Group,  Stack, Text } from "@mantine/core";
 import { useListState } from "@mantine/hooks";
 import classes from "./DndListHandle.module.css";
 import { GripVertical } from "lucide-react";

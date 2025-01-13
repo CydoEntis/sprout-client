@@ -25,7 +25,7 @@ function App() {
       </Flex>
 
       <Box>
-        <Card shadow="lg" withBorder radius="lg" w={500}>
+        <Card withBorder radius="lg" w={500}>
           <Flex justify="justify-between">
             <Group>
               <Box maw={200}>
