@@ -1,26 +1,17 @@
-import { Flex } from '@mantine/core'
-import React from 'react'
+import { Flex } from "@mantine/core";
+import { ChevronRight } from "lucide-react";
+import TaskDate from "./TaskDate";
 
-type Props = {}
+type TaskDateRangeProps = { startDate: Date; endDate: Date };
 
-function TaskDateRange({}: Props) {
+function TaskDateRange({ startDate, endDate }: TaskDateRangeProps) {
   return (
     <Flex align="center" gap={8} py={16}>
-    <Stack gap={2}>
-      <Group gap={2} align="start">
-        <Text size="2rem" fw="bold">
-          2:00
-        </Text>
-        <Text size="md" c="dimmed">
-          PM
-        </Text>
-      </Group>
-      <Text c="dimmed">Thurs, Feb 9</Text>
-    </Stack>
-    <ChevronRight size={20} color="gray" />
-
-  </Flex>
-  )
+      <TaskDate date={startDate} />
+      <ChevronRight size={20} color="gray" />
+      <TaskDate date={endDate} />
+    </Flex>
+  );
 }
 
-export default TaskDateRange
+export default TaskDateRange;
