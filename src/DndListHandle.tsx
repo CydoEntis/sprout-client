@@ -19,24 +19,17 @@ export function DndListHandle() {
   const items = state.map((item, index) => (
     <Draggable key={item.symbol} index={index} draggableId={item.symbol}>
       {(provided, snapshot) => (
-        // <div
-        //   className={cx(classes.item, {
-        //     [classes.itemDragging]: snapshot.isDragging,
-        //   })}
-        //   ref={provided.innerRef}
-        //   {...provided.draggableProps}
-        // >
-        <Box
-          p={8}
-          bg="red"
-          style={{ border: "1px solid red" }}
+        <div
+          className={cx(classes.item, {
+            [classes.itemDragging]: snapshot.isDragging,
+          })}
           ref={provided.innerRef}
           {...provided.draggableProps}
         >
           <Flex w="100%" justify="space-between" align="center">
             <Box>
-              <Group gap={8} align="center">
-                <Checkbox />
+              <Group gap={8} align="center" p={0} justify="center">
+                <Checkbox size="xs"/>
                 <Text fw={600}>Peanut Butter</Text>
               </Group>
             </Box>
@@ -49,7 +42,7 @@ export function DndListHandle() {
               <GripVertical size={20} />
             </Box>
           </Flex>
-        </Box>
+        </div>
         // </div>
       )}
     </Draggable>
@@ -62,14 +55,12 @@ export function DndListHandle() {
       }
     >
       <Droppable droppableId="dnd-list" direction="vertical">
-        <Stack gap={8}>
-          {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef}>
-              {items}
-              {provided.placeholder}
-            </div>
-          )}
-        </Stack>
+        {(provided) => (
+          <div {...provided.droppableProps} ref={provided.innerRef}>
+            <Stack gap={2}>{items}</Stack>
+            {provided.placeholder}
+          </div>
+        )}
       </Droppable>
     </DragDropContext>
   );

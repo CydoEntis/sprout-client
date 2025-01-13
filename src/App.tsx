@@ -7,6 +7,8 @@ import {
   Flex,
   Group,
   Title,
+  Text,
+  Switch,
 } from "@mantine/core";
 import { DndListHandle } from "./DndListHandle";
 
@@ -23,7 +25,7 @@ function App() {
       </Flex>
 
       <Box>
-        <Card shadow="lg" withBorder radius="lg" w={300}>
+        <Card shadow="lg" withBorder radius="lg" w={500}>
           <Flex justify="justify-between">
             <Group>
               <Box maw={200}>
@@ -33,6 +35,22 @@ function App() {
                 5d left
               </Badge>
             </Group>
+          </Flex>
+          <Flex justify="space-between" align="center" py={16}>
+            <Group align="center" gap={8}>
+              <Text  c="dimmed">
+                0/5
+              </Text>
+              <Text size="0.5rem" c="dimmed">
+                •
+              </Text>
+              <Text fw={600}>Shopping List</Text>
+            </Group>
+            <Group align="center" gap={8}>
+            <Switch size="xs" color="lime"/>
+            <Text c="dimmed" size="sm">Completed</Text>
+            </Group>
+
           </Flex>
           <DndListHandle />
         </Card>
