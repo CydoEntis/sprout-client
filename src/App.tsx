@@ -4,11 +4,15 @@ import {
   Container,
   Flex,
   Group,
+  Modal,
   Title,
 } from "@mantine/core";
 import TaskCard from "./features/Tasks/TaskCard";
+import { useDisclosure } from "@mantine/hooks";
 
 function App() {
+  const [opened, { open, close }] = useDisclosure(false);
+
   return (
     <Container size="xl" style={{ border: "1px solid red" }} p={16}>
       <Flex justify="space-between">
@@ -21,7 +25,10 @@ function App() {
       </Flex>
 
       <Box>
-        <TaskCard />
+        <Modal opened={opened} onClose={close} title="Add A Task">
+          Add A New Task.
+        </Modal>
+        <TaskCard onOpenAddTask={open} />
       </Box>
     </Container>
   );

@@ -1,20 +1,19 @@
-import { Badge, Box, Flex, Group, Title } from "@mantine/core";
+import { Box, Flex, Group, Title } from "@mantine/core";
+import TaskDueDate from "./TaskDueDate";
 
 type TaskCardTitleProps = {
-    title: string;
-    dueDate: Date;
+  title: string;
+  dueDate: Date;
 };
 
-function TaskCardTitle({title, dueDate}: TaskCardTitleProps) {
+function TaskCardTitle({ title, dueDate }: TaskCardTitleProps) {
   return (
     <Flex justify="justify-between" pb={16}>
       <Group>
         <Box maw={200}>
           <Title order={4}>{title}</Title>
         </Box>
-        <Badge variant="light" color="red">
-          {dueDate.toDateString()}
-        </Badge>
+        <TaskDueDate dueDate={dueDate} />
       </Group>
     </Flex>
   );
