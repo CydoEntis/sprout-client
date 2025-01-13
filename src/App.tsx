@@ -1,10 +1,15 @@
 import {
   Anchor,
+  Avatar,
   Box,
+  Card,
+  Center,
   Container,
   Flex,
   Group,
   Modal,
+  SimpleGrid,
+  Stack,
   Title,
 } from "@mantine/core";
 import TaskCard from "./features/Tasks/TaskCard";
@@ -24,12 +29,21 @@ function App() {
         </Group>
       </Flex>
 
-      <Box>
+      <Container size="sm">
+        <Card withBorder>
+          <Title size="xl">Grocery List</Title>
+          <Avatar
+            color="initials"
+            name="Idaho Baggins"
+            allowedInitialsColors={["lime"]}
+            size="lg"
+          />
+        </Card>
         <Modal opened={opened} onClose={close} title="Add A Task">
           Add A New Task.
         </Modal>
         <TaskCard onOpenAddTask={open} />
-      </Box>
+      </Container>
     </Container>
   );
 }

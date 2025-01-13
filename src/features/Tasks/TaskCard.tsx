@@ -14,7 +14,7 @@ function TaskCard({ onOpenAddTask }: TaskCardProps) {
   const endDate = new Date("2025-02-15T09:30:00");
 
   return (
-    <Card withBorder radius="lg" w={500}>
+    <Card withBorder radius="lg" >
       <TaskCardTitle title="Grocery List" dueDate={new Date()} />
       <TaskDateRange startDate={startDate} endDate={endDate} />
       <Divider py={8} />
