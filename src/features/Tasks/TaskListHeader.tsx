@@ -1,5 +1,4 @@
 import { Flex } from "@mantine/core";
-import React from "react";
 import TaskListDetails from "./TaskListDetails";
 import TaskCompletionControl from "./TaskCompletionControl";
 

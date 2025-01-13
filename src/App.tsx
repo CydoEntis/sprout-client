@@ -1,16 +1,11 @@
 import {
   Anchor,
-  Badge,
   Box,
-  Card,
   Container,
   Flex,
   Group,
   Title,
-  Text,
-  Switch,
 } from "@mantine/core";
-import { DndListHandle } from "./DndListHandle";
 import TaskCard from "./features/Tasks/TaskCard";
 
 function App() {
