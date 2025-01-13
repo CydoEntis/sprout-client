@@ -26,16 +26,6 @@ function App() {
 
       <Box>
         <Card withBorder radius="lg" w={500}>
-          <Flex justify="justify-between">
-            <Group>
-              <Box maw={200}>
-                <Title order={4}>Christmas Shopping</Title>
-              </Box>
-              <Badge variant="light" color="red">
-                5d left
-              </Badge>
-            </Group>
-          </Flex>
           <Flex justify="space-between" align="center" py={16}>
             <Group align="center" gap={8}>
               <Text  c="dimmed">
