@@ -36,10 +36,7 @@ function App() {
               </Text>
               <Text fw={600}>Shopping List</Text>
             </Group>
-            <Group align="center" gap={8}>
-            <Switch size="xs" color="lime"/>
-            <Text c="dimmed" size="sm">Completed</Text>
-            </Group>
+
 
           </Flex>
           <DndListHandle />

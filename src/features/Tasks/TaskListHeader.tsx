@@ -1,8 +1,8 @@
 import React from 'react'
 
-type Props = {}
 
-function TaskListHeader({}: Props) {
+
+function TaskListHeader() {
   return (
     <div>TaskListHeader</div>
   )

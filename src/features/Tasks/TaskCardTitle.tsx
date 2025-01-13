@@ -1,11 +1,11 @@
 import { Badge, Box, Flex, Group, Title } from "@mantine/core";
 
-type TaskListTitleProps = {
+type TaskCardTitleProps = {
     title: string;
     dueDate: Date;
 };
 
-function TaskListTitle({title, dueDate}: TaskListTitleProps) {
+function TaskCardTitle({title, dueDate}: TaskCardTitleProps) {
   return (
     <Flex justify="justify-between">
       <Group>
@@ -20,4 +20,4 @@ function TaskListTitle({title, dueDate}: TaskListTitleProps) {
   );
 }
 
-export default TaskListTitle;
+export default TaskCardTitle;
