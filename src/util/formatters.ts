@@ -17,3 +17,15 @@ export const formatDate = (date: Date): string => {
   });
   return formatter.format(date);
 };
+
+export const calculateDaysAway = (date: Date): number => {
+    const currentDate = new Date(); 
+    currentDate.setHours(0, 0, 0, 0); 
+    const targetDate = new Date(date);
+    targetDate.setHours(0, 0, 0, 0); 
+  
+    const diffTime = targetDate.getTime() - currentDate.getTime(); 
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    return diffDays;
+  };
+  
