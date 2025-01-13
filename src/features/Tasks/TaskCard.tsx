@@ -1,36 +1,19 @@
-import {
-  Button,
-  Card,
-  Divider,
-  Flex,
-  Group,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { Button, Card, Divider, Group } from "@mantine/core";
 import { DndListHandle } from "../../DndListHandle";
 import TaskCardTitle from "./TaskCardTitle";
 import TaskListHeader from "./TaskListHeader";
-import { ChevronRight, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
+import TaskDateRange from "./TaskDateRange";
 
 function TaskCard() {
+  const startDate = new Date("2023-12-11T14:00:00"); 
+  const endDate = new Date("2025-02-15T09:30:00"); 
+
+
   return (
     <Card withBorder radius="lg" w={500}>
       <TaskCardTitle title="Grocery List" dueDate={new Date()} />
-      <Flex align="center" gap={8} py={16}>
-        <Stack gap={2}>
-          <Group gap={2} align="start">
-            <Text size="2rem" fw="bold">
-              2:00
-            </Text>
-            <Text size="md" c="dimmed">
-              PM
-            </Text>
-          </Group>
-          <Text c="dimmed">Thurs, Feb 9</Text>
-        </Stack>
-        <ChevronRight size={20} color="gray" />
-
-      </Flex>
+      <TaskDateRange startDate={startDate} endDate={endDate} />
       <Divider py={8} />
       <TaskListHeader />
       <DndListHandle />
