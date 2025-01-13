@@ -14,8 +14,8 @@ function App() {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
-    <Container size="xl" style={{ border: "1px solid red" }} p={16}>
-      <Flex justify="space-between">
+    <Container size="xl" p={16}>
+      <Flex justify="space-between" mb={32}>
         <Title size="1.5rem">Task Garden</Title>
 
         <Group>
