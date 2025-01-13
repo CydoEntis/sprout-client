@@ -4,7 +4,7 @@ import TaskCompletionControl from "./TaskCompletionControl";
 
 function TaskListHeader() {
   return (
-    <Flex justify="space-between" align="center" py={16}>
+    <Flex justify="space-between" align="center" >
       <TaskListDetails
         totalTasks={5}
         compeletedTasks={0}

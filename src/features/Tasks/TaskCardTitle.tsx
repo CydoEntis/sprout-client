@@ -7,7 +7,7 @@ type TaskCardTitleProps = {
 
 function TaskCardTitle({title, dueDate}: TaskCardTitleProps) {
   return (
-    <Flex justify="justify-between">
+    <Flex justify="justify-between" pb={16}>
       <Group>
         <Box maw={200}>
           <Title order={4}>{title}</Title>
