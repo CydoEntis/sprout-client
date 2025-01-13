@@ -1,6 +1,6 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import cx from "clsx";
-import { Text } from "@mantine/core";
+import { Box, Checkbox, Flex, Group, Paper, Stack, Text } from "@mantine/core";
 import { useListState } from "@mantine/hooks";
 import classes from "./DndListHandle.module.css";
 import { GripVertical } from "lucide-react";
@@ -19,25 +19,38 @@ export function DndListHandle() {
   const items = state.map((item, index) => (
     <Draggable key={item.symbol} index={index} draggableId={item.symbol}>
       {(provided, snapshot) => (
-        <div
-          className={cx(classes.item, {
-            [classes.itemDragging]: snapshot.isDragging,
-          })}
+        // <div
+        //   className={cx(classes.item, {
+        //     [classes.itemDragging]: snapshot.isDragging,
+        //   })}
+        //   ref={provided.innerRef}
+        //   {...provided.draggableProps}
+        // >
+        <Box
+          p={8}
+          bg="red"
+          style={{ border: "1px solid red" }}
           ref={provided.innerRef}
           {...provided.draggableProps}
         >
-          <div {...provided.dragHandleProps} className={classes.dragHandle}>
-            {/* <IconGripVertical size={18} stroke={1.5} /> */}
-            <GripVertical size={20} />
-          </div>
-          <Text className={classes.symbol}>{item.symbol}</Text>
-          <div>
-            <Text>{item.name}</Text>
-            <Text c="dimmed" size="sm">
-              Position: {item.position} • Mass: {item.mass}
-            </Text>
-          </div>
-        </div>
+          <Flex w="100%" justify="space-between" align="center">
+            <Box>
+              <Group gap={8} align="center">
+                <Checkbox />
+                <Text fw={600}>Peanut Butter</Text>
+              </Group>
+            </Box>
+            <Box
+              {...provided.dragHandleProps}
+              className={classes.dragHandle}
+              py={16}
+            >
+              {/* <IconGripVertical size={18} stroke={1.5} /> */}
+              <GripVertical size={20} />
+            </Box>
+          </Flex>
+        </Box>
+        // </div>
       )}
     </Draggable>
   ));
@@ -49,12 +62,14 @@ export function DndListHandle() {
       }
     >
       <Droppable droppableId="dnd-list" direction="vertical">
-        {(provided) => (
-          <div {...provided.droppableProps} ref={provided.innerRef}>
-            {items}
-            {provided.placeholder}
-          </div>
-        )}
+        <Stack gap={8}>
+          {(provided) => (
+            <div {...provided.droppableProps} ref={provided.innerRef}>
+              {items}
+              {provided.placeholder}
+            </div>
+          )}
+        </Stack>
       </Droppable>
     </DragDropContext>
   );
