@@ -29,17 +29,7 @@ function TaskCard() {
           <Text c="dimmed">Thurs, Feb 9</Text>
         </Stack>
         <ChevronRight size={20} color="gray" />
-        <Stack gap={2}>
-          <Group gap={2} align="start">
-            <Text size="2rem" fw="bold">
-              5:00
-            </Text>
-            <Text size="md" c="dimmed">
-              PM
-            </Text>
-          </Group>
-          <Text c="dimmed">Sat, Feb 11</Text>
-        </Stack>
+
       </Flex>
       <Divider py={8} />
       <TaskListHeader />
