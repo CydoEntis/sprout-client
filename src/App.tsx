@@ -10,13 +10,14 @@ import {
 } from "@mantine/core";
 import TaskCard from "./features/Tasks/TaskCard";
 import { useDisclosure } from "@mantine/hooks";
+import { taskLists } from "./features/Tasks/data";
 
 function App() {
   const [opened, { open, close }] = useDisclosure(false);
   const [openCard, setOpenCard] = useState<number | null>(null);
 
-  const handleToggleCard = (cardIndex: number) => {
-    setOpenCard((prev) => (prev === cardIndex ? null : cardIndex));
+  const handleToggleCard = (cardId: number) => {
+    setOpenCard((prev) => (prev === cardId ? null : cardId));
   };
 
   return (
@@ -36,12 +37,13 @@ function App() {
         </Modal>
 
         <Stack gap={4}>
-          {Array.from({ length: 4 }).map((_, index) => (
+          {taskLists.map((taskList) => (
             <TaskCard
-              key={index}
+              key={taskList.id}
               onOpenAddTask={open}
-              isOpen={openCard === index}
-              onOpenTaskList={() => handleToggleCard(index)}
+              isOpen={openCard === taskList.id}
+              onOpenTaskList={() => handleToggleCard(taskList.id)}
+              taskList={taskList} 
             />
           ))}
         </Stack>

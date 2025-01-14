@@ -1,47 +1,48 @@
 export type TaskList = {
   name: string;
-  description: string;
+  //   description: string;
   tasks: Task[];
-  totalTasks: number;
-  compeledTasks: number;
+  taskStats: TaskStats;
   startDate: Date;
   endDate: Date;
-  crop: Crop
+  members: TaskMember[];
+  crop: Crop;
 };
 
 export type TaskStats = {
   totalTasks: number;
   completedTasks: number;
-}
+};
 
 export type Task = {
+  id: number;
   description: string;
   isCompleted: boolean;
 };
 
 export type TaskMember = {
-    userId: number;
-    username: string;
-    role: string;
-}
+  id: number;
+  username: string;
+//   role: string;
+};
 
 export type Crop = {
-    id: number;
-    name: string;
-    growthLevel: number;
-    maxGrowthLevel: number
-    imageUrl: string;
-}
+  id: number;
+  name: string;
+  growthLevel: number;
+  maxGrowthLevel: number;
+  imageUrl: string;
+};
 
 export type PurchasableCrop = {
-    cost: number
-} & Crop
+  cost: number;
+} & Crop;
 
 export type SellableCrop = {
-    value: number;
+  value: number;
 } & Crop;
 
 export type PlantedCrop = {
-    x: number;
-    y: number;
+  x: number;
+  y: number;
 } & Crop;

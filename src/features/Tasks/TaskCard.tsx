@@ -1,25 +1,36 @@
-import { Card, } from "@mantine/core";
+import { Card } from "@mantine/core";
 
 import TaskCardHeader from "./TaskCardHeader";
 import TaskCardBody from "./TaskCardBody";
+import { TaskList } from "../types/task.types";
 
 type TaskCardProps = {
   onOpenAddTask: () => void;
   isOpen: boolean;
   onOpenTaskList: () => void;
+  taskList: TaskList;
 };
 
-function TaskCard({ onOpenAddTask, isOpen, onOpenTaskList }: TaskCardProps) {
+function TaskCard({
+  onOpenAddTask,
+  isOpen,
+  onOpenTaskList,
+  taskList,
+}: TaskCardProps) {
   return (
     <Card withBorder radius="lg">
       <TaskCardHeader
         title={"Grocery Shopping"}
         onToggle={onOpenTaskList}
         isOpen={isOpen}
-        taskStats={}
-        crop={}
+        taskStats={taskList.taskStats}
+        crop={taskList.crop}
       />
-      <TaskCardBody taskList={} isOpen={isOpen} onOpenAddTask={onOpenAddTask} />
+      <TaskCardBody
+        taskList={taskList}
+        isOpen={isOpen}
+        onOpenAddTask={onOpenAddTask}
+      />
     </Card>
   );
 }
