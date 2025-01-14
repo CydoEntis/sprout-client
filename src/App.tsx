@@ -1,22 +1,15 @@
-import {
-  Anchor,
-  Avatar,
-  Box,
-  Card,
-  Center,
-  Container,
-  Flex,
-  Group,
-  Modal,
-  SimpleGrid,
-  Stack,
-  Title,
-} from "@mantine/core";
+import { useState } from "react";
+import { Anchor, Container, Flex, Group, Modal, Stack, Title } from "@mantine/core";
 import TaskCard from "./features/Tasks/TaskCard";
 import { useDisclosure } from "@mantine/hooks";
 
 function App() {
   const [opened, { open, close }] = useDisclosure(false);
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
+
+  const handleToggleCard = (cardIndex: number) => {
+    setExpandedCard((prev) => (prev === cardIndex ? null : cardIndex));
+  };
 
   return (
     <Container size="xl" p={16}>
@@ -30,19 +23,20 @@ function App() {
       </Flex>
 
       <Container size="sm">
-        <Card withBorder>
-          <Title size="xl">Grocery List</Title>
-          <Avatar
-            color="initials"
-            name="Idaho Baggins"
-            allowedInitialsColors={["lime"]}
-            size="lg"
-          />
-        </Card>
         <Modal opened={opened} onClose={close} title="Add A Task">
           Add A New Task.
         </Modal>
-        <TaskCard onOpenAddTask={open} />
+
+        <Stack gap={4}>
+          {Array.from({ length: 4 }).map((_, index) => (
+            <TaskCard
+              key={index}
+              onOpenAddTask={open}
+              isExpanded={expandedCard === index}
+              onToggleExpand={() => handleToggleCard(index)}
+            />
+          ))}
+        </Stack>
       </Container>
     </Container>
   );
