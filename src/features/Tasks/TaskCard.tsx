@@ -5,6 +5,7 @@ import TaskDateRange from "./TaskDateRange";
 import { Plus } from "lucide-react";
 import { DndListHandle } from "../../DndListHandle";
 import TaskCardHeader from "./TaskCardHeader";
+import TaskCardBody from "./TaskCardBody";
 
 type TaskCardProps = {
   onOpenAddTask: () => void;
@@ -25,35 +26,8 @@ function TaskCard({ onOpenAddTask, isOpen, onOpenTaskList }: TaskCardProps) {
         taskStats={}
         crop={}
       />
+      <TaskCardBody taskList={} isOpen={isOpen} />
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            style={{ overflow: "hidden" }}
-          >
-            <TaskDateRange startDate={startDate} endDate={endDate} />
-            <Divider py={8} />
-            <TaskListHeader />
-            <DndListHandle />
-            <Group justify="end">
-              <Button
-                leftSection={<Plus size={20} />}
-                variant="transparent"
-                c="lime"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onOpenAddTask();
-                }}
-              >
-                Add an item
-              </Button>
-            </Group>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </Card>
   );
 }
