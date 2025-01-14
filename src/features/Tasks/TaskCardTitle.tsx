@@ -1,8 +1,8 @@
 import { Box, Flex, Group, Stack, Title, Text, Progress } from "@mantine/core";
 import TaskDueDate from "./TaskDueDate";
 import TaskListMembers from "./TaskListMembers";
-import { ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import OpenCloseToggle from "../../components/OpenCloseToggle";
 
 type TaskCardTitleProps = {
   title: string;
@@ -28,15 +28,7 @@ function TaskCardTitle({
         </Group>
         <Group>
           <TaskListMembers members={["John Doe", "Jane Doe"]} />
-          <Box
-            style={{
-              display: "inline-block",
-              transform: isExpanded ? "rotate(0deg)" : "rotate(-90deg)",
-              transition: "transform 0.3s ease-in-out",
-            }}
-          >
-            <ChevronDown size={20} />
-          </Box>
+          <OpenCloseToggle isOpen={isExpanded} />
         </Group>
       </Flex>
 
