@@ -1,12 +1,11 @@
 import { Box, Flex, Group, Progress, Text } from "@mantine/core";
 import { AnimatePresence, motion } from "framer-motion";
-import React from "react";
 
-type TaskCardDescriptionProps = {
+type TaskCardPreviewProps = {
   isOpen: boolean;
 };
 
-function TaskCardDescription({ isOpen }: TaskCardDescriptionProps) {
+function TaskCardPreview({ isOpen }: TaskCardPreviewProps) {
   return (
     <AnimatePresence>
       {!isOpen && (
@@ -36,4 +35,4 @@ function TaskCardDescription({ isOpen }: TaskCardDescriptionProps) {
   );
 }
 
-export default TaskCardDescription;
+export default TaskCardPreview;

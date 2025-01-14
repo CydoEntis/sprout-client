@@ -8,15 +8,10 @@ type TaskCardTitleProps = {
   title: string;
   dueDate: Date;
   onToggle: () => void;
-  isExpanded: boolean;
+  isOpen: boolean;
 };
 
-function TaskCardTitle({
-  title,
-  dueDate,
-  onToggle,
-  isExpanded,
-}: TaskCardTitleProps) {
+function TaskCardTitle({ title, dueDate, isOpen }: TaskCardTitleProps) {
   return (
     <Flex justify="space-between" w="100%">
       <Group>
@@ -27,7 +22,7 @@ function TaskCardTitle({
       </Group>
       <Group>
         <TaskListMembers members={["John Doe", "Jane Doe"]} />
-        <OpenCloseToggle isOpen={isExpanded} />
+        <OpenCloseToggle isOpen={isOpen} />
       </Group>
     </Flex>
   );
