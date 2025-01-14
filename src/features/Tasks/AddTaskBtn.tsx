@@ -1,6 +1,5 @@
 import { Button, Group } from "@mantine/core";
 import { Plus } from "lucide-react";
-import React from "react";
 
 type AddTaskBtnProps = {
   onOpenAddTask: () => void;
