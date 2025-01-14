@@ -10,7 +10,6 @@ type TaskCardProps = {
 };
 
 function TaskCard({ onOpenAddTask, isOpen, onOpenTaskList }: TaskCardProps) {
-
   return (
     <Card withBorder radius="lg">
       <TaskCardHeader

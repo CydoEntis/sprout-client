@@ -1,14 +1,22 @@
 import { useState } from "react";
-import { Anchor, Container, Flex, Group, Modal, Stack, Title } from "@mantine/core";
+import {
+  Anchor,
+  Container,
+  Flex,
+  Group,
+  Modal,
+  Stack,
+  Title,
+} from "@mantine/core";
 import TaskCard from "./features/Tasks/TaskCard";
 import { useDisclosure } from "@mantine/hooks";
 
 function App() {
   const [opened, { open, close }] = useDisclosure(false);
-  const [expandedCard, setExpandedCard] = useState<number | null>(null);
+  const [openCard, setOpenCard] = useState<number | null>(null);
 
   const handleToggleCard = (cardIndex: number) => {
-    setExpandedCard((prev) => (prev === cardIndex ? null : cardIndex));
+    setOpenCard((prev) => (prev === cardIndex ? null : cardIndex));
   };
 
   return (
@@ -32,8 +40,8 @@ function App() {
             <TaskCard
               key={index}
               onOpenAddTask={open}
-              isExpanded={expandedCard === index}
-              onToggleExpand={() => handleToggleCard(index)}
+              isOpen={openCard === index}
+              onOpenTaskList={() => handleToggleCard(index)}
             />
           ))}
         </Stack>
