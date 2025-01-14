@@ -1,14 +1,14 @@
 import { Box, Flex, Group, Progress, Text } from "@mantine/core";
 import { AnimatePresence, motion } from "framer-motion";
+import { Crop, TaskStats } from "../types/task.types";
 
 type TaskCardPreviewProps = {
   isOpen: boolean;
-  totalTasks: number;
-  completedTasks: number;
+  taskStats: TaskStats;
   crop: Crop;
 };
 
-function TaskCardPreview({ isOpen }: TaskCardPreviewProps) {
+function TaskCardPreview({ isOpen, taskStats }: TaskCardPreviewProps) {
   return (
     <AnimatePresence>
       {!isOpen && (
@@ -22,7 +22,8 @@ function TaskCardPreview({ isOpen }: TaskCardPreviewProps) {
           <Box>
             <Flex gap={4} align="center" justify="space-between" w="100%">
               <Text c="dimmed" size="sm">
-                0/5 Tasks completed
+                {taskStats.completedTasks}/{taskStats.totalTasks} Tasks
+                completed
               </Text>
               <Group gap={4}>
                 <Text size="xs" c="dimmed">

@@ -4,7 +4,15 @@ export type TaskList = {
   tasks: Task[];
   totalTasks: number;
   compeledTasks: number;
+  startDate: Date;
+  endDate: Date;
+  crop: Crop
 };
+
+export type TaskStats = {
+  totalTasks: number;
+  completedTasks: number;
+}
 
 export type Task = {
   description: string;
@@ -22,6 +30,7 @@ export type Crop = {
     name: string;
     growthLevel: number;
     maxGrowthLevel: number
+    imageUrl: string;
 }
 
 export type PurchasableCrop = {

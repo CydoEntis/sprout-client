@@ -1,36 +1,33 @@
 import { Card, Divider, Group, Button } from "@mantine/core";
 import { motion, AnimatePresence } from "framer-motion";
-import TaskCardTitle from "./TaskCardTitle";
 import TaskListHeader from "./TaskListHeader";
 import TaskDateRange from "./TaskDateRange";
 import { Plus } from "lucide-react";
 import { DndListHandle } from "../../DndListHandle";
+import TaskCardHeader from "./TaskCardHeader";
 
 type TaskCardProps = {
   onOpenAddTask: () => void;
-  isExpanded: boolean;
-  onToggleExpand: () => void;
+  isOpen: boolean;
+  onOpenTaskList: () => void;
 };
 
-function TaskCard({
-  onOpenAddTask,
-  isExpanded,
-  onToggleExpand,
-}: TaskCardProps) {
+function TaskCard({ onOpenAddTask, isOpen, onOpenTaskList }: TaskCardProps) {
   const startDate = new Date("2023-12-11T14:00:00");
   const endDate = new Date("2025-02-15T09:30:00");
 
   return (
     <Card withBorder radius="lg">
-      <TaskCardTitle
-        title="Grocery List"
-        dueDate={new Date()}
-        onToggle={onToggleExpand}
-        isExpanded={isExpanded}
+      <TaskCardHeader
+        title={"Grocery Shopping"}
+        onToggle={onOpenTaskList}
+        isOpen={isOpen}
+        taskStats={}
+        crop={}
       />
 
       <AnimatePresence>
-        {isExpanded && (
+        {isOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}

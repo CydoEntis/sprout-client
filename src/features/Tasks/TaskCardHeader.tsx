@@ -1,25 +1,32 @@
 import { Stack } from "@mantine/core";
-import React from "react";
 import TaskCardTitle from "./TaskCardTitle";
 import TaskCardDescription from "./TaskCardPreview";
-import { TaskList } from "../types/task.types";
+import { Crop, TaskStats } from "../types/task.types";
 
 type TaskCardHeaderProps = {
-  taskList: TaskList;
+  title: string;
   onToggle: () => void;
   isOpen: boolean;
+  taskStats: TaskStats;
+  crop: Crop;
 };
 
-function TaskCardHeader({ onToggle }: TaskCardHeaderProps) {
+function TaskCardHeader({
+  title,
+  onToggle,
+  isOpen,
+  taskStats,
+  crop,
+}: TaskCardHeaderProps) {
   return (
     <Stack gap={4} onClick={onToggle} style={{ cursor: "pointer" }}>
       <TaskCardTitle
-        title="Grocery List"
+        title={title}
         dueDate={new Date()}
         onToggle={onToggle}
         isOpen={isOpen}
       />
-      <TaskCardDescription isOpen={false} totalTasks={} completedTasks={} nextCrop={} />
+      <TaskCardDescription isOpen={false} taskStats={taskStats} crop={crop} />
     </Stack>
   );
 }
