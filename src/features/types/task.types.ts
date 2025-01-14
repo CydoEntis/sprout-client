@@ -31,3 +31,8 @@ export type PurchasableCrop = {
 export type SellableCrop = {
     value: number;
 } & Crop;
+
+export type PlantedCrop = {
+    x: number;
+    y: number;
+} & Crop;
