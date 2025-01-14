@@ -20,7 +20,7 @@ function TaskCard({
   return (
     <Card withBorder radius="lg">
       <TaskCardHeader
-        title={"Grocery Shopping"}
+        title={taskList.name}
         onToggle={onOpenTaskList}
         isOpen={isOpen}
         taskStats={taskList.taskStats}
