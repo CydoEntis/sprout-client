@@ -3,6 +3,9 @@ import { AnimatePresence, motion } from "framer-motion";
 
 type TaskCardPreviewProps = {
   isOpen: boolean;
+  totalTasks: number;
+  completedTasks: number;
+  crop: Crop;
 };
 
 function TaskCardPreview({ isOpen }: TaskCardPreviewProps) {
