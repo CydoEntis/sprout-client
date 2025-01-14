@@ -26,8 +26,7 @@ function TaskCard({ onOpenAddTask, isOpen, onOpenTaskList }: TaskCardProps) {
         taskStats={}
         crop={}
       />
-      <TaskCardBody taskList={} isOpen={isOpen} />
-
+      <TaskCardBody taskList={} isOpen={isOpen} onOpenAddTask={onOpenAddTask} />
     </Card>
   );
 }

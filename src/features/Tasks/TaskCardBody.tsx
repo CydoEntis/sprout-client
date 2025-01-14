@@ -4,13 +4,15 @@ import { DndListHandle } from "../../DndListHandle";
 import TaskDateRange from "./TaskDateRange";
 import TaskListHeader from "./TaskListHeader";
 import { TaskList } from "../types/task.types";
+import AddTaskBtn from "./AddTaskBtn";
 
 type TaskCardBodyProps = {
   isOpen: boolean;
   taskList: TaskList;
+  onOpenAddTask: () => void;
 };
 
-function TaskCardBody({ isOpen, taskList }: TaskCardBodyProps) {
+function TaskCardBody({ isOpen, taskList, onOpenAddTask }: TaskCardBodyProps) {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -27,6 +29,7 @@ function TaskCardBody({ isOpen, taskList }: TaskCardBodyProps) {
           <Divider py={8} />
           <TaskListHeader />
           <DndListHandle />
+          <AddTaskBtn onOpenAddTask={onOpenAddTask} />
         </motion.div>
       )}
     </AnimatePresence>
