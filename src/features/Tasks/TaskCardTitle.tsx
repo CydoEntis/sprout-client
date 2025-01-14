@@ -1,7 +1,6 @@
-import { Box, Flex, Group, Stack, Title, Text, Progress } from "@mantine/core";
+import { Box, Flex, Group, Title } from "@mantine/core";
 import TaskDueDate from "./TaskDueDate";
 import TaskListMembers from "./TaskListMembers";
-import { motion, AnimatePresence } from "framer-motion";
 import OpenCloseToggle from "../../components/OpenCloseToggle";
 
 type TaskCardTitleProps = {
