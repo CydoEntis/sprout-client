@@ -17,6 +17,7 @@ import { Calendar, Divide } from "lucide-react";
 import ThemeToggle from "./components/theme/ThemeToggle";
 import TaskList from "./features/TaskList/TaskList";
 import CompletedTaskListCard from "./features/TaskList/CompletedTaskListCard";
+import TaskListTabs from "./features/TaskLists/TaskListTabs";
 
 function App() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -50,12 +51,7 @@ function App() {
             </Anchor>
           </Flex>
 
-          <SimpleGrid cols={3}>
-            <CompletedTaskListCard />
-            {/* <TaskList />
-            <TaskList />
-            <TaskList /> */}
-          </SimpleGrid>
+          <TaskListTabs />
 
           {/* <Modal opened={opened} onClose={close} title="Add A Task">
           Add A New Task.

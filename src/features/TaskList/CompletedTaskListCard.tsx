@@ -16,7 +16,7 @@ type Props = {};
 
 function CompletedTaskListCard({}: Props) {
   return (
-    <Card p={0} shadow="md">
+    <Card p={0} shadow="md" bg="card">
       <Flex>
         <Box bg="red" w={8} h="100%" />
         <Box p={16} flex="1">
@@ -40,11 +40,11 @@ function CompletedTaskListCard({}: Props) {
               radius="xl"
               h={22}
               w={22}
-              style={{ 
+              style={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center"
-               }}
+                justifyContent: "center",
+              }}
             >
               <Check size={14} color="white" />
             </Paper>
