@@ -14,7 +14,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { taskLists } from "./features/Tasks/data";
 import { Calendar, Divide } from "lucide-react";
 import ThemeToggle from "./components/theme/ThemeToggle";
-import TaskList from "./features/TaskList/TaskList";
+import InProgressTaskListCard from "./features/TaskList/InProgressTaskListCard";
 import CompletedTaskListCard from "./features/TaskList/CompletedTaskListCard";
 import TaskListTabs from "./features/TaskLists/TaskListTabs";
 

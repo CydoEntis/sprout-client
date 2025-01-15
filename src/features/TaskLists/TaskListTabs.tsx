@@ -1,6 +1,6 @@
 import { SimpleGrid, Tabs, Group, Button, Flex } from "@mantine/core";
 import { ClipboardCheck, ClipboardList, Plus } from "lucide-react";
-import TaskList from "../TaskList/TaskList";
+import InProgressTaskListCard from "../TaskList/InProgressTaskListCard";
 import CompletedTaskListCard from "../TaskList/CompletedTaskListCard";
 
 function TaskListTabs() {
@@ -31,9 +31,9 @@ function TaskListTabs() {
       <Tabs.Panel value="progress">
         // Todo Create a seperate list component responsible for mapping over all todos.
         <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
-          <TaskList />
-          <TaskList />
-          <TaskList />
+          <InProgressTaskListCard />
+          <InProgressTaskListCard />
+          <InProgressTaskListCard />
         </SimpleGrid>
       </Tabs.Panel>
 
