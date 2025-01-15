@@ -1,6 +1,5 @@
 import { SimpleGrid, Tabs, Group, Button, Flex } from "@mantine/core";
 import { ClipboardCheck, ClipboardList, Plus } from "lucide-react";
-import React from "react";
 import TaskList from "../TaskList/TaskList";
 import CompletedTaskListCard from "../TaskList/CompletedTaskListCard";
 

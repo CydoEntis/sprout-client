@@ -6,7 +6,6 @@ import {
   Flex,
   Group,
   Modal,
-  SimpleGrid,
   Text,
   Title,
 } from "@mantine/core";

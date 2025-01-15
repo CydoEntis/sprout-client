@@ -12,9 +12,7 @@ import {
 import { CalendarCheck, Check } from "lucide-react";
 import React from "react";
 
-type Props = {};
-
-function CompletedTaskListCard({}: Props) {
+function CompletedTaskListCard() {
   return (
     <Card p={0} shadow="md" bg="card">
       <Flex>
