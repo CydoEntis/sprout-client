@@ -18,6 +18,7 @@ import TaskCard from "./features/Tasks/TaskCard";
 import { useDisclosure } from "@mantine/hooks";
 import { taskLists } from "./features/Tasks/data";
 import { Calendar, Divide } from "lucide-react";
+import ThemeToggle from "./components/theme/ThemeToggle";
 
 function App() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -35,6 +36,7 @@ function App() {
         <Group>
           <Anchor>Tasks</Anchor>
           <Anchor>Garden</Anchor>
+          <ThemeToggle />
         </Group>
       </Flex>
 

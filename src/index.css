@@ -1,1 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+[data-mantine-color-scheme="dark"] {
+    
+    /* --borderColor: #3a4d63;
+    --modalBackground: #10171f;
+    --control: #3a4d63;
+    --control-foreground: #f5f5f5;
+    --inputBg: #19212d;
+    --text: #6f89a5;
+    --notification-bg: #19212d;
+    --notification-txt: #fff; */
+  }
+  
+  [data-mantine-color-scheme="light"] {
+    /* --borderColor: #e9e0d9;
+    --modalBackground: #fffbf5;
+    --control: #fff;
+    --control-foregrond: #181818;
+    --inputBg: #ffffff;
+    --text: #998a77;
+    --notification-bg: #fff;
+    --notification-txt: #181818; */
+  }
+  
