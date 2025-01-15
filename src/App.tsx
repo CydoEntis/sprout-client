@@ -39,7 +39,7 @@ function App() {
           </Group>
         </Flex>
 
-        <Container size="md" style={{ border: "2px solid orange" }} p={16}>
+        <Container size="md" p={16}>
           <Flex justify="space-between" align="center" py={8}>
             <Group gap={4}>
               <Text fw="bold">In Progress</Text>

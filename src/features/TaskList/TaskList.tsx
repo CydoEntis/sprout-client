@@ -14,7 +14,7 @@ import { Calendar } from "lucide-react";
 
 function TaskList() {
   return (
-    <Card p={0}  shadow="md" bg="card">
+    <Card p={0}  shadow="md" bg="secondary">
       <Box p={16}>
         <Stack gap={8} pb={20}>
           <Title size="lg">Design UI ToDo App</Title>
