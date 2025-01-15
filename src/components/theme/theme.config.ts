@@ -6,9 +6,13 @@ const theme = createTheme({
     darkPrimary: colorsTuple("#111111"),
     darkSecondary: colorsTuple("#1C1C1C"),
     darkCard: colorsTuple("#232323"),
-    lightPrimary: colorsTuple("#F5F4F4"),
+    lightPrimary: colorsTuple("#FFFBF5"),
     lightSecondary: colorsTuple("#FFFFFF"),
     lightCard: colorsTuple("#FFFFFF"),
+    lightText: colorsTuple("#F5F5F5"),
+    darkText: colorsTuple("#181818"),
+	altLightText: colorsTuple("#998A77"),
+	altDarkText: colorsTuple("#6F89A5"),
     primary: virtualColor({
       name: "primary",
       dark: "darkPrimary",
@@ -16,16 +20,33 @@ const theme = createTheme({
     }),
     secondary: virtualColor({
       name: "secondary",
-      dark: "darkSecondary",
       light: "lightSecondary",
+      dark: "darkSecondary",
     }),
-    card: virtualColor({
-      name: "card",
-      dark: "darkCard",
-      light: "lightCard",
+    inverse: virtualColor({
+      name: "inverse",
+      light: "darkPrimary",
+      dark: "lightPrimary",
     }),
+    text: virtualColor({
+      name: "text",
+      dark: "lightText",
+      light: "darkText",
+    }),
+	altText: virtualColor({
+		name: "altText",
+		dark: "altDarkText",
+		light: "altLightText",
+	  }),
   },
-  fontFamily: "Happy Monkey, sans-serif",
+  fontFamily: "Poppins, sans-serif",
+  components: {
+    Text: {
+      defaultProps: {
+        color: "text",
+      },
+    },
+  },
 });
 
 export default theme;
