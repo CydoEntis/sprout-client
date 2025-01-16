@@ -7,6 +7,15 @@ function InProgressTaskList() {
       <InProgressTaskListCard />
       <InProgressTaskListCard />
       <InProgressTaskListCard />
+      <InProgressTaskListCard />
+      <InProgressTaskListCard />
+      <InProgressTaskListCard />
+      <InProgressTaskListCard />
+      <InProgressTaskListCard />
+      <InProgressTaskListCard />
+      <InProgressTaskListCard />
+      <InProgressTaskListCard />
+      <InProgressTaskListCard />
     </TaskListGrid>
   );
 }
