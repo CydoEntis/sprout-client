@@ -1,7 +1,8 @@
-import { SimpleGrid, Tabs, Group, Button, Flex } from "@mantine/core";
+import { Tabs, Group, Button, Flex } from "@mantine/core";
 import { ClipboardCheck, ClipboardList, Plus } from "lucide-react";
-import InProgressTaskListCard from "../TaskList/InProgressTaskListCard";
-import CompletedTaskListCard from "../TaskList/CompletedTaskListCard";
+
+import InProgressTaskList from "../TaskList/InProgressTaskList";
+import CompletedTaskList from "../TaskList/CompletedTaskList";
 
 function TaskListTabs() {
   return (
@@ -22,28 +23,23 @@ function TaskListTabs() {
               Completed
             </Tabs.Tab>
           </Group>
-          <Button variant="light" c="lime" leftSection={<Plus size={20}/>} mb={8}>
-            Create New List
+          <Button
+            variant="light"
+            color="lime"
+            leftSection={<Plus size={20} />}
+            mb={8}
+          >
+            New List
           </Button>
         </Flex>
       </Tabs.List>
 
       <Tabs.Panel value="progress">
-        // Todo Create a seperate list component responsible for mapping over all todos.
-        <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
-          <InProgressTaskListCard />
-          <InProgressTaskListCard />
-          <InProgressTaskListCard />
-        </SimpleGrid>
+        <InProgressTaskList />
       </Tabs.Panel>
 
       <Tabs.Panel value="completed">
-        // TODO: Use TodoList component to hold all completed todos and map over them
-        <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
-          <CompletedTaskListCard />
-          <CompletedTaskListCard />
-          <CompletedTaskListCard />
-        </SimpleGrid>
+        <CompletedTaskList />
       </Tabs.Panel>
     </Tabs>
   );

@@ -6,6 +6,8 @@ import {
   Flex,
   Group,
   Modal,
+  Progress,
+  Stack,
   Text,
   Title,
 } from "@mantine/core";
@@ -26,6 +28,8 @@ function App() {
     setOpenCard((prev) => (prev === cardId ? null : cardId));
   };
 
+  const stage = 1;
+
   return (
     <Box bg="primary" mih="100vh">
       <Container size="xl" p={16}>
@@ -40,15 +44,36 @@ function App() {
         </Flex>
 
         <Container size="md" p={16}>
-          <Flex justify="space-between" align="center" py={8}>
-            <Group gap={4}>
-              <Text fw="bold">In Progress</Text>
-              <Text c="dimmed">(12)</Text>
-            </Group>
-            <Anchor size="sm" c="lime">
-              View More
-            </Anchor>
-          </Flex>
+          <Stack gap={4}>
+            <Title>Welcome back, Demo User</Title>
+            <Text c="dimmed">Your next crop will be ready in...</Text>
+          </Stack>
+          <Group grow gap={5} mt="xs">
+            <Progress
+              size="xs"
+              color="lime"
+              value={stage > 0 ? 100 : 0}
+              transitionDuration={0}
+            />
+            <Progress
+              size="xs"
+              color="lime"
+              transitionDuration={0}
+              value={stage < 2 ? 0 : 100}
+            />
+            <Progress
+              size="xs"
+              color="lime" 
+              transitionDuration={0}
+              value={stage < 3 ? 0 : 100}
+            />
+            <Progress
+              size="xs"
+              color="lime"
+              transitionDuration={0}
+              value={stage < 4 ? 0 : 100}
+            />
+          </Group>
 
           <TaskListTabs />
 
