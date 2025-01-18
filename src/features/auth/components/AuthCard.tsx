@@ -40,7 +40,7 @@ function AuthCard({
         <Title ta="center">{title}</Title>
         <Text c="dimmed" size="sm" ta="center" mt={5}>
           {anchorLabel}{" "}
-          <Anchor component={Link} to={to} size="sm" c="violet">
+          <Anchor component={Link} to={to} size="sm" c="lime">
             {anchorText}
           </Anchor>
         </Text>
