@@ -1,5 +1,6 @@
 import { Box, Card, Flex } from "@mantine/core";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
+import { CustomLink } from "../../components/CustomLink";
 
 type TaskListCardProps = {
   borderPos: "left" | "bottom";
@@ -10,22 +11,26 @@ type TaskListCardProps = {
 function TaskListCard({ borderPos, color, children }: TaskListCardProps) {
   if (borderPos == "left") {
     return (
-      <Card p={0} shadow="md" bg="secondary">
-        <Flex>
-          <Box bg={color} w={8} h="100%" />
-          <Box p={16} flex="1">
-            {children}
-          </Box>
-        </Flex>
-      </Card>
+      <CustomLink to={"/$taskListId"} params={{ taskListId: "123" }}>
+        <Card p={0} shadow="md" bg="secondary">
+          <Flex>
+            <Box bg={color} w={8} h="100%" />
+            <Box p={16} flex="1">
+              {children}
+            </Box>
+          </Flex>
+        </Card>
+      </CustomLink>
     );
   }
 
   return (
-    <Card p={0} shadow="md" bg="secondary">
-      <Box p={16}>{children}</Box>
-      <Box bg={color} h={8}></Box>
-    </Card>
+    <CustomLink to={"/$taskListId"} params={{ taskListId: "123" }}>
+      <Card p={0} shadow="md" bg="secondary">
+        <Box p={16}>{children}</Box>
+        <Box bg={color} h={8}></Box>
+      </Card>
+    </CustomLink>
   );
 }
 

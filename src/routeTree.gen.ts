@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as AboutImport } from './routes/about'
+import { Route as TaskListIdImport } from './routes/$taskListId'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
@@ -26,6 +27,12 @@ const LoginRoute = LoginImport.update({
 const AboutRoute = AboutImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TaskListIdRoute = TaskListIdImport.update({
+  id: '/$taskListId',
+  path: '/$taskListId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -44,6 +51,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/$taskListId': {
+      id: '/$taskListId'
+      path: '/$taskListId'
+      fullPath: '/$taskListId'
+      preLoaderRoute: typeof TaskListIdImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -67,12 +81,14 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$taskListId': typeof TaskListIdRoute
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$taskListId': typeof TaskListIdRoute
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
 }
@@ -80,27 +96,30 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/$taskListId': typeof TaskListIdRoute
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/login'
+  fullPaths: '/' | '/$taskListId' | '/about' | '/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/login'
-  id: '__root__' | '/' | '/about' | '/login'
+  to: '/' | '/$taskListId' | '/about' | '/login'
+  id: '__root__' | '/' | '/$taskListId' | '/about' | '/login'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  TaskListIdRoute: typeof TaskListIdRoute
   AboutRoute: typeof AboutRoute
   LoginRoute: typeof LoginRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  TaskListIdRoute: TaskListIdRoute,
   AboutRoute: AboutRoute,
   LoginRoute: LoginRoute,
 }
@@ -116,12 +135,16 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/$taskListId",
         "/about",
         "/login"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/$taskListId": {
+      "filePath": "$taskListId.tsx"
     },
     "/about": {
       "filePath": "about.tsx"
