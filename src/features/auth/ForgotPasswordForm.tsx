@@ -18,8 +18,8 @@ function ForgotPasswordForm() {
 
   return (
     <AuthCard
-      title="Let's Get You Registered!"
-      anchorLabel="Already have an account?"
+      title="Forgot Your Password?"
+      anchorLabel="Remembered your password?"
       anchorText="Login"
       to="/login"
     >
