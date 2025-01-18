@@ -1,51 +1,53 @@
-import { Anchor, Paper, Title, Text } from "@mantine/core";
+import { Anchor, Paper, Title, Text, Flex } from "@mantine/core";
 import { Link } from "@tanstack/react-router";
 import { ReactElement } from "react";
 
 type AuthCardProps = {
-	title: string;
-	anchorLabel: string;
-	anchorText: string;
-	to: string;
-	children: ReactElement;
+  title: string;
+  anchorLabel: string;
+  anchorText: string;
+  to: string;
+  children: ReactElement;
 };
 
 function AuthCard({
-	title,
-	anchorLabel,
-	anchorText,
-	to,
-	children,
+  title,
+  anchorLabel,
+  anchorText,
+  to,
+  children,
 }: AuthCardProps) {
-	return (
-		<Paper
-			withBorder
-			shadow="md"
-			p={{base: 16, md: 32}}
-			pt={30}
-			radius="md"
-			bg="card"
-		>
-			<Title ta="center">{title}</Title>
-			<Text
-				c="dimmed"
-				size="sm"
-				ta="center"
-				mt={5}
-			>
-				{anchorLabel}{" "}
-				<Anchor
-					component={Link}
-					to={to}
-					size="sm"
-					c="violet"
-				>
-					{anchorText}
-				</Anchor>
-			</Text>
-			{children}
-		</Paper>
-	);
+  return (
+    <Flex
+      justify="center"
+      align="center"
+      style={{
+        width: "100%",
+      }}
+    >
+      <Paper
+        withBorder
+        shadow="md"
+        p={32}
+        pt={30}
+        radius="md"
+        bg="card"
+        style={{
+          maxWidth: "520px", // Maximum width for larger screens
+          width: "100%", // Full width on smaller screens
+        }}
+      >
+        <Title ta="center">{title}</Title>
+        <Text c="dimmed" size="sm" ta="center" mt={5}>
+          {anchorLabel}{" "}
+          <Anchor component={Link} to={to} size="sm" c="violet">
+            {anchorText}
+          </Anchor>
+        </Text>
+        {children}
+      </Paper>
+    </Flex>
+  );
 }
 
 export default AuthCard;
