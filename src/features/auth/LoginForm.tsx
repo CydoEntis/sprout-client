@@ -4,32 +4,18 @@ import {
   Group,
   PasswordInput,
   TextInput,
-  Alert,
   Flex,
   Stack,
   Divider,
 } from "@mantine/core";
 import { AtSign, Lock } from "lucide-react";
-// import { zodResolver } from "mantine-form-zod-resolver";
 import { useForm, zodResolver } from "@mantine/form";
-import { Link, useNavigate } from "@tanstack/react-router";
-import { z } from "zod";
+import { Link } from "@tanstack/react-router";
 import AuthCard from "./components/AuthCard";
 import { LoginRequest } from "./shared/auth.types";
 import { loginSchema } from "./shared/auth.schemas";
-// import { useLogin } from "../../api/auth";
-// import { LoginRequest } from "../../shared/auth.types";
-// import { loginSchema } from "../../shared/auth.schemas";
-// import { ErrorResponse } from "../../../../api/errors/error.types";
-// import useFormErrorHandler from "../../../../shared/hooks/useHandleErrors";
 
 function LoginForm() {
-  //   const login = useLogin();
-  //   const navigate = useNavigate();
-
-  //   const { error, handleAuthFormErrors, resetError } =
-  //     useFormErrorHandler<LoginRequest>();
-
   const form = useForm<LoginRequest>({
     validate: zodResolver(loginSchema),
     initialValues: {
@@ -96,7 +82,6 @@ function LoginForm() {
           <Button w="100%" color="lime" variant="light" type="submit">
             Login
           </Button>
-
         </Flex>
       </form>
     </AuthCard>

@@ -33,8 +33,8 @@ function AuthCard({
         radius="md"
         bg="card"
         style={{
-          maxWidth: "520px", // Maximum width for larger screens
-          width: "100%", // Full width on smaller screens
+          maxWidth: "520px",
+          width: "100%",
         }}
       >
         <Title ta="center">{title}</Title>
