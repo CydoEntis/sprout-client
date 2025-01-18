@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as RegisterImport } from './routes/register'
 import { Route as LoginImport } from './routes/login'
+import { Route as ForgotPasswordImport } from './routes/forgot-password'
 import { Route as AboutImport } from './routes/about'
 import { Route as TaskListIdImport } from './routes/$taskListId'
 import { Route as IndexImport } from './routes/index'
@@ -28,6 +29,12 @@ const RegisterRoute = RegisterImport.update({
 const LoginRoute = LoginImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ForgotPasswordRoute = ForgotPasswordImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -74,6 +81,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordImport
+      parentRoute: typeof rootRoute
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -97,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$taskListId': typeof TaskListIdRoute
   '/about': typeof AboutRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
 }
@@ -105,6 +120,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$taskListId': typeof TaskListIdRoute
   '/about': typeof AboutRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
 }
@@ -114,16 +130,36 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$taskListId': typeof TaskListIdRoute
   '/about': typeof AboutRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$taskListId' | '/about' | '/login' | '/register'
+  fullPaths:
+    | '/'
+    | '/$taskListId'
+    | '/about'
+    | '/forgot-password'
+    | '/login'
+    | '/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$taskListId' | '/about' | '/login' | '/register'
-  id: '__root__' | '/' | '/$taskListId' | '/about' | '/login' | '/register'
+  to:
+    | '/'
+    | '/$taskListId'
+    | '/about'
+    | '/forgot-password'
+    | '/login'
+    | '/register'
+  id:
+    | '__root__'
+    | '/'
+    | '/$taskListId'
+    | '/about'
+    | '/forgot-password'
+    | '/login'
+    | '/register'
   fileRoutesById: FileRoutesById
 }
 
@@ -131,6 +167,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TaskListIdRoute: typeof TaskListIdRoute
   AboutRoute: typeof AboutRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
 }
@@ -139,6 +176,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TaskListIdRoute: TaskListIdRoute,
   AboutRoute: AboutRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
 }
@@ -156,6 +194,7 @@ export const routeTree = rootRoute
         "/",
         "/$taskListId",
         "/about",
+        "/forgot-password",
         "/login",
         "/register"
       ]
@@ -168,6 +207,9 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/forgot-password": {
+      "filePath": "forgot-password.tsx"
     },
     "/login": {
       "filePath": "login.tsx"
