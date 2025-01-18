@@ -1,4 +1,4 @@
-import { Button, PasswordInput, TextInput } from "@mantine/core";
+import { Button, PasswordInput, Stack, TextInput } from "@mantine/core";
 import { AtSign, Lock, User2 } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
 import AuthCard from "./components/AuthCard";
@@ -18,52 +18,65 @@ function RegisterForm() {
 
   return (
     <AuthCard
-      title="Welcome Back!"
-      anchorLabel="Don't have an account?"
-      anchorText="Create an account"
-      to="/register"
+      title="Let's Get You Registered!"
+      anchorLabel="Already have an account?"
+      anchorText="Login"
+      to="/login"
     >
       <form onSubmit={form.onSubmit(onSubmit)}>
-        <TextInput
-          label="Email"
-          placeholder="you@example.com"
-          classNames={{
-            input: "input",
-          }}
-          leftSection={<AtSign size={20} />}
-          {...form.getInputProps("email")}
-          onChange={(event) => {
-            form.setFieldValue("email", event.currentTarget.value);
-          }}
-        />
-        <TextInput
-          label="Username"
-          placeholder="Questbounder"
-          classNames={{
-            input: "input",
-          }}
-          leftSection={<User2 size={20} />}
-          {...form.getInputProps("username")}
-          onChange={(event) => {
-            form.setFieldValue("username", event.currentTarget.value);
-          }}
-        />
+        <Stack gap={8}>
+          <TextInput
+            label="Email"
+            placeholder="you@example.com"
+            classNames={{
+              input: "input",
+            }}
+            leftSection={<AtSign size={20} />}
+            {...form.getInputProps("email")}
+            onChange={(event) => {
+              form.setFieldValue("email", event.currentTarget.value);
+            }}
+          />
+          <TextInput
+            label="Username"
+            placeholder="Questbounder"
+            classNames={{
+              input: "input",
+            }}
+            leftSection={<User2 size={20} />}
+            {...form.getInputProps("username")}
+            onChange={(event) => {
+              form.setFieldValue("username", event.currentTarget.value);
+            }}
+          />
+          <PasswordInput
+            label="Password"
+            placeholder="Your password"
+            classNames={{
+              input: "input",
+            }}
+            leftSection={<Lock size={20} />}
+            {...form.getInputProps("confirmPassword")}
+            onChange={(event) => {
+              form.setFieldValue("confirmPassword", event.currentTarget.value);
+            }}
+          />
 
-        <PasswordInput
-          label="Confirm Password"
-          placeholder="Confirm your password"
-          mt="md"
-          classNames={{
-            input: "input",
-          }}
-          leftSection={<Lock size={20} />}
-          {...form.getInputProps("confirmPassword")}
-          onChange={(event) => {
-            form.setFieldValue("confirmPassword", event.currentTarget.value);
-          }}
-        />
+          <PasswordInput
+            label="Confirm Password"
+            placeholder="Confirm your password"
+            classNames={{
+              input: "input",
+            }}
+            leftSection={<Lock size={20} />}
+            {...form.getInputProps("confirmPassword")}
+            onChange={(event) => {
+              form.setFieldValue("confirmPassword", event.currentTarget.value);
+            }}
+          />
+        </Stack>
 
-        <Button fullWidth mt="xl" color="violet" variant="light" type="submit">
+        <Button fullWidth mt="xl" color="lime" variant="light" type="submit">
           Sign up
         </Button>
       </form>
