@@ -1,9 +1,9 @@
 import axios from "axios";
-import { baseUrl } from "./endpoints";
 import useAuthStore from "../stores/useAuthStore";
 import authService from "../features/auth/api/auth.service";
 import localStorageService from "./services/localStorage.service";
 import { ERROR_TYPES } from "./errors/error.constants";
+import { baseUrl } from "./endpoints";
 
 const apiClient = axios.create({
   baseURL: baseUrl,
