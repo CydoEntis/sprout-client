@@ -1,17 +1,17 @@
 import { create } from "zustand";
 import { User } from "../features/user/shared/user.types";
 
-export type UserState = {
+export type AuthState = {
   accessToken: string | null;
-  user: User;
+  user: User | null;
   setAccessToken: (accessToken: string) => void;
   setUser: (user: User) => void;
   logoutUser: () => void;
 };
 
-const useUserStore = create<UserState>((set) => ({
+const useAuthStore = create<AuthState>((set) => ({
   accessToken: null,
-  user: {} as User,
+  user: null,
   setAccessToken: (accessToken: string) => {
     set({ accessToken });
   },
@@ -19,9 +19,9 @@ const useUserStore = create<UserState>((set) => ({
     set({ user });
   },
   logoutUser: () => {
-    set({ user: {} as User });
+    set({ user: null });
     set({ accessToken: null });
   },
 }));
 
-export default useUserStore;
+export default useAuthStore;
