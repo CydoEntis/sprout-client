@@ -6,7 +6,7 @@ export type UserState = {
   user: User;
   setAccessToken: (accessToken: string) => void;
   setUser: (user: User) => void;
-  logout: () => void;
+  logoutUser: () => void;
 };
 
 const useUserStore = create<UserState>((set) => ({
@@ -18,7 +18,7 @@ const useUserStore = create<UserState>((set) => ({
   setUser: (user: User) => {
     set({ user });
   },
-  logout: () => {
+  logoutUser: () => {
     set({ user: {} as User });
     set({ accessToken: null });
   },

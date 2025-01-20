@@ -2,6 +2,8 @@ import axios from "axios";
 
 import { baseUrl } from "./endpoints";
 import { ERROR_TYPES } from "./errors/error.constants";
+import useAuthStore from "../stores/useAuthStore";
+import localStorageService from "../services/localStorage.service";
 
 const apiClient = axios.create({
   baseURL: baseUrl,
@@ -23,7 +25,7 @@ apiClient.interceptors.response.use(
     // Handle server down or unreachable
     if (!error.response) {
       useAuthStore.getState().logoutUser();
-      localStorageService.removeItem("questbound");
+      localStorageService.removeItem("taskgarden");
       window.location.href = "/login";
       return Promise.reject(
         new Error("Server unreachable. Please try again later.")
