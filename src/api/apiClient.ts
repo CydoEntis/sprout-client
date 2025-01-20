@@ -1,9 +1,7 @@
 import axios from "axios";
-import useAuthStore from "../stores/useAuthStore";
-import authService from "../features/auth/api/auth.service";
-import localStorageService from "./services/localStorage.service";
-import { ERROR_TYPES } from "./errors/error.constants";
+
 import { baseUrl } from "./endpoints";
+import { ERROR_TYPES } from "./errors/error.constants";
 
 const apiClient = axios.create({
   baseURL: baseUrl,
@@ -12,7 +10,6 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (request) => {
-    // Add any request logic here (e.g., CSRF tokens)
     return request;
   },
   (error) => Promise.reject(error)
@@ -50,7 +47,6 @@ apiClient.interceptors.response.use(
       }
     }
 
-
     // Attach formatted validation errors
     if (error.response?.status === 400) {
       return Promise.reject({
@@ -61,7 +57,6 @@ apiClient.interceptors.response.use(
     }
 
     if (error.response?.status === 404) {
-
       const errorMessage =
         Object.values(error.response.data.errors)?.[0] || "Resource not found.";
 
@@ -73,7 +68,6 @@ apiClient.interceptors.response.use(
     }
 
     if (error.response?.status === 409) {
-
       const errorMessage =
         Object.values(error.response.data.errors)?.[0] || "Resource conflict.";
 
