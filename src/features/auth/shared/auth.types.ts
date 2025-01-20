@@ -5,6 +5,7 @@ export type LoginRequest = z.infer<typeof loginSchema>;
 export type RegisterRequest = z.infer<typeof registerSchema>;
 
 export type AuthenticatedResponse = {
+  message: string;
   accessToken: string;
 };
 

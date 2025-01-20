@@ -10,12 +10,20 @@ import {
 } from "@mantine/core";
 import { AtSign, Lock } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import AuthCard from "./components/AuthCard";
 import { LoginRequest } from "./shared/auth.types";
 import { loginSchema } from "./shared/auth.schemas";
+import useFormErrorHandler from "../../hooks/useFormErrorHandler";
+import { ErrorResponse } from "../../api/errors/errror.types";
+import { useLogin } from "./shared/auth.api";
 
 function LoginForm() {
+  const login = useLogin();
+  const navigate = useNavigate();
+
+  const { handleAuthFormErrors } = useFormErrorHandler<LoginRequest>();
+
   const form = useForm<LoginRequest>({
     validate: zodResolver(loginSchema),
     initialValues: {
@@ -24,7 +32,17 @@ function LoginForm() {
     },
   });
 
-  const onSubmit = () => {};
+  async function onSubmit(credentials: LoginRequest) {
+    try {
+      await login.mutateAsync(credentials);
+
+      form.reset();
+      navigate({ to: "/" });
+    } catch (err) {
+      const error = err as ErrorResponse;
+      handleAuthFormErrors(error, form);
+    }
+  }
 
   return (
     <AuthCard
