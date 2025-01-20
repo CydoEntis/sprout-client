@@ -7,3 +7,7 @@ export type RegisterRequest = z.infer<typeof registerSchema>;
 export type AuthenticatedResponse = {
   accessToken: string;
 };
+
+export type RefreshTokensResponse = {
+  accessToken: string;
+};

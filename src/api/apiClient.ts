@@ -4,18 +4,23 @@ import { baseUrl } from "./endpoints";
 import { ERROR_TYPES } from "./errors/error.constants";
 import useAuthStore from "../stores/useAuthStore";
 import localStorageService from "../services/localStorage.service";
+import { refreshTokens } from "./services/auth.services";
 
 const apiClient = axios.create({
   baseURL: baseUrl,
   withCredentials: true,
 });
 
-apiClient.interceptors.request.use(
-  (request) => {
-    return request;
-  },
-  (error) => Promise.reject(error)
-);
+apiClient.interceptors.request.use((request) => {
+  const token =
+    useAuthStore.getState().accessToken ||
+    localStorageService.getItem<{ accessToken?: string }>("taskgarden")
+      ?.accessToken;
+  if (token) {
+    request.headers.Authorization = `Bearer ${token}`;
+  }
+  return request;
+});
 
 apiClient.interceptors.response.use(
   (response) => response,
@@ -37,7 +42,9 @@ apiClient.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        await authService.refreshTokens();
+        const { accessToken } = await refreshTokens();
+        useAuthStore.getState().setAccessToken(accessToken);
+
         return apiClient(originalRequest); // Retry the original request
       } catch {
         useAuthStore.getState().logoutUser();
