@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { ErrorResponse } from "../../api/errors/error.types";
-import { ERROR_TYPES } from "../../api/errors/error.constants";
 import { UseFormReturnType } from "@mantine/form"; // Import Mantine's form type
+import { ErrorResponse } from "../api/errors/errror.types";
+import { ERROR_TYPES } from "../api/errors/error.constants";
 
 function useFormErrorHandler<T>() {
   const [error, setError] = useState<string | null>(null);
