@@ -1,6 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import useAuthStore from "../../../stores/useAuthStore";
-import { AuthenticatedResponse, LoginRequest } from "./auth.types";
+import {
+  AuthenticatedResponse,
+  DecodedToken,
+  LoginRequest,
+} from "./auth.types";
 import { loginUser } from "../../../api/services/auth.services";
 import { notifications } from "@mantine/notifications";
 import localStorageService from "../../../services/localStorage.service";
@@ -14,11 +18,7 @@ export function useLogin() {
       return await loginUser(credentials);
     },
     onSuccess: (data) => {
-      const decodedToken = jwtDecode<{
-        userId: string;
-        username: string;
-        email: string;
-      }>(data.accessToken);
+      const decodedToken = jwtDecode<DecodedToken>(data.accessToken);
 
       const taskGarden = {
         isAuthenticated: true,
@@ -29,7 +29,7 @@ export function useLogin() {
 
       useAuthStore.getState().setUser({
         id: decodedToken.userId,
-        username: decodedToken.username,
+        username: decodedToken.sub,
         email: decodedToken.email,
         role: "Admin",
       });

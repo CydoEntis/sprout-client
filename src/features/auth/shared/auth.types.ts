@@ -12,3 +12,10 @@ export type AuthenticatedResponse = {
 export type RefreshTokensResponse = {
   accessToken: string;
 };
+
+export type DecodedToken = {
+  userId: string;
+  sub: string;
+  email: string;
+  role: string;
+}
