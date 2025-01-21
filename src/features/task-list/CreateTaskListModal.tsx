@@ -1,10 +1,21 @@
-import { Modal, Textarea, TextInput, Button, Group } from "@mantine/core";
+import {
+  Modal,
+  Textarea,
+  TextInput,
+  Button,
+  Group,
+  Divider,
+  Text,
+  Flex,
+  ActionIcon,
+  Stack,
+} from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useState } from "react";
 import CreateNewTask from "../tasks/CreateNewTask";
 import { Task } from "../tasks/shared/task.types";
 import { taskListSchema } from "./shared/task-list.schemas";
-
+import { Plus } from "lucide-react";
 
 type CreateTaskListModalProps = {
   isOpened: boolean;
@@ -24,7 +35,7 @@ function CreateTaskListModal({ isOpened, onClose }: CreateTaskListModalProps) {
   });
 
   const handleAddTask = () => {
-    setTasks([...tasks, { description: "", category: "" }]);
+    setTasks([{ description: "", category: "" }, ...tasks]);
   };
 
   const handleTaskChange = (
@@ -52,34 +63,22 @@ function CreateTaskListModal({ isOpened, onClose }: CreateTaskListModalProps) {
   return (
     <Modal opened={isOpened} onClose={onClose} title="Create a new list">
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <TextInput
-          label="Title"
-          placeholder="Enter list title"
-          {...form.getInputProps("title")}
-        />
-        <Textarea
-          label="Description"
-          placeholder="Enter list description"
-          {...form.getInputProps("description")}
-        />
-
-        {tasks.map((task, index) => (
-          <CreateNewTask
-            index={index}
-            key={index}
-            task={task}
-            handleTaskChange={handleTaskChange}
-            handleRemoveTask={handleRemoveTask}
+        <Stack gap={16}>
+          <TextInput
+            label="Title"
+            placeholder="Enter list title"
+            {...form.getInputProps("title")}
           />
-        ))}
+          <Textarea
+            label="Description"
+            placeholder="Enter list description"
+            {...form.getInputProps("description")}
+          />
 
-        <Button mt="md" onClick={handleAddTask}>
-          + Add Task
-        </Button>
-
-        <Group justify="right" mt="md">
-          <Button type="submit">Create List</Button>
-        </Group>
+          <Button type="submit" w="100%" variant="light" color="lime">
+            Create List
+          </Button>
+        </Stack>
       </form>
     </Modal>
   );
