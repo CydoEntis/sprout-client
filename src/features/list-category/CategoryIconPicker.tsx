@@ -14,7 +14,6 @@ function CategoryIconPicker() {
     setSelectedIcon(icon);
   };
 
-  // Filter icons based on search input
   const filteredIcons = categoryIcons.filter((icon) =>
     icon.name.toLowerCase().includes(search.toLowerCase())
   );
