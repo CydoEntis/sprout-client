@@ -1,10 +1,12 @@
-import { Stack, Title } from "@mantine/core";
+import { Box, Center, Paper, Stack, Text, Title } from "@mantine/core";
 import TaskListTabs from "./features/task-list-tabs/TaskListTabs";
 
 import useAuthStore from "./stores/useAuthStore";
 import FarmProgress from "./features/farm/FarmProgress";
 import { useDisclosure } from "@mantine/hooks";
 import CreateTaskListModal from "./features/task-list/CreateTaskListModal";
+import TaskListGrid from "./features/task-list/TaskListGrid";
+import { ShoppingBag } from "lucide-react";
 
 function App() {
   const { user } = useAuthStore();
@@ -23,6 +25,9 @@ function App() {
         <Title>Welcome back, {user!.username}</Title>
         <FarmProgress />
       </Stack>
+      {/* <TaskListGrid>
+
+      </TaskListGrid> */}
       <TaskListTabs onOpenNewList={onOpenNewList} />
     </>
   );
