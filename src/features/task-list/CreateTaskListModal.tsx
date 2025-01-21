@@ -1,18 +1,9 @@
-import {
-  Modal,
-  Textarea,
-  TextInput,
-  Button,
-  Select,
-  Group,
-  ActionIcon,
-  Stack,
-  Flex,
-} from "@mantine/core";
+import { Modal, Textarea, TextInput, Button, Group } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
 import { useState } from "react";
-import { Trash2 } from "lucide-react";
+import CreateNewTask from "../tasks/CreateNewTask";
+import { Task } from "../tasks/shared/task.types";
 
 // Schema for task list validation
 const taskSchema = z.object({
@@ -34,37 +25,32 @@ const taskSchema = z.object({
     .min(1, "At least one task must be added."),
 });
 
-type TaskType = {
-  task: string;
-  category: string;
-};
-
 type CreateTaskListModalProps = {
   isOpened: boolean;
   onClose: () => void;
 };
 
 function CreateTaskListModal({ isOpened, onClose }: CreateTaskListModalProps) {
-  const [tasks, setTasks] = useState<TaskType[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   const form = useForm({
     validate: zodResolver(taskSchema),
     initialValues: {
       title: "",
       description: "",
-      tasks: [] as TaskType[],
+      tasks: [] as Task[],
     },
   });
 
   // Handle adding a new task
   const handleAddTask = () => {
-    setTasks([...tasks, { task: "", category: "" }]);
+    setTasks([...tasks, { description: "", category: "" }]);
   };
 
   // Handle updating task fields
   const handleTaskChange = (
     index: number,
-    field: keyof TaskType,
+    field: keyof Task,
     value: string
   ) => {
     const updatedTasks = [...tasks];
@@ -100,47 +86,14 @@ function CreateTaskListModal({ isOpened, onClose }: CreateTaskListModalProps) {
         />
 
         {/* Tasks Section */}
-        {/* Tasks Section */}
         {tasks.map((task, index) => (
-          <Flex
+          <CreateNewTask
+            index={index}
             key={index}
-            mt="sm"
-            w="100%"
-            gap="sm"
-            align="flex-start"
-            direction={{ base: "column", sm: "row" }} // Stacks on small screens, row on larger
-            wrap="wrap"
-          >
-            <TextInput
-              w={{ base: "100%", sm: "50%" }} // Full width on mobile, half on larger screens
-              placeholder="Task name"
-              value={task.task}
-              onChange={(e) => handleTaskChange(index, "task", e.target.value)}
-            />
-            <Flex
-              w={{ base: "100%", sm: "45%" }} // Full width on mobile, shrinks on desktop
-              align="center"
-              gap="sm"
-            >
-              <Select
-                placeholder="Select category"
-                data={["Work", "Personal", "Urgent"]}
-                value={task.category}
-                onChange={(value) =>
-                  handleTaskChange(index, "category", value || "")
-                }
-                w="100%"
-              />
-              <ActionIcon
-                variant="light"
-                color="red"
-                size="lg"
-                onClick={() => handleRemoveTask(index)}
-              >
-                <Trash2 size={16} />
-              </ActionIcon>
-            </Flex>
-          </Flex>
+            task={task}
+            handleTaskChange={handleTaskChange}
+            handleRemoveTask={handleRemoveTask}
+          />
         ))}
 
         <Button mt="md" onClick={handleAddTask}>
