@@ -11,14 +11,14 @@ export function useCreateQuest() {
     ): Promise<NewCategoryResponse> => {
       return await createCategory(newCategory);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       //   queryClient.invalidateQueries({
       //     queryKey: ["quests", "list"],
       //   });
 
       notifications.show({
         title: "Success",
-        message: "Quest Created Successfully!",
+        message: data.message,
         color: "green",
         position: "top-right",
       });
