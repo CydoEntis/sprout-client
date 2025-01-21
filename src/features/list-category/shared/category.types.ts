@@ -6,7 +6,7 @@ export type NewCategoryRequest = z.infer<typeof newCategorySchema>;
 
 export type CategoryIcon = {
   id: number;
-  tag: string;
+  tag: ValidCategoryTags;
   icon: React.ReactNode;
 };
 
@@ -14,4 +14,4 @@ export type NewCategoryResponse = {
   message: string;
 };
 
-export type ValidCategoryTags = typeof validCategoryTags[number];
+export type ValidCategoryTags = (typeof validCategoryTags)[number];

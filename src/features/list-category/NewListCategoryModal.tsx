@@ -1,15 +1,13 @@
-import {
-  Box,
-  Button,
-  Modal,
-  ScrollArea,
-  Stack,
-  Textarea,
-  TextInput,
-} from "@mantine/core";
+import { Button, Modal, Stack, TextInput } from "@mantine/core";
 import CategoryIconPicker from "./CategoryIconPicker";
 import { useForm, zodResolver } from "@mantine/form";
-import { listCategorySchema } from "./shared/category.schemas";
+import { newCategorySchema } from "./shared/category.schemas";
+import { CategoryIcon, NewCategoryRequest } from "./shared/category.types";
+import { useCreateCategory } from "./shared/queries.mutations";
+import { ErrorResponse } from "../../api/errors/errror.types";
+import useFormErrorHandler from "../../hooks/useFormErrorHandler";
+import { useState } from "react";
+import { categoryIcons } from "./shared/category.constants";
 
 type NewListCategoryModal = {
   isNewCategoryOpened: boolean;
@@ -20,19 +18,54 @@ function NewListCategoryModal({
   isNewCategoryOpened,
   onCloseNewCategory,
 }: NewListCategoryModal) {
-  const form = useForm({
-    validate: zodResolver(listCategorySchema),
+  const createCategory = useCreateCategory();
+  const { handleFormErrors } = useFormErrorHandler<NewCategoryRequest>();
+  const [selectedIcon, setSelectedIcon] = useState<CategoryIcon>(
+    categoryIcons[0]
+  );
+
+  const form = useForm<NewCategoryRequest>({
+    validate: zodResolver(newCategorySchema),
+    initialValues: {
+      name: "",
+      tag: categoryIcons[0].tag,
+    }
   });
 
-  const handleSubmit = (values: typeof form.values) => {
-    console.log("Form submitted with values:", values);
+
+  console.log(form.errors);
+
+  const handleSubmit = async (newCategory: NewCategoryRequest) => {
+    console.log("Form submitted with data:", newCategory);
+    console.log("Form errors:", form.errors);
+    try {
+      await createCategory.mutateAsync(newCategory);
+      form.reset();
+      onCloseNewCategory();
+    } catch (e) {
+      const error = e as ErrorResponse;
+      handleFormErrors(error, form);
+    }
+  };
+
+  const handleClose = () => {
+    form.reset();
     onCloseNewCategory();
+  };
+
+  // Function to handle category icon selection
+  const handleIconSelect = (icon: CategoryIcon) => {
+    setSelectedIcon(icon);
+    form.setValues({
+      ...form.values,
+      tag: icon.tag,
+    });
   };
 
   return (
     <Modal
       opened={isNewCategoryOpened}
-      onClose={onCloseNewCategory}
+      onClose={handleClose}
       title="Add a new category"
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -40,9 +73,12 @@ function NewListCategoryModal({
           <TextInput
             label="Category Name"
             placeholder="Enter a category name"
-            {...form.getInputProps("category")}
+            {...form.getInputProps("name")}
           />
-          <CategoryIconPicker />
+          <CategoryIconPicker
+            selectedIcon={selectedIcon}
+            handleIconClick={handleIconSelect}
+          />
           <Button type="submit" w="100%" variant="light" color="lime">
             Create List
           </Button>

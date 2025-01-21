@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { NewCategoryRequest, NewCategoryResponse } from "./category.types";
 import { createCategory } from "../../../api/services/category.services";
 
-export function useCreateQuest() {
+export function useCreateCategory() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (
