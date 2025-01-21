@@ -17,6 +17,7 @@ import { useDisclosure } from "@mantine/hooks";
 import CreateTaskListModal from "./features/task-list/CreateTaskListModal";
 import TaskListGrid from "./features/task-list/TaskListGrid";
 import { Plus, ShoppingBag } from "lucide-react";
+import NewListCategoryModal from "./features/list-category/NewListCategoryModal";
 
 function App() {
   const { user } = useAuthStore();
@@ -31,13 +32,10 @@ function App() {
 
   return (
     <>
-      <Modal
-        opened={isNewCategoryOpened}
-        onClose={onCloseNewCategory}
-        title="Add a new category"
-      >
-
-      </Modal>
+      <NewListCategoryModal
+        isNewCategoryOpened={isNewCategoryOpened}
+        onCloseNewCategory={onCloseNewCategory}
+      />
 
       <CreateTaskListModal
         onClose={onCloseNewList}
