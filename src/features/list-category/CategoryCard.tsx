@@ -2,17 +2,13 @@ import { Box, Paper, Title, Text } from "@mantine/core";
 import { ReactNode } from "react";
 import React from "react";
 
-type TaskListCategoryCardProps = {
+type CategoryCard = {
   title: string;
   icon: ReactNode;
   unfinishedLists: number;
 };
 
-function TaskListCategoryCard({
-  title,
-  icon,
-  unfinishedLists,
-}: TaskListCategoryCardProps) {
+function TaskListCategoryCard({ title, icon, unfinishedLists }: CategoryCard) {
   return (
     <Paper
       h={130}
