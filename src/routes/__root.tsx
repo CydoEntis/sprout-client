@@ -6,6 +6,7 @@ import Layout from "../components/layout/Layout";
 import { jwtDecode } from "jwt-decode";
 import useAuthStore from "../stores/useAuthStore";
 import { DecodedToken } from "../features/auth/shared/auth.types";
+import { Notifications } from "@mantine/notifications";
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -37,6 +38,7 @@ function RootComponent() {
   return (
     <React.Fragment>
       <MantineProvider theme={theme}>
+        <Notifications />
         <Layout />
       </MantineProvider>
     </React.Fragment>
