@@ -1,8 +1,8 @@
 import { Tabs, Group, Button, Flex } from "@mantine/core";
 import { ClipboardCheck, ClipboardList, Plus } from "lucide-react";
 
-import InProgressTaskList from "../TaskList/InProgressTaskList";
-import CompletedTaskList from "../TaskList/CompletedTaskList";
+import InProgressTaskList from "../task-list/InProgressTaskList";
+import CompletedTaskList from "../task-list/CompletedTaskList";
 
 function TaskListTabs() {
   return (
