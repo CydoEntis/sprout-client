@@ -4,7 +4,11 @@ import { ClipboardCheck, ClipboardList, Plus } from "lucide-react";
 import InProgressTaskList from "../task-list/InProgressTaskList";
 import CompletedTaskList from "../task-list/CompletedTaskList";
 
-function TaskListTabs() {
+type TaskListTabsProps = {
+  onOpenNewList: () => void;
+};
+
+function TaskListTabs({onOpenNewList}: TaskListTabsProps) {
   return (
     <Tabs defaultValue="progress" color="lime">
       <Tabs.List mb={12}>
@@ -28,6 +32,7 @@ function TaskListTabs() {
             color="lime"
             leftSection={<Plus size={20} />}
             mb={8}
+            onClick={onOpenNewList}
           >
             New List
           </Button>
