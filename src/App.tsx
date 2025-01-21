@@ -1,12 +1,7 @@
 import {
-  Box,
   Button,
-  Center,
   Group,
-  Modal,
-  Paper,
   Stack,
-  Text,
   Title,
 } from "@mantine/core";
 import TaskListTabs from "./features/task-list-tabs/TaskListTabs";
@@ -15,8 +10,7 @@ import useAuthStore from "./stores/useAuthStore";
 import FarmProgress from "./features/farm/FarmProgress";
 import { useDisclosure } from "@mantine/hooks";
 import CreateTaskListModal from "./features/task-list/CreateTaskListModal";
-import TaskListGrid from "./features/task-list/TaskListGrid";
-import { Plus, ShoppingBag } from "lucide-react";
+import { Plus,  } from "lucide-react";
 import NewListCategoryModal from "./features/list-category/NewListCategoryModal";
 
 function App() {
