@@ -14,8 +14,10 @@ import { useForm, zodResolver } from "@mantine/form";
 import { useState } from "react";
 import CreateNewTask from "../tasks/CreateNewTask";
 import { Task } from "../tasks/shared/task.types";
-import { taskListSchema } from "./shared/task-list.schemas";
+import { newTaskListSchema, taskListSchema } from "./shared/task-list.schemas";
 import { Plus } from "lucide-react";
+import { TaskList } from "../types/task.types";
+import { NewTaskList, NewTaskListRequest } from "./shared/task-list.types";
 
 type CreateTaskListModalProps = {
   isOpened: boolean;
@@ -23,20 +25,17 @@ type CreateTaskListModalProps = {
 };
 
 function CreateTaskListModal({ isOpened, onClose }: CreateTaskListModalProps) {
-  const [tasks, setTasks] = useState<Task[]>([]);
 
   const form = useForm({
-    validate: zodResolver(taskListSchema),
+    validate: zodResolver(newTaskListSchema),
     initialValues: {
       title: "",
       description: "",
-      tasks: [] as Task[],
     },
   });
 
 
-  const handleSubmit = (values: typeof form.values) => {
-    console.log("Form submitted with values:", values);
+  const handleSubmit = (newTaskList: NewTaskListRequest) => {
     onClose();
   };
 
