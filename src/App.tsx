@@ -8,7 +8,7 @@ import CreateTaskListModal from "./features/task-list/CreateTaskListModal";
 import { Plus } from "lucide-react";
 import NewListCategoryModal from "./features/list-category/NewListCategoryModal";
 import { useGetAllCategories } from "./features/list-category/shared/category.queries";
-import TaskListCategoryCard from "./features/list-category/CategoryCard";
+import CategoryCard from "./features/list-category/CategoryCard";
 import TaskListGrid from "./features/task-list/TaskListGrid";
 
 function App() {
@@ -53,7 +53,7 @@ function App() {
 
       <TaskListGrid>
         {categories?.map((category) => (
-          <TaskListCategoryCard category={category} />
+          <CategoryCard category={category} />
         ))}
       </TaskListGrid>
       {/* <TaskListTabs onOpenNewList={onOpenNewList} /> */}

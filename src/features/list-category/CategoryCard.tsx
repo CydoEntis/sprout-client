@@ -11,10 +11,11 @@ type CategoryCard = {
   category: CategoryResponse;
 };
 
-function TaskListCategoryCard({ category }: CategoryCard) {
+function CategoryCard({ category }: CategoryCard) {
   const foundCategory = categoryIcons.find((c) => c.tag === category.tag);
 
   return (
+    // TODO: Add Hover effect to card.
     <Paper
       h={130}
       shadow="md"
@@ -45,4 +46,4 @@ function TaskListCategoryCard({ category }: CategoryCard) {
   );
 }
 
-export default TaskListCategoryCard;
+export default CategoryCard;
