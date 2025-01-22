@@ -14,8 +14,7 @@ import TaskListGrid from "./features/task-list/TaskListGrid";
 function App() {
   const { user } = useAuthStore();
   const { data: categories, isPending } = useGetAllCategories();
-  const [isNewTaskListOpened, { open: onOpenNewList, close: onCloseNewList }] =
-    useDisclosure(false);
+
   const [
     isNewCategoryOpened,
     { open: onOpenNewCategory, close: onCloseNewCategory },
@@ -32,10 +31,7 @@ function App() {
         onCloseNewCategory={onCloseNewCategory}
       />
 
-      <CreateTaskListModal
-        onClose={onCloseNewList}
-        isOpened={isNewTaskListOpened}
-      />
+ 
       <Stack gap={4} pb={32}>
         <Title>Welcome back, {user!.username}</Title>
         <FarmProgress />

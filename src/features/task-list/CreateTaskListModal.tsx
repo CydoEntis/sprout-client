@@ -34,26 +34,6 @@ function CreateTaskListModal({ isOpened, onClose }: CreateTaskListModalProps) {
     },
   });
 
-  const handleAddTask = () => {
-    setTasks([{ description: "", category: "" }, ...tasks]);
-  };
-
-  const handleTaskChange = (
-    index: number,
-    field: keyof Task,
-    value: string
-  ) => {
-    const updatedTasks = [...tasks];
-    updatedTasks[index][field] = value;
-    setTasks(updatedTasks);
-    form.setFieldValue("tasks", updatedTasks);
-  };
-
-  const handleRemoveTask = (index: number) => {
-    const updatedTasks = tasks.filter((_, i) => i !== index);
-    setTasks(updatedTasks);
-    form.setFieldValue("tasks", updatedTasks);
-  };
 
   const handleSubmit = (values: typeof form.values) => {
     console.log("Form submitted with values:", values);
