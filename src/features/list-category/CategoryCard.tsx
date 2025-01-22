@@ -1,14 +1,19 @@
 import { Box, Paper, Title, Text } from "@mantine/core";
-import { ReactNode } from "react";
+import { ReactElement } from "react";
 import React from "react";
+import { CategoryResponse } from "./shared/category.types";
+import { categoryIcons } from "./shared/category.constants";
 
 type CategoryCard = {
-  title: string;
-  icon: ReactNode;
-  unfinishedLists: number;
+  // title: string;
+  // icon: ReactNode;
+  // unfinishedLists: number;
+  category: CategoryResponse;
 };
 
-function TaskListCategoryCard({ title, icon, unfinishedLists }: CategoryCard) {
+function TaskListCategoryCard({ category }: CategoryCard) {
+  const foundCategory = categoryIcons.find((c) => c.tag === category.tag);
+
   return (
     <Paper
       h={130}
@@ -27,13 +32,14 @@ function TaskListCategoryCard({ title, icon, unfinishedLists }: CategoryCard) {
           transform: "rotate(-45deg)",
         }}
       >
-        {React.cloneElement(icon as React.ReactElement, { size: 120 })}
+        {foundCategory &&
+          React.cloneElement(foundCategory.icon as ReactElement, { size: 120 })}
       </Box>
       <Box>
-        <Title size="1.75rem">{title}</Title>
-        <Text size="sm" c="dimmed">
+        <Title size="1.75rem">{category.name}</Title>
+        {/* <Text size="sm" c="dimmed">
           {unfinishedLists} unfinished lists
-        </Text>
+        </Text> */}
       </Box>
     </Paper>
   );
