@@ -1,23 +1,8 @@
-import {
-  Modal,
-  Textarea,
-  TextInput,
-  Button,
-  Group,
-  Divider,
-  Text,
-  Flex,
-  ActionIcon,
-  Stack,
-} from "@mantine/core";
+import { Modal, Textarea, TextInput, Button, Stack } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
-import { useState } from "react";
-import CreateNewTask from "../tasks/CreateNewTask";
-import { Task } from "../tasks/shared/task.types";
-import { newTaskListSchema, taskListSchema } from "./shared/task-list.schemas";
-import { Plus } from "lucide-react";
-import { TaskList } from "../types/task.types";
-import { NewTaskList, NewTaskListRequest } from "./shared/task-list.types";
+
+import { newTaskListSchema } from "./shared/task-list.schemas";
+import { NewTaskListRequest } from "./shared/task-list.types";
 
 type CreateTaskListModalProps = {
   isOpened: boolean;
@@ -25,7 +10,6 @@ type CreateTaskListModalProps = {
 };
 
 function CreateTaskListModal({ isOpened, onClose }: CreateTaskListModalProps) {
-
   const form = useForm({
     validate: zodResolver(newTaskListSchema),
     initialValues: {
@@ -33,7 +17,6 @@ function CreateTaskListModal({ isOpened, onClose }: CreateTaskListModalProps) {
       description: "",
     },
   });
-
 
   const handleSubmit = (newTaskList: NewTaskListRequest) => {
     onClose();
