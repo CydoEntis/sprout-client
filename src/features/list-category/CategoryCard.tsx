@@ -17,6 +17,7 @@ function CategoryCard({ category }: CategoryCard) {
   return (
     // TODO: Add Hover effect to card.
     <Paper
+      className="card"
       h={130}
       shadow="md"
       p="xl"
