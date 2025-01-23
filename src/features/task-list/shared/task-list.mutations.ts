@@ -1,20 +1,20 @@
-import { notifications } from "@mantine/notifications";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { NewCategoryRequest, NewCategoryResponse } from "./category.types";
-import { createCategory } from "../../../api/services/category.services";
+import { NewTaskListRequest, NewTaskListResponse } from "./task-list.types";
+import { createTaskList } from "../../../api/services/task-list.services";
+import { notifications } from "@mantine/notifications";
 
-export function useCreateCategory() {
+export function useCreateTaskList() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (
-      newCategory: NewCategoryRequest
-    ): Promise<NewCategoryResponse> => {
-      return await createCategory(newCategory);
+      newCategory: NewTaskListRequest
+    ): Promise<NewTaskListResponse> => {
+      return await createTaskList(newCategory);
     },
     onSuccess: (data) => {
-        queryClient.invalidateQueries({
-          queryKey: ["categories", "list"],
-        });
+      queryClient.invalidateQueries({
+        queryKey: ["tasks", "list"],
+      });
 
       notifications.show({
         title: "Success",

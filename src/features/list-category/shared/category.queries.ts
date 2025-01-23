@@ -3,7 +3,7 @@ import { getAllCategories } from "../../../api/services/category.services";
 
 export const useGetAllCategories = () => {
   return useQuery({
-    queryKey: ["categories"],
+    queryKey: ["categories", "list"],
     queryFn: () => getAllCategories(),
   });
 };
