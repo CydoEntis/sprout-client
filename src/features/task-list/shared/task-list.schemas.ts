@@ -9,4 +9,5 @@ export const newTaskListSchema = z.object({
     .string()
     .min(5, "Description must be at least 5 characters long.")
     .max(100, "Description must be at most 100 characters long."),
+  category: z.string(),
 });
