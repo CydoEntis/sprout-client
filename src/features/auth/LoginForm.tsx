@@ -17,6 +17,8 @@ import { loginSchema } from "./shared/auth.schemas";
 import useFormErrorHandler from "../../hooks/useFormErrorHandler";
 import { ErrorResponse } from "../../api/errors/errror.types";
 import { useLogin } from "./shared/auth.api";
+const demoEmail = import.meta.env.VITE_DEMO_EMAIL;
+const demoPassword = import.meta.env.VITE_DEMO_PASSWORD;
 
 function LoginForm() {
   const login = useLogin();
@@ -44,6 +46,23 @@ function LoginForm() {
     }
   }
 
+  async function handleDemoUserLogin() {
+    const demoCredentials = {
+      email: demoEmail,
+      password: demoPassword,
+    };
+
+    try {
+      await login.mutateAsync(demoCredentials);
+
+      form.reset();
+      navigate({ to: "/" });
+    } catch (err) {
+      const error = err as ErrorResponse;
+      handleAuthFormErrors(error, form);
+    }
+  }
+
   return (
     <AuthCard
       title="Welcome Back!"
@@ -55,10 +74,23 @@ function LoginForm() {
         <Stack my={8}>
           <Divider label="Login with Demo Accounts" />
           <Flex gap={4} w="100%">
-            <Button w="100%" radius="xl" variant="light" color="lime">
+            <Button
+              type="button"
+              w="100%"
+              radius="xl"
+              variant="light"
+              color="lime"
+              onClick={handleDemoUserLogin}
+            >
               User Account
             </Button>
-            <Button w="100%" radius="xl" variant="light" color="lime">
+            <Button
+              type="button"
+              w="100%"
+              radius="xl"
+              variant="light"
+              color="lime"
+            >
               Admin Account
             </Button>
           </Flex>

@@ -3,6 +3,7 @@ import { useForm, zodResolver } from "@mantine/form";
 
 import { newTaskListSchema } from "./shared/task-list.schemas";
 import { NewTaskListRequest } from "./shared/task-list.types";
+import { useParams } from "@tanstack/react-router";
 
 type CreateTaskListModalProps = {
   isOpened: boolean;
@@ -10,6 +11,8 @@ type CreateTaskListModalProps = {
 };
 
 function CreateTaskListModal({ isOpened, onClose }: CreateTaskListModalProps) {
+  const { categoryName } = useParams({ from: "/category/$categoryName" });
+
   const form = useForm({
     validate: zodResolver(newTaskListSchema),
     initialValues: {
@@ -19,6 +22,10 @@ function CreateTaskListModal({ isOpened, onClose }: CreateTaskListModalProps) {
   });
 
   const handleSubmit = (newTaskList: NewTaskListRequest) => {
+    const newTaskListPayload = {
+      ...newTaskList,
+      category: categoryName,
+    }
     onClose();
   };
 
