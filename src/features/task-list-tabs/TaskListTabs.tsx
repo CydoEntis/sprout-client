@@ -1,14 +1,16 @@
-import { Tabs, Group, Button, Flex } from "@mantine/core";
+import { Tabs, Group, Button, Flex, Text } from "@mantine/core";
 import { ClipboardCheck, ClipboardList, Plus } from "lucide-react";
 
 import InProgressTaskList from "../task-list/InProgressTaskList";
 import CompletedTaskList from "../task-list/CompletedTaskList";
+import { TaskListResponse } from "../task-list/shared/task-list.types";
 
 type TaskListTabsProps = {
   onOpenNewList: () => void;
+  taskLists: TaskListResponse[];
 };
 
-function TaskListTabs({onOpenNewList}: TaskListTabsProps) {
+function TaskListTabs({ onOpenNewList, taskLists }: TaskListTabsProps) {
   return (
     <Tabs defaultValue="progress" color="lime">
       <Tabs.List mb={12}>
@@ -40,7 +42,14 @@ function TaskListTabs({onOpenNewList}: TaskListTabsProps) {
       </Tabs.List>
 
       <Tabs.Panel value="progress">
-        <InProgressTaskList />
+        {taskLists.map((taskList) => (
+          <>
+            <Text>{taskList.id}</Text>
+            <Text>{taskList.name}</Text>
+            <Text>{taskList.description}</Text>
+            <Text>{taskList.category}</Text>
+          </>
+        ))}
       </Tabs.Panel>
 
       <Tabs.Panel value="completed">
