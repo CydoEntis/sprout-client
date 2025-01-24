@@ -19,6 +19,7 @@ export type CategoryResponse = {
   id: number;
   categoryName: string;
   categoryTag: ValidCategoryTags;
+  taskListCount: number;
 };
 
 export type ValidCategoryTags = (typeof validCategoryTags)[number];

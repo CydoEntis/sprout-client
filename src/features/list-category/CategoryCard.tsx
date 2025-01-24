@@ -13,6 +13,7 @@ type CategoryCard = {
 };
 
 function CategoryCard({ category }: CategoryCard) {
+
   const foundCategory = categoryIcons.find(
     (c) => c.tag === category.categoryTag
   );

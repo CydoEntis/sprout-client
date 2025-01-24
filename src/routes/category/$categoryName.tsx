@@ -1,27 +1,32 @@
-import { createFileRoute, useLoaderData } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  useLoaderData,
+  useParams,
+} from "@tanstack/react-router";
 import { useDisclosure } from "@mantine/hooks";
 import TaskListTabs from "../../features/task-list-tabs/TaskListTabs";
 import CreateTaskListModal from "../../features/task-list/CreateTaskListModal";
 import { getAllTaskListsByCategory } from "../../api/services/task-list.services";
-import { Loader, Alert, Skeleton } from "@mantine/core";
+import { Skeleton } from "@mantine/core";
 import TaskListGrid from "../../features/task-list/TaskListGrid";
+import useLoadingManagerStore from "../../stores/useLoadingManagerStore";
+import { Suspense } from "react";
 
 // Define the route with a loader function
 export const Route = createFileRoute("/category/$categoryName")({
+  beforeLoad: async () => <Loading />,
   loader: async ({ params }) => {
     const categoryName = params.categoryName;
+
     return await getAllTaskListsByCategory(categoryName);
   },
   component: () => (
-    <TaskListGrid>
-      <Skeleton h={235}/>
-      <Skeleton h={235}/>
-      <Skeleton h={235}/>
-    </TaskListGrid>
+    <Suspense fallback={<Loading />}>
+      <TaskListPage />
+    </Suspense>
   ),
 });
 
-// The component that receives the data via useLoaderData
 function TaskListPage() {
   const taskLists = useLoaderData({
     from: "/category/$categoryName",
@@ -36,6 +41,7 @@ function TaskListPage() {
         onClose={onCloseNewList}
         isOpened={isNewTaskListOpened}
       />
+      {!taskLists && <Loading />}
       {taskLists && taskLists.length > 0 ? (
         <TaskListTabs onOpenNewList={onOpenNewList} taskLists={taskLists} />
       ) : (
@@ -44,3 +50,20 @@ function TaskListPage() {
     </>
   );
 }
+
+function Loading() {
+  const { categoryName } = useParams({ from: "/category/$categoryName" });
+  const { skeletonCounts } = useLoadingManagerStore();
+
+  const numOfSkeletons = skeletonCounts[categoryName] || 0;
+
+  return (
+    <TaskListGrid>
+      {[...Array(numOfSkeletons)].map((_, index) => (
+        <Skeleton key={index} height={235} />
+      ))}
+    </TaskListGrid>
+  );
+}
+
+export default Loading;
