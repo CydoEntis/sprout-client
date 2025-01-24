@@ -11,7 +11,11 @@ type TaskListCardProps = {
 function TaskListCard({ borderPos, color, children }: TaskListCardProps) {
   if (borderPos == "left") {
     return (
-      <CustomLink to={"/$taskListId"} params={{ taskListId: "123" }}>
+      <CustomLink
+        to={"/$taskListId"}
+        params={{ taskListId: "123" }}
+        className="card"
+      >
         <Card p={0} shadow="md" bg="secondary">
           <Flex>
             <Box bg={color} w={8} h="100%" />
@@ -25,7 +29,11 @@ function TaskListCard({ borderPos, color, children }: TaskListCardProps) {
   }
 
   return (
-    <CustomLink to={"/$taskListId"} params={{ taskListId: "123" }}>
+    <CustomLink
+      to={"/$taskListId"}
+      params={{ taskListId: "123" }}
+      className="card"
+    >
       <Card p={0} shadow="md" bg="secondary">
         <Box p={16}>{children}</Box>
         <Box bg={color} h={8}></Box>
