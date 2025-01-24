@@ -13,13 +13,15 @@ type CategoryCard = {
 };
 
 function CategoryCard({ category }: CategoryCard) {
-  const foundCategory = categoryIcons.find((c) => c.tag === category.tag);
+  const foundCategory = categoryIcons.find(
+    (c) => c.tag === category.categoryTag
+  );
 
   return (
     <CustomLink
       c="inverse"
       to={"/category/$categoryName"}
-      params={{ categoryName: category.name.toLowerCase() }}
+      params={{ categoryName: category.categoryName.toLowerCase() }}
     >
       <Paper
         className="card"
@@ -45,7 +47,7 @@ function CategoryCard({ category }: CategoryCard) {
             })}
         </Box>
         <Box>
-          <Title size="1.75rem">{category.name}</Title>
+          <Title size="1.75rem">{category.categoryName}</Title>
           {/* <Text size="sm" c="dimmed">
           {unfinishedLists} unfinished lists
         </Text> */}

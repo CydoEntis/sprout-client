@@ -59,12 +59,23 @@ function InProgressTaskListCard({ taskList }: TaskListCardProps) {
               Progress:
             </Text>
             <Group gap={4}>
-              <RingProgress
-                size={25}
-                thickness={3}
-                sections={[{ value: 78, color: "lime" }]}
-              />
-              <Text size="sm">78%</Text>
+              {taskList.totalTasksCount > 0 ? (
+                <>
+                  <RingProgress
+                    size={25}
+                    thickness={3}
+                    sections={[
+                      {
+                        value: taskList.taskCompletionPercentage,
+                        color: "lime",
+                      },
+                    ]}
+                  />
+                  <Text size="sm">{taskList.taskCompletionPercentage}%</Text>
+                </>
+              ) : (
+                <Text size="xs">No Tasks</Text>
+              )}
             </Group>
           </Stack>
         </Group>

@@ -16,6 +16,9 @@ export type TaskListResponse = {
   createdAt: Date;
   updatedAt: Date;
   members: MemberResponse[];
+  totalTasksCount: number;
+  completedTasksCount: number;
+  taskCompletionPercentage: number;
 };
 
 export type MemberResponse = {

@@ -17,8 +17,8 @@ export type NewCategoryResponse = {
 
 export type CategoryResponse = {
   id: number;
-  name: string;
-  tag: ValidCategoryTags;
+  categoryName: string;
+  categoryTag: ValidCategoryTags;
 };
 
 export type ValidCategoryTags = (typeof validCategoryTags)[number];
