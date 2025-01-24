@@ -20,6 +20,5 @@ export type TaskListResponse = {
 
 export type MemberResponse = {
   userId: string;
-  firstName: string;
-  lastName: string;
+  name: string;
 };

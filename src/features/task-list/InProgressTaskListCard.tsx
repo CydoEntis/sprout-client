@@ -10,12 +10,17 @@ import {
 } from "@mantine/core";
 import { Calendar } from "lucide-react";
 import TaskListCard from "./TaskListCard";
+import { TaskListResponse } from "./shared/task-list.types";
 
-function InProgressTaskListCard() {
+type TaskListCardProps = {
+  taskList: TaskListResponse;
+};
+
+function InProgressTaskListCard({ taskList }: TaskListCardProps) {
   return (
     <TaskListCard borderPos="bottom" color="lime">
       <Stack gap={8} pb={20}>
-        <Title size="lg">Design UI ToDo App</Title>
+        <Title size="lg">{taskList.name}</Title>
         <Group gap={4} align="center">
           <Calendar size={12} />
           <Text size="xs" c="dimmed">
@@ -28,10 +33,7 @@ function InProgressTaskListCard() {
         <Text c="dimmed" size="sm">
           Description:
         </Text>
-        <Text size="sm">
-          Design a simple home page with clean layout and color based on the
-          guidlines
-        </Text>
+        <Text size="sm">{taskList.description}</Text>
       </Stack>
       <Flex w="100%" justify="space-between">
         <Group>
@@ -40,10 +42,14 @@ function InProgressTaskListCard() {
               Members:
             </Text>
             <Avatar.Group>
-              <Avatar size="sm" src="image.png" />
-              <Avatar size="sm" src="image.png" />
-              <Avatar size="sm" src="image.png" />
-              <Avatar size="sm">+5</Avatar>
+              {taskList.members.map((member) => (
+                <Avatar
+                  key={member.userId}
+                  size="sm"
+                  name={member.name}
+                  color="initials"
+                />
+              ))}
             </Avatar.Group>
           </Stack>
         </Group>

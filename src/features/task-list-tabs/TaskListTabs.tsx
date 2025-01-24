@@ -4,6 +4,7 @@ import { ClipboardCheck, ClipboardList, Plus } from "lucide-react";
 import InProgressTaskList from "../task-list/InProgressTaskList";
 import CompletedTaskList from "../task-list/CompletedTaskList";
 import { TaskListResponse } from "../task-list/shared/task-list.types";
+import InProgressTaskListCard from "../task-list/InProgressTaskListCard";
 
 type TaskListTabsProps = {
   onOpenNewList: () => void;
@@ -43,12 +44,7 @@ function TaskListTabs({ onOpenNewList, taskLists }: TaskListTabsProps) {
 
       <Tabs.Panel value="progress">
         {taskLists.map((taskList) => (
-          <>
-            <Text>{taskList.id}</Text>
-            <Text>{taskList.name}</Text>
-            <Text>{taskList.description}</Text>
-            <Text>{taskList.category}</Text>
-          </>
+          <InProgressTaskListCard key={taskList.id} taskList={taskList} />
         ))}
       </Tabs.Panel>
 
