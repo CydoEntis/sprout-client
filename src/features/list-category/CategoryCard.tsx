@@ -4,6 +4,7 @@ import React from "react";
 import { CategoryResponse } from "./shared/category.types";
 import { categoryIcons } from "./shared/category.constants";
 import { CustomLink } from "../../components/CustomLink";
+import UpdateAndDeleteMenu from "../../components/menus/UpdateAndDeleteMenu";
 
 type CategoryCard = {
   category: CategoryResponse;
@@ -30,6 +31,10 @@ function CategoryCard({ category }: CategoryCard) {
         pos="relative"
         bg="card"
       >
+        <UpdateAndDeleteMenu
+          onUpdate={() => console.log("updating")}
+          onDelete={() => console.log("deleting")}
+        />
         <Box
           style={{
             position: "absolute",

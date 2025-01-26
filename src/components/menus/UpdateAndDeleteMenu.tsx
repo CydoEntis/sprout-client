@@ -29,8 +29,12 @@ function UpdateAndDeleteMenu({ onUpdate, onDelete }: UpdateAndDeleteMenuProps) {
             right: "2%",
             top: "5%",
           }}
-          variant="light"
-          color="lime"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+          variant="subtle"
+          color="inverse"
         >
           <Settings size={16} />
         </ActionIcon>
