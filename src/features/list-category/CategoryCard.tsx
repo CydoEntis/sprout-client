@@ -1,10 +1,10 @@
-import { Box, Paper, Title, Text, ActionIcon } from "@mantine/core";
+import { Box, Paper, Title, Text, ActionIcon, Menu } from "@mantine/core";
 import { ReactElement } from "react";
 import React from "react";
 import { CategoryResponse } from "./shared/category.types";
 import { categoryIcons } from "./shared/category.constants";
 import { CustomLink } from "../../components/CustomLink";
-import { MoreVertical } from "lucide-react";
+import { Edit2, MoreVertical, Trash2 } from "lucide-react";
 
 type CategoryCard = {
   // title: string;
@@ -34,23 +34,8 @@ function CategoryCard({ category }: CategoryCard) {
         pos="relative"
         bg="card"
       >
-        <ActionIcon
-          style={{
-            zIndex: 100,
-            position: "absolute",
-            right: "2%",
-            top: "5%",
-          }}
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log("Action icon clicked");
-          }}
-          variant="light"
-          color="lime"
-        >
-          <MoreVertical size={16} />
-        </ActionIcon>
+
+
         <Box
           style={{
             position: "absolute",
