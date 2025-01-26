@@ -1,15 +1,11 @@
-import { Box, Paper, Title, Text, ActionIcon, Menu } from "@mantine/core";
+import { Box, Paper, Title, Text } from "@mantine/core";
 import { ReactElement } from "react";
 import React from "react";
 import { CategoryResponse } from "./shared/category.types";
 import { categoryIcons } from "./shared/category.constants";
 import { CustomLink } from "../../components/CustomLink";
-import { Edit2, MoreVertical, Trash2 } from "lucide-react";
 
 type CategoryCard = {
-  // title: string;
-  // icon: ReactNode;
-  // unfinishedLists: number;
   category: CategoryResponse;
 };
 
@@ -34,8 +30,6 @@ function CategoryCard({ category }: CategoryCard) {
         pos="relative"
         bg="card"
       >
-
-
         <Box
           style={{
             position: "absolute",
