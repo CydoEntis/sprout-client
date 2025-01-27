@@ -1,13 +1,29 @@
 import { Anchor, Box, Container, Flex, Group, Title } from "@mantine/core";
 import React from "react";
 import ThemeToggle from "../theme/ThemeToggle";
-import { Outlet, useLocation } from "@tanstack/react-router"; // <-- useLocation here
+import { Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import useAuthStore from "../../stores/useAuthStore";
 import { CustomLink } from "../CustomLink";
+import { logoutUser } from "../../api/services/auth.services";
+import LocalStorageService from "../../services/localStorage.service";
 
 function Layout() {
-  const { user } = useAuthStore();
-  const location = useLocation(); // Get current location (URL path)
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logoutUser);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const logoutHandler = async () => {
+    console.log("Logging out...");
+    try {
+      await logoutUser();
+      logout(); // Update Zustand store state
+      LocalStorageService.removeItem("taskgarden");
+      navigate({ to: "/login" });
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   return (
     <Box bg="primary" mih="100vh">
@@ -21,7 +37,6 @@ function Layout() {
                 <CustomLink
                   to="/"
                   c="inverse"
-                  href="/tasks"
                   style={{
                     fontWeight:
                       location.pathname === "/tasks" ? "bold" : "normal",
@@ -33,25 +48,22 @@ function Layout() {
                 <CustomLink
                   to="/"
                   c="inverse"
-                  href="/tasks"
                   style={{
                     fontWeight:
-                      location.pathname === "/tasks" ? "bold" : "normal",
+                      location.pathname === "/garden" ? "bold" : "normal",
                   }}
                 >
                   Garden
                 </CustomLink>
-                <Anchor
-                  c="inverse"
-                  onClick={() => useAuthStore.getState().logoutUser()}
-                >
+
+                <Anchor c="inverse" onClick={logoutHandler}>
                   Logout
                 </Anchor>
               </>
             ) : (
               <>
                 <CustomLink
-                  to={"/login"}
+                  to="/login"
                   c="inverse"
                   style={{
                     fontWeight:
@@ -61,13 +73,15 @@ function Layout() {
                   Login
                 </CustomLink>
                 <CustomLink
-                  to={"/register"}
+                  to="/register"
                   c="inverse"
                   style={{
                     fontWeight:
                       location.pathname === "/register" ? "bold" : "normal",
                   }}
-                >Register</CustomLink>
+                >
+                  Register
+                </CustomLink>
               </>
             )}
             <ThemeToggle />

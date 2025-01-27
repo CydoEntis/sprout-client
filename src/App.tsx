@@ -42,7 +42,7 @@ function App() {
       />
 
       <Stack gap={4} pb={32}>
-        <Title>Welcome back, {user!.username}</Title>
+        <Title>Welcome back, {user?.username}</Title>
         <FarmProgress />
       </Stack>
       <Group justify="end">
