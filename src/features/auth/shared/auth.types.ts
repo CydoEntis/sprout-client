@@ -19,4 +19,8 @@ export type DecodedToken = {
   email: string;
   role: string;
   exp: number;
-}
+};
+
+export type LogoutResponse = {
+  message: string;
+};

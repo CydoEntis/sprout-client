@@ -1,6 +1,7 @@
 import {
   AuthenticatedResponse,
   LoginRequest,
+  LogoutResponse,
   RefreshTokensResponse,
   RegisterRequest,
 } from "../../features/auth/shared/auth.types";
@@ -28,8 +29,15 @@ export const loginUser = async (
 };
 
 export const refreshTokens = async (): Promise<RefreshTokensResponse> => {
-  const response = (await apiClient.post(`${endpoints.auth}/refresh-tokens`)).data;
+  const response = (await apiClient.post(`${endpoints.auth}/refresh-tokens`))
+    .data;
   console.log(response);
   if (!response.success) throw new Error(response.message);
+  return response.data;
+};
+
+export const logoutUser = async (): Promise<LogoutResponse> => {
+  const response = (await apiClient.post(`${endpoints.auth}/logout`)).data;
+  if (!response.success) throw new Error();
   return response.data;
 };
