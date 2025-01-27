@@ -5,6 +5,8 @@ import { ERROR_TYPES } from "./errors/error.constants";
 import useAuthStore from "../stores/useAuthStore";
 import localStorageService from "../services/localStorage.service";
 import { refreshTokens } from "./services/auth.services";
+import { jwtDecode } from "jwt-decode";
+import { DecodedToken } from "../features/auth/shared/auth.types";
 
 const apiClient = axios.create({
   baseURL: baseUrl,
@@ -27,7 +29,6 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-
     // Handle server down or unreachable
     if (!error.response) {
       useAuthStore.getState().logoutUser();
@@ -40,21 +41,29 @@ apiClient.interceptors.response.use(
 
     // Handle 401 Unauthorized and token refresh
     if (error.response.status === 401 && !originalRequest._retry) {
-      console.log("Do it even hit here?");
       originalRequest._retry = true;
 
       try {
         const { accessToken } = await refreshTokens();
-        console.log("Tokens Refreshed: ")
-
+        console.log("Tokens Refreshed: ", accessToken);
         localStorageService.updateItem("taskgarden", { accessToken });
 
         useAuthStore.getState().setAccessToken(accessToken);
 
+        const decodedToken = jwtDecode<DecodedToken>(accessToken);
+
+        useAuthStore.getState().setUser({
+          id: decodedToken.userId,
+          username: decodedToken.sub,
+          email: decodedToken.email,
+          role: "Admin",
+          tokenExpiration: decodedToken.exp,
+        });
+
         return apiClient(originalRequest); // Retry the original request
       } catch {
         useAuthStore.getState().logoutUser();
-        localStorageService.removeItem("questbound");
+        localStorageService.removeItem("taskgarden");
         window.location.href = "/login";
         return Promise.reject(
           new Error("Token refresh failed. Please log in again.")

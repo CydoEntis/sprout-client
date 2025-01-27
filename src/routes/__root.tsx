@@ -30,6 +30,7 @@ function RootComponent() {
           username: decodedToken.sub,
           email: decodedToken.email,
           role: "Admin",
+          tokenExpiration: decodedToken.exp,
         });
       }
     }

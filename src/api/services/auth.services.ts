@@ -29,7 +29,7 @@ export const loginUser = async (
 
 export const refreshTokens = async (): Promise<RefreshTokensResponse> => {
   const response = (await apiClient.post(`${endpoints.auth}/refresh-tokens`)).data;
-
+  console.log(response);
   if (!response.success) throw new Error(response.message);
   return response.data;
 };
