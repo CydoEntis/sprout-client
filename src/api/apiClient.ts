@@ -17,7 +17,6 @@ apiClient.interceptors.request.use((request) => {
     localStorageService.getItem<{ accessToken?: string }>("taskgarden")
       ?.accessToken;
 
-  console.log(token);
   if (token) {
     request.headers.Authorization = `Bearer ${token}`;
   }
@@ -41,10 +40,15 @@ apiClient.interceptors.response.use(
 
     // Handle 401 Unauthorized and token refresh
     if (error.response.status === 401 && !originalRequest._retry) {
+      console.log("Do it even hit here?");
       originalRequest._retry = true;
 
       try {
         const { accessToken } = await refreshTokens();
+        console.log("Tokens Refreshed: ")
+
+        localStorageService.updateItem("taskgarden", { accessToken });
+
         useAuthStore.getState().setAccessToken(accessToken);
 
         return apiClient(originalRequest); // Retry the original request

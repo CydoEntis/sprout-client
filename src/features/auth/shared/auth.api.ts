@@ -32,6 +32,7 @@ export function useLogin() {
         username: decodedToken.sub,
         email: decodedToken.email,
         role: "Admin",
+        tokenExpiration: decodedToken.exp
       });
 
       localStorageService.setItem("taskgarden", taskGarden);

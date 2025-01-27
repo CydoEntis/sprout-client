@@ -23,7 +23,6 @@ function App() {
   if (!user && isPending) return <div>Loading...</div>;
   if (isPending) return <div>Loading...</div>;
 
-  console.log(categories);
 
   return (
     <>
