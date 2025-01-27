@@ -9,7 +9,7 @@ import { Plus } from "lucide-react";
 import NewListCategoryModal from "./features/list-category/NewListCategoryModal";
 import { useGetAllCategories } from "./features/list-category/shared/category.queries";
 import CategoryCard from "./features/list-category/CategoryCard";
-import TaskListGrid from "./features/task-list/TaskListGrid";
+import GridList from "./components/GridList";
 import { refreshTokens } from "./api/services/auth.services";
 import localStorageService from "./services/localStorage.service";
 
@@ -64,9 +64,9 @@ function App() {
         </Button>
       </Group>
 
-      <TaskListGrid>
+      <GridList>
         {categories?.map((category) => <CategoryCard category={category} />)}
-      </TaskListGrid>
+      </GridList>
       {/* <TaskListTabs onOpenNewList={onOpenNewList} /> */}
     </>
   );

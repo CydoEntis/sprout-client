@@ -1,9 +1,9 @@
-import TaskListGrid from "./TaskListGrid";
+import GridList from "../../components/GridList";
 import InProgressTaskListCard from "./InProgressTaskListCard";
 
 function InProgressTaskList() {
   return (
-    <TaskListGrid>
+    <GridList>
       <InProgressTaskListCard />
       <InProgressTaskListCard />
       <InProgressTaskListCard />
@@ -16,7 +16,7 @@ function InProgressTaskList() {
       <InProgressTaskListCard />
       <InProgressTaskListCard />
       <InProgressTaskListCard />
-    </TaskListGrid>
+    </GridList>
   );
 }
 

@@ -5,7 +5,7 @@ import InProgressTaskList from "../task-list/InProgressTaskList";
 import CompletedTaskList from "../task-list/CompletedTaskList";
 import { TaskListResponse } from "../task-list/shared/task-list.types";
 import InProgressTaskListCard from "../task-list/InProgressTaskListCard";
-import TaskListGrid from "../task-list/TaskListGrid";
+import GridList from "../../components/GridList";
 
 type TaskListTabsProps = {
   onOpenNewList: () => void;
@@ -44,11 +44,11 @@ function TaskListTabs({ onOpenNewList, taskLists }: TaskListTabsProps) {
       </Tabs.List>
 
       <Tabs.Panel value="progress">
-        <TaskListGrid>
+        <GridList>
           {taskLists.map((taskList) => (
             <InProgressTaskListCard key={taskList.id} taskList={taskList} />
           ))}
-        </TaskListGrid>
+        </GridList>
       </Tabs.Panel>
 
       <Tabs.Panel value="completed">

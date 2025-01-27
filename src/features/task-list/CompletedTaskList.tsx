@@ -1,13 +1,13 @@
 import CompletedTaskListCard from "./CompletedTaskListCard";
-import TaskListGrid from "./TaskListGrid";
+import GridList from "../../components/GridList";
 
 function CompletedTaskList() {
   return (
-    <TaskListGrid>
+    <GridList>
       <CompletedTaskListCard />
       <CompletedTaskListCard />
       <CompletedTaskListCard />
-    </TaskListGrid>
+    </GridList>
   );
 }
 

@@ -8,7 +8,7 @@ import TaskListTabs from "../../features/task-list-tabs/TaskListTabs";
 import CreateTaskListModal from "../../features/task-list/CreateTaskListModal";
 import { getAllTaskListsByCategory } from "../../api/services/task-list.services";
 import { Skeleton } from "@mantine/core";
-import TaskListGrid from "../../features/task-list/TaskListGrid";
+import GridList from "../../components/GridList";
 import useLoadingManagerStore from "../../stores/useLoadingManagerStore";
 import { Suspense } from "react";
 
@@ -58,11 +58,11 @@ function Loading() {
   const numOfSkeletons = skeletonCounts[categoryName] || 0;
 
   return (
-    <TaskListGrid>
+    <GridList>
       {[...Array(numOfSkeletons)].map((_, index) => (
         <Skeleton key={index} height={235} />
       ))}
-    </TaskListGrid>
+    </GridList>
   );
 }
 
