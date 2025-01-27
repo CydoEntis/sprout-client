@@ -15,6 +15,8 @@ function CategoryCard({ category }: CategoryCard) {
     (c) => c.tag === category.categoryTag
   );
 
+  console.log(foundCategory)
+
   return (
     <CustomLink
       c="inverse"
