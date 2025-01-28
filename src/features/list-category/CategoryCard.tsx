@@ -20,7 +20,7 @@ function CategoryCard({ category }: CategoryCard) {
   return (
     <CustomLink
       c="inverse"
-      to={"/category/$categoryName"}
+      to={"/categories/$categoryName"}
       params={{ categoryName: category.categoryName.toLowerCase() }}
     >
       <Paper

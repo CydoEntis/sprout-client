@@ -11,7 +11,7 @@ type CreateTaskListModalProps = {
 };
 
 function CreateTaskListModal({ isOpened, onClose }: CreateTaskListModalProps) {
-  const { categoryName } = useParams({ from: "/category/$categoryName" });
+  const { categoryName } = useParams({ from: "/categories/$categoryName" });
 
   const form = useForm({
     validate: zodResolver(newTaskListSchema),

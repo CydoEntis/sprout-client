@@ -33,6 +33,8 @@ function RootComponent() {
           tokenExpiration: decodedToken.exp,
         });
       }
+    } else {
+      useAuthStore.getState().logoutUser();
     }
   }, [setAccessToken, setUser]);
 

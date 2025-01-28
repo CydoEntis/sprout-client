@@ -19,6 +19,8 @@ apiClient.interceptors.request.use((request) => {
     localStorageService.getItem<{ accessToken?: string }>("taskgarden")
       ?.accessToken;
 
+  console.log(token);
+
   if (token) {
     request.headers.Authorization = `Bearer ${token}`;
   }

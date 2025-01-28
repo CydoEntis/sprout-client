@@ -1,14 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
-import App from "../App";
+import { Text } from "@mantine/core";
+
+// const requireAuth = () => {
+//   const isAuthenticated = useAuthStore.getState().accessToken;
+//   if (!isAuthenticated) {
+//     window.location.href = "/login";
+//   }
+// };
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
+
 });
 
 function RouteComponent() {
   return (
     <div>
-      <App />
+      <Text>Home Page</Text>
     </div>
   );
 }
