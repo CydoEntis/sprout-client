@@ -15,31 +15,16 @@ import localStorageService from "./services/localStorage.service";
 
 function App() {
   const { user } = useAuthStore();
-  const { data: categories, isPending } = useGetAllCategories();
 
-  const [
-    isNewCategoryOpened,
-    { open: onOpenNewCategory, close: onCloseNewCategory },
-  ] = useDisclosure(false);
 
-  const refreshTokenHandler = async () => {
-    const { accessToken } = await refreshTokens();
-    console.log("Tokens Refreshed: ");
 
-    localStorageService.updateItem("taskgarden", { accessToken });
-
-    useAuthStore.getState().setAccessToken(accessToken);
-  };
 
   if (!user && isPending) return <div>Loading...</div>;
   if (isPending) return <div>Loading...</div>;
 
   return (
     <>
-      <NewListCategoryModal
-        isNewCategoryOpened={isNewCategoryOpened}
-        onCloseNewCategory={onCloseNewCategory}
-      />
+
 
       <Stack gap={4} pb={32}>
         <Title>Welcome back, {user?.username}</Title>
