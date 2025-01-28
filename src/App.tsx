@@ -6,9 +6,9 @@ import FarmProgress from "./features/farm/FarmProgress";
 import { useDisclosure } from "@mantine/hooks";
 import CreateTaskListModal from "./features/task-list/CreateTaskListModal";
 import { Plus } from "lucide-react";
-import NewListCategoryModal from "./features/list-category/NewListCategoryModal";
+import NewListCategoryModal from "./features/categories/NewListCategoryModal";
 import { useGetAllCategories } from "./features/list-category/shared/category.queries";
-import CategoryCard from "./features/list-category/CategoryCard";
+import CategoryCard from "./features/categories/CategoryCard";
 import GridList from "./components/GridList";
 import { refreshTokens } from "./api/services/auth.services";
 import localStorageService from "./services/localStorage.service";
@@ -45,28 +45,7 @@ function App() {
         <Title>Welcome back, {user?.username}</Title>
         <FarmProgress />
       </Stack>
-      <Group justify="end">
-        <Button
-          variant="light"
-          leftSection={<Plus size={20} />}
-          color="lime"
-          onClick={refreshTokenHandler}
-        >
-          Refresh Tokens
-        </Button>
-        <Button
-          variant="light"
-          leftSection={<Plus size={20} />}
-          color="lime"
-          onClick={onOpenNewCategory}
-        >
-          Category
-        </Button>
-      </Group>
 
-      <GridList>
-        {categories?.map((category) => <CategoryCard category={category} />)}
-      </GridList>
       {/* <TaskListTabs onOpenNewList={onOpenNewList} /> */}
     </>
   );

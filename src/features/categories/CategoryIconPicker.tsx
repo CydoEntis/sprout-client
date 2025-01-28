@@ -1,7 +1,7 @@
 import { Text, SimpleGrid, Stack } from "@mantine/core";
 import SelectableCategoryIcon from "./SelectableCategoryIcon";
-import { CategoryIcon } from "./shared/category.types";
-import { categoryIcons } from "./shared/category.constants";
+import { CategoryIcon } from "../list-category/shared/category.types";
+import { categoryIcons } from "../list-category/shared/category.constants";
 
 type CategoryIconPickerProps = {
   selectedIcon: CategoryIcon;
