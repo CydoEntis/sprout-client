@@ -20,13 +20,14 @@ function CategoriesRoute() {
   });
 
   categories.forEach((category) => {
-    console.log(category)
+    console.log(category);
 
     setNumOfSkeletons(
       category.categoryName.toLowerCase(),
       category.taskListCount
     );
   });
+
 
   return <CategoriesPage categories={categories} />;
 }

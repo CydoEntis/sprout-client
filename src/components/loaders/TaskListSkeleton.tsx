@@ -2,7 +2,6 @@ import { useParams } from "@tanstack/react-router";
 import useLoadingManagerStore from "../../stores/useLoadingManagerStore";
 import GridList from "../GridList";
 import { Skeleton } from "@mantine/core";
-import { number } from "zod";
 
 type TaskListSkeleton = {
   numberOfSkeletons: number;

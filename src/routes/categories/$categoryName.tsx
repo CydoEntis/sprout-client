@@ -1,9 +1,10 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import { useDisclosure } from "@mantine/hooks";
-import TaskListTabs from "../../features/task-list-tabs/TaskListTabs";
 import CreateTaskListModal from "../../features/task-list/CreateTaskListModal";
 import { getAllTaskListsByCategory } from "../../api/services/task-list.services";
-import TaskListSkeleton from "../../components/loaders/TaskListSkeleton";
+import useLoadingManagerStore from "../../stores/useLoadingManagerStore";
+import GridList from "../../components/GridList";
+import InProgressTaskListCard from "../../features/task-list/InProgressTaskListCard";
 
 // Define the route with a loader function
 export const Route = createFileRoute("/categories/$categoryName")({
@@ -13,7 +14,7 @@ export const Route = createFileRoute("/categories/$categoryName")({
     return await getAllTaskListsByCategory(categoryName);
   },
   component: () => <TaskListPage />,
-  pendingComponent: () => <TaskListSkeleton />,
+  pendingComponent: () => <div>Loading...</div>,
 });
 
 function TaskListPage() {
@@ -24,13 +25,23 @@ function TaskListPage() {
   const [isNewTaskListOpened, { open: onOpenNewList, close: onCloseNewList }] =
     useDisclosure(false);
 
+  const { skeletonCounts } = useLoadingManagerStore();
+
+  console.log(skeletonCounts);
+
   return (
     <>
       <CreateTaskListModal
         onClose={onCloseNewList}
         isOpened={isNewTaskListOpened}
       />
-      <TaskListTabs onOpenNewList={onOpenNewList} taskLists={taskLists} />
+      <GridList>
+        {taskLists.map((taskList) => (
+          <InProgressTaskListCard key={taskList.id} taskList={taskList} />
+        ))}
+      </GridList>
+
+      {/* <TaskListTabs onOpenNewList={onOpenNewList} taskLists={taskLists} /> */}
     </>
   );
 }
