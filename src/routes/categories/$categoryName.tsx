@@ -5,22 +5,15 @@ import CreateTaskListModal from "../../features/task-list/CreateTaskListModal";
 import useLoadingManagerStore from "../../stores/useLoadingManagerStore";
 import GridList from "../../components/GridList";
 import InProgressTaskListCard from "../../features/task-list/InProgressTaskListCard";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { getAllTaskListsByCategory } from "../../api/services/task-list.services";
 import { queryClient } from "../../main";
-
-const getAllCategoriesQueryOptions = (category: string) =>
-  queryOptions({
-    queryKey: ["categories", category],
-    queryFn: () => getAllTaskListsByCategory(category),
-    enabled: !!category,
-  });
+import { getAllTaskListsInCategoryQueryOptions } from "../../features/task-list/shared/task-list.queries";
 
 export const Route = createFileRoute("/categories/$categoryName")({
   loader: async ({ params }) => {
     return queryClient.ensureQueryData(
-      getAllCategoriesQueryOptions(params.categoryName)
+      getAllTaskListsInCategoryQueryOptions(params.categoryName)
     );
   },
   component: () => <TaskListPage />,
@@ -30,7 +23,7 @@ export const Route = createFileRoute("/categories/$categoryName")({
 function TaskListPage() {
   const { categoryName } = useParams({ from: "/categories/$categoryName" });
   const { data: taskLists } = useSuspenseQuery(
-    getAllCategoriesQueryOptions(categoryName)
+    getAllTaskListsInCategoryQueryOptions(categoryName)
   );
 
   const [isNewTaskListOpened, { open: onOpenNewList, close: onCloseNewList }] =
