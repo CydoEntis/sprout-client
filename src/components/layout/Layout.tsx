@@ -1,5 +1,5 @@
 import { Anchor, Box, Container, Flex, Group, Title } from "@mantine/core";
-import React from "react";
+
 import ThemeToggle from "../theme/ThemeToggle";
 import { Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import useAuthStore from "../../stores/useAuthStore";
@@ -87,6 +87,7 @@ function Layout() {
             <ThemeToggle />
           </Group>
         </Flex>
+
         <Outlet />
       </Container>
     </Box>

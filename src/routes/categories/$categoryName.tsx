@@ -9,6 +9,9 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { queryClient } from "../../main";
 import { getAllTaskListsInCategoryQueryOptions } from "../../features/task-list/shared/task-list.queries";
+import WelcomeHeader from "../../components/headers/WelcomeHeader";
+import FarmProgress from "../../features/farm/FarmProgress";
+import useAuthStore from "../../stores/useAuthStore";
 
 export const Route = createFileRoute("/categories/$categoryName")({
   loader: async ({ params }) => {
@@ -25,6 +28,7 @@ function TaskListPage() {
   const { data: taskLists } = useSuspenseQuery(
     getAllTaskListsInCategoryQueryOptions(categoryName)
   );
+  const user = useAuthStore((state) => state.user);
 
   const [isNewTaskListOpened, { open: onOpenNewList, close: onCloseNewList }] =
     useDisclosure(false);
@@ -35,6 +39,8 @@ function TaskListPage() {
 
   return (
     <>
+      <WelcomeHeader username={user!.username} />
+      <FarmProgress />
       <CreateTaskListModal
         onClose={onCloseNewList}
         isOpened={isNewTaskListOpened}

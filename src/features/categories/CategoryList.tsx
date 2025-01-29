@@ -12,7 +12,7 @@ type CategoryListProps = {
 function CategoryList({ categories, onOpenNewCategory }: CategoryListProps) {
   return (
     <>
-      <Group justify="end">
+      <Group justify="end" py={16}>
         <Button
           variant="light"
           leftSection={<Plus size={20} />}
