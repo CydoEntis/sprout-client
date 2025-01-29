@@ -1,25 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 import { getAllCategories } from "../../../api/services/category.services";
-import useLoadingManagerStore from "../../../stores/useLoadingManagerStore";
 
-export const useGetAllCategories = () => {
-  const setNumOfSkeletons = useLoadingManagerStore(
-    (state) => state.setNumOfSkeletons
-  );
-
-  return useQuery({
+export const getAllCategoriesQueryOptions = () =>
+  queryOptions({
     queryKey: ["categories", "list"],
-    queryFn: async () => {
-      const categories = await getAllCategories();
-
-      categories.forEach((category) => {
-        setNumOfSkeletons(
-          category.categoryName.toLowerCase(),
-          category.taskListCount
-        );
-      });
-
-      return categories;
-    },
+    queryFn: () => getAllCategories(),
   });
+
+// TODO: Possibly remove since I'm using query options and not hooks.
+export const useGetAllCategories = () => {
+  return useQuery(getAllCategoriesQueryOptions());
 };
