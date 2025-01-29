@@ -1,5 +1,5 @@
 import { Flex } from "@mantine/core";
-import { CategoryIcon } from "../list-category/shared/category.types";
+import { CategoryIcon } from "./shared/category.types";
 
 type SelectedCategoryIcon = {
   categoryIcon: CategoryIcon;

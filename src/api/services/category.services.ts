@@ -2,7 +2,7 @@ import {
   CategoryResponse,
   NewCategoryRequest,
   NewCategoryResponse,
-} from "../../features/list-category/shared/category.types";
+} from "../../features/categories/shared/category.types";
 import apiClient from "../apiClient";
 import endpoints from "../endpoints";
 

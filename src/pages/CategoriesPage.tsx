@@ -1,11 +1,13 @@
 import NewListCategoryModal from "../features/categories/NewListCategoryModal";
-import { useGetAllCategories } from "../features/list-category/shared/category.queries";
 import CategoryList from "../features/categories/CategoryList";
 import { useDisclosure } from "@mantine/hooks";
+import { CategoryResponse } from "../features/categories/shared/category.types";
 
-function CategoriesPage() {
-  const { data: categories, isPending } = useGetAllCategories();
+type CategoriesPageProps = {
+  categories: CategoryResponse[];
+};
 
+function CategoriesPage({ categories }: CategoriesPageProps) {
   const [
     isNewCategoryOpened,
     { open: onOpenNewCategory, close: onCloseNewCategory },
@@ -18,7 +20,7 @@ function CategoriesPage() {
         onCloseNewCategory={onCloseNewCategory}
       />
       <CategoryList
-        categories={categories!}
+        categories={categories}
         onOpenNewCategory={onOpenNewCategory}
       />
     </>

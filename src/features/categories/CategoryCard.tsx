@@ -1,8 +1,8 @@
 import { Box, Paper, Title, Text } from "@mantine/core";
 import { ReactElement } from "react";
 import React from "react";
-import { CategoryResponse } from "../list-category/shared/category.types";
-import { categoryIcons } from "../list-category/shared/category.constants";
+import { CategoryResponse } from "./shared/category.types";
+import { categoryIcons } from "./shared/category.constants";
 import { CustomLink } from "../../components/CustomLink";
 import UpdateAndDeleteMenu from "../../components/menus/UpdateAndDeleteMenu";
 

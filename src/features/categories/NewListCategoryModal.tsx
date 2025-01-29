@@ -1,13 +1,13 @@
 import { Button, Modal, Stack, TextInput } from "@mantine/core";
 import CategoryIconPicker from "./CategoryIconPicker";
 import { useForm, zodResolver } from "@mantine/form";
-import { newCategorySchema } from "../list-category/shared/category.schemas";
-import { CategoryIcon, NewCategoryRequest } from "../list-category/shared/category.types";
-import { useCreateCategory } from "../list-category/shared/queries.mutations";
+import { newCategorySchema } from "./shared/category.schemas";
+import { CategoryIcon, NewCategoryRequest } from "./shared/category.types";
+import { useCreateCategory } from "./shared/queries.mutations";
 import { ErrorResponse } from "../../api/errors/errror.types";
 import useFormErrorHandler from "../../hooks/useFormErrorHandler";
 import { useState } from "react";
-import { categoryIcons } from "../list-category/shared/category.constants";
+import { categoryIcons } from "./shared/category.constants";
 
 type NewListCategoryModal = {
   isNewCategoryOpened: boolean;

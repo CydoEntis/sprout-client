@@ -1,7 +1,7 @@
 import { Button, Group } from "@mantine/core";
 import GridList from "../../components/GridList";
 import CategoryCard from "./CategoryCard";
-import { CategoryResponse } from "../list-category/shared/category.types";
+import { CategoryResponse } from "./shared/category.types";
 import { Plus } from "lucide-react";
 
 type CategoryListProps = {
