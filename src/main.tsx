@@ -8,7 +8,7 @@ import '@mantine/notifications/styles.css';
 import { routeTree } from "./routeTree.gen";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 const router = createRouter({ routeTree });
 
 declare module "@tanstack/react-router" {
