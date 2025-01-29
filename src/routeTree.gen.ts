@@ -21,6 +21,7 @@ import { Route as TaskListsIndexImport } from './routes/task-lists/index'
 import { Route as CategoriesIndexImport } from './routes/categories/index'
 import { Route as TaskListsTaskListIdImport } from './routes/task-lists/$taskListId'
 import { Route as CategoriesCategoryNameImport } from './routes/categories/$categoryName'
+import { Route as CategoriesCategoryNameTaskListIdImport } from './routes/categories/$categoryName_/$taskListId'
 
 // Create/Update Routes
 
@@ -83,6 +84,13 @@ const CategoriesCategoryNameRoute = CategoriesCategoryNameImport.update({
   path: '/categories/$categoryName',
   getParentRoute: () => rootRoute,
 } as any)
+
+const CategoriesCategoryNameTaskListIdRoute =
+  CategoriesCategoryNameTaskListIdImport.update({
+    id: '/categories/$categoryName_/$taskListId',
+    path: '/categories/$categoryName/$taskListId',
+    getParentRoute: () => rootRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -158,6 +166,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TaskListsIndexImport
       parentRoute: typeof rootRoute
     }
+    '/categories/$categoryName_/$taskListId': {
+      id: '/categories/$categoryName_/$taskListId'
+      path: '/categories/$categoryName/$taskListId'
+      fullPath: '/categories/$categoryName/$taskListId'
+      preLoaderRoute: typeof CategoriesCategoryNameTaskListIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -174,6 +189,7 @@ export interface FileRoutesByFullPath {
   '/task-lists/$taskListId': typeof TaskListsTaskListIdRoute
   '/categories': typeof CategoriesIndexRoute
   '/task-lists': typeof TaskListsIndexRoute
+  '/categories/$categoryName/$taskListId': typeof CategoriesCategoryNameTaskListIdRoute
 }
 
 export interface FileRoutesByTo {
@@ -187,6 +203,7 @@ export interface FileRoutesByTo {
   '/task-lists/$taskListId': typeof TaskListsTaskListIdRoute
   '/categories': typeof CategoriesIndexRoute
   '/task-lists': typeof TaskListsIndexRoute
+  '/categories/$categoryName/$taskListId': typeof CategoriesCategoryNameTaskListIdRoute
 }
 
 export interface FileRoutesById {
@@ -201,6 +218,7 @@ export interface FileRoutesById {
   '/task-lists/$taskListId': typeof TaskListsTaskListIdRoute
   '/categories/': typeof CategoriesIndexRoute
   '/task-lists/': typeof TaskListsIndexRoute
+  '/categories/$categoryName_/$taskListId': typeof CategoriesCategoryNameTaskListIdRoute
 }
 
 export interface FileRouteTypes {
@@ -216,6 +234,7 @@ export interface FileRouteTypes {
     | '/task-lists/$taskListId'
     | '/categories'
     | '/task-lists'
+    | '/categories/$categoryName/$taskListId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -228,6 +247,7 @@ export interface FileRouteTypes {
     | '/task-lists/$taskListId'
     | '/categories'
     | '/task-lists'
+    | '/categories/$categoryName/$taskListId'
   id:
     | '__root__'
     | '/'
@@ -240,6 +260,7 @@ export interface FileRouteTypes {
     | '/task-lists/$taskListId'
     | '/categories/'
     | '/task-lists/'
+    | '/categories/$categoryName_/$taskListId'
   fileRoutesById: FileRoutesById
 }
 
@@ -254,6 +275,7 @@ export interface RootRouteChildren {
   TaskListsTaskListIdRoute: typeof TaskListsTaskListIdRoute
   CategoriesIndexRoute: typeof CategoriesIndexRoute
   TaskListsIndexRoute: typeof TaskListsIndexRoute
+  CategoriesCategoryNameTaskListIdRoute: typeof CategoriesCategoryNameTaskListIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -267,6 +289,7 @@ const rootRouteChildren: RootRouteChildren = {
   TaskListsTaskListIdRoute: TaskListsTaskListIdRoute,
   CategoriesIndexRoute: CategoriesIndexRoute,
   TaskListsIndexRoute: TaskListsIndexRoute,
+  CategoriesCategoryNameTaskListIdRoute: CategoriesCategoryNameTaskListIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -288,7 +311,8 @@ export const routeTree = rootRoute
         "/categories/$categoryName",
         "/task-lists/$taskListId",
         "/categories/",
-        "/task-lists/"
+        "/task-lists/",
+        "/categories/$categoryName_/$taskListId"
       ]
     },
     "/": {
@@ -320,6 +344,9 @@ export const routeTree = rootRoute
     },
     "/task-lists/": {
       "filePath": "task-lists/index.tsx"
+    },
+    "/categories/$categoryName_/$taskListId": {
+      "filePath": "categories/$categoryName_/$taskListId.tsx"
     }
   }
 }
