@@ -12,6 +12,7 @@ import { getAllTaskListsInCategoryQueryOptions } from "../../features/task-list/
 import WelcomeHeader from "../../components/headers/WelcomeHeader";
 import FarmProgress from "../../features/farm/FarmProgress";
 import useAuthStore from "../../stores/useAuthStore";
+import LoadingSkeleton from "../../components/loaders/LoadingSkeleton";
 
 export const Route = createFileRoute("/categories/$categoryName")({
   loader: async ({ params }) => {
@@ -20,7 +21,7 @@ export const Route = createFileRoute("/categories/$categoryName")({
     );
   },
   component: () => <TaskListPage />,
-  pendingComponent: () => <div>Loading...</div>,
+  pendingComponent: () => <LoadingSkeleton numberOfSkeletons={36} height={235} />,
 });
 
 function TaskListPage() {
@@ -32,10 +33,6 @@ function TaskListPage() {
 
   const [isNewTaskListOpened, { open: onOpenNewList, close: onCloseNewList }] =
     useDisclosure(false);
-
-  const { skeletonCounts } = useLoadingManagerStore();
-
-  console.log(skeletonCounts);
 
   return (
     <>
