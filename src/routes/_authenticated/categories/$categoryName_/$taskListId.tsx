@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import TaskCardBody from '../../../features/Tasks2/TaskCardBody'
+import TaskCardBody from '../../../../features/Tasks2/TaskCardBody'
 
 export const Route = createFileRoute(
   '/_authenticated/categories/$categoryName_/$taskListId',

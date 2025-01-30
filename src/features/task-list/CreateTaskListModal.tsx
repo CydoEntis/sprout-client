@@ -11,7 +11,9 @@ type CreateTaskListModalProps = {
 };
 
 function CreateTaskListModal({ isOpened, onClose }: CreateTaskListModalProps) {
-  const { categoryName } = useParams({ from: "/categories/$categoryName" });
+  const { categoryName } = useParams({
+    from: "/_authenticated/categories/$categoryName",
+  });
 
   const form = useForm({
     validate: zodResolver(newTaskListSchema),
@@ -25,7 +27,7 @@ function CreateTaskListModal({ isOpened, onClose }: CreateTaskListModalProps) {
     const newTaskListPayload = {
       ...newTaskList,
       category: categoryName,
-    }
+    };
     onClose();
   };
 
