@@ -19,8 +19,6 @@ apiClient.interceptors.request.use((request) => {
     localStorageService.getItem<{ accessToken?: string }>("taskgarden")
       ?.accessToken;
 
-  console.log(token);
-
   if (token) {
     request.headers.Authorization = `Bearer ${token}`;
   }
@@ -50,17 +48,15 @@ apiClient.interceptors.response.use(
         console.log("Tokens Refreshed: ", accessToken);
         localStorageService.updateItem("taskgarden", { accessToken });
 
-        useAuthStore.getState().setAccessToken(accessToken);
-
         const decodedToken = jwtDecode<DecodedToken>(accessToken);
-
-        useAuthStore.getState().setUser({
+        const user = {
           id: decodedToken.userId,
           username: decodedToken.sub,
           email: decodedToken.email,
           role: "Admin",
           tokenExpiration: decodedToken.exp,
-        });
+        };
+        useAuthStore.getState().loginUser(user, accessToken);
 
         return apiClient(originalRequest); // Retry the original request
       } catch {

@@ -39,7 +39,7 @@ function LoginForm() {
       await login.mutateAsync(credentials);
 
       form.reset();
-      navigate({ to: "/" });
+      navigate({ to: "/categories" });
     } catch (err) {
       const error = err as ErrorResponse;
       handleAuthFormErrors(error, form);
@@ -56,7 +56,7 @@ function LoginForm() {
       await login.mutateAsync(demoCredentials);
 
       form.reset();
-      navigate({ to: "/" });
+      navigate({ to: "/categories" });
     } catch (err) {
       const error = err as ErrorResponse;
       handleAuthFormErrors(error, form);

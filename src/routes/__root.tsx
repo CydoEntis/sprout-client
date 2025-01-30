@@ -22,7 +22,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 });
 
 function RootComponent() {
-  const { setUser, setAccessToken } = useAuthStore();
+  const { loginUser } = useAuthStore();
 
   React.useEffect(() => {
     const taskGardenData = localStorage.getItem("taskgarden");
@@ -32,20 +32,19 @@ function RootComponent() {
 
       if (parsedData?.accessToken) {
         const decodedToken = jwtDecode<DecodedToken>(parsedData.accessToken);
-
-        setAccessToken(parsedData.accessToken);
-        setUser({
+        const user = {
           id: decodedToken.userId,
           username: decodedToken.sub,
           email: decodedToken.email,
           role: "Admin",
           tokenExpiration: decodedToken.exp,
-        });
+        };
+        loginUser(user, parsedData.accessToken);
       }
     } else {
       useAuthStore.getState().logoutUser();
     }
-  }, [setAccessToken, setUser]);
+  }, [loginUser]);
 
   return (
     <React.Fragment>

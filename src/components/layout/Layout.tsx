@@ -8,8 +8,8 @@ import { logoutUser } from "../../api/services/auth.services";
 import LocalStorageService from "../../services/localStorage.service";
 
 function Layout() {
-  const user = useAuthStore((state) => state.user);
-  const logout = useAuthStore((state) => state.logoutUser);
+  const { user, logoutUser: logout } = useAuthStore();
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ function Layout() {
     console.log("Logging out...");
     try {
       await logoutUser();
-      logout(); // Update Zustand store state
+      logout();
       LocalStorageService.removeItem("taskgarden");
       navigate({ to: "/login" });
     } catch (error) {

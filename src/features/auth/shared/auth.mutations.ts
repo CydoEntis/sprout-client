@@ -18,8 +18,6 @@ export function useLogin() {
       return await loginUser(credentials);
     },
     onSuccess: (data) => {
-      useAuthStore.getState().setIsAuthenticated(true);
-
       const decodedToken = jwtDecode<DecodedToken>(data.accessToken);
 
       const taskGarden = {
@@ -27,13 +25,15 @@ export function useLogin() {
         accessToken: data.accessToken,
       };
 
-      useAuthStore.getState().setUser({
+      const user = {
         id: decodedToken.userId,
         username: decodedToken.sub,
         email: decodedToken.email,
         role: "Admin",
         tokenExpiration: decodedToken.exp,
-      });
+      };
+
+      useAuthStore.getState().loginUser(user, data.accessToken);
 
       localStorageService.setItem("taskgarden", taskGarden);
 
