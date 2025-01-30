@@ -14,9 +14,8 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as RegisterImport } from './routes/register'
 import { Route as LoginImport } from './routes/login'
 import { Route as ForgotPasswordImport } from './routes/forgot-password'
-import { Route as AboutImport } from './routes/about'
-import { Route as TaskListIdImport } from './routes/$taskListId'
-import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedImport } from './routes/_authenticated'
+import { Route as AuthenticatedAboutImport } from './routes/_authenticated/about'
 import { Route as AuthenticatedCategoriesIndexImport } from './routes/_authenticated/categories/index'
 import { Route as AuthenticatedCategoriesCategoryNameImport } from './routes/_authenticated/categories/$categoryName'
 import { Route as AuthenticatedCategoriesCategoryNameTaskListIdImport } from './routes/_authenticated/categories/$categoryName_/$taskListId'
@@ -41,61 +40,47 @@ const ForgotPasswordRoute = ForgotPasswordImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AboutRoute = AboutImport.update({
+const AuthenticatedRoute = AuthenticatedImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedAboutRoute = AuthenticatedAboutImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const TaskListIdRoute = TaskListIdImport.update({
-  id: '/$taskListId',
-  path: '/$taskListId',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
-  id: '/_authenticated/',
-  path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 const AuthenticatedCategoriesIndexRoute =
   AuthenticatedCategoriesIndexImport.update({
-    id: '/_authenticated/categories/',
+    id: '/categories/',
     path: '/categories/',
-    getParentRoute: () => rootRoute,
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 
 const AuthenticatedCategoriesCategoryNameRoute =
   AuthenticatedCategoriesCategoryNameImport.update({
-    id: '/_authenticated/categories/$categoryName',
+    id: '/categories/$categoryName',
     path: '/categories/$categoryName',
-    getParentRoute: () => rootRoute,
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 
 const AuthenticatedCategoriesCategoryNameTaskListIdRoute =
   AuthenticatedCategoriesCategoryNameTaskListIdImport.update({
-    id: '/_authenticated/categories/$categoryName_/$taskListId',
+    id: '/categories/$categoryName_/$taskListId',
     path: '/categories/$categoryName/$taskListId',
-    getParentRoute: () => rootRoute,
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/$taskListId': {
-      id: '/$taskListId'
-      path: '/$taskListId'
-      fullPath: '/$taskListId'
-      preLoaderRoute: typeof TaskListIdImport
-      parentRoute: typeof rootRoute
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedImport
       parentRoute: typeof rootRoute
     }
     '/forgot-password': {
@@ -119,58 +104,76 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
-    '/_authenticated/': {
-      id: '/_authenticated/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedIndexImport
-      parentRoute: typeof rootRoute
+    '/_authenticated/about': {
+      id: '/_authenticated/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AuthenticatedAboutImport
+      parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/categories/$categoryName': {
       id: '/_authenticated/categories/$categoryName'
       path: '/categories/$categoryName'
       fullPath: '/categories/$categoryName'
       preLoaderRoute: typeof AuthenticatedCategoriesCategoryNameImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/categories/': {
       id: '/_authenticated/categories/'
       path: '/categories'
       fullPath: '/categories'
       preLoaderRoute: typeof AuthenticatedCategoriesIndexImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/categories/$categoryName_/$taskListId': {
       id: '/_authenticated/categories/$categoryName_/$taskListId'
       path: '/categories/$categoryName/$taskListId'
       fullPath: '/categories/$categoryName/$taskListId'
       preLoaderRoute: typeof AuthenticatedCategoriesCategoryNameTaskListIdImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AuthenticatedImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedAboutRoute: typeof AuthenticatedAboutRoute
+  AuthenticatedCategoriesCategoryNameRoute: typeof AuthenticatedCategoriesCategoryNameRoute
+  AuthenticatedCategoriesIndexRoute: typeof AuthenticatedCategoriesIndexRoute
+  AuthenticatedCategoriesCategoryNameTaskListIdRoute: typeof AuthenticatedCategoriesCategoryNameTaskListIdRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAboutRoute: AuthenticatedAboutRoute,
+  AuthenticatedCategoriesCategoryNameRoute:
+    AuthenticatedCategoriesCategoryNameRoute,
+  AuthenticatedCategoriesIndexRoute: AuthenticatedCategoriesIndexRoute,
+  AuthenticatedCategoriesCategoryNameTaskListIdRoute:
+    AuthenticatedCategoriesCategoryNameTaskListIdRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
-  '/$taskListId': typeof TaskListIdRoute
-  '/about': typeof AboutRoute
+  '': typeof AuthenticatedRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/': typeof AuthenticatedIndexRoute
+  '/about': typeof AuthenticatedAboutRoute
   '/categories/$categoryName': typeof AuthenticatedCategoriesCategoryNameRoute
   '/categories': typeof AuthenticatedCategoriesIndexRoute
   '/categories/$categoryName/$taskListId': typeof AuthenticatedCategoriesCategoryNameTaskListIdRoute
 }
 
 export interface FileRoutesByTo {
-  '/$taskListId': typeof TaskListIdRoute
-  '/about': typeof AboutRoute
+  '': typeof AuthenticatedRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/': typeof AuthenticatedIndexRoute
+  '/about': typeof AuthenticatedAboutRoute
   '/categories/$categoryName': typeof AuthenticatedCategoriesCategoryNameRoute
   '/categories': typeof AuthenticatedCategoriesIndexRoute
   '/categories/$categoryName/$taskListId': typeof AuthenticatedCategoriesCategoryNameTaskListIdRoute
@@ -178,12 +181,11 @@ export interface FileRoutesByTo {
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/$taskListId': typeof TaskListIdRoute
-  '/about': typeof AboutRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/about': typeof AuthenticatedAboutRoute
   '/_authenticated/categories/$categoryName': typeof AuthenticatedCategoriesCategoryNameRoute
   '/_authenticated/categories/': typeof AuthenticatedCategoriesIndexRoute
   '/_authenticated/categories/$categoryName_/$taskListId': typeof AuthenticatedCategoriesCategoryNameTaskListIdRoute
@@ -192,34 +194,31 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/$taskListId'
-    | '/about'
+    | ''
     | '/forgot-password'
     | '/login'
     | '/register'
-    | '/'
+    | '/about'
     | '/categories/$categoryName'
     | '/categories'
     | '/categories/$categoryName/$taskListId'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/$taskListId'
-    | '/about'
+    | ''
     | '/forgot-password'
     | '/login'
     | '/register'
-    | '/'
+    | '/about'
     | '/categories/$categoryName'
     | '/categories'
     | '/categories/$categoryName/$taskListId'
   id:
     | '__root__'
-    | '/$taskListId'
-    | '/about'
+    | '/_authenticated'
     | '/forgot-password'
     | '/login'
     | '/register'
-    | '/_authenticated/'
+    | '/_authenticated/about'
     | '/_authenticated/categories/$categoryName'
     | '/_authenticated/categories/'
     | '/_authenticated/categories/$categoryName_/$taskListId'
@@ -227,29 +226,17 @@ export interface FileRouteTypes {
 }
 
 export interface RootRouteChildren {
-  TaskListIdRoute: typeof TaskListIdRoute
-  AboutRoute: typeof AboutRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
-  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
-  AuthenticatedCategoriesCategoryNameRoute: typeof AuthenticatedCategoriesCategoryNameRoute
-  AuthenticatedCategoriesIndexRoute: typeof AuthenticatedCategoriesIndexRoute
-  AuthenticatedCategoriesCategoryNameTaskListIdRoute: typeof AuthenticatedCategoriesCategoryNameTaskListIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  TaskListIdRoute: TaskListIdRoute,
-  AboutRoute: AboutRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
-  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
-  AuthenticatedCategoriesCategoryNameRoute:
-    AuthenticatedCategoriesCategoryNameRoute,
-  AuthenticatedCategoriesIndexRoute: AuthenticatedCategoriesIndexRoute,
-  AuthenticatedCategoriesCategoryNameTaskListIdRoute:
-    AuthenticatedCategoriesCategoryNameTaskListIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -262,22 +249,20 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/$taskListId",
-        "/about",
+        "/_authenticated",
         "/forgot-password",
         "/login",
-        "/register",
-        "/_authenticated/",
+        "/register"
+      ]
+    },
+    "/_authenticated": {
+      "filePath": "_authenticated.tsx",
+      "children": [
+        "/_authenticated/about",
         "/_authenticated/categories/$categoryName",
         "/_authenticated/categories/",
         "/_authenticated/categories/$categoryName_/$taskListId"
       ]
-    },
-    "/$taskListId": {
-      "filePath": "$taskListId.tsx"
-    },
-    "/about": {
-      "filePath": "about.tsx"
     },
     "/forgot-password": {
       "filePath": "forgot-password.tsx"
@@ -288,17 +273,21 @@ export const routeTree = rootRoute
     "/register": {
       "filePath": "register.tsx"
     },
-    "/_authenticated/": {
-      "filePath": "_authenticated/index.tsx"
+    "/_authenticated/about": {
+      "filePath": "_authenticated/about.tsx",
+      "parent": "/_authenticated"
     },
     "/_authenticated/categories/$categoryName": {
-      "filePath": "_authenticated/categories/$categoryName.tsx"
+      "filePath": "_authenticated/categories/$categoryName.tsx",
+      "parent": "/_authenticated"
     },
     "/_authenticated/categories/": {
-      "filePath": "_authenticated/categories/index.tsx"
+      "filePath": "_authenticated/categories/index.tsx",
+      "parent": "/_authenticated"
     },
     "/_authenticated/categories/$categoryName_/$taskListId": {
-      "filePath": "_authenticated/categories/$categoryName_/$taskListId.tsx"
+      "filePath": "_authenticated/categories/$categoryName_/$taskListId.tsx",
+      "parent": "/_authenticated"
     }
   }
 }

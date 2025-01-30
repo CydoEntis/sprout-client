@@ -17,10 +17,12 @@ import { loginSchema } from "./shared/auth.schemas";
 import useFormErrorHandler from "../../hooks/useFormErrorHandler";
 import { ErrorResponse } from "../../api/errors/errror.types";
 import { useLogin } from "./shared/auth.mutations";
+import useAuthStore from "../../stores/useAuthStore";
 const demoEmail = import.meta.env.VITE_DEMO_EMAIL;
 const demoPassword = import.meta.env.VITE_DEMO_PASSWORD;
 
 function LoginForm() {
+  const { isAuthenticated } = useAuthStore();
   const login = useLogin();
   const navigate = useNavigate();
 
@@ -56,6 +58,8 @@ function LoginForm() {
       await login.mutateAsync(demoCredentials);
 
       form.reset();
+
+      console.log(isAuthenticated);
       navigate({ to: "/categories" });
     } catch (err) {
       const error = err as ErrorResponse;

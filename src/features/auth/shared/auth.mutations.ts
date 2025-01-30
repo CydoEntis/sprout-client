@@ -35,6 +35,8 @@ export function useLogin() {
 
       useAuthStore.getState().loginUser(user, data.accessToken);
 
+      console.log(useAuthStore.getState().isAuthenticated);
+
       localStorageService.setItem("taskgarden", taskGarden);
 
       notifications.show({

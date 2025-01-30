@@ -9,12 +9,13 @@ export type AuthState = {
   logoutUser: () => void;
 };
 
-const useAuthStore = create<AuthState>((set) => ({
+const useAuthStore = create<AuthState>((set, get) => ({
   isAuthenticated: false,
   accessToken: null,
   user: null,
   loginUser: (user: User, accessToken: string) => {
     set({ user, accessToken, isAuthenticated: true });
+    console.log(get().isAuthenticated);
   },
   logoutUser: () => {
     set({ user: null, accessToken: null, isAuthenticated: false });
