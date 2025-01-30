@@ -5,6 +5,7 @@ export type AuthState = {
   isAuthenticated: boolean;
   accessToken: string | null;
   user: User | null;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
   setAccessToken: (accessToken: string) => void;
   setUser: (user: User) => void;
   logoutUser: () => void;
