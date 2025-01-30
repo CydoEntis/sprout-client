@@ -1,38 +1,42 @@
-import { createFileRoute, useParams } from "@tanstack/react-router";
-import { useDisclosure } from "@mantine/hooks";
-import CreateTaskListModal from "../../features/task-list/CreateTaskListModal";
+import { createFileRoute, useParams } from '@tanstack/react-router'
+import { useDisclosure } from '@mantine/hooks'
+import CreateTaskListModal from '../../features/task-list/CreateTaskListModal'
 
-import useLoadingManagerStore from "../../stores/useLoadingManagerStore";
-import GridList from "../../components/GridList";
-import InProgressTaskListCard from "../../features/task-list/InProgressTaskListCard";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import useLoadingManagerStore from '../../stores/useLoadingManagerStore'
+import GridList from '../../components/GridList'
+import InProgressTaskListCard from '../../features/task-list/InProgressTaskListCard'
+import { useSuspenseQuery } from '@tanstack/react-query'
 
-import { queryClient } from "../../main";
-import { getAllTaskListsInCategoryQueryOptions } from "../../features/task-list/shared/task-list.queries";
-import WelcomeHeader from "../../components/headers/WelcomeHeader";
-import FarmProgress from "../../features/farm/FarmProgress";
-import useAuthStore from "../../stores/useAuthStore";
-import LoadingSkeleton from "../../components/loaders/LoadingSkeleton";
+import { queryClient } from '../../main'
+import { getAllTaskListsInCategoryQueryOptions } from '../../features/task-list/shared/task-list.queries'
+import WelcomeHeader from '../../components/headers/WelcomeHeader'
+import FarmProgress from '../../features/farm/FarmProgress'
+import useAuthStore from '../../stores/useAuthStore'
+import LoadingSkeleton from '../../components/loaders/LoadingSkeleton'
 
-export const Route = createFileRoute("/categories/$categoryName")({
+export const Route = createFileRoute(
+  '/_authenticated/categories/$categoryName',
+)({
   loader: async ({ params }) => {
     return queryClient.ensureQueryData(
-      getAllTaskListsInCategoryQueryOptions(params.categoryName)
-    );
+      getAllTaskListsInCategoryQueryOptions(params.categoryName),
+    )
   },
   component: () => <TaskListPage />,
-  pendingComponent: () => <LoadingSkeleton numberOfSkeletons={36} height={235} />,
-});
+  pendingComponent: () => (
+    <LoadingSkeleton numberOfSkeletons={36} height={235} />
+  ),
+})
 
 function TaskListPage() {
-  const { categoryName } = useParams({ from: "/categories/$categoryName" });
+  const { categoryName } = useParams({ from: '/categories/$categoryName' })
   const { data: taskLists } = useSuspenseQuery(
-    getAllTaskListsInCategoryQueryOptions(categoryName)
-  );
-  const user = useAuthStore((state) => state.user);
+    getAllTaskListsInCategoryQueryOptions(categoryName),
+  )
+  const user = useAuthStore((state) => state.user)
 
   const [isNewTaskListOpened, { open: onOpenNewList, close: onCloseNewList }] =
-    useDisclosure(false);
+    useDisclosure(false)
 
   return (
     <>
@@ -50,5 +54,5 @@ function TaskListPage() {
 
       {/* <TaskListTabs onOpenNewList={onOpenNewList} taskLists={taskLists} /> */}
     </>
-  );
+  )
 }
