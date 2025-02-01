@@ -11,6 +11,7 @@ import CreateTaskListModal from "../../../features/task-list/CreateTaskListModal
 import InProgressTaskListCard from "../../../features/task-list/InProgressTaskListCard";
 import GridList from "../../../components/GridList";
 import { getAllTaskListsForCategoryQueryOptions } from "../../../features/categories/shared/category.queries";
+import TaskListPage from "../../../pages/TaskListPage";
 
 export const Route = createFileRoute(
   "/_authenticated/categories/$categoryName"
@@ -21,29 +22,29 @@ export const Route = createFileRoute(
       getAllTaskListsForCategoryQueryOptions(params.categoryName)
     );
   },
-  component: () => <TaskListPage />,
+  component: () => <TaskListRoute />,
   pendingComponent: () => (
     <LoadingSkeleton numberOfSkeletons={36} height={235} />
   ),
 });
 
-function TaskListPage() {
+function TaskListRoute() {
   const { categoryName } = useParams({
     from: "/_authenticated/categories/$categoryName",
   });
   const { data: taskLists } = useSuspenseQuery(
     getAllTaskListsForCategoryQueryOptions(categoryName)
   );
-  const user = useAuthStore((state) => state.user);
 
   const [isNewTaskListOpened, { open: onOpenNewList, close: onCloseNewList }] =
     useDisclosure(false);
 
   return (
-    <>
-
-
-      {/* <TaskListTabs onOpenNewList={onOpenNewList} taskLists={taskLists} /> */}
-    </>
+    <TaskListPage
+      onClose={onCloseNewList}
+      onOpen={onOpenNewList}
+      isOpened={isNewTaskListOpened}
+      taskLists={taskLists}
+    />
   );
 }
