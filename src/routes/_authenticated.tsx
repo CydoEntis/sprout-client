@@ -1,5 +1,7 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import useAuthStore from "../stores/useAuthStore";
+import WelcomeHeader from "../components/headers/WelcomeHeader";
+import FarmProgress from "../features/farm/FarmProgress";
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async ({ location }) => {
@@ -11,4 +13,19 @@ export const Route = createFileRoute("/_authenticated")({
       });
     }
   },
+  component: AuthLayout,
 });
+
+function AuthLayout() {
+  const { user } = useAuthStore();
+
+  return (
+    <>
+      <WelcomeHeader username={user!.username} />
+      <FarmProgress />
+      <Outlet />
+    </>
+  );
+}
+
+export default AuthLayout;

@@ -41,17 +41,7 @@ function TaskListPage() {
 
   return (
     <>
-      <WelcomeHeader username={user!.username} />
-      <FarmProgress />
-      <CreateTaskListModal
-        onClose={onCloseNewList}
-        isOpened={isNewTaskListOpened}
-      />
-      <GridList>
-        {taskLists.map((taskList) => (
-          <InProgressTaskListCard key={taskList.id} taskList={taskList} />
-        ))}
-      </GridList>
+
 
       {/* <TaskListTabs onOpenNewList={onOpenNewList} taskLists={taskLists} /> */}
     </>
