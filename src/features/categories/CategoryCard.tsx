@@ -11,11 +11,7 @@ type CategoryCard = {
 };
 
 function CategoryCard({ category }: CategoryCard) {
-  const foundCategory = categoryIcons.find(
-    (c) => c.tag === category.tag
-  );
-
-  console.log(foundCategory)
+  const foundCategory = categoryIcons.find((c) => c.tag === category.tag);
 
   return (
     <CustomLink

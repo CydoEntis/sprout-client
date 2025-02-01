@@ -23,7 +23,9 @@ function CategoryList({ categories, onOpenNewCategory }: CategoryListProps) {
         </Button>
       </Group>
       <GridList>
-        {categories?.map((category) => <CategoryCard category={category} />)}
+        {categories?.map((category) => (
+          <CategoryCard key={category.id} category={category} />
+        ))}
       </GridList>
     </>
   );
