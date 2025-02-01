@@ -17,8 +17,8 @@ export type NewCategoryResponse = {
 
 export type CategoryResponse = {
   id: number;
-  categoryName: string;
-  categoryTag: ValidCategoryTags;
+  name: string;
+  tag: ValidCategoryTags;
   taskListCount: number;
 };
 
