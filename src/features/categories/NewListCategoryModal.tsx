@@ -29,11 +29,8 @@ function NewListCategoryModal({
     initialValues: {
       name: "",
       tag: categoryIcons[0].tag,
-    }
+    },
   });
-
-
-  console.log(form.errors);
 
   const handleSubmit = async (newCategory: NewCategoryRequest) => {
     console.log("Form submitted with data:", newCategory);
