@@ -17,13 +17,11 @@ import { loginSchema } from "./shared/auth.schemas";
 import useFormErrorHandler from "../../hooks/useFormErrorHandler";
 import { ErrorResponse } from "../../api/errors/errror.types";
 import { useLogin } from "./shared/auth.mutations";
-import useAuthStore from "../../stores/useAuthStore";
 const demoEmail = import.meta.env.VITE_DEMO_EMAIL;
 const demoPassword = import.meta.env.VITE_DEMO_PASSWORD;
 
 function LoginForm() {
-  const { isAuthenticated } = useAuthStore();
-  const login = useLogin();
+  const { isPending, mutateAsync: login } = useLogin();
   const navigate = useNavigate();
 
   const { handleAuthFormErrors } = useFormErrorHandler<LoginRequest>();
@@ -38,32 +36,24 @@ function LoginForm() {
 
   async function onSubmit(credentials: LoginRequest) {
     try {
-      await login.mutateAsync(credentials);
-
+      await login(credentials);
       form.reset();
       navigate({ to: "/categories" });
     } catch (err) {
-      const error = err as ErrorResponse;
-      handleAuthFormErrors(error, form);
+      handleAuthFormErrors(err as ErrorResponse, form);
     }
   }
 
   async function handleDemoUserLogin() {
-    const demoCredentials = {
-      email: demoEmail,
-      password: demoPassword,
-    };
-
     try {
-      await login.mutateAsync(demoCredentials);
-
+      await login({
+        email: demoEmail,
+        password: demoPassword,
+      });
       form.reset();
-
-      console.log(isAuthenticated);
       navigate({ to: "/categories" });
     } catch (err) {
-      const error = err as ErrorResponse;
-      handleAuthFormErrors(error, form);
+      handleAuthFormErrors(err as ErrorResponse, form);
     }
   }
 
@@ -85,6 +75,8 @@ function LoginForm() {
               variant="light"
               color="lime"
               onClick={handleDemoUserLogin}
+              loading={isPending}
+              disabled={isPending}
             >
               User Account
             </Button>
@@ -94,6 +86,9 @@ function LoginForm() {
               radius="xl"
               variant="light"
               color="lime"
+              onClick={handleDemoUserLogin}
+              loading={isPending}
+              disabled={isPending}
             >
               Admin Account
             </Button>
@@ -103,14 +98,8 @@ function LoginForm() {
         <TextInput
           label="Email"
           placeholder="you@example.com"
-          classNames={{
-            input: "input",
-          }}
           leftSection={<AtSign size={20} />}
           {...form.getInputProps("email")}
-          onChange={(event) => {
-            form.setFieldValue("email", event.currentTarget.value);
-          }}
         />
         <PasswordInput
           label="Password"
@@ -118,22 +107,25 @@ function LoginForm() {
           withAsterisk
           required
           mt="md"
-          classNames={{
-            input: "input",
-          }}
           leftSection={<Lock size={20} />}
           {...form.getInputProps("password")}
-          onChange={(event) => {
-            form.setFieldValue("password", event.currentTarget.value);
-          }}
         />
+
         <Group justify="end" mt="lg">
           <Anchor component={Link} size="sm" c="lime" to={"/forgot-password"}>
             Forgot password?
           </Anchor>
         </Group>
+
         <Flex mt="xl" gap="sm">
-          <Button w="100%" color="lime" variant="light" type="submit">
+          <Button
+            w="100%"
+            color="lime"
+            variant="light"
+            type="submit"
+            loading={isPending}
+            disabled={isPending}
+          >
             Login
           </Button>
         </Flex>
