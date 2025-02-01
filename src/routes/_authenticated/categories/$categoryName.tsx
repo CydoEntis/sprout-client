@@ -2,7 +2,7 @@ import { createFileRoute, useParams } from "@tanstack/react-router";
 import { useDisclosure } from "@mantine/hooks";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getAllTaskListsInCategoryQueryOptions } from "../../../features/task-list/shared/task-list.queries";
+
 import LoadingSkeleton from "../../../components/loaders/LoadingSkeleton";
 import useAuthStore from "../../../stores/useAuthStore";
 import WelcomeHeader from "../../../components/headers/WelcomeHeader";
@@ -10,6 +10,7 @@ import FarmProgress from "../../../features/farm/FarmProgress";
 import CreateTaskListModal from "../../../features/task-list/CreateTaskListModal";
 import InProgressTaskListCard from "../../../features/task-list/InProgressTaskListCard";
 import GridList from "../../../components/GridList";
+import { getAllTaskListsForCategoryQueryOptions } from "../../../features/categories/shared/category.queries";
 
 export const Route = createFileRoute(
   "/_authenticated/categories/$categoryName"
@@ -17,7 +18,7 @@ export const Route = createFileRoute(
   loader: async ({ context, params }) => {
     const { queryClient } = context;
     return queryClient.ensureQueryData(
-      getAllTaskListsInCategoryQueryOptions(params.categoryName)
+      getAllTaskListsForCategoryQueryOptions(params.categoryName)
     );
   },
   component: () => <TaskListPage />,
@@ -31,7 +32,7 @@ function TaskListPage() {
     from: "/_authenticated/categories/$categoryName",
   });
   const { data: taskLists } = useSuspenseQuery(
-    getAllTaskListsInCategoryQueryOptions(categoryName)
+    getAllTaskListsForCategoryQueryOptions(categoryName)
   );
   const user = useAuthStore((state) => state.user);
 

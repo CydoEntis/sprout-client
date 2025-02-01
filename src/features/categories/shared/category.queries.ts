@@ -1,5 +1,8 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import { getAllCategories } from "../../../api/services/category.services";
+import {
+  getAllCategories,
+  getAllTaskListsForCategory,
+} from "../../../api/services/category.services";
 
 export const getAllCategoriesQueryOptions = () =>
   queryOptions({
@@ -7,7 +10,17 @@ export const getAllCategoriesQueryOptions = () =>
     queryFn: () => getAllCategories(),
   });
 
-// TODO: Possibly remove since I'm using query options and not hooks.
 export const useGetAllCategories = () => {
   return useQuery(getAllCategoriesQueryOptions());
+};
+
+export const getAllTaskListsForCategoryQueryOptions = (category: string) =>
+  queryOptions({
+    queryKey: ["categories", category],
+    queryFn: () => getAllTaskListsForCategory(category),
+    enabled: !!category,
+  });
+
+export const useGetAllTaskListsForCategory = (category: string) => {
+  return useQuery(getAllTaskListsForCategoryQueryOptions(category));
 };
