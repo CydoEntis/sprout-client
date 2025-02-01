@@ -18,7 +18,7 @@ export const createTaskList = async (
 export const getAllTaskListsByCategory = async (
   category: string
 ): Promise<TaskListResponse[]> => {
-  const response = (await apiClient.get(`${endpoints.taskList}/${category}`))
+  const response = (await apiClient.get(`${endpoints.category}/${category}`))
     .data;
   if (!response.success) throw new Error(response.message);
   return response.data;
