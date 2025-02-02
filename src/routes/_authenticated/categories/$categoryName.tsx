@@ -11,7 +11,7 @@ import CreateTaskListModal from "../../../features/task-list/CreateTaskListModal
 import InProgressTaskListCard from "../../../features/task-list/InProgressTaskListCard";
 import GridList from "../../../components/GridList";
 import { getAllTaskListsForCategoryQueryOptions } from "../../../features/categories/shared/category.queries";
-import TaskListPage from "../../../pages/TaskListPage";
+import TaskListPage from "../../../pages/TaskListsPreviewPage";
 
 export const Route = createFileRoute(
   "/_authenticated/categories/$categoryName"
