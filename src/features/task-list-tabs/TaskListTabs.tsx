@@ -1,10 +1,10 @@
 import { Tabs, Group, Button, Flex, Text } from "@mantine/core";
 import { ClipboardCheck, ClipboardList, Plus } from "lucide-react";
 
-import InProgressTaskList from "../task-list/InProgressTaskList";
-import CompletedTaskList from "../task-list/CompletedTaskList";
+import InProgressTaskList from "../task-list/lists/InProgressTaskList";
+import CompletedTaskList from "../task-list/lists/CompletedTaskList";
 import { TaskListResponse } from "../task-list/shared/task-list.types";
-import InProgressTaskListCard from "../task-list/InProgressTaskListCard";
+import InProgressTaskListCard from "../task-list/cards/InProgressTaskListCard";
 import GridList from "../../components/GridList";
 
 type TaskListTabsProps = {

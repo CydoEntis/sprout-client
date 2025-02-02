@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import { Calendar } from "lucide-react";
 import TaskListCard from "./TaskListCard";
-import { TaskListResponse } from "./shared/task-list.types";
+import { TaskListResponse } from "../shared/task-list.types";
 
 type TaskListCardProps = {
   taskList: TaskListResponse;

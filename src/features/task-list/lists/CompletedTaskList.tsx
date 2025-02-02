@@ -1,5 +1,5 @@
-import CompletedTaskListCard from "./CompletedTaskListCard";
-import GridList from "../../components/GridList";
+import CompletedTaskListCard from "../cards/CompletedTaskListCard";
+import GridList from "../../../components/GridList";
 
 function CompletedTaskList() {
   return (

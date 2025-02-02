@@ -1,6 +1,6 @@
-import CreateTaskListModal from "../features/task-list/CreateTaskListModal";
+import CreateTaskListModal from "../features/task-list/modals/CreateTaskListModal";
 import { TaskListResponse } from "../features/task-list/shared/task-list.types";
-import TaskListsPreview from "../features/task-list/TaskListsPreview";
+import TaskListsPreview from "../features/task-list/TaskListCardsList";
 import { useDisclosure } from "@mantine/hooks";
 
 type TaskListPage = {

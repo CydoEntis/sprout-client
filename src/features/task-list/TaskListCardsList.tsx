@@ -1,15 +1,15 @@
 import { Button, Group } from "@mantine/core";
 import GridList from "../../components/GridList";
-import InProgressTaskListCard from "./InProgressTaskListCard";
+import InProgressTaskListCard from "./cards/InProgressTaskListCard";
 import { TaskListResponse } from "./shared/task-list.types";
 import { Plus } from "lucide-react";
 
-type TaskListsPreviewProps = {
+type TaskListCardsListProps = {
   onOpen: () => void;
   taskLists: TaskListResponse[];
 };
 
-function TaskListsPreview({ onOpen, taskLists }: TaskListsPreviewProps) {
+function TaskListCardsList({ onOpen, taskLists }: TaskListCardsListProps) {
   return (
     <>
       <Group justify="end" py={16}>
@@ -31,4 +31,4 @@ function TaskListsPreview({ onOpen, taskLists }: TaskListsPreviewProps) {
   );
 }
 
-export default TaskListsPreview;
+export default TaskListCardsList;
