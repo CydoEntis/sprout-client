@@ -1,5 +1,4 @@
 import { createFileRoute, useParams } from "@tanstack/react-router";
-import { useDisclosure } from "@mantine/hooks";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 
@@ -30,15 +29,5 @@ function TaskListsPreviewRoute() {
     getAllTaskListsForCategoryQueryOptions(categoryName)
   );
 
-  const [isNewTaskListOpened, { open: onOpenNewList, close: onCloseNewList }] =
-    useDisclosure(false);
-
-  return (
-    <TaskListPage
-      onClose={onCloseNewList}
-      onOpen={onOpenNewList}
-      isOpened={isNewTaskListOpened}
-      taskLists={taskLists}
-    />
-  );
+  return <TaskListPage taskLists={taskLists} />;
 }

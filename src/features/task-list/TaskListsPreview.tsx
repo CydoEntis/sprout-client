@@ -1,5 +1,4 @@
-import { Box, Button, Group } from "@mantine/core";
-import React from "react";
+import { Button, Group } from "@mantine/core";
 import GridList from "../../components/GridList";
 import InProgressTaskListCard from "./InProgressTaskListCard";
 import { TaskListResponse } from "./shared/task-list.types";
@@ -12,7 +11,7 @@ type TaskListsPreviewProps = {
 
 function TaskListsPreview({ onOpen, taskLists }: TaskListsPreviewProps) {
   return (
-    <Box p={32}>
+    <>
       <Group justify="end" py={16}>
         <Button
           variant="light"
@@ -20,7 +19,7 @@ function TaskListsPreview({ onOpen, taskLists }: TaskListsPreviewProps) {
           color="lime"
           onClick={onOpen}
         >
-          Category
+          Task List
         </Button>
       </Group>
       <GridList>
@@ -28,7 +27,7 @@ function TaskListsPreview({ onOpen, taskLists }: TaskListsPreviewProps) {
           <InProgressTaskListCard key={taskList.id} taskList={taskList} />
         ))}
       </GridList>
-    </Box>
+    </>
   );
 }
 
