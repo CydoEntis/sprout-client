@@ -16,7 +16,7 @@ export const useGetAllCategories = () => {
 
 export const getAllTaskListsForCategoryQueryOptions = (category: string) =>
   queryOptions({
-    queryKey: ["categories", category],
+    queryKey: ["task-lists", category],
     queryFn: () => getAllTaskListsForCategory(category),
     enabled: !!category,
   });

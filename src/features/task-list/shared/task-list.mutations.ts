@@ -3,7 +3,7 @@ import { NewTaskListRequest, NewTaskListResponse } from "./task-list.types";
 import { createTaskList } from "../../../api/services/task-list.services";
 import { notifications } from "@mantine/notifications";
 
-export function useCreateTaskList() {
+export function useCreateTaskListMutation(categoryName: string) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (
@@ -13,7 +13,7 @@ export function useCreateTaskList() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: ["tasks", "list"],
+        queryKey: ["task-lists", categoryName],
       });
 
       notifications.show({
@@ -25,7 +25,7 @@ export function useCreateTaskList() {
     },
     onError: () => {
       notifications.show({
-        title: "Quest Creation Failed",
+        title: "Task List Creation Failed",
         message: "Quest could not be created.",
         color: "red",
         position: "top-right",
