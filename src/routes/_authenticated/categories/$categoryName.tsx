@@ -4,12 +4,6 @@ import { useDisclosure } from "@mantine/hooks";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import LoadingSkeleton from "../../../components/loaders/LoadingSkeleton";
-import useAuthStore from "../../../stores/useAuthStore";
-import WelcomeHeader from "../../../components/headers/WelcomeHeader";
-import FarmProgress from "../../../features/farm/FarmProgress";
-import CreateTaskListModal from "../../../features/task-list/CreateTaskListModal";
-import InProgressTaskListCard from "../../../features/task-list/InProgressTaskListCard";
-import GridList from "../../../components/GridList";
 import { getAllTaskListsForCategoryQueryOptions } from "../../../features/categories/shared/category.queries";
 import TaskListPage from "../../../pages/TaskListsPreviewPage";
 
@@ -22,13 +16,13 @@ export const Route = createFileRoute(
       getAllTaskListsForCategoryQueryOptions(params.categoryName)
     );
   },
-  component: () => <TaskListRoute />,
+  component: () => <TaskListsPreviewRoute />,
   pendingComponent: () => (
     <LoadingSkeleton numberOfSkeletons={36} height={235} />
   ),
 });
 
-function TaskListRoute() {
+function TaskListsPreviewRoute() {
   const { categoryName } = useParams({
     from: "/_authenticated/categories/$categoryName",
   });
