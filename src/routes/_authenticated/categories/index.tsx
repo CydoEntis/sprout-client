@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { getAllCategoriesQueryOptions } from '../../../features/categories/shared/category.queries'
+import { getAllCategoriesQueryOptions } from '../../../features/categories/api/category.queries'
 import LoadingSkeleton from '../../../components/loaders/LoadingSkeleton'
 import CategoriesPage from '../../../pages/CategoriesPage'
 

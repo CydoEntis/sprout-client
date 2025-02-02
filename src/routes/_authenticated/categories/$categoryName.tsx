@@ -3,7 +3,7 @@ import { createFileRoute, useParams } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import LoadingSkeleton from "../../../components/loaders/LoadingSkeleton";
-import { getAllTaskListsForCategoryQueryOptions } from "../../../features/categories/shared/category.queries";
+import { getAllTaskListsForCategoryQueryOptions } from "../../../features/categories/api/category.queries";
 import TaskListPage from "../../../pages/TaskListsPreviewPage";
 
 export const Route = createFileRoute(

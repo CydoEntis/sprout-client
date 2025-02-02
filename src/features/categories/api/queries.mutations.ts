@@ -1,7 +1,10 @@
 import { notifications } from "@mantine/notifications";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { NewCategoryRequest, NewCategoryResponse } from "./category.types";
-import { createCategory } from "../../../api/services/category.services";
+import {
+  NewCategoryRequest,
+  NewCategoryResponse,
+} from "../shared/category.types";
+import { createCategory } from "./category.services";
 
 export function useCreateCategory() {
   const queryClient = useQueryClient();
@@ -12,9 +15,9 @@ export function useCreateCategory() {
       return await createCategory(newCategory);
     },
     onSuccess: (data) => {
-        queryClient.invalidateQueries({
-          queryKey: ["categories", "list"],
-        });
+      queryClient.invalidateQueries({
+        queryKey: ["categories", "list"],
+      });
 
       notifications.show({
         title: "Success",

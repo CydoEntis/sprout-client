@@ -3,7 +3,7 @@ import CategoryIconPicker from "./CategoryIconPicker";
 import { useForm, zodResolver } from "@mantine/form";
 import { newCategorySchema } from "./shared/category.schemas";
 import { CategoryIcon, NewCategoryRequest } from "./shared/category.types";
-import { useCreateCategory } from "./shared/queries.mutations";
+import { useCreateCategory } from "./api/queries.mutations";
 import { ErrorResponse } from "../../api/errors/errror.types";
 import useFormErrorHandler from "../../hooks/useFormErrorHandler";
 import { useState } from "react";
