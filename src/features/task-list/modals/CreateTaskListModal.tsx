@@ -1,12 +1,12 @@
 import { Modal, Textarea, TextInput, Button, Stack } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 
-import { newTaskListSchema } from "./shared/task-list.schemas";
-import { NewTaskListRequest } from "./shared/task-list.types";
 import { useParams } from "@tanstack/react-router";
-import { useCreateTaskListMutation } from "./shared/task-list.mutations";
-import useFormErrorHandler from "../../hooks/useFormErrorHandler";
-import { ErrorResponse } from "../../api/errors/errror.types";
+import { useCreateTaskListMutation } from "../shared/task-list.mutations";
+import useFormErrorHandler from "../../../hooks/useFormErrorHandler";
+import { NewTaskListRequest } from "../shared/task-list.types";
+import { newTaskListSchema } from "../shared/task-list.schemas";
+import { ErrorResponse } from "../../../api/errors/errror.types";
 
 type CreateTaskListModalProps = {
   isOpened: boolean;

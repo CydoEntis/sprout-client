@@ -2,7 +2,7 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 import {
   getAllCategories,
   getAllTaskListsForCategory,
-} from "../../../api/services/category.services";
+} from "./category.services";
 
 export const getAllCategoriesQueryOptions = () =>
   queryOptions({

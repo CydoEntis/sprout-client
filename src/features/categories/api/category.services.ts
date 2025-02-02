@@ -1,11 +1,11 @@
+import apiClient from "../../../api/apiClient";
+import endpoints from "../../../api/endpoints";
+import { TaskListResponse } from "../../task-list/shared/task-list.types";
 import {
-  CategoryResponse,
   NewCategoryRequest,
   NewCategoryResponse,
-} from "../../features/categories/shared/category.types";
-import { TaskListResponse } from "../../features/task-list/shared/task-list.types";
-import apiClient from "../apiClient";
-import endpoints from "../endpoints";
+  CategoryResponse,
+} from "../shared/category.types";
 
 export const createCategory = async (
   newCategory: NewCategoryRequest
