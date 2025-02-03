@@ -18,7 +18,7 @@ type TaskListCardProps = {
 
 function InProgressTaskListCard({ taskList }: TaskListCardProps) {
   return (
-    <TaskListCard borderPos="bottom" color="lime">
+    <TaskListCard borderPos="bottom" color="lime" taskListId={taskList.id}>
       <Stack gap={8} pb={20}>
         <Title size="lg">{taskList.name}</Title>
         <Group gap={4} align="center">

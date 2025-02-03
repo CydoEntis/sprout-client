@@ -1,19 +1,33 @@
 import { Box, Card, Flex } from "@mantine/core";
 import { ReactNode } from "react";
 import { CustomLink } from "../../../components/CustomLink";
+import { useParams } from "@tanstack/react-router";
 
 type TaskListCardProps = {
   borderPos: "left" | "bottom";
   color: string;
   children: ReactNode;
+  taskListId: number;
 };
 
-function TaskListCard({ borderPos, color, children }: TaskListCardProps) {
+function TaskListCard({
+  borderPos,
+  color,
+  taskListId,
+  children,
+}: TaskListCardProps) {
+  const { categoryName } = useParams({
+    from: "/_authenticated/categories/$categoryName",
+  });
+
   if (borderPos == "left") {
     return (
       <CustomLink
         to={"/categories/$categoryName/$taskListId"}
-        params={{ categoryName: "shopping", taskListId: "123" }}
+        params={{
+          categoryName: categoryName,
+          taskListId: taskListId.toString(),
+        }}
         className="card"
       >
         <Card p={0} shadow="md" bg="secondary">
@@ -31,7 +45,10 @@ function TaskListCard({ borderPos, color, children }: TaskListCardProps) {
   return (
     <CustomLink
       to={"/categories/$categoryName/$taskListId"}
-      params={{ categoryName: "shopping", taskListId: "123" }}
+      params={{
+        categoryName: categoryName,
+        taskListId: taskListId.toString(),
+      }}
       className="card"
     >
       <Card p={0} shadow="md" bg="secondary">
