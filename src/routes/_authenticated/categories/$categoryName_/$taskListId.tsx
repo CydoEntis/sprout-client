@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import TaskList from "../../../../features/task-list/TaskList";
+import TaskList from "../../../../features/task-list/TaskListDetails";
 
 export const Route = createFileRoute(
   "/_authenticated/categories/$categoryName_/$taskListId"

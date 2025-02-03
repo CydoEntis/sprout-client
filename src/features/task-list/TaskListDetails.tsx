@@ -3,11 +3,11 @@ import TaskListHeader from "../Tasks2/TaskListHeader";
 import { DndListHandle } from "../../DndListHandle";
 import AddTaskBtn from "../Tasks2/AddTaskBtn";
 
-type TaskListProps = {
+type TaskListDetailsProps = {
   onOpenAddTask: () => void;
 };
 
-function TaskList({ onOpenAddTask }: TaskListProps) {
+function TaskListDetails({ onOpenAddTask }: TaskListDetailsProps) {
   return (
     <Paper>
       <TaskListHeader />
@@ -17,4 +17,4 @@ function TaskList({ onOpenAddTask }: TaskListProps) {
   );
 }
 
-export default TaskList;
+export default TaskListDetails;
