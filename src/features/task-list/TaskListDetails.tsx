@@ -12,27 +12,27 @@ import TaskListHeader from "../Tasks2/TaskListHeader";
 import { DndListHandle } from "../../DndListHandle";
 import AddTaskBtn from "../Tasks2/AddTaskBtn";
 import { Clock, Plus } from "lucide-react";
+import { TaskListDetailResponse } from "./shared/task-list.types";
 
 type TaskListDetailsProps = {
   onOpenAddTask: () => void;
+  taskListDetails: TaskListDetailResponse;
 };
 
-function TaskListDetails({ onOpenAddTask }: TaskListDetailsProps) {
+function TaskListDetails({
+  onOpenAddTask,
+  taskListDetails,
+}: TaskListDetailsProps) {
   return (
     <Paper p={16} radius="md" mt={16}>
       <Stack gap={2} mb={16}>
         <Group justify="space-between" align="center">
-          <Title>Website for Rune.io</Title>
+          <Title>{taskListDetails.name}</Title>
           <Badge color="yellow.4" variant="light">
             In Progress
           </Badge>
         </Group>
-        <Text c="dimmed">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui laborum
-          nemo rerum obcaecati quidem tempore iusto amet doloremque nisi odit!
-          Aut excepturi ipsam ipsa! Doloribus eveniet cumque dolores voluptate
-          excepturi?
-        </Text>
+        <Text c="dimmed">{taskListDetails.description}</Text>
         <Group gap={8}>
           <Button size="xs" variant="light" color="lime">
             Details
@@ -48,14 +48,19 @@ function TaskListDetails({ onOpenAddTask }: TaskListDetailsProps) {
           <Text size="xs">Members</Text>
           <Group justify="space-between" align="center">
             <Avatar.Group>
-              <Avatar color="initials" name="Bilbo Baggins" />
-              <Avatar color="initials" name="Tito Teets" />
-              <Avatar color="initials" name="Zoro Boro" />
+              {taskListDetails.members.map((member) => (
+                <Avatar color="initials" name={member.name} />
+              ))}
               <Avatar>
                 <Plus size={20} />
               </Avatar>
             </Avatar.Group>
-            <Badge size="lg" leftSection={<Clock size={16} />} variant="light" color="gray">
+            <Badge
+              size="lg"
+              leftSection={<Clock size={16} />}
+              variant="light"
+              color="gray"
+            >
               Deadline: February 6
             </Badge>
           </Group>
