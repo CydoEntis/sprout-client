@@ -1,10 +1,13 @@
-// export const getAllTaskListsForCategoryQueryOptions = (category: string) =>
-//     queryOptions({
-//       queryKey: ["task-lists", category],
-//       queryFn: () => getAllTaskListsForCategory(category),
-//       enabled: !!category,
-//     });
-  
-//   export const useGetAllTaskListsForCategory = (category: string) => {
-//     return useQuery(getAllTaskListsForCategoryQueryOptions(category));
-//   };
+import { queryOptions, useQuery } from "@tanstack/react-query";
+import { getTaskListById } from "../../../api/services/task-list.services";
+
+export const getTaskListByIdQueryOptions = (taskListId: number) =>
+  queryOptions({
+    queryKey: ["task-lists", taskListId],
+    queryFn: () => getTaskListById(taskListId),
+    enabled: !!taskListId,
+  });
+
+export const useGetAllTaskListsForCategory = (taskListId: number) => {
+  return useQuery(getTaskListByIdQueryOptions(taskListId));
+};
