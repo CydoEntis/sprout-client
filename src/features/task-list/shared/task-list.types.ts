@@ -25,3 +25,20 @@ export type MemberResponse = {
   userId: string;
   name: string;
 };
+
+export type TaskListDetailResponse = {
+  id: number;
+  name: string;
+  description: string;
+  completedTasksCount: number;
+  totalTasksCount: number;
+  isCompleted: boolean;
+  members: MemberResponse[];
+  taskListItems: TaskListItemDetailResponse[];
+};
+
+export type TaskListItemDetailResponse = {
+  id: number;
+  description: string;
+  isCompleted: boolean;
+};
