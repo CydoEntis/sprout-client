@@ -6,6 +6,12 @@ import { ReactElement } from "react";
 export type NewCategoryRequest = z.infer<typeof newCategorySchema>;
 export type UpdateCategoryRequest = z.infer<typeof updateCategorySchema>;
 
+export type Category = {
+  id: number;
+  name: string;
+  tag: ValidCategoryTags;
+}
+
 export type CategoryIcon = {
   id: number;
   tag: ValidCategoryTags;
