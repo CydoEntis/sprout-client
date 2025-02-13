@@ -3,8 +3,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   NewCategoryRequest,
   NewCategoryResponse,
+  UpdateCategoryRequest,
 } from "../shared/category.types";
-import { createCategory } from "./category.services";
+import { createCategory, updateCategory } from "./category.services";
 
 export function useCreateCategory() {
   const queryClient = useQueryClient();
@@ -26,10 +27,41 @@ export function useCreateCategory() {
         position: "top-right",
       });
     },
-    onError: () => {
+    onError: (data) => {
       notifications.show({
-        title: "Quest Creation Failed",
-        message: "Quest could not be created.",
+        title: "Unsuccessful",
+        message: data.message,
+        color: "red",
+        position: "top-right",
+      });
+    },
+  });
+}
+
+export function useUpdateCategory() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (
+      updatedCategory: UpdateCategoryRequest
+    ): Promise<NewCategoryResponse> => {
+      return await updateCategory(updatedCategory);
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ["categories", "list"],
+      });
+
+      notifications.show({
+        title: "Success",
+        message: data.message,
+        color: "green",
+        position: "top-right",
+      });
+    },
+    onError: (data) => {
+      notifications.show({
+        title: "Unsuccessful",
+        message: data.message,
         color: "red",
         position: "top-right",
       });

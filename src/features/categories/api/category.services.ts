@@ -6,6 +6,7 @@ import {
   NewCategoryResponse,
   CategoryResponse,
   UpdateCategoryResponse,
+  UpdateCategoryRequest,
 } from "../shared/category.types";
 
 export const createCategory = async (
@@ -32,9 +33,12 @@ export const getAllTaskListsForCategory = async (
   return response.data;
 };
 
-export const updateCategory = async (): Promise<UpdateCategoryResponse> => {
-  const response = (await apiClient.put(`${endpoints.category}`)).data;
+export const updateCategory = async (
+  updatedCategory: UpdateCategoryRequest
+): Promise<UpdateCategoryResponse> => {
+  const response = (
+    await apiClient.put(`${endpoints.category}`, updatedCategory)
+  ).data;
   if (!response.success) throw new Error(response.message);
   return response.data;
 };
-

@@ -1,9 +1,10 @@
 import { z } from "zod";
-import { newCategorySchema } from "./category.schemas";
+import { newCategorySchema, updateCategorySchema } from "./category.schemas";
 import { validCategoryTags } from "./category.constants";
 import { ReactElement } from "react";
 
 export type NewCategoryRequest = z.infer<typeof newCategorySchema>;
+export type UpdateCategoryRequest = z.infer<typeof updateCategorySchema>;
 
 export type CategoryIcon = {
   id: number;
