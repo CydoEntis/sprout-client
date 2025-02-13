@@ -37,17 +37,22 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
 
   useEffect(() => {
     if (category) {
-      form.setValues({ ...form.values, name: category.name, tag: category.tag });
+      form.setValues({ name: category.name, tag: category.tag });
+
+      setSelectedIcon(categoryIcons.find((icon) => icon.tag === category.tag) ?? categoryIcons[0]);
+    } else {
+      form.setValues({ name: "", tag: categoryIcons[0].tag });
+      setSelectedIcon(categoryIcons[0]);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
 
-  const handleSubmit = async (values: NewCategoryRequest | UpdateCategoryRequest) => {
+  const handleSubmit = async (data: NewCategoryRequest | UpdateCategoryRequest) => {
     try {
       if (isEditing) {
-        await updateCategory.mutateAsync(values as UpdateCategoryRequest);
+        await updateCategory.mutateAsync(data as UpdateCategoryRequest);
       } else {
-        await createCategory.mutateAsync(values as NewCategoryRequest);
+        await createCategory.mutateAsync(data as NewCategoryRequest);
       }
       form.reset();
       onClose();
@@ -59,7 +64,7 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
 
   const handleIconSelect = (icon: CategoryIcon) => {
     setSelectedIcon(icon);
-    form.setValues({ ...form.values, tag: icon.tag });
+    form.setValues((currentValues) => ({ ...currentValues, tag: icon.tag }));
   };
 
   const handleClose = () => {
@@ -67,11 +72,6 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
     setSelectedIcon(categoryIcons[0]);
     onClose();
   };
-
-  if (category && category.tag !== selectedIcon.tag) {
-    const matchedIcon = categoryIcons.find((icon) => icon.tag === category.tag) ?? categoryIcons[0];
-    setSelectedIcon(matchedIcon);
-  }
 
   return (
     <Modal opened={isOpen} onClose={handleClose} title={isEditing ? "Update Category" : "Add a New Category"}>
