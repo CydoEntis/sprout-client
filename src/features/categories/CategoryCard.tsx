@@ -1,24 +1,21 @@
 import { Box, Paper, Title, Text } from "@mantine/core";
 import { ReactElement } from "react";
 import React from "react";
-import { CategoryResponse } from "./shared/category.types";
+import { Category, CategoryResponse } from "./shared/category.types";
 import { categoryIcons } from "./shared/category.constants";
 import { CustomLink } from "../../components/CustomLink";
 import UpdateAndDeleteMenu from "../../components/menus/UpdateAndDeleteMenu";
 
 type CategoryCard = {
   category: CategoryResponse;
+  onEdit: (category: Category) => void;
 };
 
-function CategoryCard({ category }: CategoryCard) {
+function CategoryCard({ category, onEdit }: CategoryCard) {
   const foundCategory = categoryIcons.find((c) => c.tag === category.tag);
 
   return (
-    <CustomLink
-      c="inverse"
-      to={"/categories/$categoryName"}
-      params={{ categoryName: category.name.toLowerCase() }}
-    >
+    <CustomLink c="inverse" to={"/categories/$categoryName"} params={{ categoryName: category.name.toLowerCase() }}>
       <Paper
         className="card"
         h={130}
@@ -29,10 +26,7 @@ function CategoryCard({ category }: CategoryCard) {
         pos="relative"
         bg="card"
       >
-        <UpdateAndDeleteMenu
-          onUpdate={() => console.log("updating")}
-          onDelete={() => console.log("deleting")}
-        />
+        <UpdateAndDeleteMenu onUpdate={() => onEdit(category)} onDelete={() => console.log("deleting")} />
         <Box
           style={{
             position: "absolute",
@@ -49,9 +43,7 @@ function CategoryCard({ category }: CategoryCard) {
         <Box>
           <Title size="1.75rem">{category.name}</Title>
           <Text size="sm" c="dimmed">
-            {category.taskListCount === 1
-              ? `${category.taskListCount} list`
-              : `${category.taskListCount} lists`}
+            {category.taskListCount === 1 ? `${category.taskListCount} list` : `${category.taskListCount} lists`}
           </Text>
         </Box>
       </Paper>

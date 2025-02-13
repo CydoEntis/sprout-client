@@ -1,26 +1,39 @@
-import NewListCategoryModal from "../features/categories/NewListCategoryModal";
 import CategoryList from "../features/categories/CategoryList";
 import { useDisclosure } from "@mantine/hooks";
-import { CategoryResponse } from "../features/categories/shared/category.types";
+import { Category, CategoryResponse } from "../features/categories/shared/category.types";
+import UpsertCategoryModal from "../features/categories/UpsertCategoryModal";
+import { useState } from "react";
 
 type CategoriesPageProps = {
   categories: CategoryResponse[];
 };
 
 function CategoriesPage({ categories }: CategoriesPageProps) {
-  const [
-    isNewCategoryOpened,
-    { open: onOpenNewCategory, close: onCloseNewCategory },
-  ] = useDisclosure(false);
+  const [isCategoryModalOpended, { open: onOpenCategoryModal, close: onCloseCategoryModal }] = useDisclosure(false);
+  const [category, setCategory] = useState<Category | undefined>(undefined);
+
+  const openCategoryCreateModalHandler = () => {
+    setCategory(undefined);
+    onOpenCategoryModal();
+  };
+
+  const openCategoryEditModalHandler = (category: Category) => {
+    setCategory(category);
+    onOpenCategoryModal();
+  };
+
+  const closeCategoryModalHandler = () => {
+    setCategory(undefined);
+    onCloseCategoryModal();
+  };
+
   return (
     <>
-      <NewListCategoryModal
-        isNewCategoryOpened={isNewCategoryOpened}
-        onCloseNewCategory={onCloseNewCategory}
-      />
+      <UpsertCategoryModal isOpen={isCategoryModalOpended} onClose={closeCategoryModalHandler} category={category}/>
       <CategoryList
         categories={categories}
-        onOpenNewCategory={onOpenNewCategory}
+        onOpen={openCategoryCreateModalHandler}
+        onEdit={openCategoryEditModalHandler}
       />
     </>
   );

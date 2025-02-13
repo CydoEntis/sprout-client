@@ -35,6 +35,9 @@ function UpsertCategoryModal({
   >();
   const isEditing = !!category;
 
+
+  console.log("Category: ", category);
+
   const [selectedIcon, setSelectedIcon] = useState<CategoryIcon>(
     category
       ? (categoryIcons.find((icon) => icon.tag === category.tag) ??
