@@ -39,6 +39,7 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
     if (category) {
       form.setValues({ ...form.values, name: category.name, tag: category.tag });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
 
   const handleSubmit = async (values: NewCategoryRequest | UpdateCategoryRequest) => {
