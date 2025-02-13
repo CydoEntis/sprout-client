@@ -13,7 +13,6 @@ export const newCategorySchema = z.object({
 
 
 export const updateCategorySchema = z.object({
-  id: z.number(),
   name: z
     .string()
     .min(3, "Title must be at least 3 characters long.")
