@@ -5,6 +5,7 @@ import {
   NewCategoryRequest,
   NewCategoryResponse,
   CategoryResponse,
+  UpdateCategoryResponse,
 } from "../shared/category.types";
 
 export const createCategory = async (
@@ -30,3 +31,10 @@ export const getAllTaskListsForCategory = async (
   if (!response.success) throw new Error(response.message);
   return response.data;
 };
+
+export const updateCategory = async (): Promise<UpdateCategoryResponse> => {
+  const response = (await apiClient.put(`${endpoints.category}`)).data;
+  if (!response.success) throw new Error(response.message);
+  return response.data;
+};
+

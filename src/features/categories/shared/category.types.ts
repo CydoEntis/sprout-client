@@ -22,4 +22,9 @@ export type CategoryResponse = {
   taskListCount: number;
 };
 
+export type UpdateCategoryResponse = {
+  message: string;
+  categoryId: number;
+};
+
 export type ValidCategoryTags = (typeof validCategoryTags)[number];
