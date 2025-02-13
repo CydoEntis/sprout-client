@@ -21,15 +21,12 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
   const { handleFormErrors } = useFormErrorHandler<NewCategoryRequest | UpdateCategoryRequest>();
   const isEditing = !!category;
 
-  const initialIcon = category
-    ? (categoryIcons.find((icon) => icon.tag === category.tag) ?? categoryIcons[0])
-    : categoryIcons[0];
-
-  const [selectedIcon, setSelectedIcon] = useState<CategoryIcon>(initialIcon);
+  const [selectedIcon, setSelectedIcon] = useState<CategoryIcon>(categoryIcons[0]);
 
   const form = useForm<NewCategoryRequest | UpdateCategoryRequest>({
     validate: zodResolver(isEditing ? updateCategorySchema : newCategorySchema),
     initialValues: {
+      id: category ? category.id : undefined,
       name: category ? category.name : "",
       tag: category ? category.tag : categoryIcons[0].tag,
     },
@@ -37,14 +34,14 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
 
   useEffect(() => {
     if (category) {
-      form.setValues({ name: category.name, tag: category.tag });
-
-      setSelectedIcon(categoryIcons.find((icon) => icon.tag === category.tag) ?? categoryIcons[0]);
+      const foundIcon = categoryIcons.find((icon) => icon.tag === category.tag) ?? categoryIcons[0];
+      setSelectedIcon(foundIcon);
+      form.setValues({ name: category.name, tag: category.tag, id: category.id });
     } else {
+      setSelectedIcon(categoryIcons[0]); 
       form.setValues({ name: "", tag: categoryIcons[0].tag });
-      setSelectedIcon(categoryIcons[0]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
 
   const handleSubmit = async (data: NewCategoryRequest | UpdateCategoryRequest) => {
