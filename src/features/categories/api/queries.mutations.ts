@@ -1,11 +1,12 @@
 import { notifications } from "@mantine/notifications";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+  DeleteCategoryResponse,
   NewCategoryRequest,
   NewCategoryResponse,
   UpdateCategoryRequest,
 } from "../shared/category.types";
-import { createCategory, updateCategory } from "./category.services";
+import { createCategory, deleteCategory, updateCategory } from "./category.services";
 
 export function useCreateCategory() {
   const queryClient = useQueryClient();
@@ -45,6 +46,37 @@ export function useUpdateCategory() {
       updatedCategory: UpdateCategoryRequest
     ): Promise<NewCategoryResponse> => {
       return await updateCategory(updatedCategory);
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ["categories", "list"],
+      });
+
+      notifications.show({
+        title: "Success",
+        message: data.message,
+        color: "green",
+        position: "top-right",
+      });
+    },
+    onError: (data) => {
+      notifications.show({
+        title: "Unsuccessful",
+        message: data.message,
+        color: "red",
+        position: "top-right",
+      });
+    },
+  });
+}
+
+export function useDeleteCategory() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (
+      categoryId: number
+    ): Promise<DeleteCategoryResponse> => {
+      return await deleteCategory(categoryId);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({

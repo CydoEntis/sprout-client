@@ -10,7 +10,7 @@ export type Category = {
   id: number;
   name: string;
   tag: ValidCategoryTags;
-}
+};
 
 export type CategoryIcon = {
   id: number;
@@ -33,5 +33,7 @@ export type UpdateCategoryResponse = {
   message: string;
   categoryId: number;
 };
+
+export type DeleteCategoryResponse = UpdateCategoryResponse;
 
 export type ValidCategoryTags = (typeof validCategoryTags)[number];

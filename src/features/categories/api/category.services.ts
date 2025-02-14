@@ -7,6 +7,7 @@ import {
   CategoryResponse,
   UpdateCategoryResponse,
   UpdateCategoryRequest,
+  DeleteCategoryResponse,
 } from "../shared/category.types";
 
 export const createCategory = async (newCategory: NewCategoryRequest): Promise<NewCategoryResponse> => {
