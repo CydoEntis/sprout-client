@@ -5,6 +5,7 @@ import { Category, CategoryResponse } from "./shared/category.types";
 import { categoryIcons } from "./shared/category.constants";
 import { CustomLink } from "../../components/CustomLink";
 import UpdateAndDeleteMenu from "../../components/menus/UpdateAndDeleteMenu";
+import { useDeleteCategory } from "./api/queries.mutations";
 
 type CategoryCard = {
   category: CategoryResponse;
@@ -12,6 +13,7 @@ type CategoryCard = {
 };
 
 function CategoryCard({ category, onEdit }: CategoryCard) {
+  const { mutateAsync: deleteCategory } = useDeleteCategory();
   const foundCategory = categoryIcons.find((c) => c.tag === category.tag);
 
   return (
@@ -26,7 +28,7 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
         pos="relative"
         bg="card"
       >
-        <UpdateAndDeleteMenu onUpdate={() => onEdit(category)} onDelete={() => console.log("deleting")} />
+        <UpdateAndDeleteMenu onUpdate={() => onEdit(category)} onDelete={() => deleteCategory(category.id)} />
         <Box
           style={{
             position: "absolute",
