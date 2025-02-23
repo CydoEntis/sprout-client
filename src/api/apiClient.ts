@@ -16,12 +16,12 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use((request) => {
   const token =
     useAuthStore.getState().accessToken ||
-    localStorageService.getItem<{ accessToken?: string }>("taskgarden")
-      ?.accessToken;
+    localStorageService.getItem<{ accessToken?: string }>("taskgarden")?.accessToken;
 
   if (token) {
     request.headers.Authorization = `Bearer ${token}`;
   }
+
   return request;
 });
 
@@ -29,14 +29,15 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+
+    console.log("Error response:", error.response);
+
     // Handle server down or unreachable
     if (!error.response) {
       useAuthStore.getState().logoutUser();
       localStorageService.removeItem("taskgarden");
       window.location.href = "/login";
-      return Promise.reject(
-        new Error("Server unreachable. Please try again later.")
-      );
+      return Promise.reject(new Error("Server unreachable. Please try again later."));
     }
 
     // Handle 401 Unauthorized and token refresh
@@ -45,7 +46,6 @@ apiClient.interceptors.response.use(
 
       try {
         const { accessToken } = await refreshTokens();
-        console.log("Tokens Refreshed: ", accessToken);
         localStorageService.updateItem("taskgarden", { accessToken });
 
         const decodedToken = jwtDecode<DecodedToken>(accessToken);
@@ -58,15 +58,13 @@ apiClient.interceptors.response.use(
         };
         useAuthStore.getState().loginUser(user, accessToken);
 
-        return apiClient(originalRequest); // Retry the original request
+        return apiClient(originalRequest);
       } catch {
         await logoutUser();
         useAuthStore.getState().logoutUser();
         localStorageService.removeItem("taskgarden");
         window.location.href = "/login";
-        return Promise.reject(
-          new Error("Token refresh failed. Please log in again.")
-        );
+        return Promise.reject(new Error("Token refresh failed. Please log in again."));
       }
     }
 
@@ -80,8 +78,7 @@ apiClient.interceptors.response.use(
     }
 
     if (error.response?.status === 404) {
-      const errorMessage =
-        Object.values(error.response.data.errors)?.[0] || "Resource not found.";
+      const errorMessage = Object.values(error.response.data.errors)?.[0] || "Resource not found.";
 
       return Promise.reject({
         type: ERROR_TYPES.NOT_FOUND_ERROR,
@@ -91,8 +88,7 @@ apiClient.interceptors.response.use(
     }
 
     if (error.response?.status === 409) {
-      const errorMessage =
-        Object.values(error.response.data.errors)?.[0] || "Resource conflict.";
+      const errorMessage = Object.values(error.response.data.errors)?.[0] || "Resource conflict.";
 
       return Promise.reject({
         type: ERROR_TYPES.CONFLICT_ERROR,
@@ -101,9 +97,7 @@ apiClient.interceptors.response.use(
       });
     }
 
-    const errorMessage =
-      Object.values(error.response.data.errors)?.[0] ||
-      "An unknown error occurred.";
+    const errorMessage = Object.values(error.response.data.errors)?.[0] || "An unknown error occurred.";
 
     // Log relevant error details
     return Promise.reject({
