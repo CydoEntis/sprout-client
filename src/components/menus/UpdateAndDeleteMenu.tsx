@@ -1,5 +1,5 @@
 import { ActionIcon, Menu } from "@mantine/core";
-import { Edit2, Settings, Trash2 } from "lucide-react";
+import { Edit2, MoreVertical, Trash2 } from "lucide-react";
 
 type UpdateAndDeleteMenuProps = {
   onUpdate: () => void;
@@ -23,12 +23,6 @@ function UpdateAndDeleteMenu({ onUpdate, onDelete }: UpdateAndDeleteMenuProps) {
     <Menu shadow="md">
       <Menu.Target>
         <ActionIcon
-          style={{
-            zIndex: 100,
-            position: "absolute",
-            right: "2%",
-            top: "5%",
-          }}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -36,7 +30,7 @@ function UpdateAndDeleteMenu({ onUpdate, onDelete }: UpdateAndDeleteMenuProps) {
           variant="subtle"
           color="inverse"
         >
-          <Settings size={16} />
+          <MoreVertical size={20} />
         </ActionIcon>
       </Menu.Target>
 
