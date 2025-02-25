@@ -31,7 +31,7 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
       >
         <Stack gap={32}>
           <Flex justify="space-between" w="100%" align="center">
-            <Paper p="xs" bg="lime" radius="md" h={45} >
+            <Paper p="xs" bg={category.color} radius="md" h={45}>
               {foundCategory &&
                 React.cloneElement(foundCategory.icon as ReactElement, {
                   size: 25,
@@ -44,7 +44,7 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
           <Box>
             <Text size="sm" c="dimmed">
               You have{" "}
-              <Text span fw={700}  className="underline" c="dimmed">
+              <Text span fw={700} className="underline" c={category.color}>
                 {category.taskListCount}
               </Text>{" "}
               {category.taskListCount === 1 ? " active list" : " active lists"}
