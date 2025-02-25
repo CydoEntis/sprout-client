@@ -72,6 +72,7 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
   const handleClose = () => {
     form.reset();
     setSelectedIcon(categoryIcons[0]);
+    setSelectedColor(categoryColors[0]);
     onClose();
   };
 
