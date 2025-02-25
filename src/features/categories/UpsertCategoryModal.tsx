@@ -2,7 +2,13 @@ import { Button, Modal, Stack, TextInput } from "@mantine/core";
 import CategoryIconPicker from "./CategoryIconPicker";
 import { useForm, zodResolver } from "@mantine/form";
 import { newCategorySchema, updateCategorySchema } from "./shared/category.schemas";
-import { Category, CategoryIcon, NewCategoryRequest, UpdateCategoryRequest } from "./shared/category.types";
+import {
+  Category,
+  CategoryColor,
+  CategoryIcon,
+  NewCategoryRequest,
+  UpdateCategoryRequest,
+} from "./shared/category.types";
 import { useCreateCategory, useUpdateCategory } from "./api/queries.mutations";
 import { ErrorResponse } from "../../api/errors/errror.types";
 import useFormErrorHandler from "../../hooks/useFormErrorHandler";
@@ -39,21 +45,23 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
     if (category) {
       const foundIcon = categoryIcons.find((icon) => icon.tag === category.tag) ?? categoryIcons[0];
       setSelectedIcon(foundIcon);
-      setSelectedColor(category.color);
-      form.setValues({ name: category.name, tag: category.tag, id: category.id });
+      form.setValues({ name: category.name, tag: category.tag, id: category.id, color: category.color });
     } else {
       setSelectedIcon(categoryIcons[0]);
       setSelectedColor(categoryColors[0]);
-      form.setValues({ name: "", tag: categoryIcons[0].tag });
+      form.setValues({ name: "", tag: categoryIcons[0].tag, color: categoryColors[0] });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
+
+  console.log(selectedColor);
 
   const handleSubmit = async (data: NewCategoryRequest | UpdateCategoryRequest) => {
     try {
       if (isEditing) {
         await updateCategory.mutateAsync(data as UpdateCategoryRequest);
       } else {
+        console.log(data);
         await createCategory.mutateAsync(data as NewCategoryRequest);
       }
       form.reset();
@@ -69,6 +77,11 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
     form.setValues((currentValues) => ({ ...currentValues, tag: icon.tag }));
   };
 
+  const handleColorSelect = (color: CategoryColor) => {
+    setSelectedColor(color);
+    form.setValues((currentValues) => ({ ...currentValues, color: color }));
+  };
+
   const handleClose = () => {
     form.reset();
     setSelectedIcon(categoryIcons[0]);
@@ -82,7 +95,7 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
         <Stack gap={16}>
           <TextInput label="Category Name" placeholder="Enter a category name" {...form.getInputProps("name")} />
           <CategoryIconPicker selectedIcon={selectedIcon} handleIconClick={handleIconSelect} />
-          <ColorPicker selectedColor={selectedColor} handleColorSelect={setSelectedColor} />
+          <ColorPicker selectedColor={selectedColor} handleColorSelect={handleColorSelect} />
           <Button type="submit" w="100%" variant="light" color="lime">
             {isEditing ? "Update Category" : "Create Category"}
           </Button>
