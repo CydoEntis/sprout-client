@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { validCategoryTags } from "./category.constants";
+import { categoryColors, validCategoryTags } from "./category.constants";
 
 export const newCategorySchema = z.object({
   name: z
@@ -9,8 +9,10 @@ export const newCategorySchema = z.object({
   tag: z.enum(validCategoryTags, {
     errorMap: () => ({ message: "You must select a valid icon." }),
   }),
+  color: z.enum(categoryColors, {
+    errorMap: () => ({ message: "You must select a valid color." }),
+  }),
 });
-
 
 export const updateCategorySchema = z.object({
   id: z.number(),
@@ -20,5 +22,8 @@ export const updateCategorySchema = z.object({
     .max(25, "Title must be at most 25 characters long."),
   tag: z.enum(validCategoryTags, {
     errorMap: () => ({ message: "You must select a valid icon." }),
+  }),
+  color: z.enum(categoryColors, {
+    errorMap: () => ({ message: "You must select a valid color." }),
   }),
 });

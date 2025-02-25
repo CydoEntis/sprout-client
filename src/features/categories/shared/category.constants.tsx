@@ -100,3 +100,21 @@ export const validCategoryTags = [
   "book",
   "square-library",
 ] as const;
+
+export const categoryColors = [
+    "gray",
+    "red",
+    "pink",
+    "grape",
+    "violet",
+    "indigo",
+    "blue",
+    "cyan",
+    "teal",
+    "green",
+    "lime",
+    "yellow",
+    "orange",
+  ] as const;
+
+  

@@ -7,7 +7,8 @@ import { useCreateCategory, useUpdateCategory } from "./api/queries.mutations";
 import { ErrorResponse } from "../../api/errors/errror.types";
 import useFormErrorHandler from "../../hooks/useFormErrorHandler";
 import { useEffect, useState } from "react";
-import { categoryIcons } from "./shared/category.constants";
+import { categoryColors, categoryIcons } from "./shared/category.constants";
+import ColorPicker from "../../components/color-picker/ColorPicker";
 
 type UpsertCategoryModalProps = {
   isOpen: boolean;
@@ -22,6 +23,7 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
   const isEditing = !!category;
 
   const [selectedIcon, setSelectedIcon] = useState<CategoryIcon>(categoryIcons[0]);
+  const [selectedColor, setSelectedColor] = useState(category?.color ?? categoryColors[0]);
 
   const form = useForm<NewCategoryRequest | UpdateCategoryRequest>({
     validate: zodResolver(isEditing ? updateCategorySchema : newCategorySchema),
@@ -29,6 +31,7 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
       id: category ? category.id : undefined,
       name: category ? category.name : "",
       tag: category ? category.tag : categoryIcons[0].tag,
+      color: category ? category.color : "red",
     },
   });
 
@@ -36,12 +39,14 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
     if (category) {
       const foundIcon = categoryIcons.find((icon) => icon.tag === category.tag) ?? categoryIcons[0];
       setSelectedIcon(foundIcon);
+      setSelectedColor(category.color);
       form.setValues({ name: category.name, tag: category.tag, id: category.id });
     } else {
-      setSelectedIcon(categoryIcons[0]); 
+      setSelectedIcon(categoryIcons[0]);
+      setSelectedColor(categoryColors[0]);
       form.setValues({ name: "", tag: categoryIcons[0].tag });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
 
   const handleSubmit = async (data: NewCategoryRequest | UpdateCategoryRequest) => {
@@ -76,6 +81,7 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
         <Stack gap={16}>
           <TextInput label="Category Name" placeholder="Enter a category name" {...form.getInputProps("name")} />
           <CategoryIconPicker selectedIcon={selectedIcon} handleIconClick={handleIconSelect} />
+          <ColorPicker selectedColor={selectedColor} handleColorSelect={setSelectedColor} />
           <Button type="submit" w="100%" variant="light" color="lime">
             {isEditing ? "Update Category" : "Create Category"}
           </Button>

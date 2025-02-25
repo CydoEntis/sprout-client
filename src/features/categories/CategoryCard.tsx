@@ -31,7 +31,7 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
       >
         <Stack gap={32}>
           <Flex justify="space-between" w="100%" align="center">
-            <Paper p="xs" bg="lime" radius="md" h={45}>
+            <Paper p="xs" bg="lime" radius="md" h={45} >
               {foundCategory &&
                 React.cloneElement(foundCategory.icon as ReactElement, {
                   size: 25,

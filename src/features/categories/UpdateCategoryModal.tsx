@@ -7,22 +7,18 @@ import { useUpdateCategory } from "./api/queries.mutations";
 import { ErrorResponse } from "../../api/errors/errror.types";
 import useFormErrorHandler from "../../hooks/useFormErrorHandler";
 import { useState } from "react";
-import { categoryIcons } from "./shared/category.constants";
+import { categoryColors, categoryIcons } from "./shared/category.constants";
 
 type NewListCategoryModal = {
   isNewCategoryOpened: boolean;
   onCloseNewCategory: () => void;
 };
 
-function NewListCategoryModal({
-  isNewCategoryOpened,
-  onCloseNewCategory,
-}: NewListCategoryModal) {
+function NewListCategoryModal({ isNewCategoryOpened, onCloseNewCategory }: NewListCategoryModal) {
   const updateCategory = useUpdateCategory();
   const { handleFormErrors } = useFormErrorHandler<UpdateCategoryRequest>();
-  const [selectedIcon, setSelectedIcon] = useState<CategoryIcon>(
-    categoryIcons[0]
-  );
+  const [selectedIcon, setSelectedIcon] = useState<CategoryIcon>(categoryIcons[0]);
+  const [selectedColor, setSelectedColor] = useState(category?.color ?? categoryColors[0]);
 
   const form = useForm<UpdateCategoryRequest>({
     validate: zodResolver(updateCategorySchema),
@@ -30,6 +26,7 @@ function NewListCategoryModal({
       id: 1,
       name: "",
       tag: categoryIcons[0].tag,
+      color: categoryColors[0],
     },
   });
 
@@ -60,22 +57,11 @@ function NewListCategoryModal({
   };
 
   return (
-    <Modal
-      opened={isNewCategoryOpened}
-      onClose={handleClose}
-      title="Add a new category"
-    >
+    <Modal opened={isNewCategoryOpened} onClose={handleClose} title="Add a new category">
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack gap={16}>
-          <TextInput
-            label="Category Name"
-            placeholder="Enter a category name"
-            {...form.getInputProps("name")}
-          />
-          <CategoryIconPicker
-            selectedIcon={selectedIcon}
-            handleIconClick={handleIconSelect}
-          />
+          <TextInput label="Category Name" placeholder="Enter a category name" {...form.getInputProps("name")} />
+          <CategoryIconPicker selectedIcon={selectedIcon} handleIconClick={handleIconSelect} />
           <Button type="submit" w="100%" variant="light" color="lime">
             Update Category
           </Button>
