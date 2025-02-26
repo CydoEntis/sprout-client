@@ -13,7 +13,7 @@ export type Category = {
   color: CategoryColor;
 };
 
-export type CategoryIcon = {
+export type CategoryIdentifier = {
   id: number;
   tag: ValidCategoryTags;
   icon: ReactElement;

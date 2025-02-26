@@ -4,8 +4,8 @@ import ThemeToggle from "../theme/ThemeToggle";
 import { Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import useAuthStore from "../../stores/useAuthStore";
 import { CustomLink } from "../CustomLink";
-import { logoutUser } from "../../api/services/auth.services";
 import LocalStorageService from "../../services/localStorage.service";
+import { logoutUser } from "../../features-new/auth/services/logout.service";
 
 function Layout() {
   const { user, logoutUser: logout } = useAuthStore();
@@ -38,8 +38,7 @@ function Layout() {
                   to="/"
                   c="inverse"
                   style={{
-                    fontWeight:
-                      location.pathname === "/tasks" ? "bold" : "normal",
+                    fontWeight: location.pathname === "/tasks" ? "bold" : "normal",
                   }}
                 >
                   Tasks
@@ -49,8 +48,7 @@ function Layout() {
                   to="/"
                   c="inverse"
                   style={{
-                    fontWeight:
-                      location.pathname === "/garden" ? "bold" : "normal",
+                    fontWeight: location.pathname === "/garden" ? "bold" : "normal",
                   }}
                 >
                   Garden
@@ -66,8 +64,7 @@ function Layout() {
                   to="/login"
                   c="inverse"
                   style={{
-                    fontWeight:
-                      location.pathname === "/login" ? "bold" : "normal",
+                    fontWeight: location.pathname === "/login" ? "bold" : "normal",
                   }}
                 >
                   Login
@@ -76,8 +73,7 @@ function Layout() {
                   to="/register"
                   c="inverse"
                   style={{
-                    fontWeight:
-                      location.pathname === "/register" ? "bold" : "normal",
+                    fontWeight: location.pathname === "/register" ? "bold" : "normal",
                   }}
                 >
                   Register
