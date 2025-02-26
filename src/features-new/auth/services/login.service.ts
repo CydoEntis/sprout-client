@@ -46,6 +46,8 @@ export function useLogin() {
       });
     },
     onError: (error: Error) => {
+      console.log(error);
+
       notifications.show({
         title: "Login Failed",
         message: "Something went wrong!",

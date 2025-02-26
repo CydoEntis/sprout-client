@@ -12,7 +12,7 @@ import {
   Category,
   NewCategoryRequest,
   UpdateCategoryRequest,
-  CategoryIcon,
+  CategoryIdentifier,
   CategoryColor,
 } from "../shared/category.types";
 import ColorPicker from "../../../components/color-picker/ColorPicker";
@@ -29,7 +29,7 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
   const { handleFormErrors } = useFormErrorHandler<NewCategoryRequest | UpdateCategoryRequest>();
   const isEditing = !!category;
 
-  const [selectedIcon, setSelectedIcon] = useState<CategoryIcon>(categoryIcons[0]);
+  const [selectedIcon, setSelectedIcon] = useState<CategoryIdentifier>(categoryIcons[0]);
   const [selectedColor, setSelectedColor] = useState(category?.color ?? categoryColors[0]);
 
   const form = useForm<NewCategoryRequest | UpdateCategoryRequest>({
@@ -73,7 +73,7 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
     }
   };
 
-  const handleIconSelect = (icon: CategoryIcon) => {
+  const handleIconSelect = (icon: CategoryIdentifier) => {
     setSelectedIcon(icon);
     form.setValues((currentValues) => ({ ...currentValues, tag: icon.tag }));
   };

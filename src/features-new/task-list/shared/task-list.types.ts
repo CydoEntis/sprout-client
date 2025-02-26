@@ -1,12 +1,18 @@
 import { z } from "zod";
-import { newTaskListSchema } from "./task-list.schemas";
+import { newTaskListSchema, updateTaskListSchema } from "./task-list.schemas";
 
 export type NewTaskListRequest = z.infer<typeof newTaskListSchema>;
+export type UpdateTaskListRequest = z.infer<typeof updateTaskListSchema>;
 
 export type NewTaskListResponse = {
   id: string;
   message: string;
 };
+
+export type SuccessResponse = {
+  id?: number;
+  message: string;
+}
 
 export type TaskList = {
   id: number;
@@ -24,4 +30,4 @@ export type TaskList = {
 export type Member = {
   userId: string;
   name: string;
-}
+};
