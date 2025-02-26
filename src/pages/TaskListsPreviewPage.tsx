@@ -1,23 +1,28 @@
-import CreateTaskListModal from "../features/task-list/modals/CreateTaskListModal";
-import { TaskListResponse } from "../features/task-list/shared/task-list.types";
-import TaskListsPreview from "../features/task-list/TaskListCardsList";
 import { useDisclosure } from "@mantine/hooks";
+import { TaskList } from "../features-new/task-list/shared/task-list.types";
+import CreateTaskListModal from "../features-new/task-list/components/CreateTaskListModal";
+import GridList from "../components/GridList";
+import InProgressTaskListCard from "../features-new/task-list/components/InProgressTaskListCard";
+import { Box } from "@mantine/core";
 
 type TaskListPage = {
-  taskLists: TaskListResponse[];
+  taskLists: TaskList[];
 };
 
 function TaskListPage({ taskLists }: TaskListPage) {
-  const [isNewTaskListOpened, { open: onOpenNewList, close: onCloseNewList }] =
-    useDisclosure(false);
+  const [isNewTaskListOpened, { open: onOpenNewList, close: onCloseNewList }] = useDisclosure(false);
 
   return (
     <>
-      <CreateTaskListModal
-        onClose={onCloseNewList}
-        isOpened={isNewTaskListOpened}
-      />
-      <TaskListsPreview onOpen={onOpenNewList} taskLists={taskLists} />
+      <CreateTaskListModal onClose={onCloseNewList} isOpened={isNewTaskListOpened} />
+      <Box mt={32}>
+        <GridList>
+          {taskLists.map((taskList) => (
+            <InProgressTaskListCard taskList={taskList} />
+          ))}
+        </GridList>
+      </Box>
+      {/* <TaskListsPreview onOpen={onOpenNewList} taskLists={taskLists} /> */}
     </>
   );
 }

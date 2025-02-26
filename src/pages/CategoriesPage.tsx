@@ -1,8 +1,9 @@
-import CategoryList from "../features/categories/CategoryList";
 import { useDisclosure } from "@mantine/hooks";
-import { Category, CategoryResponse } from "../features/categories/shared/category.types";
-import UpsertCategoryModal from "../features/categories/UpsertCategoryModal";
+
 import { useState } from "react";
+import CategoryList from "../features-new/category/components/CategoryList";
+import UpsertCategoryModal from "../features-new/category/components/UpsertCategoryModal";
+import { CategoryResponse, Category } from "../features-new/category/shared/category.types";
 
 type CategoriesPageProps = {
   categories: CategoryResponse[];
@@ -29,7 +30,7 @@ function CategoriesPage({ categories }: CategoriesPageProps) {
 
   return (
     <>
-      <UpsertCategoryModal isOpen={isCategoryModalOpended} onClose={closeCategoryModalHandler} category={category}/>
+      <UpsertCategoryModal isOpen={isCategoryModalOpended} onClose={closeCategoryModalHandler} category={category} />
       <CategoryList
         categories={categories}
         onOpen={openCategoryCreateModalHandler}

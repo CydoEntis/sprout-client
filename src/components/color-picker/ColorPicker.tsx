@@ -1,6 +1,6 @@
 import { Flex, Paper, Stack, Text } from "@mantine/core";
-import { categoryColors } from "../../features/categories/shared/category.constants";
-import { CategoryColor } from "../../features/categories/shared/category.types";
+import { categoryColors } from "../../features-new/category/shared/category.constants";
+import { CategoryColor } from "../../features-new/category/shared/category.types";
 
 type ColorPickerProps = {
   selectedColor: CategoryColor;
