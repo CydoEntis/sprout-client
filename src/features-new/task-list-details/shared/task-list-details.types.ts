@@ -1,4 +1,4 @@
-import { MemberResponse, TaskListItemDetailResponse } from "../../../features-old/task-list/shared/task-list.types";
+import { Member } from "../../task-list/shared/task-list.types";
 
 export type TaskListDetails = {
   id: number;
@@ -7,6 +7,6 @@ export type TaskListDetails = {
   completedTasksCount: number;
   totalTasksCount: number;
   isCompleted: boolean;
-  members: MemberResponse[]; // Fix
-  taskListItems: TaskListItemDetailResponse[]; // Fix
+  members: Member[]; // Fix
+  // taskListItems: TaskListItemDetail[]; // Fix
 };

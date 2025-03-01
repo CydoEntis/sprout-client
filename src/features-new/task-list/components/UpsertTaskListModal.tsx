@@ -6,17 +6,17 @@ import { ErrorResponse } from "../../../api/errors/errror.types";
 import useFormErrorHandler from "../../../hooks/useFormErrorHandler";
 import { useCreateTaskListMutation } from "../services/create-task-list.service";
 import { newTaskListSchema, updateTaskListSchema } from "../shared/task-list.schemas";
-import { TaskList, NewTaskListRequest, UpdateTaskListRequest } from "../shared/task-list.types";
+import { NewTaskListRequest, UpdateTaskListRequest } from "../shared/task-list.types";
 import { useUpdateTaskListMutation } from "../services/update-task-list.service";
 
 type UpsertTaskListModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  taskList?: TaskList;
+  taskList?: UpdateTaskListRequest;
 };
 
 function UpsertTaskListModal({ isOpen, onClose, taskList }: UpsertTaskListModalProps) {
-  const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName" });
+  const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName_/$taskListId" });
   const createTaskList = useCreateTaskListMutation(categoryName);
   const updateTaskList = useUpdateTaskListMutation(categoryName);
   const { handleFormErrors } = useFormErrorHandler<NewTaskListRequest | UpdateTaskListRequest>();
