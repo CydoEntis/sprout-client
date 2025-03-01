@@ -15,8 +15,9 @@ type UpdateTaskListModalProps = {
 };
 
 function UpdateTaskListModal({ isOpen, onClose, taskList }: UpdateTaskListModalProps) {
+  // TODO: FIX
   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName_/$taskListId" });
-  const updateTaskList = useUpdateTaskListMutation(categoryName ?? "");
+  const updateTaskList = useUpdateTaskListMutation();
   const { handleFormErrors } = useFormErrorHandler<UpdateTaskListRequest>();
 
   const form = useForm<UpdateTaskListRequest>({

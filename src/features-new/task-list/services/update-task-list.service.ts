@@ -8,15 +8,17 @@ const updateTaskList = async (updatedTaskList: UpdateTaskListRequest): Promise<S
   return apiRequest<SuccessResponse>("put", `${endpoints.taskList}`, updatedTaskList);
 };
 
-export function useUpdateTaskListMutation(categoryName: string) {
+export function useUpdateTaskListMutation() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (updatedTaskList: UpdateTaskListRequest): Promise<SuccessResponse> => {
       return await updateTaskList(updatedTaskList);
     },
     onSuccess: (data) => {
+      console.log(data);
+
       queryClient.invalidateQueries({
-        queryKey: ["task-lists", categoryName],
+        queryKey: ["task-lists", data.taskListId],
       });
 
       notifications.show({

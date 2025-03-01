@@ -9,8 +9,9 @@ export type NewTaskListResponse = {
   message: string;
 };
 
+//TODO: Come up with a better success response.
 export type SuccessResponse = {
-  id?: number;
+  taskListId?: number;
   message: string;
 }
 
