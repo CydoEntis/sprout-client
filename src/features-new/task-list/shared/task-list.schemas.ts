@@ -12,6 +12,6 @@ export const newTaskListSchema = z.object({
 });
 
 export const updateTaskListSchema = newTaskListSchema.extend({
-  id: z.number().min(1, "Task list ID is required"),
+  taskListId: z.number().min(1, "Task list ID is required"),
   category: z.string().min(1, "Category is required"),
 });

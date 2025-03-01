@@ -23,7 +23,7 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
         onClose={onCloseTaskListModal}
         isOpen={isUpdateTaskListOpened}
         taskList={{
-          id: taskListDetails.id,
+          taskListId: taskListDetails.id,
           name: taskListDetails.name,
           description: taskListDetails.description,
           category: categoryName,
