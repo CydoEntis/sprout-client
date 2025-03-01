@@ -35,16 +35,16 @@ function Layout() {
             {user ? (
               <>
                 <CustomLink
-                  to="/"
+                  to="/categories"
                   c="inverse"
                   style={{
-                    fontWeight: location.pathname === "/tasks" ? "bold" : "normal",
+                    fontWeight: location.pathname === "/categories" ? "bold" : "normal",
                   }}
                 >
-                  Tasks
+                  Categories
                 </CustomLink>
 
-                <CustomLink
+                {/* <CustomLink
                   to="/"
                   c="inverse"
                   style={{
@@ -52,7 +52,7 @@ function Layout() {
                   }}
                 >
                   Garden
-                </CustomLink>
+                </CustomLink> */}
 
                 <Anchor c="inverse" onClick={logoutHandler}>
                   Logout
