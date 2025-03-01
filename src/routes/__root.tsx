@@ -5,9 +5,9 @@ import theme from "../components/theme/theme.config";
 import Layout from "../components/layout/Layout";
 import { jwtDecode } from "jwt-decode";
 import useAuthStore, { AuthState } from "../stores/useAuthStore";
-import { DecodedToken } from "../features/auth/shared/auth.types";
 import { Notifications } from "@mantine/notifications";
 import { QueryClient } from "@tanstack/react-query";
+import { DecodedToken } from "../features-new/auth/shared/auth.types";
 
 export type RouterContext = {
   authState: AuthState;

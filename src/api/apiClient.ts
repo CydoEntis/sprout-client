@@ -45,6 +45,17 @@ apiClient.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
+      const hasStoredToken = useAuthStore.getState().accessToken || localStorageService.getItem("taskgarden");
+
+      if (!hasStoredToken) {
+        // No token exists, immediately log out
+        await logoutUser();
+        useAuthStore.getState().logoutUser();
+        localStorageService.removeItem("taskgarden");
+        window.location.href = "/login";
+        return Promise.reject(new Error("Session expired. Please log in again."));
+      }
+
       try {
         const { accessToken } = await refreshTokens();
         localStorageService.updateItem("taskgarden", { accessToken });
