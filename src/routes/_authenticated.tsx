@@ -19,6 +19,10 @@ export const Route = createFileRoute("/_authenticated")({
 function AuthLayout() {
   const { user } = useAuthStore();
 
+  if (!user) {
+    return null;
+  }
+
   return (
     <>
       <WelcomeHeader username={user!.username} />
