@@ -1,6 +1,5 @@
 import { Button, Modal, Stack, TextInput, Textarea } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
-import { useParams } from "@tanstack/react-router";
 import { useUpdateTaskListMutation } from "../services/update-task-list.service";
 import { updateTaskListSchema } from "../shared/task-list.schemas";
 import { UpdateTaskListRequest } from "../shared/task-list.types";
@@ -16,7 +15,6 @@ type UpdateTaskListModalProps = {
 
 function UpdateTaskListModal({ isOpen, onClose, taskList }: UpdateTaskListModalProps) {
   // TODO: FIX
-  const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName_/$taskListId" });
   const updateTaskList = useUpdateTaskListMutation();
   const { handleFormErrors } = useFormErrorHandler<UpdateTaskListRequest>();
 
@@ -26,7 +24,7 @@ function UpdateTaskListModal({ isOpen, onClose, taskList }: UpdateTaskListModalP
       taskListId: taskList.taskListId,
       name: taskList.name,
       description: taskList.description,
-      category: taskList.category,
+      categoryName: taskList.categoryName,
     },
   });
 
@@ -51,12 +49,14 @@ function UpdateTaskListModal({ isOpen, onClose, taskList }: UpdateTaskListModalP
     onClose();
   };
 
+  //TODO: Update this to have a category drop down, so user can change category.
   return (
     <Modal opened={isOpen} onClose={handleClose} title="Update Task List">
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack gap={16}>
           <TextInput label="Name" placeholder="Enter list name" {...form.getInputProps("name")} />
           <Textarea label="Description" placeholder="Enter list description" {...form.getInputProps("description")} />
+          <TextInput label="Category" placeholder="Category name" {...form.getInputProps("categoryName")} disabled />
           <Button type="submit" w="100%" variant="light" color="lime">
             Update Task List
           </Button>

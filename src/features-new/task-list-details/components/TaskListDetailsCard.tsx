@@ -16,6 +16,8 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName_/$taskListId" });
   const [isUpdateTaskListOpened, { open: onOpenUpdateTaskListModal, close: onCloseTaskListModal }] =
     useDisclosure(false);
+  // const deleteTaskList = useDeleteTaskListMutation();
+
 
   return (
     <>
@@ -26,7 +28,7 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
           taskListId: taskListDetails.id,
           name: taskListDetails.name,
           description: taskListDetails.description,
-          category: categoryName,
+          categoryName: categoryName,
         }}
       />
 
