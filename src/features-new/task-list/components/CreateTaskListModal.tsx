@@ -22,12 +22,17 @@ function CreateTaskListModal({ isOpen, onClose }: CreateTaskListModalProps) {
     initialValues: {
       name: "",
       description: "",
+      categoryName: categoryName,
     },
   });
 
+  console.log(form.errors);
+
   const handleSubmit = async (data: NewTaskListRequest) => {
     try {
-      await createTaskList.mutateAsync({ ...data, name: categoryName ?? "" });
+      console.log(data);
+
+      await createTaskList.mutateAsync({ ...data, categoryName: categoryName });
       form.reset();
       onClose();
     } catch (e) {
@@ -46,6 +51,7 @@ function CreateTaskListModal({ isOpen, onClose }: CreateTaskListModalProps) {
         <Stack gap={16}>
           <TextInput label="Name" placeholder="Enter list name" {...form.getInputProps("name")} />
           <Textarea label="Description" placeholder="Enter list description" {...form.getInputProps("description")} />
+          <TextInput label="Category" placeholder="Category name" {...form.getInputProps("categoryName")} disabled />
           <Button type="submit" w="100%" variant="light" color="lime">
             Create Task List
           </Button>
