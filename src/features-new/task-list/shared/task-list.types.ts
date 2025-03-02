@@ -15,6 +15,11 @@ export type SuccessResponse = {
   message: string;
 }
 
+export type TaskListDeletedResponse = {
+  taskListId?: number;
+  message: string;
+}
+
 export type TaskList = {
   id: number;
   name: string;
