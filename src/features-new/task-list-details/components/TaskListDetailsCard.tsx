@@ -4,8 +4,9 @@ import { Plus } from "lucide-react";
 import { TaskListDetails } from "../shared/task-list-details.types";
 import UpdateAndDeleteMenu from "../../../components/menus/UpdateAndDeleteMenu";
 import { useDisclosure } from "@mantine/hooks";
-import { useParams } from "@tanstack/react-router";
+import { useNavigate, useParams } from "@tanstack/react-router";
 import UpdateTaskListModal from "../../task-list/components/UpdateTaskListModal";
+import { useDeleteTaskListMutation } from "../../task-list/services/delete-task-list.service";
 
 type TaskListDetailsCardProps = {
   onOpenAddTask: () => void;
@@ -16,8 +17,13 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName_/$taskListId" });
   const [isUpdateTaskListOpened, { open: onOpenUpdateTaskListModal, close: onCloseTaskListModal }] =
     useDisclosure(false);
-  // const deleteTaskList = useDeleteTaskListMutation();
+  const deleteTaskList = useDeleteTaskListMutation();
+  const navigate = useNavigate();
 
+  const deleteTaskListHandler = async () => {
+    await deleteTaskList.mutateAsync(taskListDetails.id);
+    navigate({ to: `/categories/${categoryName}` });
+  };
 
   return (
     <>
@@ -36,7 +42,7 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
         <Stack gap={2} mb={16}>
           <Group justify="space-between" align="center">
             <Title>{taskListDetails.name}</Title>
-            <UpdateAndDeleteMenu onUpdate={onOpenUpdateTaskListModal} onDelete={() => {}} />
+            <UpdateAndDeleteMenu onUpdate={onOpenUpdateTaskListModal} onDelete={deleteTaskListHandler} />
           </Group>
           <Text c="dimmed">{taskListDetails.description}</Text>
           <Group gap={8}>

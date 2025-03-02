@@ -8,7 +8,7 @@ const deleteTaskList = async (taskListId: number): Promise<TaskListDeletedRespon
   return apiRequest<TaskListDeletedResponse>("delete", `${endpoints.taskList}/${taskListId}`);
 };
 
-export function useCreateTaskListMutation() {
+export function useDeleteTaskListMutation() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (taskListId: number): Promise<TaskListDeletedResponse> => {
