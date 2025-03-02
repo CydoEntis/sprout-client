@@ -8,15 +8,15 @@ const createTaskListItem = async (newTaskListItem: NewTaskListItemRequest): Prom
   return apiRequest<NewTaskListItemResponse>("post", `${endpoints.taskList}`, newTaskListItem);
 };
 
-export function useCreateTaskListItemMutation(categoryName: string) {
+export function useCreateTaskListItemMutation() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (newCategory: NewTaskListItemRequest): Promise<NewTaskListItemResponse> => {
-      return await createTaskListItem(newCategory);
+    mutationFn: async (newTaskListItem: NewTaskListItemRequest): Promise<NewTaskListItemResponse> => {
+      return await createTaskListItem(newTaskListItem);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: ["task-lists", categoryName],
+        queryKey: ["task-lists", data.taskListId],
       });
 
       notifications.show({
