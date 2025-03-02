@@ -16,3 +16,10 @@ export type TaskListItemDetail = {
   description: string;
   isCompleted: boolean;
 };
+
+export type CreateTaskListItemResponse = {
+  taskListId: number;
+  message: string;
+};
+
+export type UpdateTaskListItemResponse = CreateTaskListItemResponse;

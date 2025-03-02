@@ -1,9 +1,12 @@
 import { z } from "zod";
-import { newTaskListItemSchema } from "./task-list-item.schemas";
+import { newTaskListItemSchema, updateTaskListItemSchema } from "./task-list-item.schemas";
 
 export type NewTaskListItemRequest = z.infer<typeof newTaskListItemSchema>;
+export type UpdateTaskListItemRequest = z.infer<typeof updateTaskListItemSchema>;
 
 export type NewTaskListItemResponse = {
-    taskListId: string;
-    message: string;
-  };
+  taskListId: string;
+  message: string;
+};
+
+export type UpdateTaskListItemResponse = NewTaskListItemResponse;

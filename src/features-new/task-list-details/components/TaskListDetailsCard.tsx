@@ -1,6 +1,6 @@
-import { Paper, Title, Text, Stack, Group, Button, Avatar, Input, ActionIcon } from "@mantine/core";
-import { DndListHandle } from "../../../DndListHandle";
-import { Minus, Plus, Trash } from "lucide-react";
+import { Paper, Title, Text, Stack, Group, Button, Avatar } from "@mantine/core";
+// import { DndListHandle } from "../../../DndListHandle";
+import { Plus } from "lucide-react";
 import { TaskListDetails } from "../shared/task-list-details.types";
 import UpdateAndDeleteMenu from "../../../components/menus/UpdateAndDeleteMenu";
 import { useDisclosure } from "@mantine/hooks";
@@ -76,19 +76,7 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
             </Group>
           </Stack>
         </Stack>
-        {isCreatingTaskItem ? (
-          <Group w="100%">
-            <Input
-              w="100%"
-              rightSection={
-                <ActionIcon variant="light" color="red">
-                  <Trash size={20} />
-                </ActionIcon>
-              }
-              placeholder="Describe Task"
-            />
-          </Group>
-        ) : null}
+
         {taskListDetails.taskListItems.map((taskListItem) => (
           <p>{taskListItem.description}</p>
         ))}
