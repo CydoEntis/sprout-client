@@ -7,6 +7,12 @@ export type TaskListDetails = {
   completedTasksCount: number;
   totalTasksCount: number;
   isCompleted: boolean;
-  members: Member[]; // Fix
-  // taskListItems: TaskListItemDetail[]; // Fix
+  members: Member[];
+  taskListItems: TaskListItemDetail[];
+};
+
+export type TaskListItemDetail = {
+  id: number;
+  description: string;
+  isCompleted: boolean;
 };

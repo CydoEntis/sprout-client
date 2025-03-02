@@ -1,12 +1,14 @@
-import { Paper, Title, Text, Stack, Group, Button, Avatar } from "@mantine/core";
+import { Paper, Title, Text, Stack, Group, Button, Avatar, Input, ActionIcon } from "@mantine/core";
 import { DndListHandle } from "../../../DndListHandle";
-import { Plus } from "lucide-react";
+import { Minus, Plus, Trash } from "lucide-react";
 import { TaskListDetails } from "../shared/task-list-details.types";
 import UpdateAndDeleteMenu from "../../../components/menus/UpdateAndDeleteMenu";
 import { useDisclosure } from "@mantine/hooks";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import UpdateTaskListModal from "../../task-list/components/UpdateTaskListModal";
 import { useDeleteTaskListMutation } from "../../task-list/services/delete-task-list.service";
+import { useState } from "react";
+import CreateTaskListItemButton from "../../task-list-item/components/CreateTaskListItemButton";
 
 type TaskListDetailsCardProps = {
   onOpenAddTask: () => void;
@@ -24,6 +26,9 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
     await deleteTaskList.mutateAsync(taskListDetails.id);
     navigate({ to: `/categories/${categoryName}` });
   };
+
+  const [isCreatingTaskItem, setIsCreatingTaskItem] = useState(false);
+  const showTaskItemFormHandler = () => setIsCreatingTaskItem((prevState) => !prevState);
 
   return (
     <>
@@ -67,14 +72,28 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
                   <Plus size={20} />
                 </Avatar>
               </Avatar.Group>
-              <Button variant="subtle" color="dimmed" leftSection={<Plus size={20} />}>
-                Add Item
-              </Button>
+              <CreateTaskListItemButton isCreating={isCreatingTaskItem} onCreate={showTaskItemFormHandler} />
             </Group>
           </Stack>
         </Stack>
-        {/* <TaskListHeader /> */}
-        <DndListHandle />
+        {isCreatingTaskItem ? (
+          <Group w="100%">
+            <Input
+              w="100%"
+              rightSection={
+                <ActionIcon variant="light" color="red">
+                  <Trash size={20} />
+                </ActionIcon>
+              }
+              placeholder="Describe Task"
+            />
+          </Group>
+        ) : null}
+        {taskListDetails.taskListItems.map((taskListItem) => (
+          <p>{taskListItem.description}</p>
+        ))}
+        {/* <TaskListHeader />
+        <DndListHandle /> */}
       </Paper>
     </>
   );
