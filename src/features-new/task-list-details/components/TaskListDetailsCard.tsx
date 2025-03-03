@@ -9,10 +9,17 @@ import { useDeleteTaskListMutation } from "../../task-list/services/delete-task-
 import { useState } from "react";
 import CreateTaskListItemButton from "../../task-list-item/components/CreateTaskListItemButton";
 import UpsertTaskListItem from "./UpsertTaskListItem";
+import TaskListItemList from "./TaskListItemList";
 
 type TaskListDetailsCardProps = {
   onOpenAddTask: () => void;
   taskListDetails: TaskListDetails;
+};
+
+export type TaskListItem = {
+  id: number;
+  description: string;
+  isCompleted: boolean;
 };
 
 function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
@@ -22,7 +29,7 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
   const deleteTaskList = useDeleteTaskListMutation();
   const navigate = useNavigate();
 
-  const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
+  const [itemToEdit, setItemToEdit] = useState<TaskListItem | null>(null);
   const [isCreatingTaskItem, setIsCreatingTaskItem] = useState(false);
 
   const deleteTaskListHandler = async () => {
@@ -31,16 +38,16 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
   };
 
   const showCreateTaskListItemHandler = () => {
-    setEditingTaskId(null);
+    setItemToEdit(null);
     setIsCreatingTaskItem((prevState) => !prevState);
   };
 
-  const showEditTaskListItemHandler = (taskId: number) => {
+  const showEditTaskListItemHandler = (item: TaskListItem) => {
     setIsCreatingTaskItem(false);
-    setEditingTaskId(taskId);
+    setItemToEdit(item);
   };
 
-  const cancelEditingHandler = () => setEditingTaskId(null);
+  const cancelEditingHandler = () => setItemToEdit(null);
   const cancelCreatingHandler = () => setIsCreatingTaskItem(false);
 
   return (
@@ -91,7 +98,7 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
         </Stack>
 
         {/* Show Create Task Input (Only if nothing is being edited) */}
-        {isCreatingTaskItem && !editingTaskId && (
+        {isCreatingTaskItem && !itemToEdit && (
           <UpsertTaskListItem
             taskListId={taskListDetails.id}
             isActive={isCreatingTaskItem}
@@ -100,20 +107,12 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
         )}
 
         {/* Render Task Items */}
-        {taskListDetails.taskListItems.map((taskListItem) => (
-          <div key={taskListItem.id} onDoubleClick={() => showEditTaskListItemHandler(taskListItem.id)}>
-            {editingTaskId === taskListItem.id ? (
-              <UpsertTaskListItem
-                isActive={true}
-                taskListId={taskListItem.id}
-                taskListItem={taskListItem}
-                onCancel={cancelEditingHandler}
-              />
-            ) : (
-              <p>{taskListItem.description}</p>
-            )}
-          </div>
-        ))}
+        <TaskListItemList
+          taskListItems={taskListDetails.taskListItems}
+          onEdit={showEditTaskListItemHandler}
+          onCancel={cancelEditingHandler}
+          itemToEdit={itemToEdit}
+        />
       </Paper>
     </>
   );
