@@ -1,5 +1,4 @@
 import { Paper, Title, Text, Stack, Group, Button, Avatar } from "@mantine/core";
-// import { DndListHandle } from "../../../DndListHandle";
 import { Plus } from "lucide-react";
 import { TaskListDetails } from "../shared/task-list-details.types";
 import UpdateAndDeleteMenu from "../../../components/menus/UpdateAndDeleteMenu";
@@ -9,6 +8,7 @@ import UpdateTaskListModal from "../../task-list/components/UpdateTaskListModal"
 import { useDeleteTaskListMutation } from "../../task-list/services/delete-task-list.service";
 import { useState } from "react";
 import CreateTaskListItemButton from "../../task-list-item/components/CreateTaskListItemButton";
+import UpsertTaskListItem from "./UpsertTaskListItem";
 
 type TaskListDetailsCardProps = {
   onOpenAddTask: () => void;
@@ -22,12 +22,14 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
   const deleteTaskList = useDeleteTaskListMutation();
   const navigate = useNavigate();
 
+  const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
+  const [isCreatingTaskItem, setIsCreatingTaskItem] = useState(false);
+
   const deleteTaskListHandler = async () => {
     await deleteTaskList.mutateAsync(taskListDetails.id);
     navigate({ to: `/categories/${categoryName}` });
   };
 
-  const [isCreatingTaskItem, setIsCreatingTaskItem] = useState(false);
   const showTaskItemFormHandler = () => setIsCreatingTaskItem((prevState) => !prevState);
 
   return (
@@ -66,7 +68,7 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
             <Group justify="space-between" align="center">
               <Avatar.Group>
                 {taskListDetails.members.map((member) => (
-                  <Avatar color="initials" name={member.name} />
+                  <Avatar key={member.userId} color="initials" name={member.name} />
                 ))}
                 <Avatar>
                   <Plus size={20} />
@@ -77,11 +79,32 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
           </Stack>
         </Stack>
 
+        {/* Show Create Task Input */}
+        {isCreatingTaskItem && (
+          <UpsertTaskListItem
+            taskListId={taskListDetails.id}
+            isActive={isCreatingTaskItem}
+            onSuccess={() => setIsCreatingTaskItem(false)}
+            onCancel={() => setIsCreatingTaskItem(false)}
+          />
+        )}
+
+        {/* Render Task Items */}
         {taskListDetails.taskListItems.map((taskListItem) => (
-          <p>{taskListItem.description}</p>
+          <div key={taskListItem.id} onDoubleClick={() => setEditingTaskId(taskListItem.id)}>
+            {editingTaskId === taskListItem.id ? (
+              <UpsertTaskListItem
+                isActive={true}
+                taskListId={taskListItem.id}
+                taskListItem={taskListItem}
+                onSuccess={() => setEditingTaskId(null)}
+                onCancel={() => setEditingTaskId(null)}
+              />
+            ) : (
+              <p>{taskListItem.description}</p>
+            )}
+          </div>
         ))}
-        {/* <TaskListHeader />
-        <DndListHandle /> */}
       </Paper>
     </>
   );

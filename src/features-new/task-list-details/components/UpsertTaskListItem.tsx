@@ -8,7 +8,7 @@ import { NewTaskListItemRequest, UpdateTaskListItemRequest } from "../../task-li
 
 type UpsertTaskListItemProps = {
   isActive: boolean;
-  taskListId: number; // Add taskListId as a required prop
+  taskListId: number;
   taskListItem?: TaskListItemDetail;
   onSuccess: () => void;
   onCancel: () => void;
