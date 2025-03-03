@@ -30,11 +30,18 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
     navigate({ to: `/categories/${categoryName}` });
   };
 
-  // const cancelCreateTaskListItemHandler = () => {
-  //   setIsCreatingTaskItem(false);
-  // };
+  const showCreateTaskListItemHandler = () => {
+    setEditingTaskId(null);
+    setIsCreatingTaskItem((prevState) => !prevState);
+  };
 
-  const showTaskItemFormHandler = () => setIsCreatingTaskItem((prevState) => !prevState);
+  const showEditTaskListItemHandler = (taskId: number) => {
+    setIsCreatingTaskItem(false);
+    setEditingTaskId(taskId);
+  };
+
+  const cancelEditingHandler = () => setEditingTaskId(null);
+  const cancelCreatingHandler = () => setIsCreatingTaskItem(false);
 
   return (
     <>
@@ -78,29 +85,29 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
                   <Plus size={20} />
                 </Avatar>
               </Avatar.Group>
-              <CreateTaskListItemButton isCreating={isCreatingTaskItem} onCreate={showTaskItemFormHandler} />
+              <CreateTaskListItemButton isCreating={isCreatingTaskItem} onCreate={showCreateTaskListItemHandler} />
             </Group>
           </Stack>
         </Stack>
 
-        {/* Show Create Task Input */}
-        {isCreatingTaskItem && (
+        {/* Show Create Task Input (Only if nothing is being edited) */}
+        {isCreatingTaskItem && !editingTaskId && (
           <UpsertTaskListItem
             taskListId={taskListDetails.id}
             isActive={isCreatingTaskItem}
-            onCancel={() => setIsCreatingTaskItem(false)}
+            onCancel={cancelCreatingHandler}
           />
         )}
 
         {/* Render Task Items */}
         {taskListDetails.taskListItems.map((taskListItem) => (
-          <div key={taskListItem.id} onDoubleClick={() => setEditingTaskId(taskListItem.id)}>
+          <div key={taskListItem.id} onDoubleClick={() => showEditTaskListItemHandler(taskListItem.id)}>
             {editingTaskId === taskListItem.id ? (
               <UpsertTaskListItem
                 isActive={true}
                 taskListId={taskListItem.id}
                 taskListItem={taskListItem}
-                onCancel={() => setEditingTaskId(null)}
+                onCancel={cancelEditingHandler}
               />
             ) : (
               <p>{taskListItem.description}</p>
