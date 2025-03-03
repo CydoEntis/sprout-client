@@ -61,6 +61,18 @@ function UpsertTaskListItem({
     }
   };
 
+  const cancelHandler = () => {
+    form.reset();
+    onCancel();
+  };
+
+  const deleteHandler = async () => {
+    form.reset();
+    if (onDelete) {
+      onDelete();
+    }
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       form.onSubmit(handleSubmit)();
@@ -81,7 +93,7 @@ function UpsertTaskListItem({
           onKeyDown={handleKeyDown}
           placeholder="Describe Task"
           rightSection={
-            <ActionIcon variant="light" color="red" onClick={onDelete || onCancel}>
+            <ActionIcon variant="light" color="red" onClick={cancelHandler || deleteHandler}>
               <Trash size={20} />
             </ActionIcon>
           }
