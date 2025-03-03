@@ -1,29 +1,22 @@
 import { useEffect } from "react";
-import { ActionIcon, Group, Input } from "@mantine/core";
-import { Trash } from "lucide-react";
+import { ActionIcon, Input } from "@mantine/core";
+import { X } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
 import { TaskListItemDetail } from "../shared/task-list-details.types";
 import { newTaskListItemSchema, updateTaskListItemSchema } from "../../task-list-item/shared/task-list-item.schemas";
 import { NewTaskListItemRequest, UpdateTaskListItemRequest } from "../../task-list-item/shared/task-list-item.types";
+import { useCreateTaskListItemMutation } from "../../task-list-item/services/create-task-list-item.service";
 
 type UpsertTaskListItemProps = {
   isActive: boolean;
   taskListId: number;
   taskListItem?: TaskListItemDetail;
-  onSuccess: () => void;
   onCancel: () => void;
-  onDelete?: () => void;
 };
 
-function UpsertTaskListItem({
-  isActive,
-  taskListId,
-  taskListItem,
-  onSuccess,
-  onCancel,
-  onDelete,
-}: UpsertTaskListItemProps) {
+function UpsertTaskListItem({ isActive, taskListId, taskListItem, onCancel }: UpsertTaskListItemProps) {
   const isEditing = Boolean(taskListItem);
+  const createTaskListItem = useCreateTaskListItemMutation();
 
   const form = useForm({
     initialValues: {
@@ -53,9 +46,10 @@ function UpsertTaskListItem({
       if (isEditing) {
         // Send update request
       } else {
-        // Send create request
+        console.log(data);
+
+        await createTaskListItem.mutateAsync(data as NewTaskListItemRequest);
       }
-      onSuccess();
     } catch (error) {
       console.error("Error submitting task:", error);
     }
@@ -66,15 +60,9 @@ function UpsertTaskListItem({
     onCancel();
   };
 
-  const deleteHandler = async () => {
-    form.reset();
-    if (onDelete) {
-      onDelete();
-    }
-  };
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
+      e.preventDefault();
       form.onSubmit(handleSubmit)();
     } else if (e.key === "Escape") {
       onCancel();
@@ -85,20 +73,19 @@ function UpsertTaskListItem({
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
-      <Group w="100%">
-        <Input
-          w="100%"
-          {...form.getInputProps("description")}
-          autoFocus
-          onKeyDown={handleKeyDown}
-          placeholder="Describe Task"
-          rightSection={
-            <ActionIcon variant="light" color="red" onClick={cancelHandler || deleteHandler}>
-              <Trash size={20} />
-            </ActionIcon>
-          }
-        />
-      </Group>
+      <Input
+        w="100%"
+        {...form.getInputProps("description")}
+        autoFocus
+        onKeyDown={handleKeyDown}
+        placeholder="Describe Task"
+        rightSectionPointerEvents="all"
+        rightSection={
+          <ActionIcon variant="light" color="red" onClick={cancelHandler}>
+            <X size={20} />
+          </ActionIcon>
+        }
+      />
     </form>
   );
 }

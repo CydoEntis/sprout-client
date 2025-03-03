@@ -30,6 +30,10 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
     navigate({ to: `/categories/${categoryName}` });
   };
 
+  // const cancelCreateTaskListItemHandler = () => {
+  //   setIsCreatingTaskItem(false);
+  // };
+
   const showTaskItemFormHandler = () => setIsCreatingTaskItem((prevState) => !prevState);
 
   return (
@@ -84,7 +88,6 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
           <UpsertTaskListItem
             taskListId={taskListDetails.id}
             isActive={isCreatingTaskItem}
-            onSuccess={() => setIsCreatingTaskItem(false)}
             onCancel={() => setIsCreatingTaskItem(false)}
           />
         )}
@@ -97,7 +100,6 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
                 isActive={true}
                 taskListId={taskListItem.id}
                 taskListItem={taskListItem}
-                onSuccess={() => setEditingTaskId(null)}
                 onCancel={() => setEditingTaskId(null)}
               />
             ) : (
