@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { ActionIcon, TextInput } from "@mantine/core";
-import { X } from "lucide-react";
+import { ActionIcon, ActionIconGroup, Box, TextInput } from "@mantine/core";
+import { Check, X } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
 import { TaskListItemDetail } from "../shared/task-list-details.types";
 import { newTaskListItemSchema, updateTaskListItemSchema } from "../../task-list-item/shared/task-list-item.schemas";
@@ -67,7 +67,14 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose: onCan
       }
     } catch (error) {
       console.error("Error submitting task:", error);
+    } finally {
+      form.reset();
+      onCancel();
     }
+  };
+
+  const onConfirm = () => {
+    form.onSubmit(handleSubmit)();
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -84,9 +91,10 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose: onCan
   if (!isActive) return null;
 
   return (
-    <form ref={formRef} onSubmit={form.onSubmit(handleSubmit)}>
+    <form ref={formRef} onSubmit={form.onSubmit(handleSubmit)} style={{ width: "100%" }}>
       <TextInput
         w="100%"
+        rightSectionWidth={60} // Ensures space for icons
         {...form.getInputProps("description")}
         classNames={{
           input: "input",
@@ -94,11 +102,15 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose: onCan
         autoFocus
         onKeyDown={handleKeyDown}
         placeholder="Describe Task"
-        rightSectionPointerEvents="all"
         rightSection={
-          <ActionIcon variant="light" color="red" onClick={onCancel}>
-            <X size={20} />
-          </ActionIcon>
+          <ActionIconGroup>
+            <ActionIcon variant="light" color="lime" onClick={onConfirm}>
+              <Check size={20} />
+            </ActionIcon>
+            <ActionIcon variant="light" color="red" onClick={onCancel}>
+              <X size={20} />
+            </ActionIcon>
+          </ActionIconGroup>
         }
       />
     </form>
