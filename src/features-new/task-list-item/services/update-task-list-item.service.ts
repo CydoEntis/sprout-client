@@ -17,6 +17,8 @@ export function useUpdateTaskListItemMutation() {
       return await updateTaskListItem(updatedTaskListItem);
     },
     onSuccess: (data) => {
+        console.log(data);
+
       queryClient.invalidateQueries({
         queryKey: ["task-lists", data.taskListId],
       });

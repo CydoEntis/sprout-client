@@ -102,7 +102,7 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
           <UpsertTaskListItem
             taskListId={taskListDetails.id}
             isActive={isCreatingTaskItem}
-            onCancel={cancelCreatingHandler}
+            onClose={cancelCreatingHandler}
           />
         )}
 

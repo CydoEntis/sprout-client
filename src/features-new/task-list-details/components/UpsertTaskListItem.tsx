@@ -12,10 +12,10 @@ type UpsertTaskListItemProps = {
   isActive: boolean;
   taskListId: number;
   taskListItem?: TaskListItemDetail;
-  onCancel: () => void;
+  onClose: () => void;
 };
 
-function UpsertTaskListItem({ isActive, taskListId, taskListItem, onCancel }: UpsertTaskListItemProps) {
+function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose: onCancel }: UpsertTaskListItemProps) {
   const isEditing = Boolean(taskListItem);
   const createTaskListItem = useCreateTaskListItemMutation();
   const updateTaskListItem = useUpdateTaskListItemMutation();
@@ -63,6 +63,8 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onCancel }: Up
     if (e.key === "Enter") {
       e.preventDefault();
       form.onSubmit(handleSubmit)();
+      form.reset();
+      onCancel();
     } else if (e.key === "Escape") {
       onCancel();
     }

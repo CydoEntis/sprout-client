@@ -11,13 +11,13 @@ type TaskListItemListProps = {
   onCancel: () => void;
 };
 
-function TaskListItemList({ taskListItems, onEdit, onCancel, itemToEdit }: TaskListItemListProps) {
+function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit }: TaskListItemListProps) {
   return (
     <Stack gap={6}>
       {taskListItems.map((item) => (
         <div key={item.id} onDoubleClick={() => onEdit(item)}>
           {itemToEdit?.id === item.id ? (
-            <UpsertTaskListItem isActive={true} taskListId={item.id} taskListItem={item} onCancel={onCancel} />
+            <UpsertTaskListItem isActive={true} taskListId={item.id} taskListItem={item} onClose={onClose} />
           ) : (
             <ListItem item={item} onDelete={(id) => console.log(id)} onChange={() => console.log()} />
           )}
