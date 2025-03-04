@@ -1,8 +1,8 @@
-import { ActionIcon, Checkbox, Flex, Group, Paper, Stack, Text } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import { TaskListItemDetail } from "../shared/task-list-details.types";
 import UpsertTaskListItem from "./UpsertTaskListItem";
 import { TaskListItem } from "./TaskListDetailsCard";
-import { Trash } from "lucide-react";
+import ListItem from "./ListItem";
 
 type TaskListItemListProps = {
   taskListItems: TaskListItemDetail[];
@@ -19,7 +19,7 @@ function TaskListItemList({ taskListItems, onEdit, onCancel, itemToEdit }: TaskL
           {itemToEdit?.id === item.id ? (
             <UpsertTaskListItem isActive={true} taskListId={item.id} taskListItem={item} onCancel={onCancel} />
           ) : (
-  
+            <ListItem item={item} onDelete={(id) => console.log(id)} onChange={() => console.log()} />
           )}
         </div>
       ))}

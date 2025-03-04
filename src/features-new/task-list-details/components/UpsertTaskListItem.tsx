@@ -6,6 +6,7 @@ import { TaskListItemDetail } from "../shared/task-list-details.types";
 import { newTaskListItemSchema, updateTaskListItemSchema } from "../../task-list-item/shared/task-list-item.schemas";
 import { NewTaskListItemRequest, UpdateTaskListItemRequest } from "../../task-list-item/shared/task-list-item.types";
 import { useCreateTaskListItemMutation } from "../../task-list-item/services/create-task-list-item.service";
+import { useUpdateTaskListItemMutation } from "../../task-list-item/services/update-task-list-item.service";
 
 type UpsertTaskListItemProps = {
   isActive: boolean;
@@ -17,6 +18,7 @@ type UpsertTaskListItemProps = {
 function UpsertTaskListItem({ isActive, taskListId, taskListItem, onCancel }: UpsertTaskListItemProps) {
   const isEditing = Boolean(taskListItem);
   const createTaskListItem = useCreateTaskListItemMutation();
+  const updateTaskListItem = useUpdateTaskListItemMutation();
 
   const form = useForm({
     initialValues: {
@@ -42,12 +44,9 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onCancel }: Up
 
   const handleSubmit = async (data: NewTaskListItemRequest | UpdateTaskListItemRequest) => {
     try {
-      console.log(data);
       if (isEditing) {
-        // Send update request
+        await updateTaskListItem.mutateAsync(data as UpdateTaskListItemRequest);
       } else {
-        console.log(data);
-
         await createTaskListItem.mutateAsync(data as NewTaskListItemRequest);
       }
     } catch (error) {
