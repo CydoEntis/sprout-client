@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { ActionIcon, TextInput } from "@mantine/core";
 import { X } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
@@ -16,6 +16,7 @@ type UpsertTaskListItemProps = {
 };
 
 function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose: onCancel }: UpsertTaskListItemProps) {
+  const formRef = useRef<HTMLFormElement>(null);
   const isEditing = Boolean(taskListItem);
   const createTaskListItem = useCreateTaskListItemMutation();
   const updateTaskListItem = useUpdateTaskListItemMutation();
@@ -39,8 +40,23 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose: onCan
         taskListId,
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskListItem]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (formRef.current && !formRef.current.contains(event.target as Node)) {
+        onCancel();
+      }
+    };
+
+    if (isActive) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isActive, onCancel]);
 
   const handleSubmit = async (data: NewTaskListItemRequest | UpdateTaskListItemRequest) => {
     try {
@@ -52,11 +68,6 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose: onCan
     } catch (error) {
       console.error("Error submitting task:", error);
     }
-  };
-
-  const cancelHandler = () => {
-    form.reset();
-    onCancel();
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -73,7 +84,7 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose: onCan
   if (!isActive) return null;
 
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form ref={formRef} onSubmit={form.onSubmit(handleSubmit)}>
       <TextInput
         w="100%"
         {...form.getInputProps("description")}
@@ -85,7 +96,7 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose: onCan
         placeholder="Describe Task"
         rightSectionPointerEvents="all"
         rightSection={
-          <ActionIcon variant="light" color="red" onClick={cancelHandler}>
+          <ActionIcon variant="light" color="red" onClick={onCancel}>
             <X size={20} />
           </ActionIcon>
         }
