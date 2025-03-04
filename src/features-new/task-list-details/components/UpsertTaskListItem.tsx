@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { ActionIcon, Input } from "@mantine/core";
+import { ActionIcon, TextInput } from "@mantine/core";
 import { X } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
 import { TaskListItemDetail } from "../shared/task-list-details.types";
@@ -73,9 +73,12 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onCancel }: Up
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
-      <Input
+      <TextInput
         w="100%"
         {...form.getInputProps("description")}
+        classNames={{
+          input: "input",
+        }}
         autoFocus
         onKeyDown={handleKeyDown}
         placeholder="Describe Task"
