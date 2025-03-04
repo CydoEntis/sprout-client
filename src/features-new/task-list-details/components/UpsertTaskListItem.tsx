@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { ActionIcon, ActionIconGroup, Box, TextInput } from "@mantine/core";
+import { ActionIcon, ActionIconGroup, TextInput } from "@mantine/core";
 import { Check, X } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
 import { TaskListItemDetail } from "../shared/task-list-details.types";
