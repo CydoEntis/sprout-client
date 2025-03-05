@@ -6,6 +6,8 @@ import { TaskListItem } from "./TaskListDetailsCard";
 import ListItem from "./ListItem";
 import { useListState } from "@mantine/hooks";
 import { useEffect } from "react";
+import { useReorderTaskListItemsMutation } from "../../task-list-item/services/reorder-task-list-item.service";
+import { useParams } from "@tanstack/react-router";
 
 type TaskListItemListProps = {
   taskListItems: TaskListItemDetail[];
@@ -15,7 +17,9 @@ type TaskListItemListProps = {
 };
 
 function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit }: TaskListItemListProps) {
+  const { taskListId } = useParams({ from: "/_authenticated/categories/$categoryName_/$taskListId" });
   const [state, handlers] = useListState(taskListItems);
+  const reorderTaskListItems = useReorderTaskListItemsMutation();
 
   useEffect(() => {
     handlers.setState(taskListItems);
@@ -24,7 +28,24 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDragEnd = ({ source, destination }: any) => {
     if (!destination) return;
-    handlers.reorder({ from: source.index, to: destination.index });
+
+    const newState = [...state];
+    const [movedItem] = newState.splice(source.index, 1);
+    newState.splice(destination.index, 0, movedItem);
+
+    handlers.setState(newState);
+
+    console.log(newState);
+
+    const reorderedItems = newState.map((item, index) => ({
+      id: item.id,
+      position: index,
+    }));
+
+    reorderTaskListItems.mutateAsync({
+      taskListId: Number(taskListId),
+      items: reorderedItems,
+    });
   };
 
   return (
