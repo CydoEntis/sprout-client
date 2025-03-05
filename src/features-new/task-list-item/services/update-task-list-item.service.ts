@@ -7,7 +7,11 @@ import { UpdateTaskListItemRequest, UpdateTaskListItemResponse } from "../shared
 const updateTaskListItem = async (
   updatedTaskListItem: UpdateTaskListItemRequest
 ): Promise<UpdateTaskListItemResponse> => {
-  return apiRequest<UpdateTaskListItemResponse>("put", `${endpoints.taskListItem}`, updatedTaskListItem);
+  return apiRequest<UpdateTaskListItemResponse>(
+    "put",
+    `${endpoints.taskListItem}/${updatedTaskListItem.taskListId}/items`,
+    updatedTaskListItem
+  );
 };
 
 export function useUpdateTaskListItemMutation() {
@@ -17,7 +21,7 @@ export function useUpdateTaskListItemMutation() {
       return await updateTaskListItem(updatedTaskListItem);
     },
     onSuccess: (data) => {
-        console.log(data);
+      console.log(data);
 
       queryClient.invalidateQueries({
         queryKey: ["task-lists", data.taskListId],
