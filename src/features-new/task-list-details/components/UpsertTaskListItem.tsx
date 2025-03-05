@@ -13,9 +13,10 @@ type UpsertTaskListItemProps = {
   taskListId: number;
   taskListItem?: TaskListItemDetail;
   onClose: () => void;
+  onUpdate: (updatedItem: TaskListItemDetail) => void;
 };
 
-function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose: onCancel }: UpsertTaskListItemProps) {
+function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose, onUpdate }: UpsertTaskListItemProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const isEditing = Boolean(taskListItem);
   const createTaskListItem = useCreateTaskListItemMutation();
@@ -45,7 +46,7 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose: onCan
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (formRef.current && !formRef.current.contains(event.target as Node)) {
-        onCancel();
+        onClose();
       }
     };
 
@@ -56,12 +57,13 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose: onCan
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isActive, onCancel]);
+  }, [isActive, onClose]);
 
   const handleSubmit = async (data: NewTaskListItemRequest | UpdateTaskListItemRequest) => {
     try {
       if (isEditing) {
         await updateTaskListItem.mutateAsync(data as UpdateTaskListItemRequest);
+        onUpdate(data as UpdateTaskListItemRequest);
       } else {
         await createTaskListItem.mutateAsync(data as NewTaskListItemRequest);
       }
@@ -69,7 +71,7 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose: onCan
       console.error("Error submitting task:", error);
     } finally {
       form.reset();
-      onCancel();
+      onClose();
     }
   };
 
@@ -82,9 +84,9 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose: onCan
       e.preventDefault();
       form.onSubmit(handleSubmit)();
       form.reset();
-      onCancel();
+      onClose();
     } else if (e.key === "Escape") {
-      onCancel();
+      onClose();
     }
   };
 
@@ -107,7 +109,7 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose: onCan
             <ActionIcon variant="light" color="lime" onClick={onConfirm}>
               <Check size={20} />
             </ActionIcon>
-            <ActionIcon variant="light" color="red" onClick={onCancel}>
+            <ActionIcon variant="light" color="red" onClick={onClose}>
               <X size={20} />
             </ActionIcon>
           </ActionIconGroup>

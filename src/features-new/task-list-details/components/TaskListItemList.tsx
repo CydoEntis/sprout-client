@@ -22,6 +22,10 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
   const reorderTaskListItems = useReorderTaskListItemsMutation();
   const updateStatusTaskListItem = useUpdateTaskListStatusItemMutation(Number(taskListId));
 
+  const updateTaskListItemHandler = (updatedItem: TaskListItem) => {
+    handlers.setState((prev) => prev.map((task) => (task.id === updatedItem.id ? updatedItem : task)));
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDragEnd = async ({ source, destination }: any) => {
     if (!destination) return;
@@ -74,6 +78,7 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
                           taskListId={item.id}
                           taskListItem={item}
                           onClose={onClose}
+                          onUpdate={updateTaskListItemHandler}
                         />
                       ) : (
                         <ListItem item={item} onDelete={(id) => console.log(id)} onChange={handleStatusChange} />
