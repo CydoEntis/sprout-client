@@ -13,18 +13,11 @@ const reorderTaskListItems = async (request: ReorderedTaskListItemRequest): Prom
 };
 
 export function useReorderTaskListItemsMutation() {
-  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (request: ReorderedTaskListItemRequest): Promise<ReorderedTaskListItemResponse> => {
       return await reorderTaskListItems(request);
     },
     onSuccess: (data) => {
-      console.log(data);
-
-      queryClient.invalidateQueries({
-        queryKey: ["task-lists", data.taskListId],
-      });
-
       notifications.show({
         title: "Success",
         message: data.message,

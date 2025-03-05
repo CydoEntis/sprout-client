@@ -21,12 +21,8 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
   const [state, handlers] = useListState(taskListItems);
   const reorderTaskListItems = useReorderTaskListItemsMutation();
 
-  useEffect(() => {
-    handlers.setState(taskListItems);
-  }, [handlers, taskListItems]);
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleDragEnd = ({ source, destination }: any) => {
+  const handleDragEnd = async ({ source, destination }: any) => {
     if (!destination) return;
 
     const newState = [...state];
@@ -35,14 +31,14 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
 
     handlers.setState(newState);
 
-    console.log(newState);
+    console.log("New state: ", newState);
 
     const reorderedItems = newState.map((item, index) => ({
       id: item.id,
       position: index,
     }));
 
-    reorderTaskListItems.mutateAsync({
+    await reorderTaskListItems.mutateAsync({
       taskListId: Number(taskListId),
       items: reorderedItems,
     });
