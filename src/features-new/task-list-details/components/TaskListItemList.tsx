@@ -5,7 +5,6 @@ import UpsertTaskListItem from "./UpsertTaskListItem";
 import { TaskListItem } from "./TaskListDetailsCard";
 import ListItem from "./ListItem";
 import { useListState } from "@mantine/hooks";
-import { useEffect } from "react";
 import { useReorderTaskListItemsMutation } from "../../task-list-item/services/reorder-task-list-item.service";
 import { useParams } from "@tanstack/react-router";
 
