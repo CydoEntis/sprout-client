@@ -7,3 +7,7 @@
     transform: scale(1.01);
   }
   
+  .completed {
+    text-decoration: line-through;
+    color: gray; 
+  }

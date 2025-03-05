@@ -15,8 +15,12 @@ function ListItem({ item, onDelete, onChange }: ListItemProps) {
     <Paper p={8} bg="item" className={styles["list-item"]} withBorder>
       <Flex justify="space-between">
         <Group>
-          <Checkbox checked={item.isCompleted} onChange={(event) => onChange(item.id, event.currentTarget.checked)} color="lime"/>
-          <Text>{item.description}</Text>
+          <Checkbox
+            checked={item.isCompleted}
+            onChange={(event) => onChange(item.id, event.currentTarget.checked)}
+            color="lime"
+          />
+          <Text className={item.isCompleted ? styles.completed : ""}>{item.description}</Text>
         </Group>
         <ActionIcon color="red" variant="light" onClick={() => onDelete(item.id)}>
           <Trash size={20} />
