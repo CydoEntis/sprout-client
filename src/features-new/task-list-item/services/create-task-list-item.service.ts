@@ -15,6 +15,8 @@ export function useCreateTaskListItemMutation() {
       return await createTaskListItem(newTaskListItem);
     },
     onSuccess: (data) => {
+      console.log(data);
+
       queryClient.invalidateQueries({
         queryKey: ["task-lists", data.taskListId],
       });

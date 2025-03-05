@@ -5,6 +5,7 @@ import UpsertTaskListItem from "./UpsertTaskListItem";
 import { TaskListItem } from "./TaskListDetailsCard";
 import ListItem from "./ListItem";
 import { useListState } from "@mantine/hooks";
+import { useEffect } from "react";
 
 type TaskListItemListProps = {
   taskListItems: TaskListItemDetail[];
@@ -14,8 +15,11 @@ type TaskListItemListProps = {
 };
 
 function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit }: TaskListItemListProps) {
-  // Using `useListState` for reordering support
   const [state, handlers] = useListState(taskListItems);
+
+  useEffect(() => {
+    handlers.setState(taskListItems);
+  }, [handlers, taskListItems]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDragEnd = ({ source, destination }: any) => {
