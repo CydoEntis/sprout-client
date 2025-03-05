@@ -28,6 +28,7 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
         bg="card"
         w={300}
         h={200}
+        withBorder
       >
         <Stack gap={32}>
           <Flex justify="space-between" w="100%" align="center">

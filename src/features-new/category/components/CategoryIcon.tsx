@@ -9,10 +9,11 @@ type CategoryIconProps = {
 
 function CategoryIcon({ category, color }: CategoryIconProps) {
   return (
-    <Paper p="xs" bg={color} radius="md" h={45}>
+    <Paper p="xs" bg={color} radius="md" h={45} >
       {category &&
         React.cloneElement(category.icon as ReactElement, {
           size: 25,
+          color: "white",
         })}
     </Paper>
   );
