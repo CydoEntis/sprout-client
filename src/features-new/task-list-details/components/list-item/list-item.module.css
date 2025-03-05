@@ -1,0 +1,9 @@
+.list-item {
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .list-item:hover {
+    transform: scale(1.01);
+  }
+  

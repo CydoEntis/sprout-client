@@ -63,7 +63,7 @@ function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
         }}
       />
 
-      <Paper p={16} radius="md" mt={16}>
+      <Paper p={16} radius="md" mt={16} withBorder>
         <Stack gap={2} mb={16}>
           <Group justify="space-between" align="center">
             <Title>{taskListDetails.name}</Title>

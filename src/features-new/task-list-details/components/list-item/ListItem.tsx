@@ -1,6 +1,8 @@
 import { Paper, Flex, Checkbox, ActionIcon, Text, Group } from "@mantine/core";
 import { Trash } from "lucide-react";
-import { TaskListItem } from "./TaskListDetailsCard";
+import { TaskListItem } from "../TaskListDetailsCard";
+
+import styles from "./list-item.module.css";
 
 type ListItemProps = {
   item: TaskListItem;
@@ -10,7 +12,7 @@ type ListItemProps = {
 
 function ListItem({ item, onDelete, onChange }: ListItemProps) {
   return (
-    <Paper p={8} bg="secondary">
+    <Paper p={8} bg="item" className={styles["list-item"]} withBorder>
       <Flex justify="space-between">
         <Group>
           <Checkbox checked={item.isCompleted} onChange={(event) => onChange(item.id, event.currentTarget.checked)} />

@@ -11,6 +11,10 @@ const theme = createTheme({
     darkText: colorsTuple("#181818"),
     altLightText: colorsTuple("#998A77"),
     altDarkText: colorsTuple("#6F89A5"),
+    itemDark: colorsTuple("#333333"),
+    itemLight: colorsTuple("#F8F4F0"),
+    borderDark: colorsTuple("#2A2A2A"),
+    borderLight: colorsTuple("#EAE4DD"),
     primary: virtualColor({
       name: "primary",
       dark: "darkPrimary",
@@ -36,6 +40,11 @@ const theme = createTheme({
       dark: "altDarkText",
       light: "altLightText",
     }),
+    item: virtualColor({
+      name: "item",
+      dark: "itemDark",
+      light: "itemLight",
+    })
   },
   fontFamily: "Poppins, sans-serif",
   components: {

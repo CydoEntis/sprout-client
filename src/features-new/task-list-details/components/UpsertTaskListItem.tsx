@@ -13,7 +13,7 @@ type UpsertTaskListItemProps = {
   taskListId: number;
   taskListItem?: TaskListItemDetail;
   onClose: () => void;
-  onUpdate: (updatedItem: TaskListItemDetail) => void;
+  onUpdate?: (updatedItem: TaskListItemDetail) => void;
 };
 
 function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose, onUpdate }: UpsertTaskListItemProps) {
@@ -63,7 +63,7 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose, onUpd
     try {
       if (isEditing) {
         await updateTaskListItem.mutateAsync(data as UpdateTaskListItemRequest);
-        onUpdate(data as UpdateTaskListItemRequest);
+        onUpdate?.(data as UpdateTaskListItemRequest);
       } else {
         await createTaskListItem.mutateAsync(data as NewTaskListItemRequest);
       }

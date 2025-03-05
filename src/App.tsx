@@ -1,8 +1,7 @@
 import { Stack, Title } from "@mantine/core";
-import TaskListTabs from "./features/task-list-tabs/TaskListTabs";
 
 import useAuthStore from "./stores/useAuthStore";
-import FarmProgress from "./features/farm/FarmProgress";
+import FarmProgress from "./features-new/farm/components/FarmProgress";
 
 function App() {
   const { user } = useAuthStore();
