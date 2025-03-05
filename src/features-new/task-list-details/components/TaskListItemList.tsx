@@ -7,6 +7,7 @@ import ListItem from "./ListItem";
 import { useListState } from "@mantine/hooks";
 import { useReorderTaskListItemsMutation } from "../../task-list-item/services/reorder-task-list-item.service";
 import { useParams } from "@tanstack/react-router";
+import { useUpdateTaskListStatusItemMutation } from "../../task-list-item/services/update-status-task-list.service";
 
 type TaskListItemListProps = {
   taskListItems: TaskListItemDetail[];
@@ -19,6 +20,7 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
   const { taskListId } = useParams({ from: "/_authenticated/categories/$categoryName_/$taskListId" });
   const [state, handlers] = useListState(taskListItems);
   const reorderTaskListItems = useReorderTaskListItemsMutation();
+  const updateStatusTaskListItem = useUpdateTaskListStatusItemMutation(Number(taskListId));
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDragEnd = async ({ source, destination }: any) => {
@@ -30,8 +32,6 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
 
     handlers.setState(newState);
 
-    console.log("New state: ", newState);
-
     const reorderedItems = newState.map((item, index) => ({
       id: item.id,
       position: index,
@@ -40,6 +40,15 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
     await reorderTaskListItems.mutateAsync({
       taskListId: Number(taskListId),
       items: reorderedItems,
+    });
+  };
+
+  const handleStatusChange = async (id: number, isCompleted: boolean) => {
+    handlers.setState((prev) => prev.map((item) => (item.id === id ? { ...item, isCompleted } : item)));
+
+    await updateStatusTaskListItem.mutateAsync({
+      id,
+      isCompleted,
     });
   };
 
@@ -67,7 +76,7 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
                           onClose={onClose}
                         />
                       ) : (
-                        <ListItem item={item} onDelete={(id) => console.log(id)} onChange={() => console.log()} />
+                        <ListItem item={item} onDelete={(id) => console.log(id)} onChange={handleStatusChange} />
                       )}
                     </div>
                   </div>

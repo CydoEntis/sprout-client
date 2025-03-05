@@ -5,22 +5,23 @@ import endpoints from "../../../api/endpoints";
 import { UpdateStatusTaskListItemRequest, UpdateStatusTaskListItemResponse } from "../shared/task-list-item.types";
 
 const updateTaskListStatusItem = async (
+  taskListId: number,
   updatedTaskListItem: UpdateStatusTaskListItemRequest
 ): Promise<UpdateStatusTaskListItemResponse> => {
   return apiRequest<UpdateStatusTaskListItemResponse>(
     "put",
-    `${endpoints.taskListItem}/${updatedTaskListItem.taskListId}/items`,
+    `${endpoints.taskList}/${taskListId}/items/status`,
     updatedTaskListItem
   );
 };
 
-export function useUpdateTaskListStatusItemMutation() {
+export function useUpdateTaskListStatusItemMutation(taskListId: number) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (
       updatedTaskListItem: UpdateStatusTaskListItemRequest
     ): Promise<UpdateStatusTaskListItemResponse> => {
-      return await updateTaskListStatusItem(updatedTaskListItem);
+      return await updateTaskListStatusItem(taskListId, updatedTaskListItem);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({

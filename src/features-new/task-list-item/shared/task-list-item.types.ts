@@ -14,13 +14,10 @@ type ListItemOrder = {
   position: number;
 };
 
-type ListItemStatus = {
+
+export type UpdateStatusTaskListItemRequest = {
   id: number;
   isCompleted: boolean;
-};
-export type UpdateStatusTaskListItemRequest = {
-  taskListId: number;
-  items: ListItemStatus[];
 };
 
 export type NewTaskListItemResponse = {

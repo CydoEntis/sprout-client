@@ -5,7 +5,7 @@ import { TaskListItem } from "./TaskListDetailsCard";
 type ListItemProps = {
   item: TaskListItem;
   onDelete: (id: number) => void;
-  onChange: () => void;
+  onChange: (id: number, isCompleted: boolean) => void;
 };
 
 function ListItem({ item, onDelete, onChange }: ListItemProps) {
@@ -13,7 +13,7 @@ function ListItem({ item, onDelete, onChange }: ListItemProps) {
     <Paper p={8} bg="secondary">
       <Flex justify="space-between">
         <Group>
-          <Checkbox checked={item.isCompleted} onChange={onChange} />
+          <Checkbox checked={item.isCompleted} onChange={(event) => onChange(item.id, event.currentTarget.checked)} />
           <Text>{item.description}</Text>
         </Group>
         <ActionIcon color="red" variant="light" onClick={() => onDelete(item.id)}>
