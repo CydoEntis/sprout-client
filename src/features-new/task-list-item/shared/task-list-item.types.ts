@@ -12,8 +12,16 @@ export type ReorderedTaskListItemRequest = {
 type ListItemOrder = {
   id: number;
   position: number;
-}
+};
 
+type ListItemStatus = {
+  id: number;
+  isCompleted: boolean;
+};
+export type UpdateStatusTaskListItemRequest = {
+  taskListId: number;
+  items: ListItemStatus[];
+};
 
 export type NewTaskListItemResponse = {
   taskListId: string;
@@ -23,3 +31,4 @@ export type NewTaskListItemResponse = {
 export type UpdateTaskListItemResponse = NewTaskListItemResponse;
 
 export type ReorderedTaskListItemResponse = NewTaskListItemResponse;
+export type UpdateStatusTaskListItemResponse = NewTaskListItemResponse;
