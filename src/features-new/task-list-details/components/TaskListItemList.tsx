@@ -8,6 +8,7 @@ import { useListState } from "@mantine/hooks";
 import { useReorderTaskListItemsMutation } from "../../task-list-item/services/reorder-task-list-item.service";
 import { useParams } from "@tanstack/react-router";
 import { useUpdateTaskListStatusItemMutation } from "../../task-list-item/services/update-status-task-list.service";
+import { useDeleteTaskListItemMutation } from "../../task-list-item/services/delete-task-list-item.service";
 
 type TaskListItemListProps = {
   taskListItems: TaskListItemDetail[];
@@ -21,6 +22,7 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
   const [state, handlers] = useListState(taskListItems);
   const reorderTaskListItems = useReorderTaskListItemsMutation();
   const updateStatusTaskListItem = useUpdateTaskListStatusItemMutation(Number(taskListId));
+  const deleteTaskListItem = useDeleteTaskListItemMutation(Number(taskListId));
 
   const updateTaskListItemHandler = (updatedItem: TaskListItem) => {
     handlers.setState((prev) => prev.map((task) => (task.id === updatedItem.id ? updatedItem : task)));
@@ -56,6 +58,10 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
     });
   };
 
+  const handleTaskListItemDeletion = async (taskListItemId: number) => {
+    await deleteTaskListItem.mutateAsync(taskListItemId);
+  };
+
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       <Droppable droppableId="task-list" direction="vertical">
@@ -81,7 +87,11 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
                           onUpdate={updateTaskListItemHandler}
                         />
                       ) : (
-                        <ListItem item={item} onDelete={(id) => console.log(id)} onChange={handleStatusChange} />
+                        <ListItem
+                          item={item}
+                          onDelete={() => handleTaskListItemDeletion(item.id)}
+                          onChange={handleStatusChange}
+                        />
                       )}
                     </div>
                   </div>
