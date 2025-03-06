@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const newTaskListSchema = z.object({
+export const createTaskListSchema = z.object({
   name: z
     .string()
     .min(3, "Title must be at least 3 characters long.")
@@ -12,7 +12,7 @@ export const newTaskListSchema = z.object({
   categoryName: z.string().min(1, "Category name is required"),
 });
 
-export const updateTaskListSchema = newTaskListSchema.extend({
+export const updateTaskListSchema = createTaskListSchema.extend({
   taskListId: z.number().min(1, "Task list ID is required"),
   categoryName: z.string().min(1, "Category is required"),
 });

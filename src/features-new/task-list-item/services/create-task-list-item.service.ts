@@ -2,7 +2,7 @@ import { notifications } from "@mantine/notifications";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "../../../api/apiRequest";
 import endpoints from "../../../api/endpoints";
-import { NewTaskListItemRequest as CreateTaskListItemRequest, CreateTaskListItemResponse } from "../shared/task-list-item.types";
+import { CreateTaskListItemRequest, CreateTaskListItemResponse } from "../shared/task-list-item.types";
 
 const createTaskListItem = async (newTaskListItem: CreateTaskListItemRequest): Promise<CreateTaskListItemResponse> => {
   return apiRequest<CreateTaskListItemResponse>(

@@ -8,6 +8,7 @@ export type TaskListDetails = {
   totalTasksCount: number;
   isCompleted: boolean;
   members: Member[];
+  categoryName: string;
   taskListItems: TaskListItemDetail[];
 };
 

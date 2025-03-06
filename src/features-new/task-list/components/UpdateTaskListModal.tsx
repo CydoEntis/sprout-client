@@ -14,8 +14,9 @@ type UpdateTaskListModalProps = {
 };
 
 function UpdateTaskListModal({ isOpen, onClose, taskList }: UpdateTaskListModalProps) {
-  // TODO: FIX
   const updateTaskList = useUpdateTaskListMutation();
+
+  // TODO: FIX
   const { handleFormErrors } = useFormErrorHandler<UpdateTaskListRequest>();
 
   const form = useForm<UpdateTaskListRequest>({

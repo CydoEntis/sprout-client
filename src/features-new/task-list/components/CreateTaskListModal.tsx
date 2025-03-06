@@ -2,10 +2,11 @@ import { Button, Modal, Stack, TextInput, Textarea } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useParams } from "@tanstack/react-router";
 import { useCreateTaskListMutation } from "../services/create-task-list.service";
-import { newTaskListSchema } from "../shared/task-list.schemas";
-import { NewTaskListRequest } from "../shared/task-list.types";
+
 import useFormErrorHandler from "../../../hooks/useFormErrorHandler";
 import { ErrorResponse } from "../../../api/errors/errror.types";
+import { CreateTaskListRequest } from "../shared/task-list.types";
+import { createTaskListSchema } from "../shared/task-list.schemas";
 
 type CreateTaskListModalProps = {
   isOpen: boolean;
@@ -14,11 +15,11 @@ type CreateTaskListModalProps = {
 
 function CreateTaskListModal({ isOpen, onClose }: CreateTaskListModalProps) {
   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName" });
-  const createTaskList = useCreateTaskListMutation(categoryName ?? "");
-  const { handleFormErrors } = useFormErrorHandler<NewTaskListRequest>();
+  const createTaskList = useCreateTaskListMutation();
+  const { handleFormErrors } = useFormErrorHandler<CreateTaskListRequest>();
 
-  const form = useForm<NewTaskListRequest>({
-    validate: zodResolver(newTaskListSchema),
+  const form = useForm<CreateTaskListRequest>({
+    validate: zodResolver(createTaskListSchema),
     initialValues: {
       name: "",
       description: "",
@@ -28,7 +29,7 @@ function CreateTaskListModal({ isOpen, onClose }: CreateTaskListModalProps) {
 
   console.log(form.errors);
 
-  const handleSubmit = async (data: NewTaskListRequest) => {
+  const handleSubmit = async (data: CreateTaskListRequest) => {
     try {
       console.log(data);
 

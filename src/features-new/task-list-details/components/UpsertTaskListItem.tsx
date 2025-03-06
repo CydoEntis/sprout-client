@@ -3,11 +3,8 @@ import { ActionIcon, ActionIconGroup, TextInput } from "@mantine/core";
 import { Check, X } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
 import { TaskListItemDetail } from "../shared/task-list-details.types";
-import { newTaskListItemSchema, updateTaskListItemSchema } from "../../task-list-item/shared/task-list-item.schemas";
-import { NewTaskListItemRequest, UpdateTaskListItemRequest } from "../../task-list-item/shared/task-list-item.types";
-import { useCreateTaskListItemMutation } from "../../task-list-item/services/create-task-list-item.service";
-import { useUpdateTaskListItemMutation } from "../../task-list-item/services/update-task-list-item.service";
-import { TaskListItem } from "./TaskListDetailsCard";
+import { createTaskListItemSchema, updateTaskListItemSchema } from "../../task-list-item/shared/task-list-item.schemas";
+import { CreateTaskListItemRequest, UpdateTaskListItemRequest } from "../../task-list-item/shared/task-list-item.types";
 
 type UpsertTaskListItemProps = {
   isActive: boolean;
@@ -15,7 +12,7 @@ type UpsertTaskListItemProps = {
   taskListItem?: TaskListItemDetail;
   onClose: () => void;
   onUpdate?: (updatedItem: TaskListItemDetail) => void;
-  onCreate?: (newItem: TaskListItemDetail) => void;
+  onCreate?: (newItem: CreateTaskListItemRequest) => void;
 };
 
 function UpsertTaskListItem({
@@ -28,8 +25,6 @@ function UpsertTaskListItem({
 }: UpsertTaskListItemProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const isEditing = Boolean(taskListItem);
-  const createTaskListItem = useCreateTaskListItemMutation();
-  const updateTaskListItem = useUpdateTaskListItemMutation();
 
   const form = useForm({
     initialValues: {
@@ -38,7 +33,7 @@ function UpsertTaskListItem({
       isCompleted: taskListItem?.isCompleted ?? false,
       taskListId,
     },
-    validate: zodResolver(isEditing ? updateTaskListItemSchema : newTaskListItemSchema),
+    validate: zodResolver(isEditing ? updateTaskListItemSchema : createTaskListItemSchema),
   });
 
   useEffect(() => {
@@ -68,14 +63,12 @@ function UpsertTaskListItem({
     };
   }, [isActive, onClose]);
 
-  const handleSubmit = async (data: NewTaskListItemRequest | UpdateTaskListItemRequest) => {
+  const handleSubmit = async (data: CreateTaskListItemRequest | UpdateTaskListItemRequest) => {
     try {
       if (isEditing) {
-        await updateTaskListItem.mutateAsync(data as UpdateTaskListItemRequest);
         onUpdate?.(data as UpdateTaskListItemRequest);
       } else {
-        const newItem = await createTaskListItem.mutateAsync(data as NewTaskListItemRequest);
-        onCreate?.(newItem);
+        onCreate?.(data as CreateTaskListItemRequest);
       }
     } catch (error) {
       console.error("Error submitting task:", error);

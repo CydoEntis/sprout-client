@@ -1,9 +1,15 @@
 import { z } from "zod";
-import { newTaskListItemSchema, updateTaskListItemSchema } from "./task-list-item.schemas";
+import { createTaskListItemSchema, updateTaskListItemSchema } from "./task-list-item.schemas";
 import { TaskListItemDetail } from "../../task-list-details/shared/task-list-details.types";
 
-export type NewTaskListItemRequest = z.infer<typeof newTaskListItemSchema>;
+export type CreateTaskListItemRequest = z.infer<typeof createTaskListItemSchema>;
 export type UpdateTaskListItemRequest = z.infer<typeof updateTaskListItemSchema>;
+
+export type TaskListItem = {
+  id: number;
+  description: string;
+  isCompleted: boolean;
+};
 
 export type ReorderedTaskListItemRequest = {
   taskListId: number;
@@ -15,19 +21,20 @@ type ListItemOrder = {
   position: number;
 };
 
-export type UpdateStatusTaskListItemRequest = {
+export type UpdateTaskListItemStatusRequest = {
+  taskListId: number;
   id: number;
   isCompleted: boolean;
 };
 
 export type TaskListItemResponse = {
-  taskListId: string;
+  taskListId: number;
   message: string;
 };
 
 export type CreateTaskListItemResponse = TaskListItemResponse & {
-  taskListItem: TaskListItemDetail;
-}
+  taskListItemDetail: TaskListItemDetail;
+};
 
 export type UpdateTaskListItemResponse = TaskListItemResponse;
 

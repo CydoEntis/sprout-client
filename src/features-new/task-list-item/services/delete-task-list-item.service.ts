@@ -3,19 +3,24 @@ import { apiRequest } from "../../../api/apiRequest";
 import endpoints from "../../../api/endpoints";
 import { DeleteTaskListItemResponse } from "../shared/task-list-item.types";
 
-const deleteTaskListItem = async (taskListId: number, taskListItemId: number): Promise<DeleteTaskListItemResponse> => {
+export type DeleteTaskListItemRequest = {
+  taskListId: number;
+  taskListItemId: number;
+};
+
+const deleteTaskListItem = async (request: DeleteTaskListItemRequest): Promise<DeleteTaskListItemResponse> => {
   return apiRequest<DeleteTaskListItemResponse>(
     "delete",
-    `${endpoints.taskList}/${taskListId}/items/${taskListItemId}`
+    `${endpoints.taskList}/${request.taskListId}/items/${request.taskListItemId}`
   );
 };
 
-export function useDeleteTaskListItemMutation(taskListId: number) {
+export function useDeleteTaskListItemMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (taskListItemId: number): Promise<DeleteTaskListItemResponse> => {
-      return await deleteTaskListItem(taskListId, taskListItemId);
+    mutationFn: async (request: DeleteTaskListItemRequest): Promise<DeleteTaskListItemResponse> => {
+      return await deleteTaskListItem(request);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({

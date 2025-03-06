@@ -2,26 +2,23 @@ import { notifications } from "@mantine/notifications";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "../../../api/apiRequest";
 import endpoints from "../../../api/endpoints";
-import { UpdateStatusTaskListItemRequest, UpdateStatusTaskListItemResponse } from "../shared/task-list-item.types";
+import { UpdateStatusTaskListItemResponse, UpdateTaskListItemStatusRequest } from "../shared/task-list-item.types";
 
 const updateTaskListStatusItem = async (
-  taskListId: number,
-  updatedTaskListItem: UpdateStatusTaskListItemRequest
+  request: UpdateTaskListItemStatusRequest
 ): Promise<UpdateStatusTaskListItemResponse> => {
   return apiRequest<UpdateStatusTaskListItemResponse>(
     "put",
-    `${endpoints.taskList}/${taskListId}/items/status`,
-    updatedTaskListItem
+    `${endpoints.taskList}/${request.taskListId}/items/status`,
+    request
   );
 };
 
-export function useUpdateTaskListStatusItemMutation(taskListId: number) {
+export function useUpdateTaskListStatusItemMutation() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (
-      updatedTaskListItem: UpdateStatusTaskListItemRequest
-    ): Promise<UpdateStatusTaskListItemResponse> => {
-      return await updateTaskListStatusItem(taskListId, updatedTaskListItem);
+    mutationFn: async (request: UpdateTaskListItemStatusRequest): Promise<UpdateStatusTaskListItemResponse> => {
+      return await updateTaskListStatusItem(request);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({

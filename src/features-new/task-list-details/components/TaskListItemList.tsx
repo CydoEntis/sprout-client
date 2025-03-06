@@ -9,7 +9,6 @@ import { useReorderTaskListItemsMutation } from "../../task-list-item/services/r
 import { useParams } from "@tanstack/react-router";
 import { useUpdateTaskListStatusItemMutation } from "../../task-list-item/services/update-status-task-list.service";
 import { useDeleteTaskListItemMutation } from "../../task-list-item/services/delete-task-list-item.service";
-import { NewTaskListItemRequest } from "../../task-list-item/shared/task-list-item.types";
 
 type TaskListItemListProps = {
   taskListItems: TaskListItemDetail[];
