@@ -30,7 +30,7 @@ function TaskListCard({
         }}
         className="card"
       >
-        <Card p={0} shadow="md" bg="secondary">
+        <Card p={0} shadow="md" bg="secondary" withBorder>
           <Flex>
             <Box bg={color} w={8} h="100%" />
             <Box p={16} flex="1">

@@ -11,7 +11,8 @@ type TaskListPage = {
 };
 
 function TaskListPage({ taskLists }: TaskListPage) {
-  const [isCreateTaskListModalOpened, { open: onOpenCreateTaskListModal, close: onCloseCreateTaskListModal }] = useDisclosure(false);
+  const [isCreateTaskListModalOpened, { open: onOpenCreateTaskListModal, close: onCloseCreateTaskListModal }] =
+    useDisclosure(false);
 
   return (
     <Box mt={32}>
