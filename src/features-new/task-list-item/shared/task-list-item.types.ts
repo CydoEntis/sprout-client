@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { newTaskListItemSchema, updateTaskListItemSchema } from "./task-list-item.schemas";
+import { TaskListItemDetail } from "../../task-list-details/shared/task-list-details.types";
 
 export type NewTaskListItemRequest = z.infer<typeof newTaskListItemSchema>;
 export type UpdateTaskListItemRequest = z.infer<typeof updateTaskListItemSchema>;
@@ -19,13 +20,17 @@ export type UpdateStatusTaskListItemRequest = {
   isCompleted: boolean;
 };
 
-export type NewTaskListItemResponse = {
+export type TaskListItemResponse = {
   taskListId: string;
   message: string;
 };
 
-export type UpdateTaskListItemResponse = NewTaskListItemResponse;
+export type CreateTaskListItemResponse = TaskListItemResponse & {
+  taskListItem: TaskListItemDetail;
+}
 
-export type ReorderedTaskListItemResponse = NewTaskListItemResponse;
-export type UpdateStatusTaskListItemResponse = NewTaskListItemResponse;
-export type DeleteTaskListItemResponse = NewTaskListItemResponse;
+export type UpdateTaskListItemResponse = TaskListItemResponse;
+
+export type ReorderedTaskListItemResponse = TaskListItemResponse;
+export type UpdateStatusTaskListItemResponse = TaskListItemResponse;
+export type DeleteTaskListItemResponse = TaskListItemResponse;

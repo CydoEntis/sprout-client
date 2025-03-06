@@ -9,6 +9,7 @@ import { useReorderTaskListItemsMutation } from "../../task-list-item/services/r
 import { useParams } from "@tanstack/react-router";
 import { useUpdateTaskListStatusItemMutation } from "../../task-list-item/services/update-status-task-list.service";
 import { useDeleteTaskListItemMutation } from "../../task-list-item/services/delete-task-list-item.service";
+import { NewTaskListItemRequest } from "../../task-list-item/shared/task-list-item.types";
 
 type TaskListItemListProps = {
   taskListItems: TaskListItemDetail[];
@@ -23,6 +24,11 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
   const reorderTaskListItems = useReorderTaskListItemsMutation();
   const updateStatusTaskListItem = useUpdateTaskListStatusItemMutation(Number(taskListId));
   const deleteTaskListItem = useDeleteTaskListItemMutation(Number(taskListId));
+
+  const handleTaskListItemCreation = (newItem: TaskListItemDetail) => {
+    handlers.append(newItem); 
+  };
+  
 
   const updateTaskListItemHandler = (updatedItem: TaskListItem) => {
     handlers.setState((prev) => prev.map((task) => (task.id === updatedItem.id ? updatedItem : task)));
@@ -60,6 +66,8 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
 
   const handleTaskListItemDeletion = async (taskListItemId: number) => {
     await deleteTaskListItem.mutateAsync(taskListItemId);
+
+    handlers.setState((prev) => prev.filter((item) => item.id !== taskListItemId));
   };
 
   return (

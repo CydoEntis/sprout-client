@@ -7,6 +7,7 @@ import { newTaskListItemSchema, updateTaskListItemSchema } from "../../task-list
 import { NewTaskListItemRequest, UpdateTaskListItemRequest } from "../../task-list-item/shared/task-list-item.types";
 import { useCreateTaskListItemMutation } from "../../task-list-item/services/create-task-list-item.service";
 import { useUpdateTaskListItemMutation } from "../../task-list-item/services/update-task-list-item.service";
+import { TaskListItem } from "./TaskListDetailsCard";
 
 type UpsertTaskListItemProps = {
   isActive: boolean;
@@ -14,9 +15,17 @@ type UpsertTaskListItemProps = {
   taskListItem?: TaskListItemDetail;
   onClose: () => void;
   onUpdate?: (updatedItem: TaskListItemDetail) => void;
+  onCreate?: (newItem: TaskListItemDetail) => void;
 };
 
-function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose, onUpdate }: UpsertTaskListItemProps) {
+function UpsertTaskListItem({
+  isActive,
+  taskListId,
+  taskListItem,
+  onClose,
+  onUpdate,
+  onCreate,
+}: UpsertTaskListItemProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const isEditing = Boolean(taskListItem);
   const createTaskListItem = useCreateTaskListItemMutation();
@@ -65,7 +74,8 @@ function UpsertTaskListItem({ isActive, taskListId, taskListItem, onClose, onUpd
         await updateTaskListItem.mutateAsync(data as UpdateTaskListItemRequest);
         onUpdate?.(data as UpdateTaskListItemRequest);
       } else {
-        await createTaskListItem.mutateAsync(data as NewTaskListItemRequest);
+        const newItem = await createTaskListItem.mutateAsync(data as NewTaskListItemRequest);
+        onCreate?.(newItem);
       }
     } catch (error) {
       console.error("Error submitting task:", error);
