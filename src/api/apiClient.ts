@@ -5,9 +5,9 @@ import { ERROR_TYPES } from "./errors/error.constants";
 import useAuthStore from "../stores/useAuthStore";
 import localStorageService from "../services/localStorage.service";
 import { jwtDecode } from "jwt-decode";
-import { DecodedToken } from "../features-new/auth/shared/auth.types";
-import { refreshTokens } from "../features-new/auth/services/refresh-tokens.service";
-import { logoutUser } from "../features-new/auth/services/logout.service";
+import { logoutUser } from "../features/auth/services/logout.service";
+import { refreshTokens } from "../features/auth/services/refresh-tokens.service";
+import { DecodedToken } from "../features/auth/shared/auth.types";
 
 const apiClient = axios.create({
   baseURL: baseUrl,

@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import LoadingSkeleton from "../../../components/loaders/LoadingSkeleton";
 import CategoriesPage from "../../../pages/CategoriesPage";
-import { getAllCategoriesQueryOptions } from "../../../features-new/category/services/get-all-categories.service";
+import { getAllCategoriesQueryOptions } from "../../../features/category/services/get-all-categories.service";
 
 export const Route = createFileRoute("/_authenticated/categories/")({
   loader: async ({ context }) => {

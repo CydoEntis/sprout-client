@@ -5,7 +5,7 @@ import { Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import useAuthStore from "../../stores/useAuthStore";
 import { CustomLink } from "../CustomLink";
 import LocalStorageService from "../../services/localStorage.service";
-import { logoutUser } from "../../features-new/auth/services/logout.service";
+import { logoutUser } from "../../features/auth/services/logout.service";
 
 function Layout() {
   const { user, logoutUser: logout } = useAuthStore();
@@ -14,7 +14,6 @@ function Layout() {
   const navigate = useNavigate();
 
   const logoutHandler = async () => {
-    console.log("Logging out...");
     try {
       await logoutUser();
       logout();

@@ -2,17 +2,21 @@ import { useEffect, useRef } from "react";
 import { ActionIcon, ActionIconGroup, TextInput } from "@mantine/core";
 import { Check, X } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
-import { TaskListItemDetail } from "../shared/task-list-details.types";
-import { createTaskListItemSchema, updateTaskListItemSchema } from "../../task-list-item/shared/task-list-item.schemas";
-import { CreateTaskListItemRequest, UpdateTaskListItemRequest } from "../../task-list-item/shared/task-list-item.types";
+import {
+  CreateTaskListItem,
+  TaskListItem,
+  UpdateTaskLIstItem,
+  UpdateTaskLIstItem as UpdateTaskListItem,
+} from "../shared/tasks.types";
+import { createTaskListItemSchema, updateTaskListItemSchema } from "../shared/tasks.schemas";
 
 type UpsertTaskListItemProps = {
   isActive: boolean;
   taskListId: number;
-  taskListItem?: TaskListItemDetail;
+  taskListItem?: TaskListItem;
   onClose: () => void;
-  onUpdate?: (updatedItem: TaskListItemDetail) => void;
-  onCreate?: (newItem: CreateTaskListItemRequest) => void;
+  onUpdate?: (updatedItem: UpdateTaskLIstItem) => void;
+  onCreate?: (newItem: CreateTaskListItem) => void;
 };
 
 function UpsertTaskListItem({
@@ -63,12 +67,12 @@ function UpsertTaskListItem({
     };
   }, [isActive, onClose]);
 
-  const handleSubmit = async (data: CreateTaskListItemRequest | UpdateTaskListItemRequest) => {
+  const handleSubmit = async (data: CreateTaskListItem | UpdateTaskListItem) => {
     try {
       if (isEditing) {
-        onUpdate?.(data as UpdateTaskListItemRequest);
+        onUpdate?.(data as UpdateTaskListItem);
       } else {
-        onCreate?.(data as CreateTaskListItemRequest);
+        onCreate?.(data as CreateTaskListItem);
       }
     } catch (error) {
       console.error("Error submitting task:", error);

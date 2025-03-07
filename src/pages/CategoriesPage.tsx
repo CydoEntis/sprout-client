@@ -1,9 +1,9 @@
 import { useDisclosure } from "@mantine/hooks";
 
 import { useState } from "react";
-import CategoryList from "../features-new/category/components/CategoryList";
-import UpsertCategoryModal from "../features-new/category/components/UpsertCategoryModal";
-import { CategoryResponse, Category } from "../features-new/category/shared/category.types";
+import { Category, CategoryResponse } from "../features/category/shared/category.types";
+import UpsertCategoryModal from "../features/category/components/UpsertCategoryModal";
+import CategoryList from "../features/category/components/CategoryList";
 
 type CategoriesPageProps = {
   categories: CategoryResponse[];

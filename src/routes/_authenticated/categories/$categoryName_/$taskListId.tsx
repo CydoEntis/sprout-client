@@ -1,8 +1,9 @@
 import { createFileRoute, useParams } from "@tanstack/react-router";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getTaskListByIdQueryOptions } from "../../../../features/task-list-details/services/get-task-list-details-by-id.services";
+
 import TaskListDetailsPage from "../../../../features/tasks/pages/TaskListPage";
+import { getTaskListByIdQueryOptions } from "../../../../features/tasks/services/task-list/get-task-list-details-by-id.service";
 
 
 export const Route = createFileRoute("/_authenticated/categories/$categoryName_/$taskListId")({
