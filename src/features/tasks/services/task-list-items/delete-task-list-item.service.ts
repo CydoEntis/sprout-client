@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiRequest } from "../../../api/apiRequest";
-import endpoints from "../../../api/endpoints";
-import { DeleteTaskListItemResponse } from "../shared/task-list-item.types";
+import { apiRequest } from "../../../../api/apiRequest";
+import endpoints from "../../../../api/endpoints";
+import { DeleteTaskListItemResponse } from "../../../task-list-item/shared/task-list-item.types";
 
 export type DeleteTaskListItemRequest = {
   taskListId: number;

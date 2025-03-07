@@ -5,10 +5,10 @@ import UpsertTaskListItem from "./UpsertTaskListItem";
 import { TaskListItem } from "./TaskListDetailsCard";
 import ListItem from "./list-item/ListItem";
 import { useListState } from "@mantine/hooks";
-import { useReorderTaskListItemsMutation } from "../../task-list-item/services/reorder-task-list-item.service";
+import { useReorderTaskListItemsMutation } from "../services/task-list-items/reorder-task-list-item.service";
 import { useParams } from "@tanstack/react-router";
-import { useUpdateTaskListStatusItemMutation } from "../../task-list-item/services/update-status-task-list.service";
-import { useDeleteTaskListItemMutation } from "../../task-list-item/services/delete-task-list-item.service";
+import { useUpdateTaskListStatusItemMutation } from "../services/task-list-items/update-status-task-list.service";
+import { useDeleteTaskListItemMutation } from "../services/task-list-items/delete-task-list-item.service";
 
 type TaskListItemListProps = {
   taskListItems: TaskListItemDetail[];

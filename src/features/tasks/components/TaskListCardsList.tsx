@@ -2,7 +2,7 @@ import { Button, Group } from "@mantine/core";
 import GridList from "../../../components/GridList";
 
 import { Plus } from "lucide-react";
-import { TaskList } from "../shared/task-list.types";
+import { TaskList } from "../shared/tasks.types";
 import InProgressTaskListCard from "./InProgressTaskListCard";
 
 type TaskListCardsListProps = {

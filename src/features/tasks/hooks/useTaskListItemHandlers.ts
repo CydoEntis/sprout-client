@@ -1,18 +1,20 @@
 import { useState } from "react";
 import { useListState } from "@mantine/hooks";
 import { useParams } from "@tanstack/react-router";
-import { useCreateTaskListItemMutation } from "../../task-list-item/services/create-task-list-item.service";
-import { useUpdateTaskListItemMutation } from "../../task-list-item/services/update-task-list-item.service";
-import { useReorderTaskListItemsMutation } from "../../task-list-item/services/reorder-task-list-item.service";
-import { useUpdateTaskListStatusItemMutation } from "../../task-list-item/services/update-status-task-list.service";
-import { useDeleteTaskListItemMutation } from "../../task-list-item/services/delete-task-list-item.service";
-import { CreateTaskListItemRequest, TaskListItem } from "../../task-list-item/shared/task-list-item.types";
+import { useCreateTaskListItemMutation } from "../services/task-list-items/create-task-list-item.service";
+import { useUpdateTaskListItemMutation } from "../services/task-list-items/update-task-list-item.service";
+import { useReorderTaskListItemsMutation } from "../services/task-list-items/reorder-task-list-item.service";
+import { useUpdateTaskListStatusItemMutation } from "../services/task-list-items/update-status-task-list.service";
+import { useDeleteTaskListItemMutation } from "../services/task-list-items/delete-task-list-item.service";
+import { CreateTaskListItem, TaskListItem } from "../shared/tasks.types";
 
 export function useTaskListItemHandlers(initialItems: TaskListItem[]) {
   const { taskListId } = useParams({ from: "/_authenticated/categories/$categoryName_/$taskListId" });
   const [taskListItems, taskListItemHandlers] = useListState(initialItems);
-  const [itemToUpdate, setItemToUpdate] = useState<TaskListItem | null>(null);
-  const [isCreating, setIsCreating] = useState(false);
+  const [editingState, setEditingState] = useState<{ itemToUpdate: TaskListItem | null; isCreating: boolean }>({
+    itemToUpdate: null,
+    isCreating: false,
+  });
 
   const createTaskListItem = useCreateTaskListItemMutation();
   const updateTaskListItem = useUpdateTaskListItemMutation();
@@ -20,13 +22,9 @@ export function useTaskListItemHandlers(initialItems: TaskListItem[]) {
   const updateStatusTaskListItem = useUpdateTaskListStatusItemMutation();
   const deleteTaskListItem = useDeleteTaskListItemMutation();
 
-  const createItem = async (newItem: CreateTaskListItemRequest) => {
+  const createItem = async (newItem: CreateTaskListItem) => {
     const result = await createTaskListItem.mutateAsync(newItem);
-    taskListItemHandlers.append({
-      id: result.taskListItemDetail.id,
-      description: result.taskListItemDetail.description,
-      isCompleted: result.taskListItemDetail.isCompleted,
-    });
+    taskListItemHandlers.append(result.item as TaskListItem);
   };
 
   const updateItem = async (updatedItem: TaskListItem) => {
@@ -42,7 +40,7 @@ export function useTaskListItemHandlers(initialItems: TaskListItem[]) {
     taskListItemHandlers.setState((prev) => prev.filter((item) => item.id !== taskListItemId));
   };
 
-  const toggleStatus = async (id: number, isCompleted: boolean) => {
+  const toggleItemStatus = async (id: number, isCompleted: boolean) => {
     taskListItemHandlers.setState((prev) => prev.map((item) => (item.id === id ? { ...item, isCompleted } : item)));
     await updateStatusTaskListItem.mutateAsync({ taskListId: Number(taskListId), id, isCompleted });
   };
@@ -59,16 +57,20 @@ export function useTaskListItemHandlers(initialItems: TaskListItem[]) {
     await reorderTaskListItems.mutateAsync({ taskListId: Number(taskListId), items: reorderedItems });
   };
 
+  const showCreateItem = () => setEditingState({ itemToUpdate: null, isCreating: true });
+  const showUpdateItem = (item: TaskListItem) => setEditingState({ itemToUpdate: item, isCreating: false });
+  const closeItem = () => setEditingState({ itemToUpdate: null, isCreating: false });
+
   return {
     taskListItems,
-    itemToUpdate,
-    isCreating,
     createItem,
     updateItem,
     deleteItem,
-    toggleStatus,
+    toggleItemStatus,
     reorderItems,
-    setIsCreating,
-    setItemToUpdate,
+    closeItem,
+    showCreateItem,
+    showUpdateItem,
+    editingState,
   };
 }

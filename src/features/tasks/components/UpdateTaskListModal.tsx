@@ -1,8 +1,8 @@
 import { Button, Modal, Stack, TextInput, Textarea } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
-import { useUpdateTaskListMutation } from "../services/update-task-list.service";
-import { updateTaskListSchema } from "../shared/task-list.schemas";
-import { UpdateTaskListRequest } from "../shared/task-list.types";
+import { useUpdateTaskListMutation } from "../services/task-list/update-task-list.service";
+import { updateTaskListSchema } from "../shared/tasks.schemas";
+import { TaskList, UpdateTaskList } from "../shared/tasks.types";
 import { useEffect } from "react";
 import useFormErrorHandler from "../../../hooks/useFormErrorHandler";
 import { ErrorResponse } from "../../../api/errors/errror.types";
@@ -10,19 +10,19 @@ import { ErrorResponse } from "../../../api/errors/errror.types";
 type UpdateTaskListModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  taskList: UpdateTaskListRequest;
+  taskList: TaskList;
 };
 
 function UpdateTaskListModal({ isOpen, onClose, taskList }: UpdateTaskListModalProps) {
   const updateTaskList = useUpdateTaskListMutation();
 
   // TODO: FIX
-  const { handleFormErrors } = useFormErrorHandler<UpdateTaskListRequest>();
+  const { handleFormErrors } = useFormErrorHandler<UpdateTaskList>();
 
-  const form = useForm<UpdateTaskListRequest>({
+  const form = useForm<UpdateTaskList>({
     validate: zodResolver(updateTaskListSchema),
     initialValues: {
-      taskListId: taskList.taskListId,
+      id: taskList.id,
       name: taskList.name,
       description: taskList.description,
       categoryName: taskList.categoryName,
@@ -30,11 +30,11 @@ function UpdateTaskListModal({ isOpen, onClose, taskList }: UpdateTaskListModalP
   });
 
   useEffect(() => {
-    form.setValues({ taskListId: taskList.taskListId, name: taskList.name, description: taskList.description });
+    form.setValues({ id: taskList.id, name: taskList.name, description: taskList.description });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskList]);
 
-  const handleSubmit = async (data: UpdateTaskListRequest) => {
+  const handleSubmit = async (data: UpdateTaskList) => {
     try {
       console.log(data);
       await updateTaskList.mutateAsync(data);

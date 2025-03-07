@@ -1,8 +1,8 @@
 import { notifications } from "@mantine/notifications";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import { apiRequest } from "../../../api/apiRequest";
-import endpoints from "../../../api/endpoints";
-import { UpdateStatusTaskListItemResponse, UpdateTaskListItemStatusRequest } from "../shared/task-list-item.types";
+import { apiRequest } from "../../../../api/apiRequest";
+import endpoints from "../../../../api/endpoints";
+import { UpdateStatusTaskListItemResponse, UpdateTaskListItemStatusRequest } from "../../../task-list-item/shared/task-list-item.types";
 
 const updateTaskListStatusItem = async (
   request: UpdateTaskListItemStatusRequest

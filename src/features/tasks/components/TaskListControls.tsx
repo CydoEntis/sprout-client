@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import React from "react";
-import { useDeleteTaskListMutation } from "../services/delete-task-list.service";
+import { useDeleteTaskListMutation } from "../services/task-list/delete-task-list.service";
 
 type TaskListControlsProps = {
   taskListId: number;

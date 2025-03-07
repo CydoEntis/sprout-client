@@ -1,6 +1,6 @@
 import { Stack, Text } from "@mantine/core";
 import MemberList from "../../../components/members/MemberList";
-import { Member } from "../shared/task-list.types";
+import { Member } from "../shared/tasks.types";
 
 type TaskListMembersProps = {
   members: Member[];

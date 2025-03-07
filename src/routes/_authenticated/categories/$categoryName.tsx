@@ -4,7 +4,8 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 
 import LoadingSkeleton from "../../../components/loaders/LoadingSkeleton";
 import TaskListPage from "../../../pages/TaskListsPreviewPage";
-import { getAllTaskListsForCategoryQueryOptions } from "../../../features-new/category/services/get-all-task-lists-for-category.service";
+import { getAllTaskListsForCategoryQueryOptions } from "../../../features/category/services/get-all-task-lists-for-category.service";
+
 
 export const Route = createFileRoute("/_authenticated/categories/$categoryName")({
   loader: async ({ context, params }) => {
