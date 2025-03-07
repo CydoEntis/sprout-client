@@ -1,23 +1,23 @@
 import { useDisclosure, useListState } from "@mantine/hooks";
 import { useNavigate, useParams } from "@tanstack/react-router";
-import { TaskListDetails } from "../shared/task-list-details.types";
+import { TaskListDetails } from "../../task-list-details/shared/task-list-details.types";
 import { useReorderTaskListItemsMutation } from "../../task-list-item/services/reorder-task-list-item.service";
 import { useUpdateTaskListStatusItemMutation } from "../../task-list-item/services/update-status-task-list.service";
 import { useDeleteTaskListItemMutation } from "../../task-list-item/services/delete-task-list-item.service";
 import { Avatar, Text, Group, Paper, Stack, Title } from "@mantine/core";
-import UpdateTaskListModal from "../../task-list/components/UpdateTaskListModal";
 import { useCreateTaskListItemMutation } from "../../task-list-item/services/create-task-list-item.service";
 import { useUpdateTaskListItemMutation } from "../../task-list-item/services/update-task-list-item.service";
-import { useDeleteTaskListMutation } from "../../task-list/services/delete-task-list.service";
 import { Plus } from "lucide-react";
 import UpdateAndDeleteMenu from "../../../components/menus/UpdateAndDeleteMenu";
 import CreateTaskListItemButton from "../../task-list-item/components/CreateTaskListItemButton";
-import TaskListItemControls from "../components/TaskListItemControls";
-import UpsertTaskListItem from "../components/UpsertTaskListItem";
+import TaskListItemControls from "../../task-list-details/components/TaskListItemControls";
+import UpsertTaskListItem from "../../task-list-details/components/UpsertTaskListItem";
 import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
-import ListItem from "../components/list-item/ListItem";
+import ListItem from "../../task-list-details/components/list-item/ListItem";
 import { CreateTaskListItemRequest, TaskListItem } from "../../task-list-item/shared/task-list-item.types";
+import UpdateTaskListModal from "../components/UpdateTaskListModal";
+import { useDeleteTaskListMutation } from "../services/delete-task-list.service";
 
 type TaskListDetailsPageProps = {
   taskListDetails: TaskListDetails;
