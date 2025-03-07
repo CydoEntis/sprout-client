@@ -21,18 +21,18 @@ export type DeletedTaskList = SuccessMessage & {
   id: number;
 };
 
-// export type TaskList = {
-//   id: number;
-//   name: string;
-//   description: string;
-//   category: string;
-//   createdAt: Date;
-//   updatedAt: Date;
-//   members: Member[];
-//   totalTasksCount: number;
-//   completedTasksCount: number;
-//   taskCompletionPercentage: number;
-// };
+export type TaskListPreview = {
+  id: number;
+  name: string;
+  description: string;
+  category: string;
+  createdAt: Date;
+  updatedAt: Date;
+  members: Member[];
+  totalTasksCount: number;
+  completedTasksCount: number;
+  taskCompletionPercentage: number;
+};
 
 export type TaskList = {
   id: number;
