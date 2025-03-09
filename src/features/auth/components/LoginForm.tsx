@@ -8,12 +8,15 @@ import { ErrorResponse } from "../../../api/errors/errror.types";
 import { useLogin } from "../services/login.service";
 import { loginSchema } from "../shared/auth.schemas";
 import { LoginRequest } from "../shared/auth.types";
+import { GoogleCredentialResponse, GoogleLogin } from "@react-oauth/google";
 import AuthCard from "./AuthCard";
+import { useGoogleLogin } from "../services/google-login.service";
 const demoEmail = import.meta.env.VITE_DEMO_EMAIL;
 const demoPassword = import.meta.env.VITE_DEMO_PASSWORD;
 
 function LoginForm() {
   const { isPending, mutateAsync: login } = useLogin();
+  const { isPending: isPendingGoogle, mutateAsync: googleLogin } = useGoogleLogin();
   const navigate = useNavigate();
 
   const { handleAuthFormErrors } = useFormErrorHandler<LoginRequest>();
@@ -49,6 +52,20 @@ function LoginForm() {
     }
   }
 
+  async function handleGoogleLogin(credentialResponse: GoogleCredentialResponse) {
+    try {
+      if (credentialResponse.credential) {
+        await googleLogin({
+          idToken: credentialResponse.credential,
+        });
+        form.reset();
+        navigate({ to: "/categories" });
+      }
+    } catch (err) {
+      handleAuthFormErrors(err as ErrorResponse, form);
+    }
+  }
+
   return (
     <AuthCard title="Welcome Back!" anchorLabel="Don't have an account?" anchorText="Create an account" to="/register">
       <form onSubmit={form.onSubmit(onSubmit)}>
@@ -62,8 +79,8 @@ function LoginForm() {
               variant="light"
               color="lime"
               onClick={handleDemoUserLogin}
-              loading={isPending}
-              disabled={isPending}
+              loading={isPending || isPendingGoogle}
+              disabled={isPending || isPendingGoogle}
             >
               User Account
             </Button>
@@ -74,14 +91,14 @@ function LoginForm() {
               variant="light"
               color="lime"
               onClick={handleDemoUserLogin}
-              loading={isPending}
-              disabled={isPending}
+              loading={isPending || isPendingGoogle}
+              disabled={isPending || isPendingGoogle}
             >
               Admin Account
             </Button>
           </Flex>
         </Stack>
-
+        <GoogleLogin onSuccess={handleGoogleLogin} onError={() => console.error("Login Failed")} />
         <TextInput
           label="Email"
           placeholder="you@example.com"
@@ -105,7 +122,14 @@ function LoginForm() {
         </Group>
 
         <Flex mt="xl" gap="sm">
-          <Button w="100%" color="lime" variant="light" type="submit" loading={isPending} disabled={isPending}>
+          <Button
+            w="100%"
+            color="lime"
+            variant="light"
+            type="submit"
+            loading={isPending || isPendingGoogle}
+            disabled={isPending || isPendingGoogle}
+          >
             Login
           </Button>
         </Flex>

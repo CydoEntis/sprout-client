@@ -24,3 +24,7 @@ export type DecodedToken = {
 export type LogoutResponse = {
   message: string;
 };
+
+export type GoogleLogin = {
+  idToken: string;
+}

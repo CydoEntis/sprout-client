@@ -12,6 +12,9 @@ import { DecodedToken } from "../features/auth/shared/auth.types";
 const apiClient = axios.create({
   baseURL: baseUrl,
   withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 apiClient.interceptors.request.use((request) => {
