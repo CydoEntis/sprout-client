@@ -26,5 +26,5 @@ export type LogoutResponse = {
 };
 
 export type GoogleLogin = {
-  idToken: string;
+  authorizationCode: string;
 }
