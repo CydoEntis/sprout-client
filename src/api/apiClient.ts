@@ -103,11 +103,11 @@ apiClient.interceptors.response.use(
     }
 
     if (error.response?.status === 409) {
-      const errorMessage = Object.values(error.response.data.errors)?.[0] || "Resource conflict.";
+      // const errorMessage = Object.values(error.response.data.errors)?.[0] || "Resource conflict.";
 
       return Promise.reject({
         type: ERROR_TYPES.CONFLICT_ERROR,
-        error: errorMessage,
+        error: error.response.data.detail,
         statusCode: error.response.status,
       });
     }

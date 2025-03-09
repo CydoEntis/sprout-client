@@ -34,8 +34,6 @@ export function useGoogleLoginMutation() {
 
       useAuthStore.getState().loginUser(user, data.accessToken);
 
-      console.log(useAuthStore.getState().isAuthenticated);
-
       localStorageService.setItem("taskgarden", taskGarden);
 
       notifications.show({
@@ -46,6 +44,8 @@ export function useGoogleLoginMutation() {
       });
     },
     onError: (error) => {
+      console.log("API ERROR: ", error);
+
       notifications.show({
         title: "Login Failed",
         message: error.message,

@@ -15,7 +15,6 @@ export function GoogleAuthButton(props: ButtonProps & Props) {
         authorizationCode: codeResponse.code,
       });
     },
-    onError: (errorResponse) => console.log(errorResponse),
   });
 
   return (
