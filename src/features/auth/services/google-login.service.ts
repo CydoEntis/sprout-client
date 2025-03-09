@@ -11,7 +11,7 @@ const loginUserWithGoogle = async (credentials: GoogleLogin): Promise<Authentica
   return apiRequest<AuthenticatedResponse>("post", `${endpoints.auth}/google-login`, credentials);
 };
 
-export function useGoogleLogin() {
+export function useGoogleLoginMutation() {
   return useMutation({
     mutationFn: async (credentials: GoogleLogin): Promise<AuthenticatedResponse> => {
       return await loginUserWithGoogle(credentials);
@@ -46,8 +46,6 @@ export function useGoogleLogin() {
       });
     },
     onError: (error) => {
-      console.log("GOOGLE ERROR: ", error);
-
       notifications.show({
         title: "Login Failed",
         message: error.message,

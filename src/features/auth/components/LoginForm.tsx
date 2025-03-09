@@ -8,15 +8,22 @@ import { ErrorResponse } from "../../../api/errors/errror.types";
 import { useLogin } from "../services/login.service";
 import { loginSchema } from "../shared/auth.schemas";
 import { LoginRequest } from "../shared/auth.types";
-import { GoogleCredentialResponse, GoogleLogin } from "@react-oauth/google";
+// import { GoogleCredentialResponse,  } from "@react-oauth/google";
 import AuthCard from "./AuthCard";
-import { useGoogleLogin } from "../services/google-login.service";
+import { useGoogleLoginMutation } from "../services/google-login.service";
+import { GoogleLogin } from "react-google-login";
+import { gapi } from "gapi-script";
+
+import "./google.module.css";
+import { useEffect } from "react";
+import { GoogleAuthButton } from "./GoogleAuthButton";
+
 const demoEmail = import.meta.env.VITE_DEMO_EMAIL;
 const demoPassword = import.meta.env.VITE_DEMO_PASSWORD;
 
 function LoginForm() {
   const { isPending, mutateAsync: login } = useLogin();
-  const { isPending: isPendingGoogle, mutateAsync: googleLogin } = useGoogleLogin();
+  const { isPending: isPendingGoogle, mutateAsync: googleLogin } = useGoogleLoginMutation();
   const navigate = useNavigate();
 
   const { handleAuthFormErrors } = useFormErrorHandler<LoginRequest>();
@@ -27,6 +34,17 @@ function LoginForm() {
       email: "",
       password: "",
     },
+  });
+
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        scope: "",
+      });
+    }
+
+    gapi.load("client:auth2", start);
   });
 
   async function onSubmit(credentials: LoginRequest) {
@@ -52,11 +70,30 @@ function LoginForm() {
     }
   }
 
-  async function handleGoogleLogin(credentialResponse: GoogleCredentialResponse) {
+  // async function handleGoogleLogin(credentialResponse: GoogleCredentialResponse) {
+  //   try {
+  //     console.log(credentialResponse);
+
+  //     if (credentialResponse.credential) {
+  //       await googleLogin({
+  //         idToken: credentialResponse.credential,
+  //       });
+  //       form.reset();
+  //       navigate({ to: "/categories" });
+  //     }
+  //   } catch (err) {
+  //     handleAuthFormErrors(err as ErrorResponse, form);
+  //   }
+  // }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async function handleGoogleLogin(response: any) {
     try {
-      if (credentialResponse.credential) {
+      console.log(response);
+
+      if (response.tokenId) {
         await googleLogin({
-          idToken: credentialResponse.credential,
+          idToken: response.tokenId,
         });
         form.reset();
         navigate({ to: "/categories" });
@@ -98,7 +135,26 @@ function LoginForm() {
             </Button>
           </Flex>
         </Stack>
-        <GoogleLogin onSuccess={handleGoogleLogin} onError={() => console.error("Login Failed")} />
+        {/* <Flex justify="center" my={8} pt={8}>
+          <GoogleLogin
+            onSuccess={handleGoogleLogin}
+            useOneTap
+            theme="filled_black"
+            shape="pill"
+            size="medium"
+            text="continue_with"
+            width="400"
+          />
+        </Flex> */}
+        <GoogleLogin
+          clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+          buttonText="Login"
+          onSuccess={handleGoogleLogin}
+          render={renderProps => (
+            <GoogleAuthButton onClick={renderProps.onClick} w="100%" my={8}/>
+          )}
+        />
+
         <TextInput
           label="Email"
           placeholder="you@example.com"

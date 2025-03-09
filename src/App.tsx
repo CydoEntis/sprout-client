@@ -1,10 +1,11 @@
 import { Stack, Title } from "@mantine/core";
-
 import useAuthStore from "./stores/useAuthStore";
 import FarmProgress from "./features/farm/components/FarmProgress";
 
 function App() {
   const { user } = useAuthStore();
+
+
 
   // if (!user && isPending) return <div>Loading...</div>;
   // if (isPending) return <div>Loading...</div>;
