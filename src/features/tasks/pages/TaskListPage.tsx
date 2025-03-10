@@ -24,8 +24,10 @@ function TaskListDetailsPage({ taskList }: TaskListDetailsPageProps) {
     showUpdateItem,
     closeItem,
     editingState: { itemToUpdate, isCreating },
-  } = useTaskListItemHandlers(taskList.items);
+  } = useTaskListItemHandlers(taskList.taskListItems);
   const [isModalOpen, { open: openModal, close: closeModal }] = useDisclosure(false);
+
+  console.log(taskList.taskListItems);
 
   return (
     <>

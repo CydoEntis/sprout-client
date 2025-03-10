@@ -6,7 +6,7 @@ import { useUpdateTaskListItemMutation } from "../services/task-list-items/updat
 import { useReorderTaskListItemsMutation } from "../services/task-list-items/reorder-task-list-item.service";
 import { useUpdateTaskListStatusItemMutation } from "../services/task-list-items/update-status-task-list.service";
 import { useDeleteTaskListItemMutation } from "../services/task-list-items/delete-task-list-item.service";
-import { CreateTaskListItem, TaskListItem } from "../shared/tasks.types";
+import { CreateTaskListItem, TaskListItem, UpdateTaskListItem } from "../shared/tasks.types";
 
 export function useTaskListItemHandlers(initialItems: TaskListItem[]) {
   const { taskListId } = useParams({ from: "/_authenticated/categories/$categoryName_/$taskListId" });
@@ -27,9 +27,8 @@ export function useTaskListItemHandlers(initialItems: TaskListItem[]) {
     taskListItemHandlers.append(result.item as TaskListItem);
   };
 
-  const updateItem = async (updatedItem: TaskListItem) => {
-    const updateRequest = { taskListId: Number(taskListId), ...updatedItem };
-    await updateTaskListItem.mutateAsync(updateRequest);
+  const updateItem = async (updatedItem: UpdateTaskListItem) => {
+    await updateTaskListItem.mutateAsync(updatedItem);
     taskListItemHandlers.setState((prev) =>
       prev.map((taskItem) => (taskItem.id === updatedItem.id ? updatedItem : taskItem))
     );

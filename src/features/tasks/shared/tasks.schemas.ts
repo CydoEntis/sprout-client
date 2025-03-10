@@ -31,4 +31,5 @@ export const createTaskListItemSchema = z.object({
 export const updateTaskListItemSchema = createTaskListItemSchema.extend({
   id: z.number().min(1, "Task list item ID is required"),
   isCompleted: z.boolean(),
+  position: z.number().min(1, "Position is required"),
 });

@@ -41,7 +41,7 @@ export type TaskList = {
   categoryName: string;
   isCompleted: boolean;
   members: Member[];
-  items: TaskListItem[];
+  taskListItems: TaskListItem[];
   totalTasksCount: number;
   completedTasksCount: number;
   createdAt: Date;
@@ -56,7 +56,7 @@ export type CreatedTaskListItem = SuccessMessage & {
   item: TaskListItem;
 };
 
-export type UpdateTaskLIstItem = z.infer<typeof updateTaskListItemSchema>;
+export type UpdateTaskListItem = z.infer<typeof updateTaskListItemSchema>;
 
 export type UpdatedTaskListItem = CreatedTaskListItem;
 

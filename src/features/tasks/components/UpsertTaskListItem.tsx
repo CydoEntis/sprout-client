@@ -2,12 +2,7 @@ import { useEffect, useRef } from "react";
 import { ActionIcon, ActionIconGroup, TextInput } from "@mantine/core";
 import { Check, X } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
-import {
-  CreateTaskListItem,
-  TaskListItem,
-  UpdateTaskLIstItem,
-  UpdateTaskLIstItem as UpdateTaskListItem,
-} from "../shared/tasks.types";
+import { CreateTaskListItem, TaskListItem, UpdateTaskListItem } from "../shared/tasks.types";
 import { createTaskListItemSchema, updateTaskListItemSchema } from "../shared/tasks.schemas";
 
 type UpsertTaskListItemProps = {
@@ -15,7 +10,7 @@ type UpsertTaskListItemProps = {
   taskListId: number;
   taskListItem?: TaskListItem;
   onClose: () => void;
-  onUpdate?: (updatedItem: UpdateTaskLIstItem) => void;
+  onUpdate?: (updatedItem: UpdateTaskListItem) => void;
   onCreate?: (newItem: CreateTaskListItem) => void;
 };
 
