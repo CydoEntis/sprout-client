@@ -28,6 +28,7 @@ export function useTaskListItemHandlers(initialItems: TaskListItem[]) {
   };
 
   const updateItem = async (updatedItem: UpdateTaskListItem) => {
+    console.log("CAlling???");
     await updateTaskListItem.mutateAsync(updatedItem);
     taskListItemHandlers.setState((prev) =>
       prev.map((taskItem) => (taskItem.id === updatedItem.id ? updatedItem : taskItem))

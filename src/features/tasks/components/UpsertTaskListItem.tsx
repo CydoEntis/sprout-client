@@ -30,7 +30,8 @@ function UpsertTaskListItem({
       id: taskListItem?.id ?? null,
       description: taskListItem?.description ?? "",
       isCompleted: taskListItem?.isCompleted ?? false,
-      taskListId,
+      taskListId: taskListId,
+      position: taskListItem?.position ?? 0,
     },
     validate: zodResolver(isEditing ? updateTaskListItemSchema : createTaskListItemSchema),
   });
@@ -41,9 +42,11 @@ function UpsertTaskListItem({
         id: taskListItem.id,
         description: taskListItem.description,
         isCompleted: taskListItem.isCompleted,
-        taskListId,
+        taskListId: taskListId,
+        position: taskListItem.position,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskListItem]);
 
   useEffect(() => {
@@ -83,7 +86,9 @@ function UpsertTaskListItem({
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
+      console.log(taskListItem);
       e.preventDefault();
+      console.log("HELLO");
       form.onSubmit(handleSubmit)();
       form.reset();
       onClose();
@@ -92,13 +97,16 @@ function UpsertTaskListItem({
     }
   };
 
+  console.log(form.errors);
+  console.log(isEditing);
+
   if (!isActive) return null;
 
   return (
     <form ref={formRef} onSubmit={form.onSubmit(handleSubmit)} style={{ width: "100%" }}>
       <TextInput
         w="100%"
-        rightSectionWidth={60} // Ensures space for icons
+        rightSectionWidth={60}
         {...form.getInputProps("description")}
         classNames={{
           input: "input",
