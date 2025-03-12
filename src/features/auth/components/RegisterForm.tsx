@@ -51,9 +51,9 @@ function RegisterForm() {
               input: "input",
             }}
             leftSection={<Lock size={20} />}
-            {...form.getInputProps("confirmPassword")}
+            {...form.getInputProps("password")}
             onChange={(event) => {
-              form.setFieldValue("confirmPassword", event.currentTarget.value);
+              form.setFieldValue("password", event.currentTarget.value);
             }}
           />
 
