@@ -1,23 +1,18 @@
 import { Avatar, Badge, Button, Card, Flex, Group, Stack, Text } from "@mantine/core";
-import { createFileRoute, useParams } from "@tanstack/react-router";
+import { useParams } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-
-export const Route = createFileRoute("/_authenticated/invite/$token")({
-  component: InvitePage,
-});
-
-
+import { DecodedInviteToken } from "../shared/invitation.types";
 
 function InvitePage() {
-  const { token } = useParams({ from: "/_authenticated/invite/$token" });
-  const [decodedToken, setDecodedToken] = useState<InviteToken | null>(null);
-  const [members, setMembers] = useState<string[]>([]); 
+  const { inviteToken } = useParams({ from: "/_authenticated/invite/$inviteToken" });
+  const [decodedToken, setDecodedToken] = useState<DecodedInviteToken | null>(null);
+  const [members, setMembers] = useState<string[]>([]);
 
   useEffect(() => {
-    if (token) {
+    if (inviteToken) {
       try {
-        const decoded = jwtDecode<InviteToken>(token);
+        const decoded = jwtDecode<DecodedInviteToken>(inviteToken);
         setDecodedToken(decoded);
 
         const parsedMembers = decoded.members ? JSON.parse(decoded.members) : [];
@@ -26,7 +21,7 @@ function InvitePage() {
         console.error("Invalid token", error);
       }
     }
-  }, [token]);
+  }, [inviteToken]);
 
   if (!decodedToken) {
     return <div>Loading...</div>;
@@ -50,7 +45,9 @@ function InvitePage() {
           </Text>
           <Group gap={6}>
             <Text> has invited you to join </Text>
-            <Text c="lime" td="underline" fw={700}>{decodedToken.taskListName}.</Text>
+            <Text c="lime" td="underline" fw={700}>
+              {decodedToken.taskListName}.
+            </Text>
           </Group>
         </Group>
         <Stack gap={4}>
@@ -95,3 +92,5 @@ function InvitePage() {
     </Card>
   );
 }
+
+export default InvitePage;
