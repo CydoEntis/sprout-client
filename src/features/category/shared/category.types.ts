@@ -40,3 +40,9 @@ export type DeleteCategoryResponse = UpdateCategoryResponse;
 
 export type ValidCategoryTags = (typeof validCategoryTags)[number];
 export type CategoryColor = (typeof categoryColors)[number];
+
+export type CategoryIcon = {
+  id: number;
+  icon: ReactElement;
+  tag: string;
+};
