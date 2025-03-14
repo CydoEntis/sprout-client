@@ -12,8 +12,8 @@ function SelectableCategoryIcon({ categoryIcon, selectedIcon, handleIconClick }:
     <Flex
       key={categoryIcon.id}
       pos="relative"
-      h={40}
-      w={40}
+      h={35}
+      w={35}
       align="center"
       justify="center"
       style={{
