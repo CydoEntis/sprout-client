@@ -4,10 +4,10 @@ import { Plus } from "lucide-react";
 import { useDisclosure } from "@mantine/hooks";
 import CreateTaskListModal from "../features/tasks/components/CreateTaskListModal";
 import InProgressTaskListCard from "../features/tasks/components/InProgressTaskListCard";
-import { TaskList } from "../features/tasks/shared/tasks.types";
+import { TaskListPreview } from "../features/tasks/shared/tasks.types";
 
 type TaskListPage = {
-  taskLists: TaskList[];
+  taskLists: TaskListPreview[];
 };
 
 function TaskListPage({ taskLists }: TaskListPage) {

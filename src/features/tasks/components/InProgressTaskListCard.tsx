@@ -1,12 +1,12 @@
 import { Stack, Title, Divider, Flex, Text, Group } from "@mantine/core";
 import { Calendar } from "lucide-react";
 import TaskListCard from "./TaskListCard";
-import { TaskList } from "../shared/tasks.types";
+import { TaskListPreview } from "../shared/tasks.types";
 import TaskListMembers from "./TaskListMembers";
 import TaskListProgress from "./TaskListProgress";
 
 type TaskListCardProps = {
-  taskList: TaskList;
+  taskList: TaskListPreview;
 };
 
 function InProgressTaskListCard({ taskList }: TaskListCardProps) {
