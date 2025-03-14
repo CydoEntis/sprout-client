@@ -1,7 +1,7 @@
 import { Anchor, Button, Group, PasswordInput, TextInput, Flex, Stack, Divider } from "@mantine/core";
 import { AtSign, Lock } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate, useSearch } from "@tanstack/react-router";
 
 import useFormErrorHandler from "../../../hooks/useFormErrorHandler";
 import { ErrorResponse } from "../../../api/errors/errror.types";
@@ -17,9 +17,12 @@ const demoEmail = import.meta.env.VITE_DEMO_EMAIL;
 const demoPassword = import.meta.env.VITE_DEMO_PASSWORD;
 
 function LoginForm() {
+  const search = useSearch({ from: "/login" });
+  const redirectUrl = search.redirect ?? "/categories";
+  const navigate = useNavigate();
+
   const { isPending, mutateAsync: login } = useLogin();
   const { isPending: isPendingGoogle, mutateAsync: googleLogin } = useGoogleLoginMutation();
-  const navigate = useNavigate();
 
   const { handleAuthFormErrors } = useFormErrorHandler<LoginRequest>();
 
@@ -35,7 +38,7 @@ function LoginForm() {
     try {
       await login(credentials);
       form.reset();
-      navigate({ to: "/categories" });
+      navigate({ to: redirectUrl });
     } catch (err) {
       handleAuthFormErrors(err as ErrorResponse, form);
     }
@@ -48,7 +51,7 @@ function LoginForm() {
         password: demoPassword,
       });
       form.reset();
-      navigate({ to: "/categories" });
+      navigate({ to: redirectUrl });
     } catch (err) {
       handleAuthFormErrors(err as ErrorResponse, form);
     }
@@ -59,7 +62,7 @@ function LoginForm() {
     try {
       await googleLogin(response);
       form.reset();
-      navigate({ to: "/categories" });
+      navigate({ to: redirectUrl });
     } catch (err) {
       handleAuthFormErrors(err as ErrorResponse, form);
     }

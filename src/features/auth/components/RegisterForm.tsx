@@ -4,8 +4,13 @@ import { useForm, zodResolver } from "@mantine/form";
 import { loginSchema } from "../shared/auth.schemas";
 import { LoginRequest } from "../shared/auth.types";
 import AuthCard from "./AuthCard";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 
 function RegisterForm() {
+  const search = useSearch({ from: "/register" });
+  const redirectUrl = search.redirect ?? "/categories";
+  const navigate = useNavigate();
+
   const form = useForm<LoginRequest>({
     validate: zodResolver(loginSchema),
     initialValues: {
@@ -14,7 +19,9 @@ function RegisterForm() {
     },
   });
 
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    navigate({ to: redirectUrl });
+  };
 
   return (
     <AuthCard title="Let's Get You Registered!" anchorLabel="Already have an account?" anchorText="Login" to="/login">
