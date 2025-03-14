@@ -1,6 +1,6 @@
 import { Card } from "@mantine/core";
 import { motion } from "framer-motion";
-import CategoryAssignmnetToggle from "./CategoryAssignmentToggle";
+import CategoryAssignmnetToggle from "../../invitation/components/AssignmentToggle";
 import CreateCategoryForm from "./CreateCategoryForm";
 
 type CreateCategoryCardProps = {

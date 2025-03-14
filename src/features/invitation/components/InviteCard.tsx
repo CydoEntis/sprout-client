@@ -8,7 +8,7 @@ import { DecodedInviteToken } from "../shared/invitation.types";
 import SelectCategory from "../../category/components/SelectCategory";
 import { Category } from "../../category/shared/category.types";
 import CreateCategory from "./CreateCategory";
-import CategoryAssignmnetToggle from "../../category/components/CategoryAssignmentToggle";
+import CategoryAssignmnetToggle from "./AssignmentToggle";
 
 type InviteCardProps = {
   invite: DecodedInviteToken;

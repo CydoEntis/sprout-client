@@ -1,12 +1,12 @@
 import { Group, Text } from "@mantine/core";
 
-type CategoryAssignmnetToggleProps = {
+type AssignmentToggleProps = {
   text: string;
   clickableText: string;
   toggleCreateCategory: () => void;
 };
 
-const CategoryAssignmnetToggle = ({ text, clickableText, toggleCreateCategory }: CategoryAssignmnetToggleProps) => (
+const AssignmentToggle = ({ text, clickableText, toggleCreateCategory }: AssignmentToggleProps) => (
   <Group justify="center" gap={8} mt={16}>
     <Text ta="center" c="dimmed" size="sm">
       {text}
@@ -25,4 +25,4 @@ const CategoryAssignmnetToggle = ({ text, clickableText, toggleCreateCategory }:
   </Group>
 );
 
-export default CategoryAssignmnetToggle;
+export default AssignmentToggle;
