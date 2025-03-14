@@ -44,5 +44,5 @@ export type CategoryColor = (typeof categoryColors)[number];
 export type CategoryIcon = {
   id: number;
   icon: ReactElement;
-  tag: string;
+  tag: ValidCategoryTags;
 };
