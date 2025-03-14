@@ -12,7 +12,7 @@ function CategoryIconPicker({ selectedIcon, handleIconClick }: CategoryIconPicke
   return (
     <Stack gap={4}>
       <Text size="sm">Category Icon</Text>
-      <SimpleGrid cols={5}>
+      <SimpleGrid cols={4}>
         {categoryIcons.map((icon) => (
           <SelectableCategoryIcon
             key={icon.id}

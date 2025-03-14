@@ -10,13 +10,13 @@ type ColorPickerProps = {
 const ColorPicker = ({ selectedColor, handleColorSelect }: ColorPickerProps) => {
   return (
     <Stack gap={8} mt={8}>
-      <Text size="sm">Select Category Color</Text>
-      <Flex gap={8} wrap="wrap">
+      <Text size="sm">Select Color</Text>
+      <Flex gap={6} wrap="wrap" align="center">
         {categoryColors.map((color) => (
           <Paper
             key={color}
-            w={32}
-            h={32}
+            w={33}
+            h={33}
             bg={color}
             radius="md"
             style={{

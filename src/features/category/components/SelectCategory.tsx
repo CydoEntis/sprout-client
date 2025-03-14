@@ -1,47 +1,32 @@
-import { Select, Button, Card, Stack, } from "@mantine/core";
-import { motion } from "framer-motion";
+import { Select, Button, Flex } from "@mantine/core";
 import { Category } from "../shared/category.types";
-import CategoryAssignmnetToggle from "./CategoryAssignmentToggle";
+
 
 type SelectCategoryProps = {
   categories: Category[];
-  toggleCreateCategory: () => void;
 };
 
-const SelectCategory = ({ categories, toggleCreateCategory }: SelectCategoryProps) => (
-  <motion.div
-    key="select-category"
-    initial={{ opacity: 0, y: -20 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: 20 }}
-    transition={{ duration: 0.3 }}
-  >
-    <Card withBorder radius="md" shadow="md" bg="card">
-      <Stack gap={12} align="end" w="100%">
-        <Select
-          classNames={{
-            input: "input",
-          }}
-          label="Select Category"
-          placeholder="Choose a category"
-          data={categories.map((category) => ({
-            value: String(category.id),
-            label: category.name,
-          }))}
-          required
-          w="100%"
-        />
-        <Button variant="light" color="lime" w="100%">
-          Assign
-        </Button>
-      </Stack>
-      <CategoryAssignmnetToggle
-        text="Don't see the category you need?"
-        clickableText="Create One!"
-        toggleCreateCategory={toggleCreateCategory}
+const SelectCategory = ({ categories }: SelectCategoryProps) => (
+  <>
+    <Flex gap={8} align="end">
+      <Select
+        w="80%"
+        classNames={{
+          input: "input",
+        }}
+        label="Add to a Category"
+        placeholder="Choose a category"
+        data={categories.map((category) => ({
+          value: String(category.id),
+          label: category.name,
+        }))}
+        required
       />
-    </Card>
-  </motion.div>
+      <Button variant="light" color="lime" w="20%">
+        Add
+      </Button>
+    </Flex>
+  </>
 );
 
 export default SelectCategory;
