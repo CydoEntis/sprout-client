@@ -4,6 +4,8 @@ import { jwtDecode } from "jwt-decode";
 import { DecodedInviteToken } from "../shared/invitation.types";
 import InviteCard from "../components/InviteCard";
 import useAuthStore from "../../../stores/useAuthStore";
+import { useAcceptInviteMutation } from "../services/accept-invite.service";
+import { useDeclineInviteMutation } from "../services/decline-invite.service";
 
 function InvitePage() {
   const { inviteToken } = useParams({ from: "/_authenticated/invite/$inviteToken" });
@@ -11,6 +13,8 @@ function InvitePage() {
   const [members, setMembers] = useState<string[]>([]);
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthStore();
+  const acceptInvite = useAcceptInviteMutation();
+  const declineInvite = useDeclineInviteMutation();
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -34,21 +38,24 @@ function InvitePage() {
     }
   }, [inviteToken, isAuthenticated, navigate]);
 
+  const acceptInviteHandler = () => {
+    acceptInvite.mutate(inviteToken);
+    if (invite) {
+      navigate({ to: `/categories/${invite.category.toLowerCase()}/${invite.taskListId}` });
+    }
+  };
+
+  const declineInviteHandler = () => {
+    declineInvite.mutate(inviteToken);
+    navigate({ to: "/categories" });
+  };
+
   if (!invite) {
     return <div>Loading...</div>;
   }
 
   return (
-    <InviteCard
-      invite={invite}
-      members={members}
-      onAccept={function (): void {
-        throw new Error("Function not implemented.");
-      }}
-      onDecline={function (): void {
-        throw new Error("Function not implemented.");
-      }}
-    />
+    <InviteCard invite={invite} members={members} onAccept={acceptInviteHandler} onDecline={declineInviteHandler} />
   );
 }
 

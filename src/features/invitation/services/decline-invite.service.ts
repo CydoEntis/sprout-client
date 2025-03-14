@@ -20,7 +20,7 @@ export function useDeclineInviteMutation() {
       notifications.show({
         title: "Invite Declined",
         message: message || "You have declined the invite.",
-        color: "yellow",
+        color: "lime",
         position: "top-right",
       });
     },
