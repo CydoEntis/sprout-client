@@ -48,16 +48,16 @@ function InvitePage({ categories }: InvitePageProps) {
   }, [inviteToken, isAuthenticated, navigate]);
 
   useEffect(() => {
-    // Update state if categories change dynamically
     if (categories.length === 0) {
       setIsCreatingCategory(true);
     }
   }, [categories]);
 
-  const acceptInviteHandler = () => {
-    acceptInvite.mutate(inviteToken);
+  const acceptInviteHandler = async () => {
+    const response = await acceptInvite.mutateAsync(inviteToken);
     if (invite) {
-      navigate({ to: `/assign/task-list/${invite.taskListId}` });
+      // TODO: Change to response.categoryName
+      navigate({ to: `/categories/${invite.category}/${invite.taskListId}` });
     }
   };
 
