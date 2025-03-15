@@ -3,6 +3,7 @@ import { apiRequest } from "../../../api/apiRequest";
 import endpoints from "../../../api/endpoints";
 import { notifications } from "@mantine/notifications";
 import { CreateCategory } from "../../category/shared/category.types";
+import { InviteAccepted as InviteAccepted } from "../shared/invitation.types";
 
 type AcceptInviteParams = {
   inviteToken: string;
@@ -10,27 +11,24 @@ type AcceptInviteParams = {
   categoryId?: number | null;
 };
 
-const acceptInvite = async ({ inviteToken, newCategory, categoryId }: AcceptInviteParams): Promise<string> => {
+const acceptInvite = async ({ inviteToken, newCategory, categoryId }: AcceptInviteParams): Promise<InviteAccepted> => {
   const payload = { categoryId, newCategory };
-
-  console.log("Payload: ", payload);
-
-  return apiRequest<string>("post", `${endpoints.invite}/${inviteToken}/accept`, payload);
+  return apiRequest<InviteAccepted>("post", `${endpoints.invite}/${inviteToken}/accept`, payload);
 };
 
 export function useAcceptInviteMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (params: AcceptInviteParams): Promise<string> => {
+    mutationFn: async (params: AcceptInviteParams): Promise<InviteAccepted> => {
       return await acceptInvite(params);
     },
-    onSuccess: (message) => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["task-list-members"] });
 
       notifications.show({
         title: "Invite Accepted",
-        message: message || "You have joined the task list.",
+        message: data.message || "You have joined the task list.",
         color: "green",
         position: "top-right",
       });
@@ -38,7 +36,7 @@ export function useAcceptInviteMutation() {
     onError: () => {
       notifications.show({
         title: "Invite Acceptance Failed",
-        message: "Could not accept the invite.",
+        message: "Could not accept invite.",
         color: "red",
         position: "top-right",
       });

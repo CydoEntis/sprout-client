@@ -16,6 +16,7 @@ import AssignmentToggle from "./AssignmentToggle";
 import ColorPickerMenu from "../../../components/menus/ColorPickerMenu";
 import IconPickerMenu from "../../../components/menus/IconPickerMenu";
 import { useDeclineInviteMutation } from "../services/decline-invite.service";
+import { useNavigate } from "@tanstack/react-router";
 
 type AssignTaskListToCategoryFormProps = {
   categories: Category[];
@@ -28,6 +29,7 @@ function AssignTaskListToCategoryForm({ inviteToken, categories }: AssignTaskLis
   const [selectedColor, setSelectedColor] = useState<CategoryColor>(categoryColors[0]);
   const acceptInvite = useAcceptInviteMutation();
   const declineInvite = useDeclineInviteMutation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (categories.length === 0) {
@@ -67,18 +69,27 @@ function AssignTaskListToCategoryForm({ inviteToken, categories }: AssignTaskLis
     }
   };
 
-  console.log(form.errors)
-
   const submitHandler = async (data: CreateCategory | SelectCategory) => {
     const result = await form.validate();
 
     if (!result.hasErrors) {
+      let response;
       if (isCreatingCategory) {
-        await acceptInvite.mutateAsync({ inviteToken, categoryId: null, newCategory: data as CreateCategory });
+        response = await acceptInvite.mutateAsync({
+          inviteToken,
+          categoryId: null,
+          newCategory: data as CreateCategory,
+        });
       } else {
         const selectedCategory = data as SelectCategory;
-        await acceptInvite.mutateAsync({ inviteToken, categoryId: selectedCategory.id, newCategory: null });
+        response = await acceptInvite.mutateAsync({
+          inviteToken,
+          categoryId: selectedCategory.id,
+          newCategory: null,
+        });
       }
+
+      navigate({ to: `/categories/${response.categoryName.toLowerCase()}/${response.taskListId}` });
     } else {
       console.log("Form has errors:", result.errors);
     }
@@ -86,6 +97,7 @@ function AssignTaskListToCategoryForm({ inviteToken, categories }: AssignTaskLis
 
   const declineInviteHandler = () => {
     declineInvite.mutateAsync(inviteToken);
+    navigate({ to: `/categories` });
   };
 
   const toggleFormHandler = () => {
