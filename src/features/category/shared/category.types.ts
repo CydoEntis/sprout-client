@@ -1,10 +1,10 @@
 import { ReactElement } from "react";
-import { newCategorySchema, updateCategorySchema } from "./category.schemas";
+import { createCategorySchema, updateCategorySchema } from "./category.schemas";
 import { z } from "zod";
 import { categoryColors, validCategoryTags } from "./category.constants";
 
-export type NewCategoryRequest = z.infer<typeof newCategorySchema>;
-export type UpdateCategoryRequest = z.infer<typeof updateCategorySchema>;
+export type CreateCategory = z.infer<typeof createCategorySchema>;
+export type UpdateCategory = z.infer<typeof updateCategorySchema>;
 
 export type Category = {
   id: number;
@@ -19,7 +19,7 @@ export type CategoryIdentifier = {
   icon: ReactElement;
 };
 
-export type NewCategoryResponse = {
+export type CreatedCategory = {
   message: string;
 };
 
@@ -31,12 +31,12 @@ export type CategoryResponse = {
   color: CategoryColor;
 };
 
-export type UpdateCategoryResponse = {
+export type UpdatedCategory = {
   message: string;
   categoryId: number;
 };
 
-export type DeleteCategoryResponse = UpdateCategoryResponse;
+export type DeletedCategory = UpdatedCategory;
 
 export type ValidCategoryTags = (typeof validCategoryTags)[number];
 export type CategoryColor = (typeof categoryColors)[number];

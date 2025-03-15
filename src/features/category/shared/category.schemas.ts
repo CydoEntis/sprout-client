@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { categoryColors, validCategoryTags } from "./category.constants";
 
-export const newCategorySchema = z.object({
+export const createCategorySchema = z.object({
   name: z
     .string()
     .min(3, "Title must be at least 3 characters long.")

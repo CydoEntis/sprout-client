@@ -7,14 +7,8 @@ import useFormErrorHandler from "../../../hooks/useFormErrorHandler";
 import { useCreateCategory } from "../services/create-category.service";
 import { useUpdateCategory } from "../services/update-category.service";
 import { categoryIcons, categoryColors } from "../shared/category.constants";
-import { updateCategorySchema, newCategorySchema } from "../shared/category.schemas";
-import {
-  Category,
-  NewCategoryRequest,
-  UpdateCategoryRequest,
-  CategoryIdentifier,
-  CategoryColor,
-} from "../shared/category.types";
+import { updateCategorySchema, createCategorySchema } from "../shared/category.schemas";
+import { Category, CategoryIdentifier, CategoryColor, CreateCategory, UpdateCategory } from "../shared/category.types";
 import ColorPicker from "../../../components/color-picker/ColorPicker";
 
 type UpsertCategoryModalProps = {
@@ -26,14 +20,14 @@ type UpsertCategoryModalProps = {
 function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalProps) {
   const createCategory = useCreateCategory();
   const updateCategory = useUpdateCategory();
-  const { handleFormErrors } = useFormErrorHandler<NewCategoryRequest | UpdateCategoryRequest>();
+  const { handleFormErrors } = useFormErrorHandler<CreateCategory | UpdateCategory>();
   const isEditing = !!category;
 
   const [selectedIcon, setSelectedIcon] = useState<CategoryIdentifier>(categoryIcons[0]);
   const [selectedColor, setSelectedColor] = useState(category?.color ?? categoryColors[0]);
 
-  const form = useForm<NewCategoryRequest | UpdateCategoryRequest>({
-    validate: zodResolver(isEditing ? updateCategorySchema : newCategorySchema),
+  const form = useForm<CreateCategory | UpdateCategory>({
+    validate: zodResolver(isEditing ? updateCategorySchema : createCategorySchema),
     initialValues: {
       id: category ? category.id : undefined,
       name: category ? category.name : "",
@@ -57,13 +51,13 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
 
   console.log(selectedColor);
 
-  const handleSubmit = async (data: NewCategoryRequest | UpdateCategoryRequest) => {
+  const handleSubmit = async (data: CreateCategory | UpdateCategory) => {
     try {
       if (isEditing) {
-        await updateCategory.mutateAsync(data as UpdateCategoryRequest);
+        await updateCategory.mutateAsync(data as UpdateCategory);
       } else {
         console.log(data);
-        await createCategory.mutateAsync(data as NewCategoryRequest);
+        await createCategory.mutateAsync(data as CreateCategory);
       }
       form.reset();
       onClose();

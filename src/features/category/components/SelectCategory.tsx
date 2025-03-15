@@ -1,32 +1,47 @@
 import { Select, Button, Flex } from "@mantine/core";
 import { Category } from "../shared/category.types";
-
+import { useForm } from "@mantine/form";
 
 type SelectCategoryProps = {
   categories: Category[];
+  onSelect: (categoryId: number) => void;
 };
 
-const SelectCategory = ({ categories }: SelectCategoryProps) => (
-  <>
-    <Flex gap={8} align="end">
-      <Select
-        w="80%"
-        classNames={{
-          input: "input",
-        }}
-        label="Add to a Category"
-        placeholder="Choose a category"
-        data={categories.map((category) => ({
-          value: String(category.id),
-          label: category.name,
-        }))}
-        required
-      />
-      <Button variant="light" color="lime" w="20%">
-        Add
-      </Button>
-    </Flex>
-  </>
-);
+const SelectCategory = ({ categories, onSelect }: SelectCategoryProps) => {
+  const form = useForm({
+    initialValues: {
+      categoryId: "",
+    },
+  });
+
+  const handleSubmit = (values: { categoryId: string }) => {
+    const categoryId = Number(values.categoryId);
+    if (!isNaN(categoryId)) {
+      onSelect(categoryId);
+    }
+  };
+
+  return (
+    <form onSubmit={form.onSubmit(handleSubmit)}>
+      <Flex gap={8} align="end">
+        <Select
+          w="80%"
+          classNames={{ input: "input" }}
+          label="Add to a Category"
+          placeholder="Choose a category"
+          data={categories.map((category) => ({
+            value: String(category.id),
+            label: category.name,
+          }))}
+          {...form.getInputProps("categoryId")}
+          required
+        />
+        <Button type="submit" variant="light" color="lime" w="20%">
+          Add
+        </Button>
+      </Flex>
+    </form>
+  );
+};
 
 export default SelectCategory;
