@@ -6,28 +6,70 @@ import InvitedMembers from "./InvitedMembers";
 import InviteFooter from "./InviteFooter";
 import { DecodedInviteToken } from "../shared/invitation.types";
 import { Category } from "../../category/shared/category.types";
+import { jwtDecode } from "jwt-decode";
 
 import CategoryAssignment from "./CategoryAssignment";
+import { useNavigate } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
+import { useAcceptInviteMutation } from "../services/accept-invite.service";
+import { useDeclineInviteMutation } from "../services/decline-invite.service";
 
 type InviteCardProps = {
-  invite: DecodedInviteToken;
-  members: string[];
-  onAccept: () => void;
-  onDecline: () => void;
+  inviteToken: string;
   categories: Category[];
-  onToggle: () => void;
-  isCreatingCategory: boolean;
 };
 
-function InviteCard({
-  invite,
-  members,
-  onAccept,
-  onDecline,
-  categories,
-  onToggle,
-  isCreatingCategory,
-}: InviteCardProps) {
+function InviteCard({ inviteToken, categories }: InviteCardProps) {
+  const navigate = useNavigate();
+  const [members, setMembers] = useState<string[]>([]);
+  const [invite, setInvite] = useState<DecodedInviteToken | null>(null);
+
+  const acceptInvite = useAcceptInviteMutation();
+  const declineInvite = useDeclineInviteMutation();
+
+  useEffect(() => {
+    if (inviteToken) {
+      try {
+        const decoded = jwtDecode<DecodedInviteToken>(inviteToken);
+        setInvite(decoded);
+
+        const parsedMembers = decoded.members ? JSON.parse(decoded.members) : [];
+        setMembers(Array.isArray(parsedMembers) ? parsedMembers : []);
+      } catch (error) {
+        console.error("Invalid token", error);
+      }
+    }
+  }, []);
+
+  const [isCreatingCategory, setIsCreatingCategory] = useState(categories.length === 0);
+
+  const toggleCreateCategory = () => {
+    setIsCreatingCategory((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (categories.length === 0) {
+      setIsCreatingCategory(true);
+    }
+  }, [categories]);
+
+  const acceptInviteHandler = async () => {
+    const response = await acceptInvite.mutateAsync(inviteToken);
+    if (invite) {
+      // TODO: Change to response.category
+      navigate({ to: `/categories/${invite.category}/${invite.taskListId}` });
+    }
+  };
+
+  const declineInviteHandler = () => {
+    declineInvite.mutate(inviteToken);
+    navigate({ to: "/categories" });
+  };
+
+  if (!invite) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Card maw={500} mx="auto" withBorder radius="md" shadow="md">
       <Stack>
@@ -36,10 +78,14 @@ function InviteCard({
         <InvitedMembers members={members} />
 
         <AnimatePresence initial={false} mode="wait">
-          <CategoryAssignment isCreatingCategory={isCreatingCategory} categories={categories} onToggle={onToggle} />
+          <CategoryAssignment
+            isCreatingCategory={isCreatingCategory}
+            categories={categories}
+            onToggle={toggleCreateCategory}
+          />
         </AnimatePresence>
 
-        <InviteFooter onAccept={onAccept} onDecline={onDecline} />
+        <InviteFooter onAccept={acceptInviteHandler} onDecline={declineInviteHandler} />
       </Stack>
     </Card>
   );
