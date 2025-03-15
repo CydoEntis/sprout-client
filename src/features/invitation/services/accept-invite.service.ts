@@ -11,7 +11,9 @@ type AcceptInviteParams = {
 };
 
 const acceptInvite = async ({ inviteToken, newCategory, categoryId }: AcceptInviteParams): Promise<string> => {
-  const payload = newCategory ? { newCategory } : { categoryId };
+  const payload = { categoryId, newCategory };
+
+  console.log("Payload: ", payload);
 
   return apiRequest<string>("post", `${endpoints.invite}/${inviteToken}/accept`, payload);
 };

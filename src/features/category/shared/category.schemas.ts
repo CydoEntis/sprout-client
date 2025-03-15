@@ -4,8 +4,8 @@ import { categoryColors, validCategoryTags } from "./category.constants";
 export const createCategorySchema = z.object({
   name: z
     .string()
-    .min(3, "Title must be at least 3 characters long.")
-    .max(25, "Title must be at most 25 characters long."),
+    .min(3, "Name must be at least 3 characters long.")
+    .max(25, "Name must be at most 25 characters long."),
   tag: z.enum(validCategoryTags, {
     errorMap: () => ({ message: "You must select a valid icon." }),
   }),
@@ -14,12 +14,16 @@ export const createCategorySchema = z.object({
   }),
 });
 
+export const selectCategorySchema = z.object({
+  id: z.number().min(1, "Category is required"),
+});
+
 export const updateCategorySchema = z.object({
   id: z.number(),
   name: z
     .string()
-    .min(3, "Title must be at least 3 characters long.")
-    .max(25, "Title must be at most 25 characters long."),
+    .min(3, "Name must be at least 3 characters long.")
+    .max(25, "Name must be at most 25 characters long."),
   tag: z.enum(validCategoryTags, {
     errorMap: () => ({ message: "You must select a valid icon." }),
   }),

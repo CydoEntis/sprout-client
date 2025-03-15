@@ -9,6 +9,7 @@ import CategoryAssignment from "./CategoryAssignment";
 import { useInvite } from "../hooks/useInvite";
 import { useCategorySelection } from "../hooks/useCategorySelection";
 import { useInviteActions } from "../hooks/useInviteActions";
+import AssignTaskListToCategoryForm from "./AssignTaskListToCategoryForm";
 
 type InviteCardProps = {
   inviteToken: string;
@@ -52,18 +53,7 @@ function InviteCard({ inviteToken, categories }: InviteCardProps) {
         <InviteHeader inviteDate={invite.inviteDate} />
         <InviteDetails inviter={invite.inviter} taskListName={invite.taskListName} />
         <InvitedMembers members={members} />
-
-        <AnimatePresence initial={false} mode="wait">
-          <CategoryAssignment
-            onCreate={setNewCategory}
-            onSelect={setSelectedCategory}
-            isCreatingCategory={isCreatingCategory}
-            categories={categories}
-            onToggle={toggleCreateCategory}
-          />
-        </AnimatePresence>
-
-        <InviteFooter onAccept={handleAccept} onDecline={handleDecline} />
+        <AssignTaskListToCategoryForm categories={categories} inviteToken={inviteToken} />
       </Stack>
     </Card>
   );

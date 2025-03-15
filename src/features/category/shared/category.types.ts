@@ -1,9 +1,10 @@
 import { ReactElement } from "react";
-import { createCategorySchema, updateCategorySchema } from "./category.schemas";
+import { createCategorySchema, selectCategorySchema, updateCategorySchema } from "./category.schemas";
 import { z } from "zod";
 import { categoryColors, validCategoryTags } from "./category.constants";
 
 export type CreateCategory = z.infer<typeof createCategorySchema>;
+export type SelectCategory = z.infer<typeof selectCategorySchema>;
 export type UpdateCategory = z.infer<typeof updateCategorySchema>;
 
 export type Category = {

@@ -4,10 +4,10 @@ import { CategoryColor } from "../../features/category/shared/category.types";
 
 type ColorPickerProps = {
   selectedColor: CategoryColor;
-  handleColorSelect: (color: CategoryColor) => void;
+  onColorSelect: (color: CategoryColor) => void;
 };
 
-const ColorPicker = ({ selectedColor, handleColorSelect }: ColorPickerProps) => {
+const ColorPicker = ({ selectedColor, onColorSelect }: ColorPickerProps) => {
   return (
     <Stack gap={8} mt={8}>
       <Text size="sm">Select Color</Text>
@@ -26,7 +26,7 @@ const ColorPicker = ({ selectedColor, handleColorSelect }: ColorPickerProps) => 
               justifyContent: "center",
               position: "relative",
             }}
-            onClick={() => handleColorSelect(color)}
+            onClick={() => onColorSelect(color)}
           >
             {selectedColor === color && (
               <span

@@ -6,19 +6,19 @@ import { ErrorResponse } from "../../../api/errors/errror.types";
 import useFormErrorHandler from "../../../hooks/useFormErrorHandler";
 import { useCreateCategory } from "../services/create-category.service";
 import { categoryIcons, categoryColors } from "../shared/category.constants";
-import { newCategorySchema } from "../shared/category.schemas";
-import { NewCategoryRequest, CategoryIdentifier, CategoryColor } from "../shared/category.types";
+import { createCategorySchema } from "../shared/category.schemas";
+import { CreateCategory, CategoryIdentifier, CategoryColor } from "../shared/category.types";
 import ColorPicker from "../../../components/color-picker/ColorPicker";
 
 function CreateCategoryForm() {
   const createCategory = useCreateCategory();
-  const { handleFormErrors } = useFormErrorHandler<NewCategoryRequest>();
+  const { handleFormErrors } = useFormErrorHandler<CreateCategory>();
 
   const [selectedIcon, setSelectedIcon] = useState<CategoryIdentifier>(categoryIcons[0]);
   const [selectedColor, setSelectedColor] = useState<CategoryColor>(categoryColors[0]);
 
-  const form = useForm<NewCategoryRequest>({
-    validate: zodResolver(newCategorySchema),
+  const form = useForm<CreateCategory>({
+    validate: zodResolver(createCategorySchema),
     initialValues: {
       name: "",
       tag: categoryIcons[0].tag,
@@ -26,7 +26,7 @@ function CreateCategoryForm() {
     },
   });
 
-  const handleSubmit = async (data: NewCategoryRequest) => {
+  const handleSubmit = async (data: CreateCategory) => {
     try {
       await createCategory.mutateAsync(data);
       form.reset();
@@ -50,8 +50,8 @@ function CreateCategoryForm() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack gap={16}>
         <TextInput label="Category Name" placeholder="Enter a category name" {...form.getInputProps("name")} />
-        <CategoryIconPicker selectedIcon={selectedIcon} handleIconClick={handleIconSelect} />
-        <ColorPicker selectedColor={selectedColor} handleColorSelect={handleColorSelect} />
+        <CategoryIconPicker selectedIcon={selectedIcon} onIconSelect={handleIconSelect} />
+        <ColorPicker selectedColor={selectedColor} onColorSelect={handleColorSelect} />
         <Button type="submit" w="100%" variant="light" color="lime">
           Create Category
         </Button>

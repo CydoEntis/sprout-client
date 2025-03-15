@@ -5,10 +5,10 @@ import { categoryIcons } from "../shared/category.constants";
 
 type CategoryIconPickerProps = {
   selectedIcon: CategoryIcon;
-  handleIconClick: (categoryIcon: CategoryIcon) => void;
+  onIconSelect: (categoryIcon: CategoryIcon) => void;
 };
 
-function CategoryIconPicker({ selectedIcon, handleIconClick }: CategoryIconPickerProps) {
+function CategoryIconPicker({ selectedIcon, onIconSelect }: CategoryIconPickerProps) {
   return (
     <Stack gap={4}>
       <Text size="sm">Category Icon</Text>
@@ -18,7 +18,7 @@ function CategoryIconPicker({ selectedIcon, handleIconClick }: CategoryIconPicke
             key={icon.id}
             categoryIcon={icon}
             selectedIcon={selectedIcon}
-            handleIconClick={handleIconClick}
+            onIconSelect={onIconSelect}
           />
         ))}
       </SimpleGrid>
