@@ -1,17 +1,17 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "../../../api/apiRequest";
 import endpoints from "../../../api/endpoints";
-import { NewCategoryRequest, NewCategoryResponse } from "../shared/category.types";
+import { CreateCategory, CreatedCategory } from "../shared/category.types";
 import { notifications } from "@mantine/notifications";
 
-export const createCategory = async (newCategory: NewCategoryRequest): Promise<NewCategoryResponse> => {
-  return apiRequest<NewCategoryResponse>("post", endpoints.category, newCategory);
+export const createCategory = async (newCategory: CreateCategory): Promise<CreatedCategory> => {
+  return apiRequest<CreatedCategory>("post", endpoints.category, newCategory);
 };
 
 export function useCreateCategory() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (newCategory: NewCategoryRequest): Promise<NewCategoryResponse> => {
+    mutationFn: async (newCategory: CreateCategory): Promise<CreatedCategory> => {
       return await createCategory(newCategory);
     },
     onSuccess: (data) => {

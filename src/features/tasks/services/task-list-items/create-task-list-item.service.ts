@@ -22,7 +22,7 @@ export function useCreateTaskListItemMutation() {
       console.log(data);
 
       queryClient.invalidateQueries({
-        queryKey: ["task-lists", data.item.id],
+        queryKey: ["task-lists", data.taskListId],
       });
 
       notifications.show({
@@ -32,7 +32,8 @@ export function useCreateTaskListItemMutation() {
         position: "top-right",
       });
     },
-    onError: () => {
+    onError: (error) => {
+      console.log(error);
       notifications.show({
         title: "Task List Creation Failed",
         message: "Quest could not be created.",

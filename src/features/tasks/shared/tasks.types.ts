@@ -53,7 +53,8 @@ export type TaskList = {
 export type CreateTaskListItem = z.infer<typeof createTaskListItemSchema>;
 
 export type CreatedTaskListItem = SuccessMessage & {
-  item: TaskListItem;
+  taskListId: number;
+  taskListItemDetail: TaskListItem;
 };
 
 export type UpdateTaskListItem = z.infer<typeof updateTaskListItemSchema>;
