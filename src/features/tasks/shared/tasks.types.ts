@@ -57,6 +57,11 @@ export type CreatedTaskListItem = SuccessMessage & {
   taskListItemDetail: TaskListItem;
 };
 
+export type CreatedTaskListItems = SuccessMessage & {
+  taskListId: number;
+  taskListItemDetails: TaskListItem[];
+};
+
 export type UpdateTaskListItem = z.infer<typeof updateTaskListItemSchema>;
 
 export type UpdatedTaskListItem = CreatedTaskListItem;

@@ -23,9 +23,19 @@ function useFormErrorHandler<T>() {
 
   function handleFormErrors(err: ErrorResponse, form: UseFormReturnType<T>) {
     if (err.type === ERROR_TYPES.VALIDATION_ERROR) {
-      form.setErrors(err.errors);
+      console.log(err.errors);
+  
+      const modifiedErrors = Object.keys(err.errors).reduce((acc, key) => {
+        const modifiedKey = key.charAt(0).toLowerCase() + key.slice(1); // Make the first letter lowercase
+        acc[modifiedKey] = err.errors[key];
+        return acc;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      }, {} as Record<string, any>);
+  
+      form.setErrors(modifiedErrors);
     }
   }
+  
 
   function resetError() {
     setError(null);

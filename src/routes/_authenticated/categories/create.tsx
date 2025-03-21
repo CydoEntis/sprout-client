@@ -12,15 +12,13 @@ export const Route = createFileRoute("/_authenticated/categories/create")({
 function RouteComponent() {
   const [active, setActive] = useState(0);
   const [categoryName, setCategoryName] = useState("");
-  const [taskListId, setTaskListId] = useState<number>(15);
+  const [taskListId, setTaskListId] = useState<number>(1);
 
   return (
     <Paper withBorder bg="card" p={32}>
       <Stepper color="lime" active={active} onStepClick={setActive}>
         <Stepper.Step label="Step 1" description="Create a category">
-          <Box maw={500}>
-            <CreateCategoryForm setCategoryName={setCategoryName} />
-          </Box>
+          <CreateCategoryForm setCategoryName={setCategoryName} />
         </Stepper.Step>
         <Stepper.Step label="Step 2" description="Create a task list">
           <CreateTaskListForm categoryName={categoryName} />

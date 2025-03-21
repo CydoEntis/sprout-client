@@ -72,6 +72,8 @@ import { CategoryColor, CategoryIcon, CreateCategory } from "../../category/shar
 import ColorPickerMenu from "../../../components/menus/ColorPickerMenu";
 import IconPickerMenu from "../../../components/menus/IconPickerMenu";
 import { useCreateCategory } from "../services/create-category.service";
+import { ErrorResponse } from "../../../api/errors/errror.types";
+import useFormErrorHandler from "../../../hooks/useFormErrorHandler";
 
 type CreateCategoryFormProps = {
   setCategoryName: (name: string) => void;
@@ -81,6 +83,7 @@ const CreateCategoryForm = ({ setCategoryName }: CreateCategoryFormProps) => {
   const [selectedIcon, setSelectedIcon] = useState<CategoryIcon>(categoryIcons[0]);
   const [selectedColor, setSelectedColor] = useState<CategoryColor>(categoryColors[0]);
   const createCategory = useCreateCategory();
+  const { handleFormErrors } = useFormErrorHandler<CreateCategory>();
   const form = useForm<CreateCategory>({
     validate: zodResolver(createCategorySchema),
     initialValues: {
@@ -104,9 +107,14 @@ const CreateCategoryForm = ({ setCategoryName }: CreateCategoryFormProps) => {
     const result = await form.validate();
 
     if (!result.hasErrors) {
-      await createCategory.mutateAsync(data as CreateCategory);
-      setCategoryName(data.name);
-      form.reset();
+      try {
+        await createCategory.mutateAsync(data as CreateCategory);
+        setCategoryName(data.name);
+        form.reset();
+      } catch (e) {
+        const error = e as ErrorResponse;
+        handleFormErrors(error, form);
+      }
     } else {
       console.log("Form has errors:", result.errors);
     }
