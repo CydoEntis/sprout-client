@@ -21,7 +21,7 @@ function RouteComponent() {
           <CreateCategoryForm setCategoryName={setCategoryName} />
         </Stepper.Step>
         <Stepper.Step label="Step 2" description="Create a task list">
-          <CreateTaskListForm categoryName={categoryName} />
+          <CreateTaskListForm categoryName={categoryName} setTaskListId={setTaskListId}/>
         </Stepper.Step>
         <Stepper.Step label="Step 4" description="Add items">
           <CreateTaskListItemsForm taskListId={taskListId} />

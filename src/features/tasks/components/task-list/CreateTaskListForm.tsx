@@ -8,9 +8,10 @@ import { CreateTaskList } from "../../shared/tasks.types";
 
 type CreateTaskListFormProps = {
   categoryName: string;
+  setTaskListId: (id: number) => void;
 };
 
-const CreateTaskListForm = ({ categoryName }: CreateTaskListFormProps) => {
+const CreateTaskListForm = ({ categoryName, setTaskListId }: CreateTaskListFormProps) => {
   const createTaskList = useCreateTaskListMutation();
   const { handleFormErrors } = useFormErrorHandler<CreateTaskList>();
 
@@ -25,7 +26,8 @@ const CreateTaskListForm = ({ categoryName }: CreateTaskListFormProps) => {
 
   const handleSubmit = async (data: CreateTaskList) => {
     try {
-      await createTaskList.mutateAsync({ ...data, categoryName });
+      const response = await createTaskList.mutateAsync({ ...data, categoryName });
+      setTaskListId(response.taskList.id);
       form.reset();
     } catch (e) {
       handleFormErrors(e as ErrorResponse, form);
