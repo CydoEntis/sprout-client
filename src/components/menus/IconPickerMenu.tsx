@@ -11,7 +11,7 @@ function IconPickerMenu({selectedIcon, onIconSelect}: IconPickerMenuProps) {
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
-        <Stack gap={4} justify="center" align="center">
+        <Stack gap={4} justify="center" align="center" w="5%">
           <Text size="sm">Icon</Text>
           <Paper
             w={35}

@@ -18,12 +18,14 @@ import { CreateTaskListItem } from "../../shared/tasks.types";
 import { useCreateTaskListItemsMutation } from "../../services/task-list-items/create-task-list-items.service";
 import useFormErrorHandler from "../../../../hooks/useFormErrorHandler";
 import { ErrorResponse } from "../../../../api/errors/errror.types";
+import { CustomLink } from "../../../../components/CustomLink";
 
 type CreateTaskListItemsFormProps = {
   taskListId: number;
+  goToNextStep: () => void;
 };
 
-function CreateTaskListItemsForm({ taskListId }: CreateTaskListItemsFormProps) {
+function CreateTaskListItemsForm({ taskListId, goToNextStep }: CreateTaskListItemsFormProps) {
   const [taskListItems, setTaskListItems] = useState<CreateTaskListItem[]>([]);
   const [isEditing, setIsEditing] = useState<number | null>(null);
   const [newTaskDescription, setNewTaskDescription] = useState("");
@@ -219,9 +221,15 @@ function CreateTaskListItemsForm({ taskListId }: CreateTaskListItemsFormProps) {
         </Stack>
       )}
 
-      <Button mt={8} onClick={handleSubmit} fullWidth variant="light" color="lime">
-        Add Task Items
-      </Button>
+      {taskListItems.length > 0 ? (
+        <Stack gap={24} mt={8}>
+          <Group justify="end" align="center" gap={8} w="100%">
+            <Button onClick={handleSubmit} fullWidth variant="light" color="lime" w="20%">
+              Add Task Items
+            </Button>
+          </Group>
+        </Stack>
+      ) : null}
     </div>
   );
 }

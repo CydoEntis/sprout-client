@@ -7,19 +7,19 @@ import { CustomLink } from "../../../components/CustomLink";
 
 type CategoryListProps = {
   categories: CategoryResponse[];
-  // onOpen: () => void;
+  onOpen: () => void;
   onEdit: (category: Category) => void;
 };
 
-function CategoryList({ categories, onEdit }: CategoryListProps) {
+function CategoryList({ categories, onEdit, onOpen }: CategoryListProps) {
   return (
     <>
       <Group justify="end" py={16}>
-        <CustomLink c="inverse" to={"/categories/create"}>
-          <Button variant="light" leftSection={<Plus size={20} />} color="lime">
-            Category
-          </Button>
-        </CustomLink>
+        {/* <CustomLink c="inverse" to={"/categories/create"}> */}
+        <Button onClick={onOpen} variant="light" leftSection={<Plus size={20} />} color="lime">
+          Category
+        </Button>
+        {/* </CustomLink> */}
       </Group>
       <GridList>
         {categories?.map((category) => <CategoryCard key={category.id} category={category} onEdit={onEdit} />)}

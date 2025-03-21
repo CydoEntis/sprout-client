@@ -30,10 +30,10 @@ function CategoriesPage({ categories }: CategoriesPageProps) {
 
   return (
     <>
-      <UpsertCategoryModal isOpen={isCategoryModalOpended} onClose={closeCategoryModalHandler} category={category} />
+      <UpsertCategoryModal  isOpen={isCategoryModalOpended} onClose={closeCategoryModalHandler} category={category} />
       <CategoryList
         categories={categories}
-        // onOpen={openCategoryCreateModalHandler}
+        onOpen={openCategoryCreateModalHandler}
         onEdit={openCategoryEditModalHandler}
       />
     </>
