@@ -109,12 +109,21 @@ function LoginForm() {
           <GoogleAuthButton onClick={handleGoogleLogin} w="100%" my={8} />
 
           <TextInput
+            variant="filled"
+            classNames={{
+              input: "input",
+              wrapper: "input-container"
+            }}
             label="Email"
             placeholder="you@example.com"
             leftSection={<AtSign size={20} />}
             {...form.getInputProps("email")}
           />
           <PasswordInput
+            variant="filled"
+            classNames={{
+              input: "input",
+            }}
             label="Password"
             placeholder="Your password"
             withAsterisk

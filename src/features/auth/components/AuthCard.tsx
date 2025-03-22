@@ -10,13 +10,7 @@ type AuthCardProps = {
   children: ReactElement;
 };
 
-function AuthCard({
-  title,
-  anchorLabel,
-  anchorText,
-  to,
-  children,
-}: AuthCardProps) {
+function AuthCard({ title, anchorLabel, anchorText, to, children }: AuthCardProps) {
   return (
     <Flex
       justify="center"
@@ -31,7 +25,8 @@ function AuthCard({
         p={32}
         pt={30}
         radius="md"
-        bg="card"
+        bg="secondary"
+        className="card"
         style={{
           maxWidth: "520px",
           width: "100%",

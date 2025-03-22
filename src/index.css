@@ -40,10 +40,14 @@ body {
   overflow: hidden;
 }
 
-.card:hover {
+.input {
+  background-color: var(--bg-color) !important;
+}
+
+/* .card:hover {
   transform: scale(1.05);
   cursor: pointer;
-}
+} */
 
 .input:focus-within {
   border: 1px solid #66a80f !important;
