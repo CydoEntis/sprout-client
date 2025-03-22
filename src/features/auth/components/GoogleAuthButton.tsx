@@ -18,7 +18,14 @@ export function GoogleAuthButton(props: ButtonProps & Props) {
   });
 
   return (
-    <Button leftSection={<GoogleIcon />} variant="default" {...props} onClick={() => googleLogin()}>
+    <Button
+      classNames={{ root: "button" }}
+      // bg="btn"
+      leftSection={<GoogleIcon />}
+      variant="default"
+      {...props}
+      onClick={() => googleLogin()}
+    >
       Continue with Google
     </Button>
   );
