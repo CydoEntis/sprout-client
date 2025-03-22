@@ -25,7 +25,7 @@ function Layout() {
   };
 
   return (
-    <Box bg="primary" mih="100vh">
+    <Box  mih="100vh">
       <Container size="md" py={16}>
         <Flex justify="space-between" mb={32}>
           <Title size="1.5rem">Task Garden</Title>

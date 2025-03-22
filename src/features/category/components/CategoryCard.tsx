@@ -18,18 +18,7 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
 
   return (
     <CustomLink c="inverse" to={"/categories/$categoryName"} params={{ categoryName: category.name.toLowerCase() }}>
-      <Paper
-        className="card"
-        shadow="md"
-        p="md"
-        radius="md"
-        style={{ overflow: "hidden" }}
-        pos="relative"
-        bg="card"
-        w={300}
-        h={200}
-        withBorder
-      >
+      <Paper className="card" shadow="md" p="md" radius="md" pos="relative" bg="secondary" w={300} h={200} withBorder>
         <Stack gap={32}>
           <Flex justify="space-between" w="100%" align="center">
             <CategoryIcon category={foundCategory} color={category.color} />
