@@ -2,7 +2,7 @@ import { Button, Group, Stack, Title } from "@mantine/core";
 import { Plus } from "lucide-react";
 import { Category, CategoryResponse } from "../shared/category.types";
 import GridList from "../../../components/GridList";
-import CategoryCard from "./CategoryCard";
+import CategoryCard from "./category-card/CategoryCard";
 import { CustomLink } from "../../../components/CustomLink";
 import PageHeader from "../../../components/headers/PageHeader";
 import LazyHeader from "../../../components/lazy-components/header/LazyHeader";

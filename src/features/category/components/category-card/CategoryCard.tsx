@@ -1,12 +1,14 @@
 import { Title, Stack } from "@mantine/core";
-import { Category, CategoryResponse } from "../shared/category.types";
-import { useDeleteCategory } from "../services/delete-category.service";
-import UpdateAndDeleteMenu from "../../../components/menus/UpdateAndDeleteMenu";
-import { categoryIcons } from "../shared/category.constants";
-import CategoryIcon from "./CategoryIcon";
-import LazyCard from "../../../components/lazy-components/card/LazyCard";
-import LazyHeader from "../../../components/lazy-components/header/LazyHeader";
-import LazyText from "../../../components/lazy-components/text/LazyText";
+import { Category, CategoryResponse } from "../../shared/category.types";
+import { useDeleteCategory } from "../../services/delete-category.service";
+import UpdateAndDeleteMenu from "../../../../components/menus/UpdateAndDeleteMenu";
+import { categoryIcons } from "../../shared/category.constants";
+import CategoryIcon from "../CategoryIcon";
+import LazyCard from "../../../../components/lazy-components/card/LazyCard";
+import LazyHeader from "../../../../components/lazy-components/header/LazyHeader";
+import LazyText from "../../../../components/lazy-components/text/LazyText";
+
+import styles from "./category-card.module.css"
 
 type CategoryCard = {
   category: CategoryResponse;
@@ -21,7 +23,7 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
     <LazyCard
       to={`/categories/${category.name.toLowerCase()}`}
       params={{ categoryName: category.name.toLowerCase() }}
-      isHoverable
+      className={styles.card}
       shadow="md"
       p="md"
       radius="md"
@@ -29,7 +31,6 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
       bg="secondary"
       w={300}
       h={200}
-      withBorder
     >
       <Stack gap={32}>
         <LazyHeader
