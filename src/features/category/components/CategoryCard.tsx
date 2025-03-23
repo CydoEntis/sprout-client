@@ -1,12 +1,12 @@
-import { Title, Flex, Stack } from "@mantine/core";
+import { Title, Stack } from "@mantine/core";
 import { Category, CategoryResponse } from "../shared/category.types";
 import { useDeleteCategory } from "../services/delete-category.service";
 import UpdateAndDeleteMenu from "../../../components/menus/UpdateAndDeleteMenu";
 import { categoryIcons } from "../shared/category.constants";
 import CategoryIcon from "./CategoryIcon";
-import CategoryTaskListCount from "./CategoryTaskListCount";
 import LazyCard from "../../../components/lazy-components/card/LazyCard";
 import LazyHeader from "../../../components/lazy-components/header/LazyHeader";
+import LazyText from "../../../components/lazy-components/text/LazyText";
 
 type CategoryCard = {
   category: CategoryResponse;
@@ -34,7 +34,12 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
         ></LazyHeader>
 
         <Title size="1.25rem">{category.name}</Title>
-        <CategoryTaskListCount color={category.color} count={category.taskListCount} />
+        <LazyText
+          text={`You have ${category.taskListCount} ${category.taskListCount === 1 ? "active list" : "active lists"}`}
+          highlightColor={category.color + ".5"}
+          highlight={category.taskListCount}
+          textColor="dimmed"
+        />
       </Stack>
     </LazyCard>
   );
