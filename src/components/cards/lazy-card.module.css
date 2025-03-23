@@ -1,0 +1,17 @@
+.card {
+  border-color: var(--border-color) !important;
+  overflow: hidden;
+}
+
+.card-hoverable {
+  transition: transform 300ms ease-in-out;
+}
+
+.card-hoverable:hover {
+  transform: scale(1.05);
+}
+
+.card-border {
+  border-width: 2px !important;
+  border-style: solid;
+}
