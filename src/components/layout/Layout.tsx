@@ -3,10 +3,12 @@ import { Anchor, Box, Container, Flex, Group, Title } from "@mantine/core";
 import ThemeToggle from "../theme/ThemeToggle";
 import { Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import useAuthStore from "../../stores/useAuthStore";
-import { CustomLink } from "../CustomLink";
 import LocalStorageService from "../../services/localStorage.service";
 import { logoutUser } from "../../features/auth/services/logout.service";
 import LazyNavbar from "../lazy-components/nav-bar/LazyNavbar";
+import LazyNavLink from "../lazy-components/nav-link/LazyNavLink";
+
+import styles from "./navlink.module.css";
 
 function Layout() {
   const { user, logoutUser: logout } = useAuthStore();
@@ -27,9 +29,20 @@ function Layout() {
 
   return (
     <Box mih="100vh">
+      <LazyNavbar justify="space-between"  logo={<Title size="1.5rem">Task Garden</Title>} size="md" bg="secondary" >
+        <LazyNavLink to="/categories" className={styles.navlink} activeClassName={styles.active}>
+          Categories
+        </LazyNavLink>
+        <LazyNavLink to="/garden" className={styles.navlink} activeClassName={styles.active}>
+          Garden
+        </LazyNavLink>
+        <LazyNavLink to="/account" className={styles.navlink} activeClassName={styles.active}>
+          Account
+        </LazyNavLink>
+        <ThemeToggle />
+      </LazyNavbar>
       <Container size="md" py={16}>
-        <LazyNavbar justify="space-between" mb={32} logo={<Title size="1.5rem">Task Garden</Title>}>
-          {user ? (
+        {/* {user ? (
             <>
               <CustomLink
                 to="/categories"
@@ -68,7 +81,7 @@ function Layout() {
             </>
           )}
           <ThemeToggle />
-        </LazyNavbar>
+        </LazyNavbar> */}
         <Outlet />
       </Container>
     </Box>

@@ -1,0 +1,25 @@
+.navlink {
+  color: light-dark(var(--mantine-color-gray-9), var(--mantine-gray-5));
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  line-height: 1;
+  padding: 8px 12px;
+  border-radius: var(--mantine-radius-sm);
+
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+
+  @mixin hover {
+    background-color: light-dark(#d1cfc2, #212428);
+  }
+}
+
+.active {
+    background-color: light-dark(var(--mantine-color-lime-6), var(--mantine-color-lime-8));
+    color: #fff !important;
+    transition: ease-in-out 300ms all;
+
+    @mixin hover {
+        background-color: light-dark(var(--mantine-color-lime-7), var(--mantine-color-lime-9));
+      }
+}
