@@ -20,7 +20,7 @@ const theme = createTheme({
     // borderDark: colorsTuple("#2A2A2A"),
     borderDark: colorsTuple("#23272B"),
     borderLight: colorsTuple("#EAE4DD"),
-    buttonDark: colorsTuple("#FF0000"),
+    buttonDark: colorsTuple("#000A10"),
     buttonLight: colorsTuple("#FAF7F0"),
     primary: virtualColor({
       name: "primary",
@@ -58,7 +58,7 @@ const theme = createTheme({
       light: "borderLight",
     }),
     btn: virtualColor({
-      name: "item",
+      name: "btn",
       dark: "buttonDark",
       light: "borderLight",
     }),
