@@ -5,7 +5,8 @@ import UpdateAndDeleteMenu from "../../../components/menus/UpdateAndDeleteMenu";
 import { categoryIcons } from "../shared/category.constants";
 import CategoryIcon from "./CategoryIcon";
 import CategoryTaskListCount from "./CategoryTaskListCount";
-import LazyCard from "../../../components/cards/LazyCard";
+import LazyCard from "../../../components/lazy-components/card/LazyCard";
+import LazyHeader from "../../../components/lazy-components/header/LazyHeader";
 
 type CategoryCard = {
   category: CategoryResponse;
@@ -17,24 +18,25 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
   const foundCategory = categoryIcons.find((c) => c.tag === category.tag);
 
   return (
-    // <CustomLink c="inverse" to={"/categories/$categoryName"} params={{ categoryName: category.name.toLowerCase() }}>
-    //   <Paper className="card" shadow="md" p="md" radius="md" pos="relative" bg="secondary" w={300} h={200} withBorder>
     <LazyCard
       to={`/categories/${category.name.toLowerCase()}`}
       params={{ categoryName: category.name.toLowerCase() }}
       isHoverable
     >
       <Stack gap={32}>
-        <Flex justify="space-between" w="100%" align="center">
-          <CategoryIcon category={foundCategory} color={category.color} />
-          <UpdateAndDeleteMenu onUpdate={() => onEdit(category)} onDelete={() => deleteCategory(category.id)} />
-        </Flex>
+        <LazyHeader
+          align="center"
+          justify="space-between"
+          leftSection={<CategoryIcon category={foundCategory} color={category.color} />}
+          rightSection={
+            <UpdateAndDeleteMenu onUpdate={() => onEdit(category)} onDelete={() => deleteCategory(category.id)} />
+          }
+        ></LazyHeader>
+
         <Title size="1.25rem">{category.name}</Title>
         <CategoryTaskListCount color={category.color} count={category.taskListCount} />
       </Stack>
     </LazyCard>
-    //   </Paper>
-    // </CustomLink>
   );
 }
 

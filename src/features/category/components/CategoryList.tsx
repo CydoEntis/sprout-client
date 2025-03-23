@@ -1,10 +1,11 @@
-import { Button, Group, Stack } from "@mantine/core";
+import { Button, Group, Stack, Title } from "@mantine/core";
 import { Plus } from "lucide-react";
 import { Category, CategoryResponse } from "../shared/category.types";
 import GridList from "../../../components/GridList";
 import CategoryCard from "./CategoryCard";
 import { CustomLink } from "../../../components/CustomLink";
 import PageHeader from "../../../components/headers/PageHeader";
+import LazyHeader from "../../../components/lazy-components/header/LazyHeader";
 
 type CategoryListProps = {
   categories: CategoryResponse[];
@@ -15,11 +16,20 @@ type CategoryListProps = {
 function CategoryList({ categories, onEdit, onOpen }: CategoryListProps) {
   return (
     <Stack gap={16}>
-      <PageHeader title="Categories">
+      <LazyHeader
+        rightSection={
+          <Button onClick={onOpen} variant="light" leftSection={<Plus size={20} />} color="lime">
+            Category
+          </Button>
+        }
+      >
+        <Title>Categories</Title>
+      </LazyHeader>
+      {/* <PageHeader title="Categories">
         <Button onClick={onOpen} variant="light" leftSection={<Plus size={20} />} color="lime">
           Category
         </Button>
-      </PageHeader>
+      </PageHeader> */}
 
       <GridList>
         {categories?.map((category) => <CategoryCard key={category.id} category={category} onEdit={onEdit} />)}

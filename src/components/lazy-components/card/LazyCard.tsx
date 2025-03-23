@@ -1,5 +1,5 @@
 import React from "react";
-import { CustomLink } from "../CustomLink";
+import { CustomLink } from "../../CustomLink";
 import { Paper } from "@mantine/core";
 import clsx from "clsx";
 import styles from "./lazy-card.module.css";
