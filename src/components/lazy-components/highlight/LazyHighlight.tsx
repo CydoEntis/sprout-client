@@ -5,17 +5,29 @@ type LazyHighlightProps = {
   variant?: "text" | "box";
   bg?: DefaultMantineColor;
   borderRadius?: number | string;
+  highlightColor?: string;
 } & TextProps;
 
-function LazyHighlight({ text, variant = "text", bg = "black", borderRadius = "4px", ...rest }: LazyHighlightProps) {
-  return variant === "box" ? (
-    <Paper px={10} py={2.5} bg={bg} radius={borderRadius} style={{ display: "inline-block" }}>
-      <Text fw={700} {...rest}>
-        {text}
-      </Text>
-    </Paper>
-  ) : (
-    <Text span fw={700} {...rest}>
+function LazyHighlight({
+  text,
+  variant = "text",
+  bg = "black",
+  borderRadius = "4px",
+  highlightColor = "yellow",
+  ...rest
+}: LazyHighlightProps) {
+  if (variant === "box") {
+    return (
+      <Paper px={10} py={2.5} bg={bg} radius={borderRadius} style={{ display: "inline-block" }}>
+        <Text fw={700} {...rest}>
+          {text}
+        </Text>
+      </Paper>
+    );
+  }
+
+  return (
+    <Text span fw={700} color={highlightColor} {...rest}>
       {text}
     </Text>
   );

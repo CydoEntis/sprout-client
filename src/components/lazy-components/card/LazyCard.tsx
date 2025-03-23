@@ -1,6 +1,6 @@
 import React from "react";
 import { CustomLink } from "../../CustomLink";
-import { Paper } from "@mantine/core";
+import { Paper, PaperProps } from "@mantine/core";
 import clsx from "clsx";
 import styles from "./lazy-card.module.css";
 
@@ -10,26 +10,16 @@ type LazyCardProps = {
   params?: Record<string, string>;
   isHoverable?: boolean;
   hasBorder?: boolean;
-};
+} & PaperProps;
 
-function LazyCard({ to, params, isHoverable = false, hasBorder = true, children }: LazyCardProps) {
+function LazyCard({ to, params, isHoverable = false, hasBorder = true, children, ...rest }: LazyCardProps) {
   const cardClasses = clsx(styles.card, {
     [styles["card-hoverable"]]: isHoverable,
     [styles["card-border"]]: hasBorder,
   });
 
   const cardContent = (
-    <Paper
-      className={cardClasses}
-      shadow="md"
-      p="md"
-      radius="md"
-      pos="relative"
-      bg="secondary"
-      w={300}
-      h={200}
-      withBorder
-    >
+    <Paper className={cardClasses} {...rest}>
       {children}
     </Paper>
   );

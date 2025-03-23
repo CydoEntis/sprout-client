@@ -10,6 +10,7 @@ type LazyTextProps = {
   highlightColor?: string;
   highlightBg?: string;
   highlightSize?: MantineSize;
+  highlightVariant?: "text" | "box";
 } & TextProps;
 
 function LazyText({
@@ -19,35 +20,34 @@ function LazyText({
   highlightBg,
   highlightColor,
   highlightSize = "md",
+  highlightVariant = "text",
   ...textProps
 }: LazyTextProps) {
   const textStr = String(text);
   const highlightStr = String(highlight);
 
-  const words = textStr.split(" ");
-  const highlightWordsArray = highlightStr.split(" ");
+  const highlightRegex = new RegExp(`(${highlightStr})`, "gi");
 
-  const variant = highlightBg ? "box" : "text";
+  const parts = textStr.split(highlightRegex);
 
   return (
     <Text c={textColor} {...textProps}>
-      {words.map((word, index) => {
-        const isHighlighted = highlightWordsArray.includes(word);
+      {parts.map((part, index) => {
+        const isHighlighted = part.toLowerCase() === highlightStr.toLowerCase();
 
         return (
           <React.Fragment key={index}>
             {isHighlighted ? (
               <LazyHighlight
                 size={highlightSize}
-                text={word}
-                color={highlightColor}
+                text={part}
+                c={highlightColor}
                 bg={highlightBg}
-                variant={variant}
+                variant={highlightVariant}
               />
             ) : (
-              <span>{word}</span>
+              part
             )}
-            {index < words.length - 1 && " "}
           </React.Fragment>
         );
       })}
