@@ -6,6 +6,7 @@ import useAuthStore from "../../stores/useAuthStore";
 import { CustomLink } from "../CustomLink";
 import LocalStorageService from "../../services/localStorage.service";
 import { logoutUser } from "../../features/auth/services/logout.service";
+import LazyNavbar from "../lazy-components/nav-bar/LazyNavbar";
 
 function Layout() {
   const { user, logoutUser: logout } = useAuthStore();
@@ -25,64 +26,49 @@ function Layout() {
   };
 
   return (
-    <Box  mih="100vh">
+    <Box mih="100vh">
       <Container size="md" py={16}>
-        <Flex justify="space-between" mb={32}>
-          <Title size="1.5rem">Task Garden</Title>
+        <LazyNavbar justify="space-between" mb={32} logo={<Title size="1.5rem">Task Garden</Title>}>
+          {user ? (
+            <>
+              <CustomLink
+                to="/categories"
+                c="inverse"
+                style={{
+                  fontWeight: location.pathname === "/categories" ? "bold" : "normal",
+                }}
+              >
+                Categories
+              </CustomLink>
 
-          <Group>
-            {user ? (
-              <>
-                <CustomLink
-                  to="/categories"
-                  c="inverse"
-                  style={{
-                    fontWeight: location.pathname === "/categories" ? "bold" : "normal",
-                  }}
-                >
-                  Categories
-                </CustomLink>
-
-                {/* <CustomLink
-                  to="/"
-                  c="inverse"
-                  style={{
-                    fontWeight: location.pathname === "/garden" ? "bold" : "normal",
-                  }}
-                >
-                  Garden
-                </CustomLink> */}
-
-                <Anchor c="inverse" onClick={logoutHandler}>
-                  Logout
-                </Anchor>
-              </>
-            ) : (
-              <>
-                <CustomLink
-                  to="/login"
-                  c="inverse"
-                  style={{
-                    fontWeight: location.pathname === "/login" ? "bold" : "normal",
-                  }}
-                >
-                  Login
-                </CustomLink>
-                <CustomLink
-                  to="/register"
-                  c="inverse"
-                  style={{
-                    fontWeight: location.pathname === "/register" ? "bold" : "normal",
-                  }}
-                >
-                  Register
-                </CustomLink>
-              </>
-            )}
-            <ThemeToggle />
-          </Group>
-        </Flex>
-
+              <Anchor c="inverse" onClick={logoutHandler}>
+                Logout
+              </Anchor>
+            </>
+          ) : (
+            <>
+              <CustomLink
+                to="/login"
+                c="inverse"
+                style={{
+                  fontWeight: location.pathname === "/login" ? "bold" : "normal",
+                }}
+              >
+                Login
+              </CustomLink>
+              <CustomLink
+                to="/register"
+                c="inverse"
+                style={{
+                  fontWeight: location.pathname === "/register" ? "bold" : "normal",
+                }}
+              >
+                Register
+              </CustomLink>
+            </>
+          )}
+          <ThemeToggle />
+        </LazyNavbar>
         <Outlet />
       </Container>
     </Box>
