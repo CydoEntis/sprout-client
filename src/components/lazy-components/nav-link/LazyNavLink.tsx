@@ -1,7 +1,7 @@
 import React from "react";
 import { CustomLink } from "../../CustomLink";
 import { useLocation } from "@tanstack/react-router";
-import { Button, ButtonProps, UnstyledButton } from "@mantine/core";
+import { UnstyledButton } from "@mantine/core";
 
 type LazyNavLinkProps = {
   to?: string;
