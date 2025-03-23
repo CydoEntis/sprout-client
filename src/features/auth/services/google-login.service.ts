@@ -39,8 +39,9 @@ export function useGoogleLoginMutation() {
       notifications.show({
         title: "Success",
         message: data.message,
-        color: "green",
+        color: "lime",
         position: "top-right",
+        className: "notification"
       });
     },
     onError: (error) => {
@@ -51,6 +52,7 @@ export function useGoogleLoginMutation() {
         message: error.message,
         color: "red",
         position: "top-right",
+        className: "notification"
       });
       throw error;
     },

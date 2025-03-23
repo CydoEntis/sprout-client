@@ -35,8 +35,9 @@ export function useCreateTaskListItemsMutation() {
       notifications.show({
         title: "Success",
         message: "Items added successfully",
-        color: "green",
+        color: "lime",
         position: "top-right",
+        className: "notification",
       });
     },
     onError: (error) => {
@@ -46,6 +47,7 @@ export function useCreateTaskListItemsMutation() {
         message: "Could not create task items.",
         color: "red",
         position: "top-right",
+        className: "notification",
       });
     },
   });

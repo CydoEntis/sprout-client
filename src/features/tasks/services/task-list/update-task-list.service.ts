@@ -24,8 +24,9 @@ export function useUpdateTaskListMutation() {
       notifications.show({
         title: "Success",
         message: data.message,
-        color: "green",
+        color: "lime",
         position: "top-right",
+        className: "notification",
       });
     },
     onError: (data) => {
@@ -34,6 +35,7 @@ export function useUpdateTaskListMutation() {
         message: data.message,
         color: "red",
         position: "top-right",
+        className: "notification",
       });
     },
   });

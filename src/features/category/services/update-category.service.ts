@@ -2,16 +2,16 @@ import { notifications } from "@mantine/notifications";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "../../../api/apiRequest";
 import endpoints from "../../../api/endpoints";
-import { NewCategoryResponse, UpdateCategoryRequest, UpdateCategoryResponse } from "../shared/category.types";
+import { UpdateCategory, UpdatedCategory } from "../shared/category.types";
 
-const updateCategory = async (updatedCategory: UpdateCategoryRequest): Promise<UpdateCategoryResponse> => {
-  return apiRequest<UpdateCategoryResponse>("put", endpoints.category, updatedCategory);
+const updateCategory = async (updatedCategory: UpdateCategory): Promise<UpdatedCategory> => {
+  return apiRequest<UpdatedCategory>("put", endpoints.category, updatedCategory);
 };
 
 export function useUpdateCategory() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (updatedCategory: UpdateCategoryRequest): Promise<NewCategoryResponse> => {
+    mutationFn: async (updatedCategory: UpdateCategory): Promise<UpdatedCategory> => {
       return await updateCategory(updatedCategory);
     },
     onSuccess: (data) => {
@@ -22,8 +22,9 @@ export function useUpdateCategory() {
       notifications.show({
         title: "Success",
         message: data.message,
-        color: "green",
+        color: "lime",
         position: "top-right",
+        className: "notification",
       });
     },
     onError: (data) => {
@@ -32,6 +33,7 @@ export function useUpdateCategory() {
         message: data.message,
         color: "red",
         position: "top-right",
+        className: "notification",
       });
     },
   });

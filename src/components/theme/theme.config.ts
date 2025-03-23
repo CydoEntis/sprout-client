@@ -61,7 +61,7 @@ const theme = createTheme({
       name: "item",
       dark: "buttonDark",
       light: "borderLight",
-    })
+    }),
   },
   fontFamily: "Poppins, sans-serif",
   components: {

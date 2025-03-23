@@ -28,8 +28,9 @@ export function useCreateTaskListItemMutation() {
       notifications.show({
         title: "Success",
         message: data.message,
-        color: "green",
+        color: "lime",
         position: "top-right",
+        className: "notification",
       });
     },
     onError: (error) => {
@@ -39,6 +40,7 @@ export function useCreateTaskListItemMutation() {
         message: "Quest could not be created.",
         color: "red",
         position: "top-right",
+        className: "notification",
       });
     },
   });

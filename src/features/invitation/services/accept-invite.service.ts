@@ -29,7 +29,7 @@ export function useAcceptInviteMutation() {
       notifications.show({
         title: "Invite Accepted",
         message: data.message || "You have joined the task list.",
-        color: "green",
+        color: "lime",
         position: "top-right",
       });
     },

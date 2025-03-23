@@ -1,17 +1,17 @@
 import { notifications } from "@mantine/notifications";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import { DeleteCategoryResponse } from "../shared/category.types";
 import endpoints from "../../../api/endpoints";
 import { apiRequest } from "../../../api/apiRequest";
+import { DeletedCategory } from "../shared/category.types";
 
-export const deleteCategory = async (categoryId: number): Promise<DeleteCategoryResponse> => {
-  return apiRequest<DeleteCategoryResponse>("delete", `${endpoints.category}/${categoryId}`);
+export const deleteCategory = async (categoryId: number): Promise<DeletedCategory> => {
+  return apiRequest<DeletedCategory>("delete", `${endpoints.category}/${categoryId}`);
 };
 
 export function useDeleteCategory() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (categoryId: number): Promise<DeleteCategoryResponse> => {
+    mutationFn: async (categoryId: number): Promise<DeletedCategory> => {
       return await deleteCategory(categoryId);
     },
     onSuccess: (data) => {
@@ -22,8 +22,9 @@ export function useDeleteCategory() {
       notifications.show({
         title: "Success",
         message: data.message,
-        color: "green",
+        color: "lime",
         position: "top-right",
+        className: "notification",
       });
     },
     onError: (data) => {
@@ -32,6 +33,7 @@ export function useDeleteCategory() {
         message: data.message,
         color: "red",
         position: "top-right",
+        className: "notification",
       });
     },
   });

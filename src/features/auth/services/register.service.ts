@@ -27,7 +27,7 @@ const registerUser = async (credentials: RegisterRequest): Promise<Authenticated
 //       notifications.show({
 //         title: "Success",
 //         message: data.message,
-//         color: "green",
+//         color: "lime",
 //         position: "top-right",
 //       });
 //     },

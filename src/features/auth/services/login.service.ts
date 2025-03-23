@@ -41,8 +41,9 @@ export function useLogin() {
       notifications.show({
         title: "Success",
         message: data.message,
-        color: "green",
+        color: "lime",
         position: "top-right",
+        className: "notification",
       });
     },
     onError: (error: Error) => {
@@ -53,6 +54,7 @@ export function useLogin() {
         message: "Something went wrong!",
         color: "red",
         position: "top-right",
+        className: "notification",
       });
       throw error;
     },

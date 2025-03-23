@@ -22,8 +22,9 @@ export function useCreateCategory() {
       notifications.show({
         title: "Success",
         message: data.message,
-        color: "green",
+        color: "lime",
         position: "top-right",
+        className: "notification",
       });
     },
     onError: (data) => {
@@ -32,6 +33,7 @@ export function useCreateCategory() {
         message: data.message,
         color: "red",
         position: "top-right",
+        className: "notification",
       });
     },
   });

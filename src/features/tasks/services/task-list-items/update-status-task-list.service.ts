@@ -2,7 +2,10 @@ import { notifications } from "@mantine/notifications";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "../../../../api/apiRequest";
 import endpoints from "../../../../api/endpoints";
-import { UpdateStatusTaskListItemResponse, UpdateTaskListItemStatusRequest } from "../../../task-list-item/shared/task-list-item.types";
+import {
+  UpdateStatusTaskListItemResponse,
+  UpdateTaskListItemStatusRequest,
+} from "../../../task-list-item/shared/task-list-item.types";
 
 const updateTaskListStatusItem = async (
   request: UpdateTaskListItemStatusRequest
@@ -28,8 +31,9 @@ export function useUpdateTaskListStatusItemMutation() {
       notifications.show({
         title: "Success",
         message: data.message,
-        color: "green",
+        color: "lime",
         position: "top-right",
+        className: "notification",
       });
     },
     onError: (data) => {
@@ -38,6 +42,7 @@ export function useUpdateTaskListStatusItemMutation() {
         message: data.message,
         color: "red",
         position: "top-right",
+        className: "notification",
       });
     },
   });
