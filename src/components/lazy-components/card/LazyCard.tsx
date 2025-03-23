@@ -1,16 +1,15 @@
 import React from "react";
 import { CustomLink } from "../../CustomLink";
-import { Paper, PaperProps } from "@mantine/core";
-
+import { Card, CardProps } from "@mantine/core";
 
 type LazyCardProps = {
   children: React.ReactNode;
   to?: string;
   params?: Record<string, string>;
-} & PaperProps;
+} & CardProps;
 
 function LazyCard({ to, params, children, ...rest }: LazyCardProps) {
-  const cardContent = <Paper {...rest}>{children}</Paper>;
+  const cardContent = <Card {...rest}>{children}</Card>;
 
   return to ? (
     <CustomLink c="inverse" to={to} params={params}>

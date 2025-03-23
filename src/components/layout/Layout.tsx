@@ -29,7 +29,7 @@ function Layout() {
 
   return (
     <Box mih="100vh">
-      <LazyNavbar justify="space-between"  logo={<Title size="1.5rem">Task Garden</Title>} size="md" bg="secondary" >
+      <LazyNavbar justify="space-between" logo={<Title size="1.5rem">Task Garden</Title>} size="md" bg="secondary">
         <LazyNavLink to="/categories" className={styles.navlink} activeClassName={styles.active}>
           Categories
         </LazyNavLink>
@@ -39,9 +39,12 @@ function Layout() {
         <LazyNavLink to="/account" className={styles.navlink} activeClassName={styles.active}>
           Account
         </LazyNavLink>
+        <LazyNavLink  className={styles.navlink} onClick={logoutHandler}>
+          Logout
+        </LazyNavLink>
         <ThemeToggle />
       </LazyNavbar>
-      <Container size="md" py={16}>
+      <Container size="md" py={32}>
         {/* {user ? (
             <>
               <CustomLink

@@ -8,10 +8,6 @@ type LazyNavbarProps = {
   bg?: string;
 } & FlexProps;
 
-{
-  /* <Title size="1.5rem">Task Garden</Title> */
-}
-// justify="space-between" mb={32}
 function LazyNavbar({ logo, children, size, bg, ...props }: LazyNavbarProps) {
   return (
     <Box w="100%" py={16} bg={bg}>
