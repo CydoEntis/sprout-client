@@ -1,5 +1,5 @@
 import { Group, Stack, Text } from "@mantine/core";
-import RadialProgressIndicator from "../../../components/progress-bars/RadialProgressIndicator";
+import LazyRingProgress from "../../../components/lazy-components/progress-bars/LazyRingProgressBar";
 
 type TaskListProgressProps = {
   count: number;
@@ -7,7 +7,7 @@ type TaskListProgressProps = {
 };
 
 function TaskListProgress({ count, percentage }: TaskListProgressProps) {
-    console.log(count);
+  console.log(count);
   return (
     <Group>
       <Stack gap={4}>
@@ -15,7 +15,21 @@ function TaskListProgress({ count, percentage }: TaskListProgressProps) {
           Progress:
         </Text>
         <Group gap={4}>
-          {count > 0 ? <RadialProgressIndicator percentage={percentage} /> : <Text size="xs">No Tasks</Text>}
+          {count > 0 ? (
+            <LazyRingProgress
+              percentage={percentage}
+              size={25}
+              thickness={3}
+              sections={[
+                {
+                  value: percentage,
+                  color: "lime",
+                },
+              ]}
+            />
+          ) : (
+            <Text size="xs">No Tasks</Text>
+          )}
         </Group>
       </Stack>
     </Group>

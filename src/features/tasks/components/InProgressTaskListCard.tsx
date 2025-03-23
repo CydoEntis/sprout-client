@@ -4,6 +4,7 @@ import TaskListCard from "./TaskListCard";
 import { TaskListPreview } from "../shared/tasks.types";
 import TaskListMembers from "./TaskListMembers";
 import TaskListProgress from "./TaskListProgress";
+import LazyCard from "../../../components/lazy-components/card/LazyCard";
 
 type TaskListCardProps = {
   taskList: TaskListPreview;
@@ -11,7 +12,8 @@ type TaskListCardProps = {
 
 function InProgressTaskListCard({ taskList }: TaskListCardProps) {
   return (
-    <TaskListCard borderPos="bottom" color="lime" taskListId={taskList.id}>
+    // <TaskListCard borderPos="bottom" color="lime" taskListId={taskList.id}>
+    <LazyCard p={12} bg="secondary">
       <Stack gap={8} pb={20}>
         <Title size="lg">{taskList.name}</Title>
         <Group gap={4} align="center">
@@ -32,7 +34,8 @@ function InProgressTaskListCard({ taskList }: TaskListCardProps) {
         <TaskListMembers members={taskList.members} />
         <TaskListProgress count={taskList.totalTasksCount} percentage={taskList.taskCompletionPercentage} />
       </Flex>
-    </TaskListCard>
+    </LazyCard>
+    // </TaskListCard>
   );
 }
 
