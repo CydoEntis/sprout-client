@@ -26,8 +26,8 @@ function CategoryList({ categories, onEdit, onOpen }: CategoryListProps) {
         }
       >
         <Title>Categories</Title>
-      </LazyHeader>{" "}
-      *
+      </LazyHeader>
+
       <GridList>
         {categories?.map((category) => <CategoryCard key={category.id} category={category} onEdit={onEdit} />)}
       </GridList>

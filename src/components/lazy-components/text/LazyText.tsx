@@ -29,7 +29,6 @@ function LazyText({
   const highlightRegex = new RegExp(`(${highlightStr})`, "gi");
 
   const parts = textStr.split(highlightRegex);
-
   return (
     <Text c={textColor} {...textProps}>
       {parts.map((part, index) => {
@@ -43,7 +42,7 @@ function LazyText({
                 text={part}
                 c={highlightColor}
                 bg={highlightBg}
-                variant={highlightVariant}
+                highlightVariant={highlightVariant}
               />
             ) : (
               part

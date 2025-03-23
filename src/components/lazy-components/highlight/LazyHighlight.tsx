@@ -2,7 +2,7 @@ import { DefaultMantineColor, Text, Paper, TextProps } from "@mantine/core";
 
 type LazyHighlightProps = {
   text: string | number;
-  variant?: "text" | "box";
+  highlightVariant?: "text" | "box";
   bg?: DefaultMantineColor;
   borderRadius?: number | string;
   highlightColor?: string;
@@ -10,13 +10,14 @@ type LazyHighlightProps = {
 
 function LazyHighlight({
   text,
-  variant = "text",
+  highlightVariant = "text",
   bg = "black",
   borderRadius = "4px",
   highlightColor = "yellow",
   ...rest
 }: LazyHighlightProps) {
-  if (variant === "box") {
+  if (highlightVariant === "box") {
+    console.log(highlightVariant)
     return (
       <Paper px={10} py={2.5} bg={bg} radius={borderRadius} style={{ display: "inline-block" }}>
         <Text fw={700} {...rest}>
@@ -27,7 +28,7 @@ function LazyHighlight({
   }
 
   return (
-    <Text span fw={700} color={highlightColor} {...rest}>
+    <Text span fw={700} c={highlightColor} {...rest}>
       {text}
     </Text>
   );

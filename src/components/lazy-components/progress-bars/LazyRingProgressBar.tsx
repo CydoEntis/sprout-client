@@ -1,4 +1,4 @@
-import { RingProgress, RingProgressProps, Text } from "@mantine/core";
+import { Group, RingProgress, RingProgressProps, Text } from "@mantine/core";
 
 type LazyRingProgressProps = {
   percentage: number;
@@ -6,10 +6,10 @@ type LazyRingProgressProps = {
 
 function LazyRingProgress({ percentage, ...ringProgressProps }: LazyRingProgressProps) {
   return (
-    <>
+    <Group gap={2}>
       <RingProgress {...ringProgressProps} />
       <Text size="sm">{percentage}%</Text>
-    </>
+    </Group>
   );
 }
 
