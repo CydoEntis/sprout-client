@@ -50,6 +50,7 @@ body {
 
 .input {
   background-color: var(--bg-color) !important;
+  border: 2px solid var(--border-color) !important;
 }
 
 .button {

@@ -109,10 +109,9 @@ function LoginForm() {
           <GoogleAuthButton onClick={handleGoogleLogin} w="100%" my={8} />
 
           <TextInput
-            variant="filled"
             classNames={{
               input: "input",
-              wrapper: "input-container"
+              wrapper: "input-container",
             }}
             label="Email"
             placeholder="you@example.com"
@@ -120,7 +119,6 @@ function LoginForm() {
             {...form.getInputProps("email")}
           />
           <PasswordInput
-            variant="filled"
             classNames={{
               input: "input",
             }}
