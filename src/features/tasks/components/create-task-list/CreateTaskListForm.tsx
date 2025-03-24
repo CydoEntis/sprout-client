@@ -5,15 +5,13 @@ import useFormErrorHandler from "../../../../hooks/useFormErrorHandler";
 import { useCreateTaskListMutation } from "../../services/task-list/create-task-list.service";
 import { createTaskListSchema } from "../../shared/tasks.schemas";
 import { CreateTaskList } from "../../shared/tasks.types";
-import { CustomLink } from "../../../../components/CustomLink";
 
 type CreateTaskListFormProps = {
   categoryName: string;
-  setTaskListId: (id: number) => void;
-  goToNextStep: () => void;
+  onClose: () => void;
 };
 
-const CreateTaskListForm = ({ categoryName, setTaskListId, goToNextStep }: CreateTaskListFormProps) => {
+const CreateTaskListForm = ({ categoryName, onClose }: CreateTaskListFormProps) => {
   const createTaskList = useCreateTaskListMutation();
   const { handleFormErrors } = useFormErrorHandler<CreateTaskList>();
 
@@ -22,23 +20,18 @@ const CreateTaskListForm = ({ categoryName, setTaskListId, goToNextStep }: Creat
     initialValues: {
       name: "",
       description: "",
-      // categoryName: categoryName,
-      categoryName: "shopping",
+      categoryName: categoryName,
     },
   });
 
   const handleSubmit = async (data: CreateTaskList) => {
-    console.log("CLICKING");
-    console.log(data.categoryName);
-    // try {
-    // const response = await createTaskList.mutateAsync({ ...data, categoryName });
-    // setTaskListId(response.taskList.id);
-    // form.reset();
-    // goToNextStep();
-    // } catch (e) {
-    //   handleFormErrors(e as ErrorResponse, form);
-    // }
-    goToNextStep();
+    try {
+      await createTaskList.mutateAsync({ ...data, categoryName });
+      form.reset();
+      onClose();
+    } catch (e) {
+      handleFormErrors(e as ErrorResponse, form);
+    }
   };
 
   console.log(form.errors);

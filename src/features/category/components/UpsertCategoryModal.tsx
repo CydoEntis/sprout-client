@@ -83,14 +83,25 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
   };
 
   return (
-    <Modal size="lg" opened={isOpen} onClose={handleClose} title={isEditing ? "Update Category" : "Add a New Category"}>
+    <Modal
+      classNames={{
+        body: "modal",
+        header: "modal",
+      }}
+      size="lg"
+      opened={isOpen}
+      onClose={handleClose}
+      title={isEditing ? "Update Category" : "Add a New Category"}
+    >
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack>
           <Flex gap={12} w="100%">
             <ColorPickerMenu selectedColor={selectedColor} onColorSelect={handleColorSelect} />
             <IconPickerMenu selectedIcon={selectedIcon} onIconSelect={handleIconSelect} />
             <TextInput
-              variant="filled"
+              classNames={{
+                input: "input",
+              }}
               label="Category Name"
               placeholder="Enter a category name"
               {...form.getInputProps("name")}

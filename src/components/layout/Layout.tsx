@@ -27,27 +27,27 @@ function Layout() {
     }
   };
 
-  // const navbar = (
-  //   <LazyHorizontalNavbar
-  //     justify="space-between"
-  //     logo={<Title size="1.5rem">Task Garden</Title>}
-  //     navbar={<>{user ? <HorizontalNavLinks.Private onLogout={handleLogout} /> : <HorizontalNavLinks.Public />}</>}
-  //   ></LazyHorizontalNavbar>
-  // );
-
   const navbar = (
-    <LazyVerticalNavbar
+    <LazyHorizontalNavbar
       justify="space-between"
       logo={<Title size="1.5rem">Task Garden</Title>}
-      navbar={
-        <>{user ? <VerticalNavigation.PrivateLinks onLogout={handleLogout} /> : <VerticalNavigation.PublicLinks />}</>
-      }
-      footer={<>{user ? <VerticalNavigation.Logout onLogout={handleLogout} /> : null}</>}
-    ></LazyVerticalNavbar>
+      navbar={<>{user ? <HorizontalNavLinks.Private onLogout={handleLogout} /> : <HorizontalNavLinks.Public />}</>}
+    ></LazyHorizontalNavbar>
   );
 
-  return <LazyVerticalLayout>{navbar}</LazyVerticalLayout>;
-  // return <LazyHorizontalLayout>{navbar}</LazyHorizontalLayout>;
+  // const navbar = (
+  //   <LazyVerticalNavbar
+  //     justify="space-between"
+  //     logo={<Title size="1.5rem">Task Garden</Title>}
+  //     navbar={
+  //       <>{user ? <VerticalNavigation.PrivateLinks onLogout={handleLogout} /> : <VerticalNavigation.PublicLinks />}</>
+  //     }
+  //     footer={<>{user ? <VerticalNavigation.Logout onLogout={handleLogout} /> : null}</>}
+  //   ></LazyVerticalNavbar>
+  // );
+
+  // return <LazyVerticalLayout>{navbar}</LazyVerticalLayout>;
+  return <LazyHorizontalLayout>{navbar}</LazyHorizontalLayout>;
 }
 
 export default Layout;

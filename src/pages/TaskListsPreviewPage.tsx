@@ -2,9 +2,9 @@ import GridList from "../components/GridList";
 import { Box, Button, Group } from "@mantine/core";
 import { Plus } from "lucide-react";
 import { useDisclosure } from "@mantine/hooks";
-import CreateTaskListModal from "../features/tasks/components/CreateTaskListModal";
 import InProgressTaskListCard from "../features/tasks/components/InProgressTaskListCard";
 import { TaskListPreview } from "../features/tasks/shared/tasks.types";
+import CreateTaskListModal from "../features/tasks/components/create-task-list/CreateTaskListModal";
 
 type TaskListPage = {
   taskLists: TaskListPreview[];

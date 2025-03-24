@@ -111,7 +111,6 @@ function LoginForm() {
           <TextInput
             classNames={{
               input: "input",
-              wrapper: "input-container",
             }}
             label="Email"
             placeholder="you@example.com"
