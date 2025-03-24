@@ -23,7 +23,7 @@ function LazyVerticalLayout({ children }: LazyLayoutProps) {
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
         </Group>
       </AppShell.Header>
-      <AppShell.Navbar p="md" bg="secondary" className={styles.navbar}>
+      <AppShell.Navbar  bg="secondary" className={styles.navbar}>
         {children}
       </AppShell.Navbar>
       <AppShell.Main>

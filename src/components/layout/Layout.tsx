@@ -9,6 +9,8 @@ import LazyHorizontalNavbar from "../lazy-components/nav-bar/horizontal-navbar/L
 import HorizontalNavLinks from "../../features/navigation/HorizontalNavLinks";
 import LazyVerticalLayout from "../lazy-components/layouts/vertical-layout/LazyVerticalLayout";
 import LazyHorizontalLayout from "../lazy-components/layouts/horizontal-layout/LazyHorizontalLayout";
+import VerticalNavigation from "../../features/navigation/VerticalNavLinks";
+import LazyVerticalNavbar from "../lazy-components/nav-bar/vertical-navbar/LazyVerticalNavbar";
 
 function Layout() {
   const { user, logoutUser: logout } = useAuthStore();
@@ -25,25 +27,27 @@ function Layout() {
     }
   };
 
-  const navbar = (
-    <LazyHorizontalNavbar
-      justify="space-between"
-      logo={<Title size="1.5rem">Task Garden</Title>}
-      navbar={<>{user ? <HorizontalNavLinks.Private onLogout={handleLogout} /> : <HorizontalNavLinks.Public />}</>}
-    ></LazyHorizontalNavbar>
-  );
-
   // const navbar = (
-  //   <LazyVerticalNavbar
+  //   <LazyHorizontalNavbar
   //     justify="space-between"
   //     logo={<Title size="1.5rem">Task Garden</Title>}
-  //     navbar={<>{user ? <VerticalNavigation.PrivateLinks /> : <VerticalNavigation.PublicLinks />}</>}
-  //     footer={<>{user ? <VerticalNavigation.Logout onLogout={handleLogout} /> : null}</>}
-  //   ></LazyVerticalNavbar>
+  //     navbar={<>{user ? <HorizontalNavLinks.Private onLogout={handleLogout} /> : <HorizontalNavLinks.Public />}</>}
+  //   ></LazyHorizontalNavbar>
   // );
 
-  // return <LazyVerticalLayout>{navbar}</LazyVerticalLayout>;
-  return <LazyHorizontalLayout>{navbar}</LazyHorizontalLayout>;
+  const navbar = (
+    <LazyVerticalNavbar
+      justify="space-between"
+      logo={<Title size="1.5rem">Task Garden</Title>}
+      navbar={
+        <>{user ? <VerticalNavigation.PrivateLinks onLogout={handleLogout} /> : <VerticalNavigation.PublicLinks />}</>
+      }
+      footer={<>{user ? <VerticalNavigation.Logout onLogout={handleLogout} /> : null}</>}
+    ></LazyVerticalNavbar>
+  );
+
+  return <LazyVerticalLayout>{navbar}</LazyVerticalLayout>;
+  // return <LazyHorizontalLayout>{navbar}</LazyHorizontalLayout>;
 }
 
 export default Layout;
