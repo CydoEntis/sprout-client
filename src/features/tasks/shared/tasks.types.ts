@@ -28,6 +28,7 @@ export type TaskListPreview = {
   category: string;
   createdAt: Date;
   updatedAt: Date;
+  categoryName: string;
   members: Member[];
   totalTasksCount: number;
   completedTasksCount: number;

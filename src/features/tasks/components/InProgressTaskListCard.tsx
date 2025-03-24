@@ -1,6 +1,5 @@
-import { Stack, Title, Divider, Flex, Text, Group } from "@mantine/core";
+import { Stack, Title, Divider, Flex, Text } from "@mantine/core";
 import { Calendar } from "lucide-react";
-import TaskListCard from "./TaskListCard";
 import { TaskListPreview } from "../shared/tasks.types";
 import TaskListMembers from "./TaskListMembers";
 import TaskListProgress from "./TaskListProgress";
@@ -12,20 +11,15 @@ type TaskListCardProps = {
 };
 
 function InProgressTaskListCard({ taskList }: TaskListCardProps) {
+  console.log(taskList);
   return (
     // <TaskListCard borderPos="bottom" color="lime" taskListId={taskList.id}>
-    <LazyCard p={12} bg="secondary">
+    <LazyCard p={12} bg="secondary" to={`/categories/${taskList.categoryName}/${taskList.id}`} >
       <Stack gap={8} pb={20}>
         <Title size="lg">{taskList.name}</Title>
 
-
-        
         <LazyDate leftSection={<Calendar size={18} />} size="xs" c="dimmed" date={taskList.createdAt} format="eu" />
-        
-        
-        
-        
-        
+
         {/* <Group gap={4} align="center">
           <Calendar size={12} />
           <Text size="xs" c="dimmed">

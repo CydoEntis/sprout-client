@@ -22,5 +22,7 @@ function TaskListsPreviewRoute() {
   });
   const { data: taskLists } = useSuspenseQuery(getAllTaskListsForCategoryQueryOptions(categoryName));
 
+  console.log(taskLists)
+
   return <TaskListPage taskLists={taskLists} />;
 }
