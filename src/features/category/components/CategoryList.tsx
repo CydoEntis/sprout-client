@@ -18,7 +18,10 @@ type CategoryListProps = {
 function CategoryList({ categories, onEdit, onOpen }: CategoryListProps) {
   return (
     <Stack gap={16}>
-      <LazyHeader
+      <LazyCard>
+        <LazyHeader textAlign="center">Layout Testing</LazyHeader>
+      </LazyCard>
+      {/* <LazyHeader
         rightSection={
           <Button onClick={onOpen} variant="light" leftSection={<Plus size={20} />} color="lime">
             Category
@@ -30,7 +33,7 @@ function CategoryList({ categories, onEdit, onOpen }: CategoryListProps) {
 
       <GridList>
         {categories?.map((category) => <CategoryCard key={category.id} category={category} onEdit={onEdit} />)}
-      </GridList>
+      </GridList> */}
     </Stack>
   );
 }

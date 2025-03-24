@@ -1,0 +1,7 @@
+.header {
+    border-bottom: 2px solid var(--border-color);
+  }
+  
+  .navbar {
+    border-right: 2px solid var(--border-color);
+  }
