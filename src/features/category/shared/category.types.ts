@@ -1,7 +1,8 @@
 import { ReactElement } from "react";
 import { createCategorySchema, selectCategorySchema, updateCategorySchema } from "./category.schemas";
 import { z } from "zod";
-import { categoryColors, validCategoryTags } from "./category.constants";
+import { ValidIconTags } from "../../../util/types/valid-icon.types";
+import { ValidColor } from "../../../util/types/valid-color.types";
 
 export type CreateCategory = z.infer<typeof createCategorySchema>;
 export type SelectCategory = z.infer<typeof selectCategorySchema>;
@@ -10,13 +11,13 @@ export type UpdateCategory = z.infer<typeof updateCategorySchema>;
 export type Category = {
   id: number;
   name: string;
-  tag: ValidCategoryTags;
-  color: CategoryColor;
+  tag: ValidIconTags;
+  color: ValidColor;
 };
 
 export type CategoryIdentifier = {
   id: number;
-  tag: ValidCategoryTags;
+  tag: ValidIconTags;
   icon: ReactElement;
 };
 
@@ -27,9 +28,9 @@ export type CreatedCategory = {
 export type CategoryResponse = {
   id: number;
   name: string;
-  tag: ValidCategoryTags;
+  tag: ValidIconTags;
   taskListCount: number;
-  color: CategoryColor;
+  color: ValidColor;
 };
 
 export type UpdatedCategory = {
@@ -38,12 +39,3 @@ export type UpdatedCategory = {
 };
 
 export type DeletedCategory = UpdatedCategory;
-
-export type ValidCategoryTags = (typeof validCategoryTags)[number];
-export type CategoryColor = (typeof categoryColors)[number];
-
-export type CategoryIcon = {
-  id: number;
-  icon: ReactElement;
-  tag: ValidCategoryTags;
-};

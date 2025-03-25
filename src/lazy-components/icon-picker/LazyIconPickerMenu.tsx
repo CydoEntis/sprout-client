@@ -1,20 +1,23 @@
 import { MantineColor, Menu, MenuProps, Paper, Stack, Text } from "@mantine/core";
 import LazyIconPicker from "./LazyIconPicker";
-import { ValidIcon } from "./lazy-icon-picker.types";
+import { LazyValidIcon } from "./lazy-icon-picker.types";
 
 type IconPickerMenuProps = {
-  icons: ValidIcon[];
-  selectedIcon: ValidIcon;
-  onIconSelect: (icon: ValidIcon) => void;
+  icons: LazyValidIcon[];
+  selectedIcon: LazyValidIcon;
+  onSelect: (icon: LazyValidIcon) => void;
   dropdownColor?: MantineColor;
+  selectionColor?: string;
   withBorder?: boolean;
   withShadow?: boolean;
 } & MenuProps;
 
-function IconPickerMenu({
+function LazyIconPickerMenu({
+  icons,
   selectedIcon,
-  onIconSelect,
+  onSelect,
   dropdownColor,
+  selectionColor = "gray",
   withBorder = false,
   withShadow = false,
   ...rest
@@ -47,10 +50,10 @@ function IconPickerMenu({
           boxShadow: withShadow ? "0 4px 8px rgba(0, 0, 0, 0.1)" : "none",
         }}
       >
-        <LazyIconPicker selectedIcon={selectedIcon} onSelect={onIconSelect} />
+        <LazyIconPicker selectedIcon={selectedIcon} onSelect={onSelect} icons={icons} selectionColor={selectionColor} />
       </Menu.Dropdown>
     </Menu>
   );
 }
 
-export default IconPickerMenu;
+export default LazyIconPickerMenu;

@@ -25,6 +25,7 @@ import {
   Building,
   Building2,
 } from "lucide-react";
+import { ValidIcon } from "../types/valid-icon.types";
 
 export const validIcons: ValidIcon[] = [
   // Shopping
@@ -71,7 +72,7 @@ export const validIcons: ValidIcon[] = [
   { id: 25, tag: "square-library", icon: <SquareLibrary /> },
 ];
 
-export const validCategoryTags = [
+export const validIconTags = [
   "shopping-bag",
   "shopping-basket",
   "shopping-cart",
@@ -97,20 +98,4 @@ export const validCategoryTags = [
   "university",
   "book",
   "square-library",
-] as const;
-
-export const categoryColors = [
-  "gray",
-  "red",
-  "pink",
-  "grape",
-  "violet",
-  "indigo",
-  "blue",
-  "cyan",
-  "teal",
-  "green",
-  "lime",
-  "yellow",
-  "orange",
 ] as const;

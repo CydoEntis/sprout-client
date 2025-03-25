@@ -10,7 +10,7 @@ import { categoryColors, categoryIcons } from "../../features/category/shared/ca
 import { createCategorySchema } from "../../features/category/shared/category.schemas";
 import { ErrorResponse } from "../../api/errors/errror.types";
 import ColorPickerMenu from "../menus/ColorPickerMenu";
-import IconPickerMenu from "../../lazy-components/icon-picker/LazyIconPickerMenu";
+import LazyIconPickerMenu from "../../lazy-components/icon-picker/LazyIconPickerMenu";
 
 type CreateTaskListFormProps = {
   onClose: () => void;
@@ -48,7 +48,7 @@ const CreateTaskListForm = ({ onClose }: CreateTaskListFormProps) => {
       <Stack>
         <Flex gap={12} w="100%">
           <ColorPickerMenu selectedColor={selectedColor} onColorSelect={setSelectedColor} />
-          <IconPickerMenu selectedIcon={selectedIcon} onIconSelect={setSelectedIcon} />
+          <LazyIconPickerMenu selectedIcon={selectedIcon} onIconSelect={setSelectedIcon} />
           <TextInput
             label="Category Name"
             placeholder="Enter a category name"

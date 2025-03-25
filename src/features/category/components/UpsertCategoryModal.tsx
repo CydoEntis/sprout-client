@@ -6,7 +6,7 @@ import { createCategorySchema, updateCategorySchema } from "../shared/category.s
 import { categoryColors, categoryIcons } from "../shared/category.constants";
 import { Category, CategoryColor, CategoryIdentifier, CreateCategory, UpdateCategory } from "../shared/category.types";
 import ColorPickerMenu from "../../../components/menus/ColorPickerMenu";
-import IconPickerMenu from "../../../lazy-components/icon-picker/LazyIconPickerMenu";
+import LazyIconPickerMenu from "../../../lazy-components/icon-picker/LazyIconPickerMenu";
 import { useCreateCategory } from "../services/create-category.service";
 import { useUpdateCategory } from "../services/update-category.service";
 import { ErrorResponse } from "../../../api/errors/errror.types";
@@ -97,7 +97,7 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
         <Stack>
           <Flex gap={12} w="100%">
             <ColorPickerMenu selectedColor={selectedColor} onColorSelect={handleColorSelect} />
-            <IconPickerMenu selectedIcon={selectedIcon} onIconSelect={handleIconSelect} />
+            <LazyIconPickerMenu selectedIcon={selectedIcon} onIconSelect={handleIconSelect} />
             <TextInput
               classNames={{
                 input: "input",

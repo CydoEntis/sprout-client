@@ -1,13 +1,14 @@
 import { Flex } from "@mantine/core";
-import { ValidIcon } from "./lazy-icon-picker.types";
+import { LazyValidIcon } from "./lazy-icon-picker.types";
 
 type LazySelectableIcon = {
-  icon: ValidIcon;
-  selectedIcon: ValidIcon;
-  onSelect: (icon: ValidIcon) => void;
+  icon: LazyValidIcon;
+  selectionColor: string;
+  selectedIcon: LazyValidIcon;
+  onSelect: (icon: LazyValidIcon) => void;
 };
 
-function LazySelectableIcon({ icon, selectedIcon, onSelect }: LazySelectableIcon) {
+function LazySelectableIcon({ icon, selectedIcon, onSelect, selectionColor }: LazySelectableIcon) {
   return (
     <Flex
       key={icon.id}
@@ -19,7 +20,7 @@ function LazySelectableIcon({ icon, selectedIcon, onSelect }: LazySelectableIcon
       style={{
         borderRadius: "8px",
         cursor: "pointer",
-        border: selectedIcon.id === icon.id ? "2px solid #66A80F" : "2px solid transparent",
+        border: selectedIcon.id === icon.id ? `2px solid ${selectionColor}` : "2px solid transparent",
         transition: "all 0.2s ease-in-out",
       }}
       onClick={() => onSelect(icon)}

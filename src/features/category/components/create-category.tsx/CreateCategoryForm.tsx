@@ -5,11 +5,12 @@ import { zodResolver } from "@mantine/form";
 import { ErrorResponse } from "../../../../api/errors/errror.types";
 import useFormErrorHandler from "../../../../hooks/useFormErrorHandler";
 import { useCreateCategory } from "../../services/create-category.service";
-import { categoryIcons, categoryColors } from "../../shared/category.constants";
+import { categoryColors as validColors, validIcons } from "../../shared/category.constants";
 import { createCategorySchema } from "../../shared/category.schemas";
-import { CreateCategory, CategoryIdentifier } from "../../shared/category.types";
+import { CreateCategory } from "../../shared/category.types";
 import LazyColorPickerMenu from "../../../../lazy-components/color-picker/LazyColorPickerMenu";
 import LazyIconPickerMenu from "../../../../lazy-components/icon-picker/LazyIconPickerMenu";
+import { LazyValidIcon } from "../../../../lazy-components/icon-picker/lazy-icon-picker.types";
 
 type CreateCategoryFormProps = {
   onClose: () => void;
@@ -20,15 +21,15 @@ const CreateCategoryForm = ({ onClose }: CreateCategoryFormProps) => {
 
   const { handleFormErrors } = useFormErrorHandler<CreateCategory>();
   const colors = ["red", "green", "blue"];
-  const [selectedIcon, setSelectedIcon] = useState<CategoryIdentifier>(categoryIcons[0]);
+  const [selectedIcon, setSelectedIcon] = useState<LazyValidIcon>(validIcons[0]);
   const [selectedColor, setSelectedColor] = useState<string>(colors[0]);
 
   const form = useForm<CreateCategory>({
     validate: zodResolver(createCategorySchema),
     initialValues: {
       name: "",
-      tag: categoryIcons[0].tag,
-      color: categoryColors[0],
+      tag: validIcons[0].tag,
+      color: validColors[0],
     },
   });
 
@@ -53,7 +54,14 @@ const CreateCategoryForm = ({ onClose }: CreateCategoryFormProps) => {
             dropdownColor="secondary"
             withBorder
           />
-          <LazyIconPickerMenu selectedIcon={selectedIcon} onSelect={setSelectedIcon} />
+          <LazyIconPickerMenu
+            icons={validIcons}
+            selectedIcon={selectedIcon}
+            onSelect={setSelectedIcon}
+            dropdownColor="secondary"
+            selectionColor="#66A80F"
+            withBorder
+          />
           <TextInput
             label="Category Name"
             placeholder="Enter a category name"

@@ -14,7 +14,7 @@ import { zodResolver } from "@mantine/form";
 import { useAcceptInviteMutation } from "../services/accept-invite.service";
 import AssignmentToggle from "./AssignmentToggle";
 import ColorPickerMenu from "../../../components/menus/ColorPickerMenu";
-import IconPickerMenu from "../../../lazy-components/icon-picker/LazyIconPickerMenu";
+import LazyIconPickerMenu from "../../../lazy-components/icon-picker/LazyIconPickerMenu";
 import { useDeclineInviteMutation } from "../services/decline-invite.service";
 import { useNavigate } from "@tanstack/react-router";
 
@@ -114,7 +114,7 @@ function AssignTaskListToCategoryForm({ inviteToken, categories }: AssignTaskLis
           <>
             <Flex gap={12} w="100%">
               <ColorPickerMenu selectedColor={selectedColor} onColorSelect={colorSelectHandler} />
-              <IconPickerMenu selectedIcon={selectedIcon} onIconSelect={iconSelectHandler} />
+              <LazyIconPickerMenu selectedIcon={selectedIcon} onIconSelect={iconSelectHandler} />
               <TextInput
                 classNames={{
                   input: "input",
