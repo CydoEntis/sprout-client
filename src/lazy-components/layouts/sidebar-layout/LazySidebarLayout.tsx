@@ -1,4 +1,4 @@
-import { AppShell, MantineColor, ScrollArea } from "@mantine/core";
+import { AppShell, Box, MantineColor, ScrollArea } from "@mantine/core";
 import { Outlet } from "@tanstack/react-router";
 import React from "react";
 import LazyBurger from "../../burger/LazyBurger";
@@ -8,6 +8,7 @@ import LazySidebarNavLinkList from "../../nav-link/sidebar-nav-link/LazySidebarN
 type LazySidebarLayoutProps = {
   isSidebarOpened: boolean;
   onToggle: () => void;
+  logo?: React.ReactNode;
   links: LazyNavLinkItem[];
   isLoading?: boolean;
   footer?: React.ReactNode;
@@ -17,6 +18,7 @@ type LazySidebarLayoutProps = {
 function LazySidebarLayout({
   isSidebarOpened,
   onToggle,
+  logo,
   links,
   isLoading = false,
   footer,
@@ -57,18 +59,25 @@ function LazySidebarLayout({
               }}
             />
           )}
-          Navbar header
+          <Box px={32} pt={16}>{logo}</Box>
         </AppShell.Section>
 
         <AppShell.Section p="md" grow my="md" component={ScrollArea}>
-          {isLoading ? <p>Loading...</p> : <LazySidebarNavLinkList links={links || []} color={navLinkColor} 
-          px={12}
-          py={4}
-          childLinkProps={{
-            color: "lime",
-            variant: "subtle",
-            py: 4
-          }}/>}
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <LazySidebarNavLinkList
+              links={links || []}
+              color={navLinkColor}
+              px={12}
+              py={4}
+              childLinkProps={{
+                color: "lime",
+                variant: "subtle",
+                py: 4,
+              }}
+            />
+          )}
         </AppShell.Section>
         <AppShell.Section style={{ borderTop: "1px solid var(--border-color)" }}>{footer}</AppShell.Section>
       </AppShell.Navbar>

@@ -4,6 +4,7 @@ import SidebarFooter from "../side-bar/SidebarFooter";
 import { useGetAllCategories } from "../category/services/get-all-categories.service";
 import { getIconByTag } from "../category/shared/category.helpers";
 import CreateCategoryModal from "../category/components/create-category.tsx/CreateCategoryModal";
+import { Title } from "@mantine/core";
 
 function ProtectedLayout() {
   const [isSidebarOpened, { toggle: toggleSidebar }] = useDisclosure();
@@ -22,7 +23,7 @@ function ProtectedLayout() {
       icon: getIconByTag(category.tag),
       iconColor: category.color,
       childLinks: category.recentTaskLists.map((taskList) => ({
-        label: taskList.taskListName, 
+        label: taskList.taskListName,
         to: `/category/${category.name.toLocaleLowerCase()}/${taskList.taskListId}`,
         routePattern: "/category/$categoryName/$taskListId",
       })),
@@ -32,6 +33,7 @@ function ProtectedLayout() {
     <>
       <CreateCategoryModal opened={isCreateTaskListModalOpened} onClose={onCloseCreateTaskListModal} />
       <LazySidebarLayout
+        logo={<Title size="1.45rem" c="white">Task Garden</Title>}
         isSidebarOpened={isSidebarOpened}
         onToggle={toggleSidebar}
         footer={<SidebarFooter onOpen={onOpenCreateTaskListModal} />}
