@@ -2,12 +2,14 @@ import * as React from "react";
 import { createRootRouteWithContext } from "@tanstack/react-router";
 import { MantineProvider, Text } from "@mantine/core";
 import theme from "../components/theme/theme.config";
-import Layout from "../components/layout/Layout";
 import { jwtDecode } from "jwt-decode";
 import useAuthStore, { AuthState } from "../stores/useAuthStore";
 import { Notifications } from "@mantine/notifications";
 import { QueryClient } from "@tanstack/react-query";
 import { DecodedToken } from "../features/auth/shared/auth.types";
+import PrivateLayout from "../components/layout/PrivateLayout";
+import LazyHorizontalLayout from "../lazy-components/layouts/horizontal-layout/LazyHorizontalLayout";
+import Layout from "../components/layout/Layout";
 
 export type RouterContext = {
   authState: AuthState;
@@ -22,7 +24,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 });
 
 function RootComponent() {
-  const { loginUser } = useAuthStore();
+  const { loginUser, isAuthenticated } = useAuthStore();
 
   React.useEffect(() => {
     const taskGardenData = localStorage.getItem("taskgarden");
@@ -46,11 +48,13 @@ function RootComponent() {
     }
   }, [loginUser]);
 
+  console.log(isAuthenticated)
+
   return (
     <React.Fragment>
       <MantineProvider theme={theme}>
         <Notifications />
-        <Layout />
+        {isAuthenticated ? <PrivateLayout /> : <Layout />}
       </MantineProvider>
     </React.Fragment>
   );

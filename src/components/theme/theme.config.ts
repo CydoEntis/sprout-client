@@ -3,6 +3,25 @@ import { colorsTuple, createTheme, virtualColor } from "@mantine/core";
 const theme = createTheme({
   cursorType: "pointer",
   colors: {
+    primaryDark: colorsTuple("#1A1A1A"),
+    secondaryDark: colorsTuple("#2C2C2C"),
+
+    priamryLight: colorsTuple("#000A10"),
+    secondaryLight: colorsTuple("#000A10"),
+
+    primary: virtualColor({
+      name: "primary",
+      dark: "primaryDark",
+      light: "priamryLight",
+    }),
+    secondary: virtualColor({
+      name: "secondary",
+      light: "secondaryLight",
+      dark: "secondaryDark",
+    }),
+
+    // Old
+
     // darkPrimary: colorsTuple("#121212"),
     darkPrimary: colorsTuple("#000A10"),
     // darkSecondary: colorsTuple("#282828"),
@@ -22,16 +41,16 @@ const theme = createTheme({
     borderLight: colorsTuple("#EAE4DD"),
     buttonDark: colorsTuple("#000A10"),
     buttonLight: colorsTuple("#FAF7F0"),
-    primary: virtualColor({
-      name: "primary",
-      dark: "darkPrimary",
-      light: "lightPrimary",
-    }),
-    secondary: virtualColor({
-      name: "secondary",
-      light: "lightSecondary",
-      dark: "darkSecondary",
-    }),
+    // primary: virtualColor({
+    //   name: "primary",
+    //   dark: "darkPrimary",
+    //   light: "lightPrimary",
+    // }),
+    // secondary: virtualColor({
+    //   name: "secondary",
+    //   light: "lightSecondary",
+    //   dark: "darkSecondary",
+    // }),
     inverse: virtualColor({
       name: "inverse",
       light: "darkPrimary",

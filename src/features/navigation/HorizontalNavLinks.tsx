@@ -1,5 +1,5 @@
-import LazyNavLink from "../../components/lazy-components/nav-link/LazyNavLink";
 import ThemeToggle from "../../components/theme/ThemeToggle";
+import LazyNavLink from "../../lazy-components/nav-link/LazyNavLink";
 import styles from "./navlink.module.css";
 
 const HorizontalNavLinks = () => {

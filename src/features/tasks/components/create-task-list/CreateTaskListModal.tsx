@@ -1,7 +1,6 @@
 import { Modal } from "@mantine/core";
 import {} from "@mantine/form";
-import { useParams } from "@tanstack/react-router";
-import CreateTaskListForm from "./CreateTaskListForm";
+import CreateTaskListForm from "../../../../components/layout/CreateTaskListForm";
 
 type CreateTaskListModalProps = {
   isOpen: boolean;
@@ -9,7 +8,6 @@ type CreateTaskListModalProps = {
 };
 
 function CreateTaskListModal({ isOpen, onClose }: CreateTaskListModalProps) {
-  const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName" });
 
   const handleClose = () => {
     onClose();
@@ -17,6 +15,7 @@ function CreateTaskListModal({ isOpen, onClose }: CreateTaskListModalProps) {
 
   return (
     <Modal
+    size="lg"
       classNames={{
         body: "modal",
         header: "modal",
@@ -25,7 +24,7 @@ function CreateTaskListModal({ isOpen, onClose }: CreateTaskListModalProps) {
       onClose={handleClose}
       title="Create a New Task List"
     >
-      <CreateTaskListForm onClose={handleClose} categoryName={categoryName} />
+      <CreateTaskListForm onClose={handleClose} />
     </Modal>
   );
 }

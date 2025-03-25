@@ -1,7 +1,7 @@
 import React from "react";
-import { CustomLink } from "../../CustomLink";
 import { useLocation } from "@tanstack/react-router";
 import { UnstyledButton } from "@mantine/core";
+import { LazyLink } from "../link/LazyLink";
 
 type LazyNavLinkProps = {
   to?: string;
@@ -17,9 +17,9 @@ function LazyNavLink({ to, params, className = "", activeClassName = "", childre
   const linkClasses = `${className} ${isActive ? activeClassName : ""}`.trim();
 
   return to ? (
-    <CustomLink to={to} className={linkClasses} params={params}>
+    <LazyLink to={to} className={linkClasses} params={params}>
       {children}
-    </CustomLink>
+    </LazyLink>
   ) : (
     <UnstyledButton className={className} onClick={onClick}>
       {children}

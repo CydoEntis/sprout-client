@@ -4,11 +4,11 @@ import { useDeleteCategory } from "../../services/delete-category.service";
 import UpdateAndDeleteMenu from "../../../../components/menus/UpdateAndDeleteMenu";
 import { categoryIcons } from "../../shared/category.constants";
 import CategoryIcon from "../CategoryIcon";
-import LazyCard from "../../../../components/lazy-components/card/LazyCard";
-import LazyHeader from "../../../../components/lazy-components/header/LazyHeader";
-import LazyText from "../../../../components/lazy-components/text/LazyText";
 
-import styles from "./category-card.module.css"
+import styles from "./category-card.module.css";
+import LazyCard from "../../../../lazy-components/card/LazyCard";
+import LazyHeader from "../../../../lazy-components/header/LazyHeader";
+import LazyText from "../../../../lazy-components/text/LazyText";
 
 type CategoryCard = {
   category: CategoryResponse;

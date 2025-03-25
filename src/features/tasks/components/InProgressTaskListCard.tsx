@@ -3,8 +3,8 @@ import { Calendar } from "lucide-react";
 import { TaskListPreview } from "../shared/tasks.types";
 import TaskListMembers from "./TaskListMembers";
 import TaskListProgress from "./TaskListProgress";
-import LazyCard from "../../../components/lazy-components/card/LazyCard";
-import LazyDate from "../../../components/lazy-components/date/LazyDate";
+import LazyCard from "../../../lazy-components/card/LazyCard";
+import LazyDate from "../../../lazy-components/date/LazyDate";
 
 type TaskListCardProps = {
   taskList: TaskListPreview;
@@ -14,7 +14,7 @@ function InProgressTaskListCard({ taskList }: TaskListCardProps) {
   console.log(taskList);
   return (
     // <TaskListCard borderPos="bottom" color="lime" taskListId={taskList.id}>
-    <LazyCard p={12} bg="secondary" to={`/categories/${taskList.categoryName}/${taskList.id}`} >
+    <LazyCard p={12} bg="secondary" to={`/categories/${taskList.categoryName}/${taskList.id}`}>
       <Stack gap={8} pb={20}>
         <Title size="lg">{taskList.name}</Title>
 

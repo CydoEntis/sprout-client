@@ -1,5 +1,5 @@
 import { Group, Stack, Text } from "@mantine/core";
-import LazyRingProgress from "../../../components/lazy-components/progress-bars/LazyRingProgressBar";
+import LazyRingProgress from "../../../lazy-components/progress-bars/LazyRingProgressBar";
 
 type TaskListProgressProps = {
   count: number;

@@ -5,12 +5,11 @@ import useAuthStore from "../../stores/useAuthStore";
 import LocalStorageService from "../../services/localStorage.service";
 import { logoutUser } from "../../features/auth/services/logout.service";
 
-import LazyHorizontalNavbar from "../lazy-components/nav-bar/horizontal-navbar/LazyHorizontalNavbar";
 import HorizontalNavLinks from "../../features/navigation/HorizontalNavLinks";
-import LazyVerticalLayout from "../lazy-components/layouts/vertical-layout/LazyVerticalLayout";
-import LazyHorizontalLayout from "../lazy-components/layouts/horizontal-layout/LazyHorizontalLayout";
-import VerticalNavigation from "../../features/navigation/VerticalNavLinks";
-import LazyVerticalNavbar from "../lazy-components/nav-bar/vertical-navbar/LazyVerticalNavbar";
+import LazyHorizontalNavbar from "../../lazy-components/nav-bar/horizontal-navbar/LazyHorizontalNavbar";
+import LazyHorizontalLayout from "../../lazy-components/layouts/horizontal-layout/LazyHorizontalLayout";
+
+
 
 function Layout() {
   const { user, logoutUser: logout } = useAuthStore();
@@ -46,7 +45,6 @@ function Layout() {
   //   ></LazyVerticalNavbar>
   // );
 
-  // return <LazyVerticalLayout>{navbar}</LazyVerticalLayout>;
   return <LazyHorizontalLayout>{navbar}</LazyHorizontalLayout>;
 }
 

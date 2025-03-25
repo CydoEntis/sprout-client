@@ -3,7 +3,7 @@ import { Plus } from "lucide-react";
 import { Category, CategoryResponse } from "../shared/category.types";
 import GridList from "../../../components/GridList";
 import CategoryCard from "./category-card/CategoryCard";
-import LazyHeader from "../../../components/lazy-components/header/LazyHeader";
+import LazyHeader from "../../../lazy-components/header/LazyHeader";
 
 type CategoryListProps = {
   categories: CategoryResponse[];
