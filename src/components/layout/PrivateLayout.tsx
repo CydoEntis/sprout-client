@@ -1,9 +1,11 @@
 import { ActionIcon, AppShell, Burger, Button, Flex, Group, NavLink, ScrollArea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Outlet } from "@tanstack/react-router";
+import { Link, Outlet, useMatchRoute } from "@tanstack/react-router";
 import { Plus, Settings2, ShoppingBag } from "lucide-react";
 import CreateTaskListModal from "../../features/tasks/components/create-task-list/CreateTaskListModal";
 import { useGetAllCategories } from "../../features/category/services/get-all-categories.service";
+
+import styles from "./navlink.module.css";
 
 function PrivateLayout() {
   const [opened, { toggle }] = useDisclosure();
@@ -11,35 +13,56 @@ function PrivateLayout() {
     useDisclosure(false);
 
   const { data: categories, isLoading } = useGetAllCategories();
-
-  console.log(categories);
+  const matchRoute = useMatchRoute();
 
   return (
-    <AppShell
-      header={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
-      padding="md"
-      withBorder={false}
-    >
-      <AppShell.Header bg="primary">
-        <Group h="100%" px="md">
+    <AppShell navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }} padding="md" withBorder={false}>
+      {/* Floating Burger when Navbar is closed */}
+      {!opened && (
+        <div
+          style={{
+            position: "fixed",
+            top: 10,
+            left: 10,
+            zIndex: 1000,
+            padding: "5px",
+          }}
+        >
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-        </Group>
-      </AppShell.Header>
+        </div>
+      )}
+
       <AppShell.Navbar bg="primary">
-        <AppShell.Section>Navbar header</AppShell.Section>
+        <AppShell.Section>
+          {opened && (
+            <div style={{ padding: "10px" }}>
+              <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+            </div>
+          )}
+          Navbar header
+        </AppShell.Section>
+
         <AppShell.Section p="md" grow my="md" component={ScrollArea}>
           {isLoading ? (
             <p>Loading...</p>
           ) : (
-            categories?.map((category) => (
-              <NavLink
-                key={category.id} 
-                label={category.name}
-                leftSection={<ShoppingBag size={20} />}
-                childrenOffset={28}
-              />
-            ))
+            categories?.map((category) => {
+              const isActive = matchRoute({ to: `/task-list/${category.id}` as "/task-list/$taskListId" });
+
+              return (
+                <NavLink
+                  component={Link}
+                  key={category.id}
+                  label={category.name}
+                  leftSection={<ShoppingBag size={20} />}
+                  childrenOffset={28}
+                  active={!!isActive}
+                  to={`/task-list/${category.id}`}
+                  color="gray"
+                  className={styles.navlink}
+                />
+              );
+            })
           )}
         </AppShell.Section>
         <AppShell.Section style={{ borderTop: "1px solid var(--border-color)" }}>
@@ -53,7 +76,9 @@ function PrivateLayout() {
           </Flex>
         </AppShell.Section>
       </AppShell.Navbar>
-      <AppShell.Main bg="secondary">
+
+      <AppShell.Main bg="secondary" style={{ paddingTop: "50px" }}>
+        {/* Add padding to prevent content overlap */}
         <CreateTaskListModal isOpen={isCreateTaskListModalOpened} onClose={onCloseCreateTaskListModal} />
         <Outlet />
       </AppShell.Main>
