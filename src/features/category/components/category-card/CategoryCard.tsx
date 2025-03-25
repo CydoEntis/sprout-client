@@ -20,7 +20,6 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
   const foundIcon = getIconByTag(category.tag);
 
   console.log("Category card: ", category);
-  console.log("Found category: ", foundIcon);
 
   return (
     <LazyCard
@@ -46,9 +45,9 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
 
         <Title size="1.25rem">{category.name}</Title>
         <LazyText
-          text={`You have ${category.taskListCount} ${category.taskListCount === 1 ? "active list" : "active lists"}`}
+          text={`You have ${category.totalTaskLists} ${category.totalTaskLists === 1 ? "active list" : "active lists"}`}
           highlightColor={category.color}
-          highlight={category.taskListCount}
+          highlight={category.totalTaskLists}
           textColor="dimmed"
         />
       </Stack>
