@@ -8,7 +8,7 @@ type CreateCategoryModalProps = {
 
 function CreateCategoryModal({ onClose, ...rest }: CreateCategoryModalProps) {
   return (
-    <LazyModal onClose={onClose} {...rest}>
+    <LazyModal title="Create Category" size="lg" onClose={onClose} {...rest}>
       <CreateCategoryForm onClose={onClose} />
     </LazyModal>
   );

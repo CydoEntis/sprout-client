@@ -10,7 +10,7 @@ import { categoryColors, categoryIcons } from "../../features/category/shared/ca
 import { createCategorySchema } from "../../features/category/shared/category.schemas";
 import { ErrorResponse } from "../../api/errors/errror.types";
 import ColorPickerMenu from "../menus/ColorPickerMenu";
-import IconPickerMenu from "../menus/IconPickerMenu";
+import IconPickerMenu from "../../lazy-components/icon-picker/LazyIconPickerMenu";
 
 type CreateTaskListFormProps = {
   onClose: () => void;

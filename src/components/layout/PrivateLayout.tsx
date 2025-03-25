@@ -1,4 +1,4 @@
-import { ActionIcon, AppShell, Burger, Button, Flex, Group, NavLink, ScrollArea } from "@mantine/core";
+import { ActionIcon, AppShell, Burger, Button, Flex, NavLink, ScrollArea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Link, Outlet, useMatchRoute } from "@tanstack/react-router";
 import { Plus, Settings2, ShoppingBag } from "lucide-react";

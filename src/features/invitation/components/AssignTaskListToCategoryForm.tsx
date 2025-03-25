@@ -14,7 +14,7 @@ import { zodResolver } from "@mantine/form";
 import { useAcceptInviteMutation } from "../services/accept-invite.service";
 import AssignmentToggle from "./AssignmentToggle";
 import ColorPickerMenu from "../../../components/menus/ColorPickerMenu";
-import IconPickerMenu from "../../../components/menus/IconPickerMenu";
+import IconPickerMenu from "../../../lazy-components/icon-picker/LazyIconPickerMenu";
 import { useDeclineInviteMutation } from "../services/decline-invite.service";
 import { useNavigate } from "@tanstack/react-router";
 

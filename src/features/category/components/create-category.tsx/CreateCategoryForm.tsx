@@ -3,15 +3,13 @@ import { Flex, Stack, TextInput, Button, Group } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { zodResolver } from "@mantine/form";
 import { ErrorResponse } from "../../../../api/errors/errror.types";
-import IconPickerMenu from "../../../../components/menus/IconPickerMenu";
 import useFormErrorHandler from "../../../../hooks/useFormErrorHandler";
 import { useCreateCategory } from "../../services/create-category.service";
 import { categoryIcons, categoryColors } from "../../shared/category.constants";
 import { createCategorySchema } from "../../shared/category.schemas";
 import { CreateCategory, CategoryIdentifier } from "../../shared/category.types";
 import LazyColorPickerMenu from "../../../../lazy-components/color-picker/LazyColorPickerMenu";
-
-import styles from "./create-category.module.css";
+import LazyIconPickerMenu from "../../../../lazy-components/icon-picker/LazyIconPickerMenu";
 
 type CreateCategoryFormProps = {
   onClose: () => void;
@@ -55,7 +53,7 @@ const CreateCategoryForm = ({ onClose }: CreateCategoryFormProps) => {
             dropdownColor="secondary"
             withBorder
           />
-          <IconPickerMenu selectedIcon={selectedIcon} onIconSelect={setSelectedIcon} />
+          <LazyIconPickerMenu selectedIcon={selectedIcon} onSelect={setSelectedIcon} />
           <TextInput
             label="Category Name"
             placeholder="Enter a category name"

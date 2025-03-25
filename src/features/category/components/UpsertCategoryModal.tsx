@@ -6,7 +6,7 @@ import { createCategorySchema, updateCategorySchema } from "../shared/category.s
 import { categoryColors, categoryIcons } from "../shared/category.constants";
 import { Category, CategoryColor, CategoryIdentifier, CreateCategory, UpdateCategory } from "../shared/category.types";
 import ColorPickerMenu from "../../../components/menus/ColorPickerMenu";
-import IconPickerMenu from "../../../components/menus/IconPickerMenu";
+import IconPickerMenu from "../../../lazy-components/icon-picker/LazyIconPickerMenu";
 import { useCreateCategory } from "../services/create-category.service";
 import { useUpdateCategory } from "../services/update-category.service";
 import { ErrorResponse } from "../../../api/errors/errror.types";
