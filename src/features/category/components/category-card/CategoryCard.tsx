@@ -2,13 +2,13 @@ import { Title, Stack } from "@mantine/core";
 import { Category, CategoryResponse } from "../../shared/category.types";
 import { useDeleteCategory } from "../../services/delete-category.service";
 import UpdateAndDeleteMenu from "../../../../components/menus/UpdateAndDeleteMenu";
-import { categoryIcons } from "../../shared/category.constants";
 import CategoryIcon from "../CategoryIcon";
 
 import styles from "./category-card.module.css";
 import LazyCard from "../../../../lazy-components/card/LazyCard";
 import LazyHeader from "../../../../lazy-components/header/LazyHeader";
 import LazyText from "../../../../lazy-components/text/LazyText";
+import { getIconByTag } from "../../shared/category.helpers";
 
 type CategoryCard = {
   category: CategoryResponse;
@@ -17,7 +17,7 @@ type CategoryCard = {
 
 function CategoryCard({ category, onEdit }: CategoryCard) {
   const { mutateAsync: deleteCategory } = useDeleteCategory();
-  const foundCategory = categoryIcons.find((c) => c.tag === category.tag);
+  const foundCategory = getIconByTag(category.tag);
 
   return (
     <LazyCard

@@ -5,12 +5,14 @@ import { zodResolver } from "@mantine/form";
 import { ErrorResponse } from "../../../../api/errors/errror.types";
 import useFormErrorHandler from "../../../../hooks/useFormErrorHandler";
 import { useCreateCategory } from "../../services/create-category.service";
-import { categoryColors as validColors, validIcons } from "../../shared/category.constants";
+import { validCategoryTags, validIcons } from "../../shared/category.constants";
 import { createCategorySchema } from "../../shared/category.schemas";
 import { CreateCategory } from "../../shared/category.types";
 import LazyColorPickerMenu from "../../../../lazy-components/color-picker/LazyColorPickerMenu";
 import LazyIconPickerMenu from "../../../../lazy-components/icon-picker/LazyIconPickerMenu";
 import { LazyValidIcon } from "../../../../lazy-components/icon-picker/lazy-icon-picker.types";
+import { validColors } from "../../../../util/constants/valid-colors.constants";
+import { ValidColor } from "../../../../util/types/valid-color.types";
 
 type CreateCategoryFormProps = {
   onClose: () => void;
@@ -20,15 +22,14 @@ const CreateCategoryForm = ({ onClose }: CreateCategoryFormProps) => {
   const createCategory = useCreateCategory();
 
   const { handleFormErrors } = useFormErrorHandler<CreateCategory>();
-  const colors = ["red", "green", "blue"];
   const [selectedIcon, setSelectedIcon] = useState<LazyValidIcon>(validIcons[0]);
-  const [selectedColor, setSelectedColor] = useState<string>(colors[0]);
+  const [selectedColor, setSelectedColor] = useState<ValidColor>(validColors[0]);
 
   const form = useForm<CreateCategory>({
     validate: zodResolver(createCategorySchema),
     initialValues: {
       name: "",
-      tag: validIcons[0].tag,
+      tag: validIcons[0].tag as (typeof validCategoryTags)[number],
       color: validColors[0],
     },
   });
@@ -50,7 +51,7 @@ const CreateCategoryForm = ({ onClose }: CreateCategoryFormProps) => {
           <LazyColorPickerMenu
             selectedColor={selectedColor}
             onSelect={setSelectedColor}
-            colors={["red", "green", "blue"]}
+            colors={validColors}
             dropdownColor="secondary"
             withBorder
           />

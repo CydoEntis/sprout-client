@@ -8,7 +8,7 @@ type LazyColorPickerProps = {
 
 const LazyColorPicker = ({ colors, selectedColor, onSelect }: LazyColorPickerProps) => {
   return (
-    <Stack gap={8} mt={8}>
+    <Stack gap={8} mt={8} align="center" justify="center">
       <Text size="sm">Select Color</Text>
       <Flex gap={6} wrap="wrap" align="center">
         {colors.map((color) => (

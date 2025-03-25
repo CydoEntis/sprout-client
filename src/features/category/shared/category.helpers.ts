@@ -1,6 +1,6 @@
-import { categoryIcons } from "./category.constants";
+import { validIcons } from "../../../util/constants/valid-icon.constants";
 
 export const getIconByTag = (tag: string) => {
-  const category = categoryIcons.find((category) => category.tag === tag);
-  return category ? category.icon : null; 
+  const icon = validIcons.find((icon) => icon.tag === tag);
+  return icon ? icon.icon : null;
 };

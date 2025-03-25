@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { categoryColors, validCategoryTags } from "./category.constants";
+import { validCategoryTags } from "./category.constants";
+import { validColors } from "../../../util/constants/valid-colors.constants";
 
 export const createCategorySchema = z.object({
   name: z
@@ -9,7 +10,7 @@ export const createCategorySchema = z.object({
   tag: z.enum(validCategoryTags, {
     errorMap: () => ({ message: "You must select a valid icon." }),
   }),
-  color: z.enum(categoryColors, {
+  color: z.enum(validColors, {
     errorMap: () => ({ message: "You must select a valid color." }),
   }),
 });
@@ -27,7 +28,7 @@ export const updateCategorySchema = z.object({
   tag: z.enum(validCategoryTags, {
     errorMap: () => ({ message: "You must select a valid icon." }),
   }),
-  color: z.enum(categoryColors, {
+  color: z.enum(validColors, {
     errorMap: () => ({ message: "You must select a valid color." }),
   }),
 });

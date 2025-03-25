@@ -40,6 +40,7 @@ function ColorPickerMenu({
         </Stack>
       </Menu.Target>
       <Menu.Dropdown
+        w={162}
         bg={dropdownColor}
         style={{
           border: withBorder ? "" : "none",

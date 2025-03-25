@@ -25,7 +25,7 @@ function LazyIconPickerMenu({
   return (
     <Menu {...rest}>
       <Menu.Target>
-        <Stack gap={4} justify="center" align="center" w="5%">
+        <Stack gap={4} justify="center" align="center">
           <Text size="sm">Icon</Text>
           <Paper
             w={35}
