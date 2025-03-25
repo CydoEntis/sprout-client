@@ -69,6 +69,7 @@ function ProtectedLayout() {
         navList={navList}
         isLoading={isLoading}
         navLinkColor="gray"
+        childActiveColor="lime"
       />
     </>
   );

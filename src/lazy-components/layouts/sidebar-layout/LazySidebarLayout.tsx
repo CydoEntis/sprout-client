@@ -13,6 +13,7 @@ type LazySidebarLayoutProps = {
   isLoading?: boolean;
   footer?: React.ReactNode;
   navLinkColor?: MantineColor;
+  childActiveColor?: MantineColor;
 };
 
 function LazySidebarLayout({
@@ -23,6 +24,7 @@ function LazySidebarLayout({
   isLoading = false,
   footer,
   navLinkColor = "gray",
+  childActiveColor
 }: LazySidebarLayoutProps) {
   return (
     <AppShell
@@ -74,7 +76,7 @@ function LazySidebarLayout({
               px={12}
               py={4}
               childLinkProps={{
-                color: "lime",
+                color: childActiveColor,
                 variant: "subtle",
                 py: 4,
               }}
