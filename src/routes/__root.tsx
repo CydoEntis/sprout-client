@@ -1,15 +1,15 @@
 import * as React from "react";
-import { createRootRouteWithContext } from "@tanstack/react-router";
 import { MantineProvider, Text } from "@mantine/core";
 import theme from "../components/theme/theme.config";
 import { jwtDecode } from "jwt-decode";
 import useAuthStore, { AuthState } from "../stores/useAuthStore";
 import { Notifications } from "@mantine/notifications";
-import { QueryClient } from "@tanstack/react-query";
-import { DecodedToken } from "../features/auth/shared/auth.types";
 import PrivateLayout from "../components/layout/PrivateLayout";
-import LazyHorizontalLayout from "../lazy-components/layouts/horizontal-layout/LazyHorizontalLayout";
 import Layout from "../components/layout/Layout";
+import { useGetAllCategories } from "../features/category/services/get-all-categories.service"; // Importing your custom hook
+import { DecodedToken } from "../features/auth/shared/auth.types";
+import { QueryClient } from "@tanstack/react-query";
+import { createRootRouteWithContext } from "@tanstack/react-router";
 
 export type RouterContext = {
   authState: AuthState;
@@ -47,8 +47,6 @@ function RootComponent() {
       useAuthStore.getState().logoutUser();
     }
   }, [loginUser]);
-
-  console.log(isAuthenticated)
 
   return (
     <React.Fragment>

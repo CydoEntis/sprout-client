@@ -1,13 +1,19 @@
-import { ActionIcon, AppShell, Burger, Button, Flex, Group, NavLink, ScrollArea, Skeleton } from "@mantine/core";
+import { ActionIcon, AppShell, Burger, Button, Flex, Group, NavLink, ScrollArea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Outlet } from "@tanstack/react-router";
-import { Filter, Plus, Settings2, ShoppingBag } from "lucide-react";
+import { Plus, Settings2, ShoppingBag } from "lucide-react";
 import CreateTaskListModal from "../../features/tasks/components/create-task-list/CreateTaskListModal";
+import { useGetAllCategories } from "../../features/category/services/get-all-categories.service";
 
 function PrivateLayout() {
   const [opened, { toggle }] = useDisclosure();
   const [isCreateTaskListModalOpened, { open: onOpenCreateTaskListModal, close: onCloseCreateTaskListModal }] =
     useDisclosure(false);
+
+  const { data: categories, isLoading } = useGetAllCategories();
+
+  console.log(categories);
+
   return (
     <AppShell
       header={{ height: 60 }}
@@ -23,20 +29,18 @@ function PrivateLayout() {
       <AppShell.Navbar bg="primary">
         <AppShell.Section>Navbar header</AppShell.Section>
         <AppShell.Section p="md" grow my="md" component={ScrollArea}>
-          <NavLink
-            href="#required-for-focus"
-            label="First parent link"
-            leftSection={<ShoppingBag size={20} />}
-            childrenOffset={28}
-          >
-            <NavLink href="#required-for-focus" label="First child link" />
-            <NavLink label="Second child link" href="#required-for-focus" />
-            <NavLink label="Nested parent link" childrenOffset={28} href="#required-for-focus">
-              <NavLink label="First child link" href="#required-for-focus" />
-              <NavLink label="Second child link" href="#required-for-focus" />
-              <NavLink label="Third child link" href="#required-for-focus" />
-            </NavLink>
-          </NavLink>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            categories?.map((category) => (
+              <NavLink
+                key={category.id} 
+                label={category.name}
+                leftSection={<ShoppingBag size={20} />}
+                childrenOffset={28}
+              />
+            ))
+          )}
         </AppShell.Section>
         <AppShell.Section style={{ borderTop: "1px solid var(--border-color)" }}>
           <Flex justify="space-between" align="center" p="md">
