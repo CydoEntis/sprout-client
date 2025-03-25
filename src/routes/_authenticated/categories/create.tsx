@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import CreateCategoryForm from "../../../features/category/components/CreateCategoryForm";
+import CreateCategoryForm from "../../../features/category/components/create-category.tsx/CreateCategoryForm";
 import { Accordion, Button, Group, Stack, Tooltip, Text, Flex, Divider, Title } from "@mantine/core";
 import { useState } from "react";
 import CreateTaskListForm from "../../../features/tasks/components/create-task-list/CreateTaskListForm";

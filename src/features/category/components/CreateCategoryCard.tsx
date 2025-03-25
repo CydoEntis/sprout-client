@@ -1,7 +1,7 @@
 import { Card } from "@mantine/core";
 import { motion } from "framer-motion";
 import CategoryAssignmnetToggle from "../../invitation/components/AssignmentToggle";
-import CreateCategoryForm from "./CreateCategoryForm";
+import CreateCategoryForm from "./create-category.tsx/CreateCategoryForm";
 
 type CreateCategoryCardProps = {
   toggleCreateCategory: () => void;

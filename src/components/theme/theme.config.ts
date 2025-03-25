@@ -6,13 +6,22 @@ const theme = createTheme({
     primaryDark: colorsTuple("#1A1A1A"),
     secondaryDark: colorsTuple("#2C2C2C"),
 
-    priamryLight: colorsTuple("#000A10"),
+    primaryLight: colorsTuple("#000A10"),
     secondaryLight: colorsTuple("#000A10"),
+
+    testLight: colorsTuple("#FF0000"),
+    testDark: colorsTuple("#FF0000"),
+
+    test: virtualColor({
+      name: "test",
+      dark: "testDark",
+      light: "testLight",
+    }),
 
     primary: virtualColor({
       name: "primary",
       dark: "primaryDark",
-      light: "priamryLight",
+      light: "primaryLight",
     }),
     secondary: virtualColor({
       name: "secondary",

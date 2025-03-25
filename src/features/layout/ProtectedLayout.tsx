@@ -1,9 +1,9 @@
 import LazySidebarLayout from "../../lazy-components/layouts/sidebar-layout/LazySidebarLayout";
 import { useDisclosure } from "@mantine/hooks";
-import CreateTaskListModal from "../tasks/components/create-task-list/CreateTaskListModal";
 import SidebarFooter from "../side-bar/SidebarFooter";
 import { useGetAllCategories } from "../category/services/get-all-categories.service";
 import { getIconByTag } from "../category/shared/category.helpers";
+import CreateCategoryModal from "../category/components/create-category.tsx/CreateCategoryModal";
 
 function ProtectedLayout() {
   const [isSidebarOpened, { toggle: toggleSidebar }] = useDisclosure();
@@ -22,7 +22,7 @@ function ProtectedLayout() {
 
   return (
     <>
-      <CreateTaskListModal isOpen={isCreateTaskListModalOpened} onClose={onCloseCreateTaskListModal} />
+      <CreateCategoryModal opened={isCreateTaskListModalOpened} onClose={onCloseCreateTaskListModal} />
       <LazySidebarLayout
         isSidebarOpened={isSidebarOpened}
         onToggle={toggleSidebar}
