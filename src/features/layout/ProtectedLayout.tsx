@@ -5,6 +5,8 @@ import { useGetAllCategories } from "../category/services/get-all-categories.ser
 import { getIconByTag } from "../category/shared/category.helpers";
 import CreateCategoryModal from "../category/components/create-category.tsx/CreateCategoryModal";
 import { Title } from "@mantine/core";
+import { LazyNavLinkList } from "../../lazy-components/nav-link/sidebar-nav-link/lazy-sidebar-nav-link.types";
+import { Calendar, Star } from "lucide-react";
 
 function ProtectedLayout() {
   const [isSidebarOpened, { toggle: toggleSidebar }] = useDisclosure();
@@ -15,29 +17,56 @@ function ProtectedLayout() {
 
   console.log(categories);
 
-  const links =
-    categories?.map((category) => ({
-      label: category.name,
-      to: `/category/${category.name.toLocaleLowerCase()}`,
-      // routePattern: "/category/$categoryName",
-      icon: getIconByTag(category.tag),
-      iconColor: category.color,
-      childLinks: category.recentTaskLists.map((taskList) => ({
-        label: taskList.taskListName,
-        to: `/category/${category.name.toLocaleLowerCase()}/${taskList.taskListId}`,
-        routePattern: "/category/$categoryName/$taskListId",
-      })),
-    })) || [];
+  const navList: LazyNavLinkList[] = [
+    {
+      links: [
+        {
+          label: "Today",
+          to: `/category/shopping`,
+          routePattern: "/category/$categoryName", 
+          icon: <Star />,
+          iconColor: "#F08C00",
+        },
+        {
+          label: "Coming Up",
+          to: `/category/shopping`,
+          routePattern: "/category/$categoryName", 
+          icon: <Calendar />,
+          iconColor: "#E03131",
+        },
+      ],
+    },
+    {
+      sectionTitle: "Recent Categories",
+      links:
+        categories?.map((category) => ({
+          label: category.name,
+          to: `/category/${category.name.toLocaleLowerCase()}`,
+          // routePattern: "/category/$categoryName", 
+          icon: getIconByTag(category.tag),
+          iconColor: category.color,
+          childLinks: category.recentTaskLists.map((taskList) => ({
+            label: taskList.taskListName,
+            to: `/category/${category.name.toLocaleLowerCase()}/${taskList.taskListId}`,
+            routePattern: "/category/$categoryName/$taskListId", 
+          })),
+        })) || [],
+    },
+  ];
 
   return (
     <>
       <CreateCategoryModal opened={isCreateTaskListModalOpened} onClose={onCloseCreateTaskListModal} />
       <LazySidebarLayout
-        logo={<Title size="1.45rem" c="white">Task Garden</Title>}
+        logo={
+          <Title size="1.45rem" c="white">
+            Task Garden
+          </Title>
+        }
         isSidebarOpened={isSidebarOpened}
         onToggle={toggleSidebar}
         footer={<SidebarFooter onOpen={onOpenCreateTaskListModal} />}
-        links={links}
+        navList={navList}
         isLoading={isLoading}
         navLinkColor="gray"
       />
