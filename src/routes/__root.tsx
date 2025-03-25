@@ -4,12 +4,11 @@ import theme from "../components/theme/theme.config";
 import { jwtDecode } from "jwt-decode";
 import useAuthStore, { AuthState } from "../stores/useAuthStore";
 import { Notifications } from "@mantine/notifications";
-import PrivateLayout from "../components/layout/PrivateLayout";
 import Layout from "../components/layout/Layout";
-import { useGetAllCategories } from "../features/category/services/get-all-categories.service"; // Importing your custom hook
 import { DecodedToken } from "../features/auth/shared/auth.types";
 import { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext } from "@tanstack/react-router";
+import ProtectedLayout from "../features/layout/ProtectedLayout";
 
 export type RouterContext = {
   authState: AuthState;
@@ -52,7 +51,8 @@ function RootComponent() {
     <React.Fragment>
       <MantineProvider theme={theme}>
         <Notifications />
-        {isAuthenticated ? <PrivateLayout /> : <Layout />}
+
+        {isAuthenticated ? <ProtectedLayout /> : <Layout />}
       </MantineProvider>
     </React.Fragment>
   );
