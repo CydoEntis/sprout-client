@@ -25,9 +25,9 @@ import {
   Building,
   Building2,
 } from "lucide-react";
-import { ValidIcon } from "../types/valid-icon.types";
+import { LazyValidIcon } from "../../lazy-components/icon-picker/lazy-icon-picker.types";
 
-export const validIcons: ValidIcon[] = [
+export const validIcons: LazyValidIcon[] = [
   // Shopping
   { id: 1, tag: "shopping-bag", icon: <ShoppingBag /> },
   { id: 2, tag: "shopping-basket", icon: <ShoppingBasket /> },

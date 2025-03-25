@@ -1,4 +1,4 @@
-import { AppShell, Box, MantineColor, ScrollArea } from "@mantine/core";
+import { AppShell, Box, Container, MantineColor, ScrollArea } from "@mantine/core";
 import { Outlet } from "@tanstack/react-router";
 import React from "react";
 import LazyBurger from "../../burger/LazyBurger";
@@ -24,7 +24,7 @@ function LazySidebarLayout({
   isLoading = false,
   footer,
   navLinkColor = "gray",
-  childActiveColor
+  childActiveColor,
 }: LazySidebarLayoutProps) {
   return (
     <AppShell
@@ -87,7 +87,9 @@ function LazySidebarLayout({
       </AppShell.Navbar>
 
       <AppShell.Main bg="secondary" style={{ paddingTop: "50px" }}>
-        <Outlet />
+        <Container size="xl">
+          <Outlet />
+        </Container>
       </AppShell.Main>
     </AppShell>
   );

@@ -6,7 +6,7 @@ type GridListProps = {
 };
 
 function GridList({ children }: GridListProps) {
-  return <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>{children}</SimpleGrid>;
+  return <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }}>{children}</SimpleGrid>;
 }
 
 export default GridList;

@@ -17,18 +17,20 @@ type CategoryCard = {
 
 function CategoryCard({ category, onEdit }: CategoryCard) {
   const { mutateAsync: deleteCategory } = useDeleteCategory();
-  const foundCategory = getIconByTag(category.tag);
+  const foundIcon = getIconByTag(category.tag);
+
+  console.log("Category card: ", category);
+  console.log("Found category: ", foundIcon);
 
   return (
     <LazyCard
       to={`/categories/${category.name.toLowerCase()}`}
       params={{ categoryName: category.name.toLowerCase() }}
-      className={styles.card}
       shadow="md"
       p="md"
       radius="md"
       pos="relative"
-      bg="secondary"
+      bg="primary"
       w={300}
       h={200}
     >
@@ -36,7 +38,7 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
         <LazyHeader
           align="center"
           justify="space-between"
-          leftSection={<CategoryIcon category={foundCategory} color={category.color} />}
+          leftSection={<CategoryIcon icon={foundIcon} color={category.color} />}
           rightSection={
             <UpdateAndDeleteMenu onUpdate={() => onEdit(category)} onDelete={() => deleteCategory(category.id)} />
           }

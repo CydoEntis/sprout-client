@@ -5,7 +5,6 @@ import { zodResolver } from "@mantine/form";
 import { ErrorResponse } from "../../../../api/errors/errror.types";
 import useFormErrorHandler from "../../../../hooks/useFormErrorHandler";
 import { useCreateCategory } from "../../services/create-category.service";
-import { validCategoryTags, validIcons } from "../../shared/category.constants";
 import { createCategorySchema } from "../../shared/category.schemas";
 import { CreateCategory } from "../../shared/category.types";
 import LazyColorPickerMenu from "../../../../lazy-components/color-picker/LazyColorPickerMenu";
@@ -13,6 +12,7 @@ import LazyIconPickerMenu from "../../../../lazy-components/icon-picker/LazyIcon
 import { LazyValidIcon } from "../../../../lazy-components/icon-picker/lazy-icon-picker.types";
 import { validColors } from "../../../../util/constants/valid-colors.constants";
 import { ValidColor } from "../../../../util/types/valid-color.types";
+import { validIcons, validIconTags } from "../../../../util/constants/valid-icon.constants";
 
 type CreateCategoryFormProps = {
   onClose: () => void;
@@ -29,7 +29,7 @@ const CreateCategoryForm = ({ onClose }: CreateCategoryFormProps) => {
     validate: zodResolver(createCategorySchema),
     initialValues: {
       name: "",
-      tag: validIcons[0].tag as (typeof validCategoryTags)[number],
+      tag: validIcons[0].tag as (typeof validIconTags)[number],
       color: validColors[0],
     },
   });

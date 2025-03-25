@@ -1,17 +1,17 @@
 import React, { ReactElement } from "react";
-import { CategoryColor, CategoryIcon as CategoryIconType } from "../shared/category.types";
 import { Paper } from "@mantine/core";
+import { ValidColor } from "../../../util/types/valid-color.types";
 
 type CategoryIconProps = {
-  category?: CategoryIconType;
-  color: CategoryColor;
+  icon?: React.ReactNode;
+  color: ValidColor;
 };
 
-function CategoryIcon({ category, color }: CategoryIconProps) {
+function CategoryIcon({ icon, color }: CategoryIconProps) {
   return (
     <Paper p="xs" bg={color} radius="md" h={45}>
-      {category &&
-        React.cloneElement(category.icon as ReactElement, {
+      {icon &&
+        React.cloneElement(icon as ReactElement, {
           size: 25,
           color: "white",
         })}

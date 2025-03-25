@@ -1,4 +1,3 @@
-import { ReactElement } from "react";
 import { createCategorySchema, selectCategorySchema, updateCategorySchema } from "./category.schemas";
 import { z } from "zod";
 import { ValidIconTags } from "../../../util/types/valid-icon.types";
@@ -8,10 +7,6 @@ export type CreateCategory = z.infer<typeof createCategorySchema>;
 export type SelectCategory = z.infer<typeof selectCategorySchema>;
 export type UpdateCategory = z.infer<typeof updateCategorySchema>;
 
-export type CategoryAndRecentTaskLists = Category & {
-  recentTaskLists: RecentTaskList[];
-};
-
 export type Category = {
   id: number;
   name: string;
@@ -19,19 +14,29 @@ export type Category = {
   color: ValidColor;
 };
 
-export type CategoryIdentifier = {
-  id: number;
-  tag: ValidIconTags;
-  icon: ReactElement;
+export type RecentTaskList = {
+  taskListId: number;
+  taskListName: string;
+};
+
+export type PaginatedCategoriesWithTaskListCount = {
+  items: CategoryWithTaskListCount[];
+  page: number;
+  pageSize: number;
+  totalRecords: number;
+  totalPages: number;
+};
+
+export type CategoryAndRecentTaskLists = Category & {
+  recentTaskLists: RecentTaskList[];
+};
+
+export type CategoryWithTaskListCount = Category & {
+  taskListCount: number;
 };
 
 export type CreatedCategory = {
   message: string;
-};
-
-export type RecentTaskList = {
-  taskListId: number;
-  taskListName: string;
 };
 
 export type UpdatedCategory = {

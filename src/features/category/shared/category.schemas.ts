@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { validCategoryTags } from "./category.constants";
+import { validIconTags } from "../../../util/constants/valid-icon.constants";
 import { validColors } from "../../../util/constants/valid-colors.constants";
 
 export const createCategorySchema = z.object({
@@ -7,7 +7,7 @@ export const createCategorySchema = z.object({
     .string()
     .min(3, "Name must be at least 3 characters long.")
     .max(25, "Name must be at most 25 characters long."),
-  tag: z.enum(validCategoryTags, {
+  tag: z.enum(validIconTags, {
     errorMap: () => ({ message: "You must select a valid icon." }),
   }),
   color: z.enum(validColors, {
@@ -25,7 +25,7 @@ export const updateCategorySchema = z.object({
     .string()
     .min(3, "Name must be at least 3 characters long.")
     .max(25, "Name must be at most 25 characters long."),
-  tag: z.enum(validCategoryTags, {
+  tag: z.enum(validIconTags, {
     errorMap: () => ({ message: "You must select a valid icon." }),
   }),
   color: z.enum(validColors, {
