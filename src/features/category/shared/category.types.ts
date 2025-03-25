@@ -8,6 +8,10 @@ export type CreateCategory = z.infer<typeof createCategorySchema>;
 export type SelectCategory = z.infer<typeof selectCategorySchema>;
 export type UpdateCategory = z.infer<typeof updateCategorySchema>;
 
+export type CategoryAndRecentTaskLists = Category & {
+  recentTaskLists: RecentTaskList[];
+};
+
 export type Category = {
   id: number;
   name: string;
@@ -25,12 +29,9 @@ export type CreatedCategory = {
   message: string;
 };
 
-export type CategoryResponse = {
-  id: number;
-  name: string;
-  tag: ValidIconTags;
-  taskListCount: number;
-  color: ValidColor;
+export type RecentTaskList = {
+  taskListId: number;
+  taskListName: string;
 };
 
 export type UpdatedCategory = {

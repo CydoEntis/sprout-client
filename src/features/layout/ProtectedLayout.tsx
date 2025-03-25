@@ -12,12 +12,20 @@ function ProtectedLayout() {
 
   const { data: categories, isLoading } = useGetAllCategories();
 
+  console.log(categories);
+
   const links =
     categories?.map((category) => ({
       label: category.name,
       to: `/category/${category.name.toLocaleLowerCase()}`,
-      routePattern: "/category/$categoryName",
+      // routePattern: "/category/$categoryName",
       icon: getIconByTag(category.tag),
+      iconColor: category.color,
+      childLinks: category.recentTaskLists.map((taskList) => ({
+        label: taskList.taskListName, 
+        to: `/category/${category.name.toLocaleLowerCase()}/${taskList.taskListId}`,
+        routePattern: "/category/$categoryName/$taskListId",
+      })),
     })) || [];
 
   return (

@@ -61,7 +61,14 @@ function LazySidebarLayout({
         </AppShell.Section>
 
         <AppShell.Section p="md" grow my="md" component={ScrollArea}>
-          {isLoading ? <p>Loading...</p> : <LazySidebarNavLinkList links={links || []} color={navLinkColor} />}
+          {isLoading ? <p>Loading...</p> : <LazySidebarNavLinkList links={links || []} color={navLinkColor} 
+          px={12}
+          py={4}
+          childLinkProps={{
+            color: "lime",
+            variant: "subtle",
+            py: 4
+          }}/>}
         </AppShell.Section>
         <AppShell.Section style={{ borderTop: "1px solid var(--border-color)" }}>{footer}</AppShell.Section>
       </AppShell.Navbar>
