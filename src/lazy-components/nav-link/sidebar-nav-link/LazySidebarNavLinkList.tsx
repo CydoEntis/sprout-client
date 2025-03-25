@@ -54,7 +54,7 @@ function LazySidebarNavLinkList({ navList, childLinkProps = {}, ...rest }: LazyS
                     active={isParentActive}
                     {...rest}
                   >
-                    {link.childLinks?.length > 0 && (
+                    {link.childLinks && link.childLinks.length > 0 && (
                       <Stack gap={8} py={8}>
                         {link.childLinks.map((childLink) => {
                           const isChildActive = !!matchRoute({
