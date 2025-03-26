@@ -1,7 +1,7 @@
 import { Title, Stack } from "@mantine/core";
 import { Category, CategoryResponse } from "../../shared/category.types";
 import { useDeleteCategory } from "../../services/delete-category.service";
-import UpdateAndDeleteMenu from "../../../../components/menus/UpdateAndDeleteMenu";
+import UpdateAndDeleteMenu from "../../../../lazy-components/menus/LazyEditDeleteMenu";
 import CategoryIcon from "../CategoryIcon";
 
 import styles from "./category-card.module.css";

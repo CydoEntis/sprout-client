@@ -1,6 +1,7 @@
 import { Anchor, Paper, Title, Text, Flex } from "@mantine/core";
 import { Link } from "@tanstack/react-router";
 import { ReactElement } from "react";
+import LazyCard from "../../../lazy-components/card/LazyCard";
 
 type AuthCardProps = {
   title: string;
@@ -19,19 +20,7 @@ function AuthCard({ title, anchorLabel, anchorText, to, children }: AuthCardProp
         width: "100%",
       }}
     >
-      <Paper
-        withBorder
-        shadow="md"
-        p={32}
-        pt={30}
-        radius="md"
-        bg="secondary"
-        className="card"
-        style={{
-          maxWidth: "520px",
-          width: "100%",
-        }}
-      >
+      <LazyCard bg="primary" shadow="md" p={32} pt={30} maw={520} w="100%">
         <Title ta="center">{title}</Title>
         <Text c="dimmed" size="sm" ta="center" mt={5}>
           {anchorLabel}{" "}
@@ -40,7 +29,7 @@ function AuthCard({ title, anchorLabel, anchorText, to, children }: AuthCardProp
           </Anchor>
         </Text>
         {children}
-      </Paper>
+      </LazyCard>
     </Flex>
   );
 }

@@ -7,7 +7,7 @@ import { logoutUser } from "../../features/auth/services/logout.service";
 
 import HorizontalNavLinks from "../../features/navigation/HorizontalNavLinks";
 import LazyHorizontalNavbar from "../../lazy-components/nav-bar/horizontal-navbar/LazyHorizontalNavbar";
-import LazyHorizontalLayout from "../../lazy-components/layouts/horizontal-layout/LazyHorizontalLayout";
+import LazyLayout from "../../lazy-components/layouts/horizontal-layout/LazyLayout";
 
 
 
@@ -45,7 +45,7 @@ function Layout() {
   //   ></LazyVerticalNavbar>
   // );
 
-  return <LazyHorizontalLayout>{navbar}</LazyHorizontalLayout>;
+  return <LazyLayout>{navbar}</LazyLayout>;
 }
 
 export default Layout;

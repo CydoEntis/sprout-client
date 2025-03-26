@@ -30,7 +30,7 @@
   --btn-bg: var(--btn-dark);
 }
 
-body {
+/* body {
   background-color: var(--bg-color) !important;
   background-image: url("/polka-dots.svg");
   background-repeat: repeat;
@@ -38,7 +38,7 @@ body {
   background-size: auto;
   height: 100vh;
   color: var(--text-color);
-}
+} */
 
 .card {
   transition: transform 300ms ease-in-out;
@@ -59,8 +59,9 @@ body {
 
 .button,
 .notification {
-  border: var(--btn-border) 2px solid !important;
-  background-color: var(--btn-bg) !important;
+  border: none !important;
+  /* border: var(--btn-border) 2px solid !important;
+  background-color: var(--btn-bg) !important; */
 }
 
 /* .card:hover {

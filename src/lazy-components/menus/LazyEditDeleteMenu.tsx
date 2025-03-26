@@ -1,12 +1,24 @@
-import { ActionIcon, Menu } from "@mantine/core";
-import { Edit2, MoreVertical, Trash2 } from "lucide-react";
+import { ActionIcon, MantineColor, Menu, MenuProps } from "@mantine/core";
+import { Edit2, MoreVertical, MoreHorizontal, Trash2 } from "lucide-react";
 
-type UpdateAndDeleteMenuProps = {
+type LazyEditDeleteMenuProps = {
+  direction?: "horizontal" | "vertical";
   onUpdate: () => void;
   onDelete: () => void;
-};
+  dropdownColor?: MantineColor;
+  withBorder?: boolean;
+  withShadow?: boolean;
+} & MenuProps;
 
-function UpdateAndDeleteMenu({ onUpdate, onDelete }: UpdateAndDeleteMenuProps) {
+function LazyEditDeleteMenu({
+  direction = "vertical",
+  onUpdate,
+  onDelete,
+  dropdownColor,
+  withBorder = false,
+  withShadow = false,
+  ...rest
+}: LazyEditDeleteMenuProps) {
   const updateHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -20,7 +32,7 @@ function UpdateAndDeleteMenu({ onUpdate, onDelete }: UpdateAndDeleteMenuProps) {
   };
 
   return (
-    <Menu shadow="md">
+    <Menu {...rest}>
       <Menu.Target>
         <ActionIcon
           onClick={(e) => {
@@ -30,11 +42,17 @@ function UpdateAndDeleteMenu({ onUpdate, onDelete }: UpdateAndDeleteMenuProps) {
           variant="subtle"
           color="inverse"
         >
-          <MoreVertical size={20} />
+          {direction === "horizontal" ? <MoreHorizontal size={20} /> : <MoreVertical size={20} />}
         </ActionIcon>
       </Menu.Target>
 
-      <Menu.Dropdown>
+      <Menu.Dropdown
+        bg={dropdownColor}
+        style={{
+          border: withBorder ? "" : "none",
+          boxShadow: withShadow ? "0 4px 8px rgba(0, 0, 0, 0.1)" : "none",
+        }}
+      >
         <Menu.Item leftSection={<Edit2 size={14} />} onClick={updateHandler}>
           Edit
         </Menu.Item>
@@ -46,4 +64,4 @@ function UpdateAndDeleteMenu({ onUpdate, onDelete }: UpdateAndDeleteMenuProps) {
   );
 }
 
-export default UpdateAndDeleteMenu;
+export default LazyEditDeleteMenu;

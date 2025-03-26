@@ -2,9 +2,9 @@ import GridList from "../components/GridList";
 import { Box, Button, Group } from "@mantine/core";
 import { Plus } from "lucide-react";
 import { useDisclosure } from "@mantine/hooks";
-import InProgressTaskListCard from "../features/tasks/components/InProgressTaskListCard";
 import { TaskListPreview } from "../features/tasks/shared/tasks.types";
 import CreateTaskListModal from "../features/tasks/components/create-task-list/CreateTaskListModal";
+import TaskListCard from "../features/tasks/components/task-card/TaskListCard";
 
 type TaskListPage = {
   taskLists: TaskListPreview[];
@@ -24,7 +24,7 @@ function TaskListPage({ taskLists }: TaskListPage) {
       </Group>
       <GridList>
         {taskLists.map((taskList) => (
-          <InProgressTaskListCard key={taskList.id} taskList={taskList} />
+          <TaskListCard key={taskList.id} taskList={taskList} />
         ))}
       </GridList>
     </Box>

@@ -1,6 +1,6 @@
 import { Group, Title, Text, Stack } from "@mantine/core";
 import { TaskList } from "../../shared/tasks.types";
-import UpdateAndDeleteMenu from "../../../../components/menus/UpdateAndDeleteMenu";
+import UpdateAndDeleteMenu from "../../../../lazy-components/menus/LazyEditDeleteMenu";
 import TaskListMembers from "../TaskListMembers";
 
 type Props = {

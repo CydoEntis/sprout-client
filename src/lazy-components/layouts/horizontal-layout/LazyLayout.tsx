@@ -5,12 +5,12 @@ import { useDisclosure } from "@mantine/hooks";
 
 import styles from "./lazy-horizontal-layout.module.css";
 
-function LazyHorizontalLayout({ children }: LazyLayoutProps) {
+function LazyLayout({ children }: LazyLayoutProps) {
   const [opened, { toggle }] = useDisclosure();
 
   return (
     <AppShell padding="md" navbar={{ width: 300, breakpoint: "sm", collapsed: { desktop: true, mobile: !opened } }}>
-      <AppShell.Header bg="secondary" className={styles.header}>
+      <AppShell.Header bg="primary" withBorder={false}>
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
         <Container size="md">{children}</Container>
       </AppShell.Header>
@@ -24,4 +24,4 @@ function LazyHorizontalLayout({ children }: LazyLayoutProps) {
   );
 }
 
-export default LazyHorizontalLayout;
+export default LazyLayout;
