@@ -1,5 +1,4 @@
-import GridList from "../components/GridList";
-import { Box, Button, Group, Title, Text, Stack, Divider, SimpleGrid } from "@mantine/core";
+import { Box, Button, Title, SimpleGrid } from "@mantine/core";
 import { DollarSign, Plus } from "lucide-react";
 import { useDisclosure } from "@mantine/hooks";
 import { TaskListPreview } from "../features/tasks/shared/tasks.types";
@@ -7,8 +6,8 @@ import CreateTaskListModal from "../features/tasks/components/create-task-list/C
 import TaskListCard from "../features/tasks/components/task-card/TaskListCard";
 import LazyHeader from "../lazy-components/header/LazyHeader";
 import { useParams } from "@tanstack/react-router";
-import CategoryIcon from "../lazy-components/icons/LazyIcon";
 import LazyIcon from "../lazy-components/icons/LazyIcon";
+import { getIconByTag } from "../features/category/shared/category.helpers";
 
 type TaskListPage = {
   taskLists: TaskListPreview[];
@@ -19,17 +18,19 @@ function TaskListPage({ taskLists }: TaskListPage) {
   const [isCreateTaskListModalOpened, { open: onOpenCreateTaskListModal, close: onCloseCreateTaskListModal }] =
     useDisclosure(false);
 
+  const categoryDetails = taskLists[0].categoryDetail;
+
   return (
     <Box mt={32}>
       <CreateTaskListModal isOpen={isCreateTaskListModalOpened} onClose={onCloseCreateTaskListModal} />
       <LazyHeader
         leftSection={
           <LazyIcon
-            icon={<DollarSign />}
+            icon={getIconByTag(categoryDetails.tag)}
             size="xl"
             iconColor="white"
             hasBackground
-            backgroundColor="lime"
+            backgroundColor={categoryDetails.color}
           />
         }
         rightSection={

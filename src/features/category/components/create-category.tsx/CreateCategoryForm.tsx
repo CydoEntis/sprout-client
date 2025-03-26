@@ -64,7 +64,7 @@ const CreateCategoryForm = ({ onClose }: CreateCategoryFormProps) => {
             withBorder
           />
           <TextInput
-            label="Category Name"
+          label="Category Name"
             placeholder="Enter a category name"
             {...form.getInputProps("name")}
             w="100%"

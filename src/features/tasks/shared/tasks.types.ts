@@ -21,11 +21,18 @@ export type DeletedTaskList = SuccessMessage & {
   id: number;
 };
 
+type CategoryDetail = {
+  id: number;
+  name: string;
+  tag: string;
+  color: string;
+}
+
 export type TaskListPreview = {
   id: number;
   name: string;
   description: string;
-  category: string;
+  categoryDetail: CategoryDetail
   createdAt: Date;
   updatedAt: Date;
   categoryName: string;
