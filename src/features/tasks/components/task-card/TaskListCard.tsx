@@ -4,6 +4,7 @@ import { Flex, OptionsDropdown, Stack, Text, Title } from "@mantine/core";
 import { TaskListPreview } from "../../shared/tasks.types";
 import LazyEditDeleteMenu from "../../../../lazy-components/menus/LazyEditDeleteMenu";
 import MemberList from "../../../../components/members/MemberList";
+import LazyRingProgress from "../../../../lazy-components/progress-bars/LazyRingProgressBar";
 
 type TaskListCardProps = {
   taskList: TaskListPreview;
@@ -13,7 +14,16 @@ function TaskListCard({ taskList }: TaskListCardProps) {
   return (
     <LazyCard bg="primary">
       <Stack gap={8}>
-        <LazyHeader>
+        <LazyHeader
+          rightSection={
+            <LazyRingProgress
+              size={25}
+              thickness={3}
+              percentage={taskList.taskCompletionPercentage}
+              sections={[{ value: taskList.taskCompletionPercentage, color: "lime" }]}
+            />
+          }
+        >
           <Title size="1.25rem">{taskList.name}</Title>
         </LazyHeader>
         <Text size="sm" c="dimmed">
