@@ -10,7 +10,7 @@ import { Member, SuccessMessage } from "../../shared/shared.types";
 export type CreateTaskList = z.infer<typeof createTaskListSchema>;
 
 export type CreatedTaskList = SuccessMessage & {
-  taskList: TaskList;
+  taskListPreview: TaskListPreview;
 };
 
 export type UpdateTaskList = z.infer<typeof updateTaskListSchema>;

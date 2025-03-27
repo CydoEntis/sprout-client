@@ -16,7 +16,7 @@ export function useCreateTaskListMutation() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: ["task-lists", data.taskList.categoryName],
+        queryKey: ["task-lists", data.taskListPreview.categoryDetail.name],
       });
 
       notifications.show({

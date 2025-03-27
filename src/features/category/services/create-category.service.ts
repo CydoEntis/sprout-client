@@ -18,6 +18,9 @@ export function useCreateCategory() {
       queryClient.invalidateQueries({
         queryKey: ["categories", "list"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["categories", "list-with-count"],
+      });
 
       notifications.show({
         title: "Success",

@@ -45,6 +45,8 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListW
         });
       }
 
+      console.log(data.categoryName);
+
       await createTaskList.mutateAsync({
         name: data.name,
         description: data.description,
@@ -53,7 +55,7 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListW
       form.reset();
       onClose();
     } catch (e) {
-      console.error(e);
+      console.error("We have an error: ",e);
     }
   };
 

@@ -11,6 +11,7 @@ export const getAllCategoriesQueryOptions = () =>
   queryOptions({
     queryKey: ["categories", "list"],
     queryFn: () => getAllCategories(),
+    staleTime: 0,
   });
 
 export const useGetAllCategories = () => {

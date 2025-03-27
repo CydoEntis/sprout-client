@@ -9,8 +9,9 @@ const getCategoriesWithTasklistCount = async (): Promise<PaginatedCategoriesWith
 
 export const getCategoriesWithTasklistCountQueryOptions = () =>
   queryOptions({
-    queryKey: ["categories", "list"],
+    queryKey: ["categories", "list-with-count"],
     queryFn: () => getCategoriesWithTasklistCount(),
+    staleTime: 0
   });
 
 export const useGetCategoriesWithTaskListCount = () => {
