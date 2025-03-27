@@ -16,9 +16,11 @@ export function useCreateTasklistWithCategoryMutation() {
   return useMutation({
     mutationFn: createCategoryWithTaskList,
     onSuccess: (data) => {
+      console.log(data);
       queryClient.invalidateQueries({ queryKey: ["categories", "list"] });
       queryClient.invalidateQueries({ queryKey: ["categories", "list-with-count"] });
       queryClient.invalidateQueries({ queryKey: ["task-lists", "list"] });
+      queryClient.invalidateQueries({ queryKey: ["task-lists", data.categoryName.toLowerCase()] });
 
       notifications.show({
         title: "Success",

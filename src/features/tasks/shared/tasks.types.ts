@@ -61,7 +61,9 @@ export type CreateTasklistWithCategory = z.infer<typeof createTasklistWithCatego
 
 export interface CreatedTasklistWithCategory {
   categoryId: number;
+  categoryName: string;
   taskListId: number;
+  taskListName: string;
   message: string;
 }
 

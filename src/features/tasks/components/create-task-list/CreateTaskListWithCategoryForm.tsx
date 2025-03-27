@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Group, Stack, TextInput, Textarea, Select, Switch, Flex, Text } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
-import { AnimatePresence } from "framer-motion"; // ✅ Import Framer Motion
+import { AnimatePresence } from "framer-motion";
 import LazyColorPickerMenu from "../../../../lazy-components/color-picker/LazyColorPickerMenu";
 import LazyIconPickerMenu from "../../../../lazy-components/icon-picker/LazyIconPickerMenu";
 import { validColors } from "../../../../util/constants/valid-colors.constants";
@@ -31,14 +31,13 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListW
       categoryColor: validColors[0],
       taskListName: "",
       taskListDescription: "",
+      categoryId: undefined,
     },
   });
 
   console.log(form.errors);
 
   const handleSubmit = async (data: CreateTasklistWithCategory) => {
-    console.log("Submitting Data:", data);
-
     try {
       const payload: CreateTasklistWithCategory = createNewCategory
         ? {
@@ -55,11 +54,10 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListW
           };
 
       await createCategoryWithTaskList.mutateAsync(payload);
-
       form.reset();
       onClose();
     } catch (e) {
-      console.error("We have an error: ", e);
+      console.error("Error during submit:", e);
     }
   };
 
@@ -71,7 +69,11 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListW
           <Switch
             color="lime"
             checked={createNewCategory}
-            onChange={(event) => setCreateNewCategory(event.currentTarget.checked)}
+            onChange={(event) => {
+              setCreateNewCategory(event.currentTarget.checked);
+              form.setFieldValue("categoryId", undefined); 
+              form.setFieldValue("categoryName", ""); 
+            }}
           />
         </Flex>
 
@@ -93,9 +95,7 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListW
                   selectionColor="#66a80f"
                 />
                 <TextInput
-                  classNames={{
-                    input: "input",
-                  }}
+                  classNames={{ input: "input" }}
                   w="100%"
                   label="New Category Name"
                   placeholder="Enter category name"
@@ -106,12 +106,13 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListW
           ) : (
             <LazyFadeInAnimation animationKey="existing-category-form">
               <Select
-                classNames={{
-                  input: "input",
-                }}
+                classNames={{ input: "input" }}
                 label="Select Existing Category"
                 placeholder="Choose category"
-                data={categories.map((cat) => ({ value: cat.id.toString(), label: cat.name }))}
+                data={categories.map((cat) => ({
+                  value: cat.id.toString(),
+                  label: cat.name,
+                }))}
                 {...form.getInputProps("categoryId")}
               />
             </LazyFadeInAnimation>
@@ -119,17 +120,13 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListW
         </AnimatePresence>
 
         <TextInput
-          classNames={{
-            input: "input",
-          }}
+          classNames={{ input: "input" }}
           label="Task List Name"
           placeholder="Enter name"
           {...form.getInputProps("taskListName")}
         />
         <Textarea
-          classNames={{
-            input: "input",
-          }}
+          classNames={{ input: "input" }}
           label="Description"
           placeholder="Enter description"
           {...form.getInputProps("taskListDescription")}

@@ -1,6 +1,4 @@
 import { z } from "zod";
-import { validIconTags } from "../../../util/constants/valid-icon.constants";
-import { validColors } from "../../../util/constants/valid-colors.constants";
 
 // Task List Schemas
 export const createTaskListSchema = z.object({
@@ -20,29 +18,54 @@ export const updateTaskListSchema = createTaskListSchema.extend({
   categoryName: z.string().min(1, "Category is required"),
 });
 
-export const createTasklistWithCategorySchema = z.union([
-  z.object({
-    categoryId: z.undefined(),
-    categoryName: z.string().min(1, "Category name is required"),
-    categoryTag: z.enum(validIconTags, {
-      errorMap: () => ({ message: "Invalid category tag" }),
-    }),
-    categoryColor: z.enum(validColors, {
-      errorMap: () => ({ message: "Invalid category color" }),
-    }),
+export const createTasklistWithCategorySchema = z
+  .object({
     taskListName: z.string().min(1, "Task list name is required"),
     taskListDescription: z.string().optional(),
-  }),
-
-  z.object({
-    categoryId: z.string().min(1, "Category selection is required"),
-    categoryName: z.undefined(),
-    categoryTag: z.undefined(),
-    categoryColor: z.undefined(),
-    taskListName: z.string().min(1, "Task list name is required"),
-    taskListDescription: z.string().optional(),
-  }),
-]);
+    categoryId: z.string().optional(),
+    categoryName: z.string().optional(),
+    categoryTag: z.string().optional(),
+    categoryColor: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      // If creating a new category, require categoryName, categoryTag, and categoryColor
+      if (data.categoryId === undefined) {
+        return !!(data.categoryName && data.categoryName.trim() !== "");
+      }
+      return true;
+    },
+    {
+      message: "Category name is required when creating a new category.",
+      path: ["categoryName"],
+    }
+  )
+  .refine(
+    (data) => {
+      // If creating a new category, require categoryTag
+      if (data.categoryId === undefined) {
+        return !!(data.categoryTag && data.categoryTag.trim() !== "");
+      }
+      return true;
+    },
+    {
+      message: "Category tag is required when creating a new category.",
+      path: ["categoryTag"],
+    }
+  )
+  .refine(
+    (data) => {
+      // If creating a new category, require categoryColor
+      if (data.categoryId === undefined) {
+        return !!(data.categoryColor && data.categoryColor.trim() !== "");
+      }
+      return true;
+    },
+    {
+      message: "Category color is required when creating a new category.",
+      path: ["categoryColor"],
+    }
+  );
 
 // Task List Item Schemas
 export const createTaskListItemSchema = z.object({
