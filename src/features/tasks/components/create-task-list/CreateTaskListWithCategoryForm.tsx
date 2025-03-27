@@ -2,16 +2,15 @@ import { useState } from "react";
 import { Button, Group, Stack, TextInput, Textarea, Select, Switch, Flex, Text } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { AnimatePresence } from "framer-motion"; // ✅ Import Framer Motion
-import { useCreateTaskListMutation } from "../../services/task-list/create-task-list.service";
-import { createTaskListSchema } from "../../shared/tasks.schemas";
 import LazyColorPickerMenu from "../../../../lazy-components/color-picker/LazyColorPickerMenu";
 import LazyIconPickerMenu from "../../../../lazy-components/icon-picker/LazyIconPickerMenu";
 import { validColors } from "../../../../util/constants/valid-colors.constants";
 import { validIcons, validIconTags } from "../../../../util/constants/valid-icon.constants";
-import { useCreateCategory } from "../../../category/services/create-category.service";
 import { Category } from "../../../category/shared/category.types";
-import { CreateTaskList } from "../../shared/tasks.types";
 import LazyFadeInAnimation from "../../../../lazy-components/animations/LazyFadeInAnimation";
+import { createTasklistWithCategorySchema } from "../../shared/tasks.schemas";
+import { CreateTasklistWithCategory } from "../../shared/tasks.types";
+import { useCreateTasklistWithCategoryMutation } from "../../services/task-list/create-task-list-with-category.service";
 
 export type CreateTaskListWithCategoryFormProps = {
   categories: Category[];
@@ -19,43 +18,48 @@ export type CreateTaskListWithCategoryFormProps = {
 };
 
 const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListWithCategoryFormProps) => {
-  const createTaskList = useCreateTaskListMutation();
-  const createCategory = useCreateCategory();
+  const createCategoryWithTaskList = useCreateTasklistWithCategoryMutation();
   const [createNewCategory, setCreateNewCategory] = useState(false);
   const [selectedColor, setSelectedColor] = useState(validColors[0]);
   const [selectedIcon, setSelectedIcon] = useState(validIcons[0]);
 
-  const form = useForm({
-    validate: zodResolver(createTaskListSchema),
+  const form = useForm<CreateTasklistWithCategory>({
+    validate: zodResolver(createTasklistWithCategorySchema),
     initialValues: {
-      name: "",
-      description: "",
-      categoryId: "",
       categoryName: "",
+      categoryTag: validIconTags[0],
+      categoryColor: validColors[0],
+      taskListName: "",
+      taskListDescription: "",
     },
   });
 
-  const handleSubmit = async (data: CreateTaskList) => {
+  console.log(form.errors);
+
+  const handleSubmit = async (data: CreateTasklistWithCategory) => {
+    console.log("Submitting Data:", data);
+
     try {
-      if (createNewCategory) {
-        await createCategory.mutateAsync({
-          name: data.categoryName,
-          color: selectedColor,
-          tag: selectedIcon.tag as (typeof validIconTags)[number],
-        });
-      }
+      const payload: CreateTasklistWithCategory = createNewCategory
+        ? {
+            categoryName: data.categoryName!,
+            categoryTag: validIcons[0].tag as (typeof validIconTags)[number],
+            categoryColor: selectedColor,
+            taskListName: data.taskListName,
+            taskListDescription: data.taskListDescription,
+          }
+        : {
+            categoryId: data.categoryId!,
+            taskListName: data.taskListName,
+            taskListDescription: data.taskListDescription,
+          };
 
-      console.log(data.categoryName);
+      await createCategoryWithTaskList.mutateAsync(payload);
 
-      await createTaskList.mutateAsync({
-        name: data.name,
-        description: data.description,
-        categoryName: data.categoryName,
-      });
       form.reset();
       onClose();
     } catch (e) {
-      console.error("We have an error: ",e);
+      console.error("We have an error: ", e);
     }
   };
 
@@ -120,7 +124,7 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListW
           }}
           label="Task List Name"
           placeholder="Enter name"
-          {...form.getInputProps("name")}
+          {...form.getInputProps("taskListName")}
         />
         <Textarea
           classNames={{
@@ -128,7 +132,7 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListW
           }}
           label="Description"
           placeholder="Enter description"
-          {...form.getInputProps("description")}
+          {...form.getInputProps("taskListDescription")}
         />
 
         <Group justify="end">

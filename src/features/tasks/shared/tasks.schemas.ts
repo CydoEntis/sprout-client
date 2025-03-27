@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { validIconTags } from "../../../util/constants/valid-icon.constants";
+import { validColors } from "../../../util/constants/valid-colors.constants";
 
 // Task List Schemas
 export const createTaskListSchema = z.object({
@@ -18,6 +20,29 @@ export const updateTaskListSchema = createTaskListSchema.extend({
   categoryName: z.string().min(1, "Category is required"),
 });
 
+export const createTasklistWithCategorySchema = z.union([
+  z.object({
+    categoryId: z.undefined(),
+    categoryName: z.string().min(1, "Category name is required"),
+    categoryTag: z.enum(validIconTags, {
+      errorMap: () => ({ message: "Invalid category tag" }),
+    }),
+    categoryColor: z.enum(validColors, {
+      errorMap: () => ({ message: "Invalid category color" }),
+    }),
+    taskListName: z.string().min(1, "Task list name is required"),
+    taskListDescription: z.string().optional(),
+  }),
+
+  z.object({
+    categoryId: z.string().min(1, "Category selection is required"),
+    categoryName: z.undefined(),
+    categoryTag: z.undefined(),
+    categoryColor: z.undefined(),
+    taskListName: z.string().min(1, "Task list name is required"),
+    taskListDescription: z.string().optional(),
+  }),
+]);
 
 // Task List Item Schemas
 export const createTaskListItemSchema = z.object({

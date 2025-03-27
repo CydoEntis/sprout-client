@@ -2,6 +2,7 @@ import { z } from "zod";
 import {
   createTaskListItemSchema,
   createTaskListSchema,
+  createTasklistWithCategorySchema,
   updateTaskListItemSchema,
   updateTaskListSchema,
 } from "./tasks.schemas";
@@ -26,13 +27,13 @@ type CategoryDetail = {
   name: string;
   tag: string;
   color: string;
-}
+};
 
 export type TaskListPreview = {
   id: number;
   name: string;
   description: string;
-  categoryDetail: CategoryDetail
+  categoryDetail: CategoryDetail;
   createdAt: Date;
   updatedAt: Date;
   categoryName: string;
@@ -55,6 +56,14 @@ export type TaskList = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type CreateTasklistWithCategory = z.infer<typeof createTasklistWithCategorySchema>;
+
+export interface CreatedTasklistWithCategory {
+  categoryId: number;
+  taskListId: number;
+  message: string;
+}
 
 // Task List Item Types
 
