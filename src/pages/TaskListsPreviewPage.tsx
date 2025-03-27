@@ -1,13 +1,13 @@
 import { Box, Button, Title, SimpleGrid } from "@mantine/core";
-import { DollarSign, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useDisclosure } from "@mantine/hooks";
 import { TaskListPreview } from "../features/tasks/shared/tasks.types";
-import CreateTaskListModal from "../features/tasks/components/create-task-list/CreateTaskListModal";
 import TaskListCard from "../features/tasks/components/task-card/TaskListCard";
 import LazyHeader from "../lazy-components/header/LazyHeader";
 import { useParams } from "@tanstack/react-router";
 import LazyIcon from "../lazy-components/icons/LazyIcon";
 import { getIconByTag } from "../features/category/shared/category.helpers";
+import CreateTaskListWithCategoryModal from "../features/tasks/components/create-task-list/CreateTaskListWithCategoryModal";
 
 type TaskListPage = {
   taskLists: TaskListPreview[];
@@ -15,14 +15,20 @@ type TaskListPage = {
 
 function TaskListPage({ taskLists }: TaskListPage) {
   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName" });
-  const [isCreateTaskListModalOpened, { open: onOpenCreateTaskListModal, close: onCloseCreateTaskListModal }] =
-    useDisclosure(false);
+  const [
+    isCreateTaskListWithCategoryModalOpened,
+    { open: onOpenCreateTaskListWithCategoryModal, close: onCloseCreateTaskListWithCategoryModal },
+  ] = useDisclosure(false);
 
   const categoryDetails = taskLists[0].categoryDetail;
 
   return (
     <Box mt={32}>
-      <CreateTaskListModal isOpen={isCreateTaskListModalOpened} onClose={onCloseCreateTaskListModal} />
+      <CreateTaskListWithCategoryModal
+        isOpen={isCreateTaskListWithCategoryModalOpened}
+        onClose={onCloseCreateTaskListWithCategoryModal}
+        categoryId={categoryDetails.id}
+      />
       <LazyHeader
         leftSection={
           <LazyIcon
@@ -34,7 +40,12 @@ function TaskListPage({ taskLists }: TaskListPage) {
           />
         }
         rightSection={
-          <Button onClick={onOpenCreateTaskListModal} variant="light" leftSection={<Plus size={20} />} color="lime">
+          <Button
+            onClick={onOpenCreateTaskListWithCategoryModal}
+            variant="light"
+            leftSection={<Plus size={20} />}
+            color="lime"
+          >
             Task List
           </Button>
         }

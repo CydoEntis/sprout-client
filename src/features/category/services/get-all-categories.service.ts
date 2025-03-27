@@ -1,10 +1,10 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { apiRequest } from "../../../api/apiRequest";
 import endpoints from "../../../api/endpoints";
-import { PaginatedCategoriesWithTaskListCount } from "../shared/category.types";
+import { Category } from "../shared/category.types";
 
-const getAllCategories = async (): Promise<PaginatedCategoriesWithTaskListCount> => {
-  return apiRequest<PaginatedCategoriesWithTaskListCount>("get", endpoints.category);
+const getAllCategories = async (): Promise<Category[]> => {
+  return apiRequest<Category[]>("get", endpoints.category);
 };
 
 export const getAllCategoriesQueryOptions = () =>

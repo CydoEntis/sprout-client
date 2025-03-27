@@ -1,15 +1,15 @@
 import { useDisclosure } from "@mantine/hooks";
 
 import { useState } from "react";
-import { Category } from "../shared/category.types";
+import { Category, CategoryWithTaskListCount, PaginatedCategoriesWithTaskListCount } from "../shared/category.types";
 // import UpsertCategoryModal from "../components/UpsertCategoryModal";
 import CategoryList from "../components/CategoryList";
 
 type CategoriesPageProps = {
-  categories: Category[];
+  paginatedCategories: PaginatedCategoriesWithTaskListCount;
 };
 
-function CategoriesPage({ categories }: CategoriesPageProps) {
+function CategoriesPage({ paginatedCategories }: CategoriesPageProps) {
   const [isCategoryModalOpended, { open: onOpenCategoryModal, close: onCloseCategoryModal }] = useDisclosure(false);
   const [category, setCategory] = useState<Category | undefined>(undefined);
 
@@ -30,7 +30,7 @@ function CategoriesPage({ categories }: CategoriesPageProps) {
 
   return (
     <CategoryList
-      categories={categories}
+      categories={paginatedCategories.items}
       onOpen={openCategoryCreateModalHandler}
       onEdit={openCategoryEditModalHandler}
     />

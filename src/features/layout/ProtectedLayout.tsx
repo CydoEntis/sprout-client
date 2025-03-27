@@ -15,8 +15,6 @@ function ProtectedLayout() {
 
   const { data: categories, isLoading } = useGetRecentCategories();
 
-  console.log(categories);
-
   const navList: LazyNavLinkList[] = [
     {
       links: [

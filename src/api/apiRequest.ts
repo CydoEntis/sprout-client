@@ -7,7 +7,6 @@ export const apiRequest = async <T>(
   params?: any
 ): Promise<T> => {
   const response = (await apiClient[method](url, params)).data;
-  console.log(response);
   if (!response.success) throw new Error(response.message);
   return response.data;
 };

@@ -9,6 +9,7 @@ import LazyCard from "../../../../lazy-components/card/LazyCard";
 import LazyHeader from "../../../../lazy-components/header/LazyHeader";
 import LazyText from "../../../../lazy-components/text/LazyText";
 import { getIconByTag } from "../../shared/category.helpers";
+import LazyIcon from "../../../../lazy-components/icons/LazyIcon";
 
 type CategoryCard = {
   category: CategoryResponse;
@@ -37,7 +38,7 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
         <LazyHeader
           align="center"
           justify="space-between"
-          leftSection={<CategoryIcon icon={foundIcon} color={category.color} />}
+          leftSection={<LazyIcon icon={foundIcon} size="md" hasBackground backgroundColor={category.color} />}
           rightSection={
             <UpdateAndDeleteMenu onUpdate={() => onEdit(category)} onDelete={() => deleteCategory(category.id)} />
           }

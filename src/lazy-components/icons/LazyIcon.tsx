@@ -19,9 +19,8 @@ const sizeMap = {
 
 function LazyIcon({
   icon,
-  iconColor = "red",
+  iconColor = "white",
   size = "md",
-  hasBackground = false,
   backgroundColor = "transparent",
 }: LazyIconProps) {
   const iconSize = sizeMap[size];
@@ -29,7 +28,7 @@ function LazyIcon({
   return (
     <Paper
       p="xs"
-      bg={hasBackground ? backgroundColor : "transparent"}
+      bg={backgroundColor ? backgroundColor : "transparent"}
       radius="md"
       h={iconSize + 20}
       w={iconSize + 20}
