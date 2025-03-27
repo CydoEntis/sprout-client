@@ -6,10 +6,9 @@ import { useGetAllCategories } from "../../../category/services/get-all-categori
 type CreateTaskListWithCategoryModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  categoryId: number;
 };
 
-function CreateTaskListWithCategoryModal({ isOpen, onClose, categoryId }: CreateTaskListWithCategoryModalProps) {
+function CreateTaskListWithCategoryModal({ isOpen, onClose }: CreateTaskListWithCategoryModalProps) {
   const { data: categories } = useGetAllCategories();
   console.log(categories);
 
@@ -28,7 +27,7 @@ function CreateTaskListWithCategoryModal({ isOpen, onClose, categoryId }: Create
       onClose={handleClose}
       title="Create a New Task List"
     >
-      <CreateTaskListWithCategoryForm onClose={handleClose} categories={categories || []} categoryId={categoryId} />
+      <CreateTaskListWithCategoryForm onClose={handleClose} categories={categories || []} />
     </Modal>
   );
 }

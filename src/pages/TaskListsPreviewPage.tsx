@@ -27,7 +27,6 @@ function TaskListPage({ taskLists }: TaskListPage) {
       <CreateTaskListWithCategoryModal
         isOpen={isCreateTaskListWithCategoryModalOpened}
         onClose={onCloseCreateTaskListWithCategoryModal}
-        categoryId={categoryDetails.id}
       />
       <LazyHeader
         leftSection={

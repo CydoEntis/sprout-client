@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Group, Stack, TextInput, Textarea, Select, Switch, Flex, Text } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
-import { motion, AnimatePresence } from "framer-motion"; // ✅ Import Framer Motion
+import { AnimatePresence } from "framer-motion"; // ✅ Import Framer Motion
 import { useCreateTaskListMutation } from "../../services/task-list/create-task-list.service";
 import { createTaskListSchema } from "../../shared/tasks.schemas";
 import LazyColorPickerMenu from "../../../../lazy-components/color-picker/LazyColorPickerMenu";
@@ -11,14 +11,14 @@ import { validIcons, validIconTags } from "../../../../util/constants/valid-icon
 import { useCreateCategory } from "../../../category/services/create-category.service";
 import { Category } from "../../../category/shared/category.types";
 import { CreateTaskList } from "../../shared/tasks.types";
+import LazyFadeInAnimation from "../../../../lazy-components/animations/LazyFadeInAnimation";
 
 export type CreateTaskListWithCategoryFormProps = {
   categories: Category[];
   onClose: () => void;
-  categoryId: number;
 };
 
-const CreateTaskListWithCategoryForm = ({ categories, onClose, categoryId }: CreateTaskListWithCategoryFormProps) => {
+const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListWithCategoryFormProps) => {
   const createTaskList = useCreateTaskListMutation();
   const createCategory = useCreateCategory();
   const [createNewCategory, setCreateNewCategory] = useState(false);
@@ -35,20 +35,20 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose, categoryId }: Cre
     },
   });
 
-  const handleSubmit = async (values: CreateTaskList) => {
+  const handleSubmit = async (data: CreateTaskList) => {
     try {
       if (createNewCategory) {
-        const newCategory = await createCategory.mutateAsync({
-          name: values.categoryName,
+        await createCategory.mutateAsync({
+          name: data.categoryName,
           color: selectedColor,
           tag: selectedIcon.tag as (typeof validIconTags)[number],
         });
       }
 
       await createTaskList.mutateAsync({
-        name: values.name,
-        description: values.description,
-        categoryName: "test",
+        name: data.name,
+        description: data.description,
+        categoryName: data.categoryName,
       });
       form.reset();
       onClose();
@@ -69,16 +69,9 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose, categoryId }: Cre
           />
         </Flex>
 
-        {/* ✅ Animate category selection switch */}
         <AnimatePresence mode="wait" initial={false}>
           {createNewCategory ? (
-            <motion.div
-              key="new-category-form"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
+            <LazyFadeInAnimation animationKey="new-category-form">
               <Flex gap={16} w="100%">
                 <LazyColorPickerMenu
                   withBorder
@@ -103,15 +96,9 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose, categoryId }: Cre
                   {...form.getInputProps("categoryName")}
                 />
               </Flex>
-            </motion.div>
+            </LazyFadeInAnimation>
           ) : (
-            <motion.div
-              key="existing-category-form"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
+            <LazyFadeInAnimation animationKey="existing-category-form">
               <Select
                 classNames={{
                   input: "input",
@@ -121,7 +108,7 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose, categoryId }: Cre
                 data={categories.map((cat) => ({ value: cat.id.toString(), label: cat.name }))}
                 {...form.getInputProps("categoryId")}
               />
-            </motion.div>
+            </LazyFadeInAnimation>
           )}
         </AnimatePresence>
 
