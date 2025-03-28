@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useListState } from "@mantine/hooks";
 import { useParams } from "@tanstack/react-router";
 import { useCreateTaskListItemMutation } from "../services/task-list-items/create-task-list-item.service";
@@ -16,6 +16,10 @@ export function useTaskListItemHandlers(initialItems: TaskListItem[]) {
     isCreating: false,
   });
 
+  useEffect(() => {
+    taskListItemHandlers.setState(initialItems);
+  }, [initialItems, taskListItemHandlers]);
+
   const createTaskListItem = useCreateTaskListItemMutation();
   const updateTaskListItem = useUpdateTaskListItemMutation();
   const reorderTaskListItems = useReorderTaskListItemsMutation();
@@ -24,7 +28,7 @@ export function useTaskListItemHandlers(initialItems: TaskListItem[]) {
 
   const createItem = async (newItem: CreateTaskListItem) => {
     const result = await createTaskListItem.mutateAsync(newItem);
-    taskListItemHandlers.append(result.item as TaskListItem);
+    taskListItemHandlers.append(result.taskListItemDetail as TaskListItem);
   };
 
   const updateItem = async (updatedItem: UpdateTaskListItem) => {

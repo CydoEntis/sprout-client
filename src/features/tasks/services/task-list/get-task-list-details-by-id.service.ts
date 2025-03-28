@@ -12,6 +12,7 @@ export const getTaskListByIdQueryOptions = (taskListId: number) =>
     queryKey: ["task-lists", taskListId],
     queryFn: () => getTaskListDetailsById(taskListId),
     enabled: !!taskListId,
+    staleTime: 0,
   });
 
 export const useGetAllTaskListsForCategory = (taskListId: number) => {

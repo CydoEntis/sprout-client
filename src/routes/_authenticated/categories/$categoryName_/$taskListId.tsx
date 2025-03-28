@@ -22,12 +22,6 @@ function RouteComponent() {
   console.log(taskList);
 
   return (
-    // <TaskListDetailsCard
-    //   taskListDetails={taskListDetails}
-    //   onOpenAddTask={function (): void {
-    //     throw new Error("Function not implemented.");
-    //   }}
-    // />
     <TaskListDetailsPage taskList={taskList} />
   );
 }

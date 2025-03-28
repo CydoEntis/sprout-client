@@ -27,6 +27,7 @@ function TaskListDetailsPage({ taskList }: TaskListDetailsPageProps) {
   } = useTaskListItemHandlers(taskList.taskListItems);
   const [isModalOpen, { open: openModal, close: closeModal }] = useDisclosure(false);
 
+
   console.log("ITEMS: ", taskListItems);
   return (
     <>
