@@ -23,15 +23,15 @@ function ProtectedLayout() {
       links: [
         {
           label: "Today",
-          to: `/category/shopping`,
-          routePattern: "/category/$categoryName",
+          to: `/task-list/today`,
+          routePattern: "/task-list/today",
           icon: <Star />,
           iconColor: "#F08C00",
         },
         {
           label: "Coming Up",
-          to: `/category/shopping`,
-          routePattern: "/category/$categoryName",
+          to: `/task-list/coming-up`,
+          routePattern: "/task-list/coming-up",
           icon: <Calendar />,
           iconColor: "#E03131",
         },
@@ -49,8 +49,6 @@ function ProtectedLayout() {
       links:
         categories?.map((category) => ({
           label: category.name,
-          to: `/categories/${category.name.toLocaleLowerCase()}`,
-          // routePattern: "/category/$categoryName",
           icon: getIconByTag(category.tag),
           iconColor: category.color,
           childLinks: category.recentTasklists.map((tasklist) => ({

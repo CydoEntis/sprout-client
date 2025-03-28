@@ -10,8 +10,6 @@ type LazySidebarNavLinkListProps = {
 } & NavLinkProps;
 
 function LazySidebarNavLinkList({ navList, childLinkProps = {}, ...rest }: LazySidebarNavLinkListProps) {
-  const matchRoute = useMatchRoute();
-
   return (
     <Stack gap={16}>
       {navList.map((list, listIndex) => (
@@ -24,8 +22,8 @@ function LazySidebarNavLinkList({ navList, childLinkProps = {}, ...rest }: LazyS
 
           <Stack gap={8} mt={8}>
             {list.links.map((link, linkIndex) => {
-              const isParentActive = !!matchRoute({ to: link.to as typeof link.routePattern });
-
+              const isParentActive = location.pathname === link.to;
+              console.log(isParentActive);
               return (
                 <div key={linkIndex}>
                   <NavLink
@@ -57,9 +55,7 @@ function LazySidebarNavLinkList({ navList, childLinkProps = {}, ...rest }: LazyS
                     {link.childLinks && link.childLinks.length > 0 && (
                       <Stack gap={8} py={8}>
                         {link.childLinks.map((childLink) => {
-                          const isChildActive = !!matchRoute({
-                            to: childLink.to as typeof childLink.routePattern,
-                          });
+                          const isChildActive = location.pathname === childLink.to;
 
                           return (
                             <NavLink

@@ -11,7 +11,7 @@ type ChildLink = {
 
 export type LazyNavLinkItem = {
   label: string;
-  to: string;
+  to?: string;
   routePattern?: string;
   icon?: React.ReactNode;
   iconColor?: string;
