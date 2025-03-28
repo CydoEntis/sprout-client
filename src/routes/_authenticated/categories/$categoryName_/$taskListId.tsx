@@ -20,6 +20,5 @@ function RouteComponent() {
   const { data: tasklist } = useSuspenseQuery(getTasklistByIdQueryOptions(Number(tasklistId)));
   console.log(tasklist);
 
-  // return <TasklistDetailsPage tasklist={tasklist} />
-  return <p>Test</p>;
+  return <TasklistDetailsPage tasklist={tasklist} />;
 }

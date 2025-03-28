@@ -1,10 +1,10 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import endpoints from "../../../../api/endpoints";
 import { apiRequest } from "../../../../api/apiRequest";
-import { Tasklist } from "../../shared/tasks.types";
+import { TasklistDetails } from "../../shared/tasks.types";
 
-export const getTasklistDetailsById = async (id: number): Promise<Tasklist> => {
-  return apiRequest<Tasklist>("get", `${endpoints.Tasklist}/${id}`);
+export const getTasklistDetailsById = async (id: number): Promise<TasklistDetails> => {
+  return apiRequest<TasklistDetails>("get", `${endpoints.Tasklist}/${id}`);
 };
 
 export const getTasklistByIdQueryOptions = (TasklistId: number) =>

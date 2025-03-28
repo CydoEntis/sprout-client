@@ -28,13 +28,6 @@ export type CategoryWithTasklists = {
   tag: string;
   color: string;
   tasklistsInfo: TasklistInfo[];
-}
-
-type CategoryInfo = {
-  id: number;
-  name: string;
-  tag: string;
-  color: string;
 };
 
 export type TasklistInfo = {
@@ -49,24 +42,25 @@ export type TasklistInfo = {
   taskCompletionPercentage: number;
 };
 
-export type CategoryAndTasklistInfo = {
-  categoryInfo: CategoryInfo;
-  tasklistInfo: TasklistInfo;
-}
-
-
-export type Tasklist = {
+export type TasklistDetails = {
   id: number;
   name: string;
   description: string;
-  categoryName: string;
-  isCompleted: boolean;
-  members: Member[];
-  tasklistItems: TasklistItem[];
-  totalTasksCount: number;
-  completedTasksCount: number;
   createdAt: Date;
   updatedAt: Date;
+  totalTasksCount: number;
+  completedTasksCount: number;
+  members: Member[];
+  tasklistItems: TasklistItem[];
+  categoryColor: string;
+};
+
+export type CategoryWithTasklist = {
+  id: number;
+  name: string;
+  tag: string;
+  color: string;
+  tasklistsInfo: TasklistInfo;
 };
 
 export type CreateTasklistWithCategory = z.infer<typeof createTasklistWithCategorySchema>;

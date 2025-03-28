@@ -3,13 +3,12 @@ import UpsertTasklistItem from "../components/UpsertTasklistItem";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import ListItem from "../components/list-item/ListItem";
 import UpdateTasklistModal from "../components/UpdateTasklistModal";
-import TasklistDetails from "../components/task-list-details/TasklistDetails";
 import { useTasklistItemHandlers } from "../hooks/useTasklistItemHandlers";
 import { Divider, Paper, Stack, Title } from "@mantine/core";
-import { Tasklist } from "../shared/tasks.types";
+import { TasklistDetails } from "../shared/tasks.types";
 
 type TasklistDetailsPageProps = {
-  tasklist: Tasklist;
+  tasklist: TasklistDetails;
 };
 
 function TasklistDetailsPage({ tasklist }: TasklistDetailsPageProps) {
@@ -30,7 +29,7 @@ function TasklistDetailsPage({ tasklist }: TasklistDetailsPageProps) {
   return (
     <>
       <Title>{tasklist.name}</Title>
-      {/* <Divider my={16} size="md" color={tasklist.categoryDetails.color} /> */}
+      <Divider my={16} size="md" color={tasklist.categoryColor} />
 
       <DragDropContext onDragEnd={reorderItems}>
         <Droppable droppableId="task-list" direction="vertical">
