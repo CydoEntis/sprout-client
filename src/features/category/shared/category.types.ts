@@ -32,7 +32,7 @@ export type CategoryAndRecentTaskLists = Category & {
 };
 
 export type CategoryWithTaskListCount = Category & {
-  taskListCount: number;
+  totalTaskLists: number;
 };
 
 export type CreatedCategory = {

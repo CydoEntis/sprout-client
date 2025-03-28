@@ -1,16 +1,17 @@
 import { Box, Button, Title, SimpleGrid } from "@mantine/core";
 import { Plus } from "lucide-react";
 import { useDisclosure } from "@mantine/hooks";
-import { TaskListPreview } from "../features/tasks/shared/tasks.types";
+import { TasklistOverview } from "../features/tasks/shared/tasks.types";
 import TaskListCard from "../features/tasks/components/task-card/TaskListCard";
 import LazyHeader from "../lazy-components/header/LazyHeader";
 import { useParams } from "@tanstack/react-router";
 import LazyIcon from "../lazy-components/icons/LazyIcon";
 import { getIconByTag } from "../features/category/shared/category.helpers";
 import CreateTaskListWithCategoryModal from "../features/tasks/components/create-task-list/CreateTaskListWithCategoryModal";
+import { ValidIconTags } from "../util/types/valid-icon.types";
 
 type TaskListPage = {
-  taskLists: TaskListPreview[];
+  taskLists: TasklistOverview[];
 };
 
 function TaskListPage({ taskLists }: TaskListPage) {
@@ -20,7 +21,11 @@ function TaskListPage({ taskLists }: TaskListPage) {
     { open: onOpenCreateTaskListWithCategoryModal, close: onCloseCreateTaskListWithCategoryModal },
   ] = useDisclosure(false);
 
-  const categoryDetails = taskLists[0].categoryDetail;
+  const categoryDetails = taskLists[0].categoryDetails;
+  console.log("Test: ", taskLists[0]); // works
+  console.log("Test: ", taskLists[0].categoryDetails); // doesnt work
+
+  const filteredTaskLists = taskLists.filter((taskList) => taskList.taskListDetails);
 
   return (
     <Box mt={32}>
@@ -31,7 +36,7 @@ function TaskListPage({ taskLists }: TaskListPage) {
       <LazyHeader
         leftSection={
           <LazyIcon
-            icon={getIconByTag(categoryDetails.tag)}
+            icon={getIconByTag(categoryDetails.tag as ValidIconTags)}
             size="xl"
             iconColor="white"
             hasBackground
@@ -51,11 +56,19 @@ function TaskListPage({ taskLists }: TaskListPage) {
       >
         <Title>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</Title>
       </LazyHeader>
-      <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} mt={32}>
-        {taskLists.map((taskList) => (
-          <TaskListCard key={taskList.id} taskList={taskList} />
-        ))}
-      </SimpleGrid>
+
+      {/* Only render the grid if there are valid task lists */}
+      {filteredTaskLists.length > 0 ? (
+        <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} mt={32}>
+          {filteredTaskLists.map((taskList) => (
+            <TaskListCard key={taskList.taskListDetails.id} taskList={taskList} />
+          ))}
+        </SimpleGrid>
+      ) : (
+        <Title ta="center" mt={32} c="dimmed">
+          No task lists available
+        </Title>
+      )}
     </Box>
   );
 }

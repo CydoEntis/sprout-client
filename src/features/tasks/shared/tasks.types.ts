@@ -29,14 +29,37 @@ type CategoryDetail = {
   color: string;
 };
 
+type CategoryDetails = {
+  id: number;
+  name: string;
+  tag: string;
+  color: string;
+};
+
+export type TasklistDetails = {
+  id: number;
+  name: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+  members: Member[];
+  totalTasksCount: number;
+  completedTasksCount: number;
+  taskCompletionPercentage: number;
+};
+
+export type TasklistOverview = {
+  categoryDetails: CategoryDetails;
+  taskListDetails: TasklistDetails;
+}
+
 export type TaskListPreview = {
   id: number;
   name: string;
   description: string;
-  categoryDetail: CategoryDetail;
   createdAt: Date;
   updatedAt: Date;
-  categoryName: string;
+  categoryDetail: CategoryDetail;
   members: Member[];
   totalTasksCount: number;
   completedTasksCount: number;

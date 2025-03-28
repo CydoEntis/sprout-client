@@ -1,10 +1,10 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { apiRequest } from "../../../api/apiRequest";
 import endpoints from "../../../api/endpoints";
-import { TaskListPreview } from "../../tasks/shared/tasks.types";
+import { TasklistOverview } from "../../tasks/shared/tasks.types";
 
-const getAllTaskListsForCategory = async (categoryName: string): Promise<TaskListPreview[]> => {
-  return apiRequest<TaskListPreview[]>("get", `${endpoints.category}/${categoryName}`);
+const getAllTaskListsForCategory = async (categoryName: string): Promise<TasklistOverview[]> => {
+  return apiRequest<TasklistOverview[]>("get", `${endpoints.category}/${categoryName}`);
 };
 
 export const getAllTaskListsForCategoryQueryOptions = (categoryName: string) =>
