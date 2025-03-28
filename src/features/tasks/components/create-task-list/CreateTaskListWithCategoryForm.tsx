@@ -35,8 +35,6 @@ const CreateTasklistWithCategoryForm = ({ categories, onClose }: CreateTasklistW
     },
   });
 
-  console.log(form.errors);
-
   const handleSubmit = async (data: CreateTasklistWithCategory) => {
     try {
       const payload: CreateTasklistWithCategory = createNewCategory
@@ -123,13 +121,13 @@ const CreateTasklistWithCategoryForm = ({ categories, onClose }: CreateTasklistW
           classNames={{ input: "input" }}
           label="Task List Name"
           placeholder="Enter name"
-          {...form.getInputProps("TasklistName")}
+          {...form.getInputProps("tasklistName")}
         />
         <Textarea
           classNames={{ input: "input" }}
           label="Description"
           placeholder="Enter description"
-          {...form.getInputProps("TasklistDescription")}
+          {...form.getInputProps("tasklistDescription")}
         />
 
         <Group justify="end">

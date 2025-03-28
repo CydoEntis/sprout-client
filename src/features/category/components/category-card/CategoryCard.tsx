@@ -17,7 +17,6 @@ type CategoryCard = {
 function CategoryCard({ category, onEdit }: CategoryCard) {
   const { mutateAsync: deleteCategory } = useDeleteCategory();
   const foundIcon = getIconByTag(category.tag);
-  console.log(category)
 
   return (
     <LazyCard

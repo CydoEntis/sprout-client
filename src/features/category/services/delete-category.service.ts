@@ -12,11 +12,16 @@ export function useDeleteCategory() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (categoryId: number): Promise<DeletedCategory> => {
+      console.log(categoryId);
       return await deleteCategory(categoryId);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: ["categories", "list"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["categories", "list-with-count"],
       });
 
       notifications.show({
