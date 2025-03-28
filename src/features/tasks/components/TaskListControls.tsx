@@ -1,22 +1,22 @@
 import { useNavigate } from "@tanstack/react-router";
 import React from "react";
-import { useDeleteTaskListMutation } from "../services/task-list/delete-task-list.service";
+import { useDeleteTasklistMutation } from "../services/task-list/delete-task-list.service";
 
-type TaskListControlsProps = {
-  taskListId: number;
+type TasklistControlsProps = {
+  TasklistId: number;
   categoryName: string;
 };
 
-function TaskListControls({ taskListId, categoryName }: TaskListControlsProps) {
+function TasklistControls({ TasklistId, categoryName }: TasklistControlsProps) {
   const navigate = useNavigate();
 
-  const deleteTaskList = useDeleteTaskListMutation();
+  const deleteTasklist = useDeleteTasklistMutation();
   const onDeleteHandler = async () => {
-    await deleteTaskList.mutateAsync(taskListId);
+    await deleteTasklist.mutateAsync(TasklistId);
     navigate({ to: `/categories/${categoryName}` });
   };
 
-  return <div>TaskListControls</div>;
+  return <div>TasklistControls</div>;
 }
 
-export default TaskListControls;
+export default TasklistControls;

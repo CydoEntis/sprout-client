@@ -1,13 +1,13 @@
 import { Stack, Avatar, Text } from "@mantine/core";
 import { Plus } from "lucide-react";
-import { Member } from "../../shared/tasks.types";
+import { Member } from "../../../shared/shared.types";
 
 type Props = {
   members: Member[];
   onManageMembers: () => void;
 };
 
-function TaskListMembers({ members, onManageMembers }: Props) {
+function TasklistMembers({ members, onManageMembers }: Props) {
   return (
     <Stack mt={16} gap={4}>
       <Text size="xs">Members</Text>
@@ -23,4 +23,4 @@ function TaskListMembers({ members, onManageMembers }: Props) {
   );
 }
 
-export default TaskListMembers;
+export default TasklistMembers;

@@ -1,35 +1,34 @@
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { Stack } from "@mantine/core";
-import { TaskListItemDetail } from "../shared/task-list-details.types";
-import UpsertTaskListItem from "./UpsertTaskListItem";
-import { TaskListItem } from "./TaskListDetailsCard";
+import { TasklistItemDetail } from "../shared/task-list-details.types";
+import UpsertTasklistItem from "./UpsertTasklistItem";
+import { TasklistItem } from "./TasklistDetailsCard";
 import ListItem from "./list-item/ListItem";
 import { useListState } from "@mantine/hooks";
-import { useReorderTaskListItemsMutation } from "../services/task-list-items/reorder-task-list-item.service";
+import { useReorderTasklistItemsMutation } from "../services/task-list-items/reorder-task-list-item.service";
 import { useParams } from "@tanstack/react-router";
-import { useUpdateTaskListStatusItemMutation } from "../services/task-list-items/update-status-task-list.service";
-import { useDeleteTaskListItemMutation } from "../services/task-list-items/delete-task-list-item.service";
+import { useUpdateTasklistStatusItemMutation } from "../services/task-list-items/update-status-task-list.service";
+import { DeleteTasklistItemRequest, useDeleteTasklistItemMutation } from "../services/task-list-items/delete-task-list-item.service";
 
-type TaskListItemListProps = {
-  taskListItems: TaskListItemDetail[];
-  onEdit: (item: TaskListItem) => void;
-  itemToEdit: TaskListItem | null;
+type TasklistItemListProps = {
+  TasklistItems: TasklistItemDetail[];
+  onEdit: (item: TasklistItem) => void;
+  itemToEdit: TasklistItem | null;
   onCancel: () => void;
 };
 
-function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit }: TaskListItemListProps) {
-  const { taskListId } = useParams({ from: "/_authenticated/categories/$categoryName_/$taskListId" });
-  const [state, handlers] = useListState(taskListItems);
-  const reorderTaskListItems = useReorderTaskListItemsMutation();
-  const updateStatusTaskListItem = useUpdateTaskListStatusItemMutation(Number(taskListId));
-  const deleteTaskListItem = useDeleteTaskListItemMutation(Number(taskListId));
+function TasklistItemList({ TasklistItems, onEdit, onCancel: onClose, itemToEdit }: TasklistItemListProps) {
+  const { tasklistId } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
+  const [state, handlers] = useListState(TasklistItems);
+  const reorderTasklistItems = useReorderTasklistItemsMutation();
+  const updateStatusTasklistItem = useUpdateTasklistStatusItemMutation();
+  const deleteTasklistItem = useDeleteTasklistItemMutation();
 
-  const handleTaskListItemCreation = (newItem: TaskListItemDetail) => {
-    handlers.append(newItem); 
+  const handleTasklistItemCreation = (newItem: TasklistItemDetail) => {
+    handlers.append(newItem);
   };
-  
 
-  const updateTaskListItemHandler = (updatedItem: TaskListItem) => {
+  const updateTasklistItemHandler = (updatedItem: TasklistItem) => {
     handlers.setState((prev) => prev.map((task) => (task.id === updatedItem.id ? updatedItem : task)));
   };
 
@@ -48,8 +47,8 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
       position: index,
     }));
 
-    await reorderTaskListItems.mutateAsync({
-      taskListId: Number(taskListId),
+    await reorderTasklistItems.mutateAsync({
+      TasklistId: Number(tasklistId),
       items: reorderedItems,
     });
   };
@@ -57,16 +56,16 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
   const handleStatusChange = async (id: number, isCompleted: boolean) => {
     handlers.setState((prev) => prev.map((item) => (item.id === id ? { ...item, isCompleted } : item)));
 
-    await updateStatusTaskListItem.mutateAsync({
+    await updateStatusTasklistItem.mutateAsync({
       id,
       isCompleted,
     });
   };
 
-  const handleTaskListItemDeletion = async (taskListItemId: number) => {
-    await deleteTaskListItem.mutateAsync(taskListItemId);
+  const handleTasklistItemDeletion = async (tasklistItemId: number) => {
+    await deleteTasklistItem.mutateAsync(tasklistItemId);
 
-    handlers.setState((prev) => prev.filter((item) => item.id !== taskListItemId));
+    handlers.setState((prev) => prev.filter((item) => item.id !== tasklistItemId));
   };
 
   return (
@@ -86,17 +85,17 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
                   >
                     <div {...provided.dragHandleProps} onDoubleClick={() => onEdit(item)}>
                       {itemToEdit?.id === item.id ? (
-                        <UpsertTaskListItem
+                        <UpsertTasklistItem
                           isActive={true}
-                          taskListId={item.id}
-                          taskListItem={item}
+                          TasklistId={item.id}
+                          TasklistItem={item}
                           onClose={onClose}
-                          onUpdate={updateTaskListItemHandler}
+                          onUpdate={updateTasklistItemHandler}
                         />
                       ) : (
                         <ListItem
                           item={item}
-                          onDelete={() => handleTaskListItemDeletion(item.id)}
+                          onDelete={() => handleTasklistItemDeletion(item.id)}
                           onChange={handleStatusChange}
                         />
                       )}
@@ -113,4 +112,4 @@ function TaskListItemList({ taskListItems, onEdit, onCancel: onClose, itemToEdit
   );
 }
 
-export default TaskListItemList;
+export default TasklistItemList;

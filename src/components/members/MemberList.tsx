@@ -1,5 +1,5 @@
 import { Avatar } from "@mantine/core";
-import { Member } from "../../features-new/task-list/shared/task-list.types";
+import { Member } from "../../features/shared/shared.types";
 
 type MemberListProps = {
   members: Member[];
@@ -10,7 +10,7 @@ function MemberList({ members, size }: MemberListProps) {
   return (
     <Avatar.Group>
       {members.map((member) => (
-        <Avatar key={member.userId} size={size} name={member.name} color="initials" />
+        <Avatar key={member.id} size={size} name={member.name} color="initials" />
       ))}
     </Avatar.Group>
   );

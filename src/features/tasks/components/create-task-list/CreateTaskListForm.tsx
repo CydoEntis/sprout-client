@@ -2,21 +2,21 @@ import { Button, Group, Stack, TextInput, Textarea } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { ErrorResponse } from "../../../../api/errors/errror.types";
 import useFormErrorHandler from "../../../../hooks/useFormErrorHandler";
-import { useCreateTaskListMutation } from "../../services/task-list/create-task-list.service";
-import { createTaskListSchema } from "../../shared/tasks.schemas";
-import { CreateTaskList } from "../../shared/tasks.types";
+import { useCreateTasklistMutation } from "../../services/task-list/create-task-list.service";
+import { createTasklistSchema } from "../../shared/tasks.schemas";
+import { CreateTasklist } from "../../shared/tasks.types";
 
-type CreateTaskListFormProps = {
+type CreateTasklistFormProps = {
   categoryName: string;
   onClose: () => void;
 };
 
-const CreateTaskListForm = ({ categoryName, onClose }: CreateTaskListFormProps) => {
-  const createTaskList = useCreateTaskListMutation();
-  const { handleFormErrors } = useFormErrorHandler<CreateTaskList>();
+const CreateTasklistForm = ({ categoryName, onClose }: CreateTasklistFormProps) => {
+  const createTasklist = useCreateTasklistMutation();
+  const { handleFormErrors } = useFormErrorHandler<CreateTasklist>();
 
-  const form = useForm<CreateTaskList>({
-    validate: zodResolver(createTaskListSchema),
+  const form = useForm<CreateTasklist>({
+    validate: zodResolver(createTasklistSchema),
     initialValues: {
       name: "",
       description: "",
@@ -24,9 +24,9 @@ const CreateTaskListForm = ({ categoryName, onClose }: CreateTaskListFormProps) 
     },
   });
 
-  const handleSubmit = async (data: CreateTaskList) => {
+  const handleSubmit = async (data: CreateTasklist) => {
     try {
-      await createTaskList.mutateAsync({ ...data, categoryName });
+      await createTasklist.mutateAsync({ ...data, categoryName });
       form.reset();
       onClose();
     } catch (e) {
@@ -64,4 +64,4 @@ const CreateTaskListForm = ({ categoryName, onClose }: CreateTaskListFormProps) 
   );
 };
 
-export default CreateTaskListForm;
+export default CreateTasklistForm;

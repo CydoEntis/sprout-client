@@ -5,7 +5,7 @@ import InvitedMembers from "./InvitedMembers";
 import { Category } from "../../category/shared/category.types";
 import { useInvite } from "../hooks/useInvite";
 
-// import AssignTaskListToCategoryForm from "./AssignTaskListToCategoryForm";
+// import AssignTasklistToCategoryForm from "./AssignTasklistToCategoryForm";
 
 type InviteCardProps = {
   inviteToken: string;
@@ -23,9 +23,9 @@ function InviteCard({ inviteToken, categories }: InviteCardProps) {
     <Card maw={500} mx="auto" withBorder radius="md" shadow="md">
       <Stack>
         <InviteHeader inviteDate={invite.inviteDate} />
-        <InviteDetails inviter={invite.inviter} taskListName={invite.taskListName} />
+        <InviteDetails inviter={invite.inviter} TasklistName={invite.TasklistName} />
         <InvitedMembers members={members} />
-        {/* <AssignTaskListToCategoryForm categories={categories} inviteToken={inviteToken} /> */}
+        {/* <AssignTasklistToCategoryForm categories={categories} inviteToken={inviteToken} /> */}
       </Stack>
     </Card>
   );

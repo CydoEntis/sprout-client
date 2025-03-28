@@ -18,12 +18,12 @@
 // import { useDeclineInviteMutation } from "../services/decline-invite.service";
 // import { useNavigate } from "@tanstack/react-router";
 
-// type AssignTaskListToCategoryFormProps = {
+// type AssignTasklistToCategoryFormProps = {
 //   categories: Category[];
 //   inviteToken: string;
 // };
 
-// function AssignTaskListToCategoryForm({ inviteToken, categories }: AssignTaskListToCategoryFormProps) {
+// function AssignTasklistToCategoryForm({ inviteToken, categories }: AssignTasklistToCategoryFormProps) {
 //   const [isCreatingCategory, setIsCreatingCategory] = useState(false);
 //   const [selectedIcon, setSelectedIcon] = useState<CategoryIcon>(categoryIcons[0]);
 //   const [selectedColor, setSelectedColor] = useState<CategoryColor>(categoryColors[0]);
@@ -89,7 +89,7 @@
 //         });
 //       }
 
-//       navigate({ to: `/categories/${response.categoryName.toLowerCase()}/${response.taskListId}` });
+//       navigate({ to: `/categories/${response.categoryName.toLowerCase()}/${response.TasklistId}` });
 //     } else {
 //       console.log("Form has errors:", result.errors);
 //     }
@@ -165,4 +165,4 @@
 //   );
 // }
 
-// export default AssignTaskListToCategoryForm;
+// export default AssignTasklistToCategoryForm;

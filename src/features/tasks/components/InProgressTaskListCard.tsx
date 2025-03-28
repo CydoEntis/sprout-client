@@ -1,24 +1,24 @@
 import { Stack, Title, Divider, Flex, Text } from "@mantine/core";
 import { Calendar } from "lucide-react";
-import { TaskListPreview } from "../shared/tasks.types";
-import TaskListMembers from "./TaskListMembers";
-import TaskListProgress from "./TaskListProgress";
+import { TasklistPreview } from "../shared/tasks.types";
+import TasklistMembers from "./TasklistMembers";
+import TasklistProgress from "./TasklistProgress";
 import LazyCard from "../../../lazy-components/card/LazyCard";
 import LazyDate from "../../../lazy-components/date/LazyDate";
 
-type TaskListCardProps = {
-  taskList: TaskListPreview;
+type TasklistCardProps = {
+  Tasklist: TasklistPreview;
 };
 
-function InProgressTaskListCard({ taskList }: TaskListCardProps) {
-  console.log(taskList);
+function InProgressTasklistCard({ Tasklist }: TasklistCardProps) {
+  console.log(Tasklist);
   return (
-    // <TaskListCard borderPos="bottom" color="lime" taskListId={taskList.id}>
-    <LazyCard p={12} bg="secondary" to={`/categories/${taskList.categoryName}/${taskList.id}`}>
+    // <TasklistCard borderPos="bottom" color="lime" TasklistId={Tasklist.id}>
+    <LazyCard p={12} bg="secondary" to={`/categories/${Tasklist.categoryName}/${Tasklist.id}`}>
       <Stack gap={8} pb={20}>
-        <Title size="lg">{taskList.name}</Title>
+        <Title size="lg">{Tasklist.name}</Title>
 
-        <LazyDate leftSection={<Calendar size={18} />} size="xs" c="dimmed" date={taskList.createdAt} format="eu" />
+        <LazyDate leftSection={<Calendar size={18} />} size="xs" c="dimmed" date={Tasklist.createdAt} format="eu" />
 
         {/* <Group gap={4} align="center">
           <Calendar size={12} />
@@ -32,15 +32,15 @@ function InProgressTaskListCard({ taskList }: TaskListCardProps) {
         <Text c="dimmed" size="sm">
           Description:
         </Text>
-        <Text size="sm">{taskList.description}</Text>
+        <Text size="sm">{Tasklist.description}</Text>
       </Stack>
       <Flex w="100%" justify="space-between">
-        <TaskListMembers members={taskList.members} />
-        <TaskListProgress count={taskList.totalTasksCount} percentage={taskList.taskCompletionPercentage} />
+        <TasklistMembers members={Tasklist.members} />
+        <TasklistProgress count={Tasklist.totalTasksCount} percentage={Tasklist.taskCompletionPercentage} />
       </Flex>
     </LazyCard>
-    // </TaskListCard>
+    // </TasklistCard>
   );
 }
 
-export default InProgressTaskListCard;
+export default InProgressTasklistCard;

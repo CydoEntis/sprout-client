@@ -1,25 +1,25 @@
 import { Group, Title, Text, Stack } from "@mantine/core";
-import { TaskList } from "../../shared/tasks.types";
+import { Tasklist } from "../../shared/tasks.types";
 import UpdateAndDeleteMenu from "../../../../lazy-components/menus/LazyEditDeleteMenu";
-import TaskListMembers from "../TaskListMembers";
+import TasklistMembers from "../TasklistMembers";
 
 type Props = {
-  taskList: TaskList;
+  Tasklist: Tasklist;
   onUpdate: () => void;
   onDelete: () => void;
 };
 
-function TaskListDetails({ taskList, onUpdate, onDelete }: Props) {
+function TasklistDetails({ Tasklist, onUpdate, onDelete }: Props) {
   return (
     <Stack gap={2} mb={16}>
       <Group justify="space-between" align="center">
-        <Title>{taskList.name}</Title>
+        <Title>{Tasklist.name}</Title>
         <UpdateAndDeleteMenu onUpdate={onUpdate} onDelete={onDelete} />
       </Group>
-      <Text c="dimmed">{taskList.description}</Text>
-      <TaskListMembers members={taskList.members} />
+      <Text c="dimmed">{Tasklist.description}</Text>
+      <TasklistMembers members={Tasklist.members} />
     </Stack>
   );
 }
 
-export default TaskListDetails;
+export default TasklistDetails;

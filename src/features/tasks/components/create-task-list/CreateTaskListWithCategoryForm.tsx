@@ -12,13 +12,13 @@ import { createTasklistWithCategorySchema } from "../../shared/tasks.schemas";
 import { CreateTasklistWithCategory } from "../../shared/tasks.types";
 import { useCreateTasklistWithCategoryMutation } from "../../services/task-list/create-task-list-with-category.service";
 
-export type CreateTaskListWithCategoryFormProps = {
+export type CreateTasklistWithCategoryFormProps = {
   categories: Category[];
   onClose: () => void;
 };
 
-const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListWithCategoryFormProps) => {
-  const createCategoryWithTaskList = useCreateTasklistWithCategoryMutation();
+const CreateTasklistWithCategoryForm = ({ categories, onClose }: CreateTasklistWithCategoryFormProps) => {
+  const createCategoryWithTasklist = useCreateTasklistWithCategoryMutation();
   const [createNewCategory, setCreateNewCategory] = useState(false);
   const [selectedColor, setSelectedColor] = useState(validColors[0]);
   const [selectedIcon, setSelectedIcon] = useState(validIcons[0]);
@@ -29,8 +29,8 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListW
       categoryName: "",
       categoryTag: validIconTags[0],
       categoryColor: validColors[0],
-      taskListName: "",
-      taskListDescription: "",
+      tasklistName: "",
+      tasklistDescription: "",
       categoryId: undefined,
     },
   });
@@ -44,16 +44,16 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListW
             categoryName: data.categoryName!,
             categoryTag: validIcons[0].tag as (typeof validIconTags)[number],
             categoryColor: selectedColor,
-            taskListName: data.taskListName,
-            taskListDescription: data.taskListDescription,
+            tasklistName: data.tasklistName,
+            tasklistDescription: data.tasklistDescription,
           }
         : {
             categoryId: data.categoryId!,
-            taskListName: data.taskListName,
-            taskListDescription: data.taskListDescription,
+            tasklistName: data.tasklistName,
+            tasklistDescription: data.tasklistDescription,
           };
 
-      await createCategoryWithTaskList.mutateAsync(payload);
+      await createCategoryWithTasklist.mutateAsync(payload);
       form.reset();
       onClose();
     } catch (e) {
@@ -123,13 +123,13 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListW
           classNames={{ input: "input" }}
           label="Task List Name"
           placeholder="Enter name"
-          {...form.getInputProps("taskListName")}
+          {...form.getInputProps("TasklistName")}
         />
         <Textarea
           classNames={{ input: "input" }}
           label="Description"
           placeholder="Enter description"
-          {...form.getInputProps("taskListDescription")}
+          {...form.getInputProps("TasklistDescription")}
         />
 
         <Group justify="end">
@@ -142,4 +142,4 @@ const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListW
   );
 };
 
-export default CreateTaskListWithCategoryForm;
+export default CreateTasklistWithCategoryForm;

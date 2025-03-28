@@ -2,26 +2,24 @@ import { createFileRoute, useParams } from "@tanstack/react-router";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import TaskListDetailsPage from "../../../../features/tasks/pages/TaskListPage";
-import { getTaskListByIdQueryOptions } from "../../../../features/tasks/services/task-list/get-task-list-details-by-id.service";
+import { getTasklistByIdQueryOptions } from "../../../../features/tasks/services/task-list/get-task-list-details-by-id.service";
+import TasklistDetailsPage from "../../../../features/tasks/pages/TaskListPage";
 
-
-export const Route = createFileRoute("/_authenticated/categories/$categoryName_/$taskListId")({
+export const Route = createFileRoute("/_authenticated/categories/$categoryName_/$tasklistId")({
   loader: async ({ context, params }) => {
     const { queryClient } = context;
-    return queryClient.ensureQueryData(getTaskListByIdQueryOptions(Number(params.taskListId)));
+    return queryClient.ensureQueryData(getTasklistByIdQueryOptions(Number(params.tasklistId)));
   },
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { taskListId } = useParams({
-    from: "/_authenticated/categories/$categoryName_/$taskListId",
+  const { tasklistId } = useParams({
+    from: "/_authenticated/categories/$categoryName_/$tasklistId",
   });
-  const { data: taskList } = useSuspenseQuery(getTaskListByIdQueryOptions(Number(taskListId)));
-  console.log(taskList);
+  const { data: tasklist } = useSuspenseQuery(getTasklistByIdQueryOptions(Number(tasklistId)));
+  console.log(tasklist);
 
-  return (
-    <TaskListDetailsPage taskList={taskList} />
-  );
+  // return <TasklistDetailsPage tasklist={tasklist} />
+  return <p>Test</p>;
 }

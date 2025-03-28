@@ -1,43 +1,43 @@
 import { Button, Modal, Stack, TextInput, Textarea } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
-import { useUpdateTaskListMutation } from "../services/task-list/update-task-list.service";
-import { updateTaskListSchema } from "../shared/tasks.schemas";
-import { TaskList, UpdateTaskList } from "../shared/tasks.types";
+import { useUpdateTasklistMutation } from "../services/task-list/update-task-list.service";
+import { updateTasklistSchema } from "../shared/tasks.schemas";
+import { Tasklist, UpdateTasklist } from "../shared/tasks.types";
 import { useEffect } from "react";
 import useFormErrorHandler from "../../../hooks/useFormErrorHandler";
 import { ErrorResponse } from "../../../api/errors/errror.types";
 
-type UpdateTaskListModalProps = {
+type UpdateTasklistModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  taskList: TaskList;
+  Tasklist: Tasklist;
 };
 
-function UpdateTaskListModal({ isOpen, onClose, taskList }: UpdateTaskListModalProps) {
-  const updateTaskList = useUpdateTaskListMutation();
+function UpdateTasklistModal({ isOpen, onClose, Tasklist }: UpdateTasklistModalProps) {
+  const updateTasklist = useUpdateTasklistMutation();
 
   // TODO: FIX
-  const { handleFormErrors } = useFormErrorHandler<UpdateTaskList>();
+  const { handleFormErrors } = useFormErrorHandler<UpdateTasklist>();
 
-  const form = useForm<UpdateTaskList>({
-    validate: zodResolver(updateTaskListSchema),
+  const form = useForm<UpdateTasklist>({
+    validate: zodResolver(updateTasklistSchema),
     initialValues: {
-      id: taskList.id,
-      name: taskList.name,
-      description: taskList.description,
-      categoryName: taskList.categoryName,
+      id: Tasklist.id,
+      name: Tasklist.name,
+      description: Tasklist.description,
+      categoryName: Tasklist.categoryName,
     },
   });
 
   useEffect(() => {
-    form.setValues({ id: taskList.id, name: taskList.name, description: taskList.description });
+    form.setValues({ id: Tasklist.id, name: Tasklist.name, description: Tasklist.description });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [taskList]);
+  }, [Tasklist]);
 
-  const handleSubmit = async (data: UpdateTaskList) => {
+  const handleSubmit = async (data: UpdateTasklist) => {
     try {
       console.log(data);
-      await updateTaskList.mutateAsync(data);
+      await updateTasklist.mutateAsync(data);
       form.reset();
       onClose();
     } catch (e) {
@@ -67,4 +67,4 @@ function UpdateTaskListModal({ isOpen, onClose, taskList }: UpdateTaskListModalP
   );
 }
 
-export default UpdateTaskListModal;
+export default UpdateTasklistModal;

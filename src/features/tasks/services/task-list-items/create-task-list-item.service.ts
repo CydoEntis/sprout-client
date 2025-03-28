@@ -2,27 +2,27 @@ import { notifications } from "@mantine/notifications";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "../../../../api/apiRequest";
 import endpoints from "../../../../api/endpoints";
-import { CreatedTaskListItem, CreateTaskListItem } from "../../shared/tasks.types";
+import { CreatedTasklistItem, CreateTasklistItem } from "../../shared/tasks.types";
 
-const createTaskListItem = async (newTaskListItem: CreateTaskListItem): Promise<CreatedTaskListItem> => {
-  return apiRequest<CreatedTaskListItem>(
+const createTasklistItem = async (newTasklistItem: CreateTasklistItem): Promise<CreatedTasklistItem> => {
+  return apiRequest<CreatedTasklistItem>(
     "post",
-    `${endpoints.taskList}/${newTaskListItem.taskListId}/item`,
-    newTaskListItem
+    `${endpoints.Tasklist}/${newTasklistItem.TasklistId}/item`,
+    newTasklistItem
   );
 };
 
-export function useCreateTaskListItemMutation() {
+export function useCreateTasklistItemMutation() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (newTaskListItem: CreateTaskListItem): Promise<CreatedTaskListItem> => {
-      return await createTaskListItem(newTaskListItem);
+    mutationFn: async (newTasklistItem: CreateTasklistItem): Promise<CreatedTasklistItem> => {
+      return await createTasklistItem(newTasklistItem);
     },
     onSuccess: (data) => {
       console.log(data);
 
       queryClient.invalidateQueries({
-        queryKey: ["task-lists", data.taskListId],
+        queryKey: ["task-lists", data.TasklistId],
       });
 
       notifications.show({

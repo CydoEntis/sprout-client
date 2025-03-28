@@ -13,42 +13,40 @@ import {
 } from "@mantine/core";
 import { Check, Edit, Plus, Trash, X } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
-import { createTaskListItemSchema } from "../../shared/tasks.schemas";
-import { CreateTaskListItem } from "../../shared/tasks.types";
-import { useCreateTaskListItemsMutation } from "../../services/task-list-items/create-task-list-items.service";
+import { createTasklistItemSchema } from "../../shared/tasks.schemas";
+import { CreateTasklistItem } from "../../shared/tasks.types";
+import { useCreateTasklistItemsMutation } from "../../services/task-list-items/create-task-list-items.service";
 import useFormErrorHandler from "../../../../hooks/useFormErrorHandler";
 import { ErrorResponse } from "../../../../api/errors/errror.types";
-import { CustomLink } from "../../../../components/CustomLink";
 
-type CreateTaskListItemsFormProps = {
-  taskListId: number;
-  goToNextStep: () => void;
+type CreateTasklistItemsFormProps = {
+  tasklistId: number;
 };
 
-function CreateTaskListItemsForm({ taskListId, goToNextStep }: CreateTaskListItemsFormProps) {
-  const [taskListItems, setTaskListItems] = useState<CreateTaskListItem[]>([]);
+function CreateTasklistItemsForm({ tasklistId }: CreateTasklistItemsFormProps) {
+  const [TasklistItems, setTasklistItems] = useState<CreateTasklistItem[]>([]);
   const [isEditing, setIsEditing] = useState<number | null>(null);
   const [newTaskDescription, setNewTaskDescription] = useState("");
   const [editErrors, setEditErrors] = useState<{ [key: number]: string }>({});
-  const { handleFormErrors } = useFormErrorHandler<CreateTaskListItem>();
+  const { handleFormErrors } = useFormErrorHandler<CreateTasklistItem>();
 
-  const form = useForm<CreateTaskListItem>({
+  const form = useForm<CreateTasklistItem>({
     initialValues: {
       description: "",
-      taskListId: taskListId,
+      tasklistId: tasklistId,
     },
-    validate: zodResolver(createTaskListItemSchema),
+    validate: zodResolver(createTasklistItemSchema),
   });
 
-  const createTaskListItems = useCreateTaskListItemsMutation();
+  const createTasklistItems = useCreateTasklistItemsMutation();
 
   const handleSubmit = async () => {
     try {
-      await createTaskListItems.mutateAsync({
-        taskListId,
-        newTaskListItems: taskListItems,
+      await createTasklistItems.mutateAsync({
+        tasklistId,
+        newTasklistItems: TasklistItems,
       });
-      setTaskListItems([]);
+      setTasklistItems([]);
       form.reset();
       setNewTaskDescription("");
     } catch (e) {
@@ -73,21 +71,21 @@ function CreateTaskListItemsForm({ taskListId, goToNextStep }: CreateTaskListIte
       form.clearErrors();
     }
 
-    const newItem: CreateTaskListItem = {
+    const newItem: CreateTasklistItem = {
       description: newTaskDescription,
-      taskListId: taskListId,
+      tasklistId: tasklistId,
     };
-    setTaskListItems((prev) => [...prev, newItem]);
+    setTasklistItems((prev) => [...prev, newItem]);
     setNewTaskDescription("");
   };
 
   const handleDeleteItem = (index: number) => {
-    setTaskListItems((prev) => prev.filter((_, i) => i !== index));
+    setTasklistItems((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleEditItem = (index: number) => {
     setIsEditing(index);
-    form.setValues({ description: taskListItems[index].description });
+    form.setValues({ description: TasklistItems[index].description });
     setEditErrors((prev) => ({ ...prev, [index]: "" }));
   };
 
@@ -105,9 +103,9 @@ function CreateTaskListItemsForm({ taskListId, goToNextStep }: CreateTaskListIte
         return;
       }
 
-      const updatedItems = [...taskListItems];
+      const updatedItems = [...TasklistItems];
       updatedItems[isEditing].description = description;
-      setTaskListItems(updatedItems);
+      setTasklistItems(updatedItems);
 
       setIsEditing(null);
       setEditErrors((prev) => ({ ...prev, [isEditing!]: "" }));
@@ -167,13 +165,13 @@ function CreateTaskListItemsForm({ taskListId, goToNextStep }: CreateTaskListIte
       </form>
 
       <Divider label="Task List Items" labelPosition="center" my={16} />
-      {taskListItems.length === 0 ? (
+      {TasklistItems.length === 0 ? (
         <Text my={16} size="sm" c="dimmed" ta="center">
           You haven't added any items yet.
         </Text>
       ) : (
         <Stack gap={8}>
-          {taskListItems.map((item, index) => (
+          {TasklistItems.map((item, index) => (
             <div key={index}>
               {isEditing === index ? (
                 <TextInput
@@ -221,7 +219,7 @@ function CreateTaskListItemsForm({ taskListId, goToNextStep }: CreateTaskListIte
         </Stack>
       )}
 
-      {taskListItems.length > 0 ? (
+      {TasklistItems.length > 0 ? (
         <Stack gap={24} mt={8}>
           <Group justify="end" align="center" gap={8} w="100%">
             <Button onClick={handleSubmit} fullWidth variant="light" color="lime" w="20%">
@@ -234,4 +232,4 @@ function CreateTaskListItemsForm({ taskListId, goToNextStep }: CreateTaskListIte
   );
 }
 
-export default CreateTaskListItemsForm;
+export default CreateTasklistItemsForm;

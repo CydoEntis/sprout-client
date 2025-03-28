@@ -1,10 +1,10 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { apiRequest } from "../../../api/apiRequest";
 import endpoints from "../../../api/endpoints";
-import { PaginatedCategoriesWithTaskListCount } from "../shared/category.types";
+import { PaginatedCategoriesWithTasklistCount } from "../shared/category.types";
 
-const getCategoriesWithTasklistCount = async (): Promise<PaginatedCategoriesWithTaskListCount> => {
-  return apiRequest<PaginatedCategoriesWithTaskListCount>("get", endpoints.category + "/details");
+const getCategoriesWithTasklistCount = async (): Promise<PaginatedCategoriesWithTasklistCount> => {
+  return apiRequest<PaginatedCategoriesWithTasklistCount>("get", endpoints.category + "/details");
 };
 
 export const getCategoriesWithTasklistCountQueryOptions = () =>
@@ -14,6 +14,6 @@ export const getCategoriesWithTasklistCountQueryOptions = () =>
     staleTime: 0
   });
 
-export const useGetCategoriesWithTaskListCount = () => {
+export const useGetCategoriesWithTasklistCount = () => {
   return useQuery(getCategoriesWithTasklistCountQueryOptions());
 };

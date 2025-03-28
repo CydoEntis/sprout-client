@@ -5,12 +5,12 @@ type Props = {}
 
 
 
-function EditTaskListItem({}: Props) {
+function EditTasklistItem({}: Props) {
 
 
   return (
-    <div>EditTaskListItem</div>
+    <div>EditTasklistItem</div>
   )
 }
 
-export default EditTaskListItem
+export default EditTasklistItem

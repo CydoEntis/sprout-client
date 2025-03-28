@@ -1,8 +1,8 @@
 import { SuccessMessage } from "../../shared/shared.types";
 
 export type DecodedInviteToken = {
-  taskListName: string;
-  taskListId: string;
+  TasklistName: string;
+  TasklistId: string;
   category: string;
   inviteDate: string;
   inviter: string;
@@ -11,6 +11,6 @@ export type DecodedInviteToken = {
 };
 
 export type InviteAccepted = SuccessMessage & {
-  taskListId: number;
+  TasklistId: number;
   categoryName: string;
 };

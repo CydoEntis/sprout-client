@@ -1,20 +1,20 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { apiRequest } from "../../../api/apiRequest";
 import endpoints from "../../../api/endpoints";
-import { TasklistOverview } from "../../tasks/shared/tasks.types";
+import { CategoryWithTasklists } from "../../tasks/shared/tasks.types";
 
-const getAllTaskListsForCategory = async (categoryName: string): Promise<TasklistOverview[]> => {
-  return apiRequest<TasklistOverview[]>("get", `${endpoints.category}/${categoryName}`);
+const getAllTasklistsForCategory = async (categoryName: string): Promise<CategoryWithTasklists> => {
+  return apiRequest<CategoryWithTasklists>("get", `${endpoints.category}/${categoryName}`);
 };
 
-export const getAllTaskListsForCategoryQueryOptions = (categoryName: string) =>
+export const getAllTasklistsForCategoryQueryOptions = (categoryName: string) =>
   queryOptions({
     queryKey: ["task-lists", categoryName.toLowerCase()],
-    queryFn: () => getAllTaskListsForCategory(categoryName),
+    queryFn: () => getAllTasklistsForCategory(categoryName),
     enabled: !!categoryName,
     staleTime: 0,
   });
 
-export const useGetAllTaskListsForCategory = (categoryName: string) => {
-  return useQuery(getAllTaskListsForCategoryQueryOptions(categoryName));
+export const useGetAllTasklistsForCategory = (categoryName: string) => {
+  return useQuery(getAllTasklistsForCategoryQueryOptions(categoryName));
 };

@@ -1,13 +1,13 @@
 import { useDisclosure } from "@mantine/hooks";
 
 import { useState } from "react";
-import { Category, PaginatedCategoriesWithTaskListCount } from "../shared/category.types";
+import { Category, PaginatedCategoriesWithTasklistCount } from "../shared/category.types";
 // import UpsertCategoryModal from "../components/UpsertCategoryModal";
 import CategoryList from "../components/category-list/CategoryList";
 import UpsertCategoryModal from "../components/UpsertCategoryModal";
 
 type CategoriesPageProps = {
-  paginatedCategories: PaginatedCategoriesWithTaskListCount;
+  paginatedCategories: PaginatedCategoriesWithTasklistCount;
 };
 
 function CategoriesPage({ paginatedCategories }: CategoriesPageProps) {

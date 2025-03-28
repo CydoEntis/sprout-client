@@ -1,6 +1,6 @@
 import { Button, Group } from "@mantine/core";
 
-function TaskListItemControls() {
+function TasklistItemControls() {
   return (
     <Group gap={8}>
       <Button size="xs" variant="light" color="lime">
@@ -16,4 +16,4 @@ function TaskListItemControls() {
   );
 }
 
-export default TaskListItemControls;
+export default TasklistItemControls;

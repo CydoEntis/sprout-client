@@ -1,12 +1,12 @@
 import { Stack, Text } from "@mantine/core";
 import MemberList from "../../../components/members/MemberList";
-import { Member } from "../shared/tasks.types";
+import { Member } from "../../shared/shared.types";
 
-type TaskListMembersProps = {
+type TasklistMembersProps = {
   members: Member[];
 };
 
-function TaskListMembers({ members }: TaskListMembersProps) {
+function TasklistMembers({ members }: TasklistMembersProps) {
   return (
     <Stack gap={4}>
       <Text size="sm" c="dimmed">
@@ -17,4 +17,4 @@ function TaskListMembers({ members }: TaskListMembersProps) {
   );
 }
 
-export default TaskListMembers;
+export default TasklistMembers;

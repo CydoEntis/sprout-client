@@ -2,52 +2,52 @@ import { useEffect, useRef } from "react";
 import { ActionIcon, ActionIconGroup, TextInput } from "@mantine/core";
 import { Check, X } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
-import { CreateTaskListItem, TaskListItem, UpdateTaskListItem } from "../shared/tasks.types";
-import { createTaskListItemSchema, updateTaskListItemSchema } from "../shared/tasks.schemas";
+import { CreateTasklistItem, TasklistItem, UpdateTasklistItem } from "../shared/tasks.types";
+import { createTasklistItemSchema, updateTasklistItemSchema } from "../shared/tasks.schemas";
 
-type UpsertTaskListItemProps = {
+type UpsertTasklistItemProps = {
   isActive: boolean;
-  taskListId: number;
-  taskListItem?: TaskListItem;
+  TasklistId: number;
+  TasklistItem?: TasklistItem;
   onClose: () => void;
-  onUpdate?: (updatedItem: UpdateTaskListItem) => void;
-  onCreate?: (newItem: CreateTaskListItem) => void;
+  onUpdate?: (updatedItem: UpdateTasklistItem) => void;
+  onCreate?: (newItem: CreateTasklistItem) => void;
 };
 
-function UpsertTaskListItem({
+function UpsertTasklistItem({
   isActive,
-  taskListId,
-  taskListItem,
+  TasklistId,
+  TasklistItem,
   onClose,
   onUpdate,
   onCreate,
-}: UpsertTaskListItemProps) {
+}: UpsertTasklistItemProps) {
   const formRef = useRef<HTMLFormElement>(null);
-  const isEditing = Boolean(taskListItem);
+  const isEditing = Boolean(TasklistItem);
 
   const form = useForm({
     initialValues: {
-      id: taskListItem?.id ?? null,
-      description: taskListItem?.description ?? "",
-      isCompleted: taskListItem?.isCompleted ?? false,
-      taskListId: taskListId,
-      position: taskListItem?.position ?? 0,
+      id: TasklistItem?.id ?? null,
+      description: TasklistItem?.description ?? "",
+      isCompleted: TasklistItem?.isCompleted ?? false,
+      TasklistId: TasklistId,
+      position: TasklistItem?.position ?? 0,
     },
-    validate: zodResolver(isEditing ? updateTaskListItemSchema : createTaskListItemSchema),
+    validate: zodResolver(isEditing ? updateTasklistItemSchema : createTasklistItemSchema),
   });
 
   useEffect(() => {
-    if (taskListItem) {
+    if (TasklistItem) {
       form.setValues({
-        id: taskListItem.id,
-        description: taskListItem.description,
-        isCompleted: taskListItem.isCompleted,
-        taskListId: taskListId,
-        position: taskListItem.position,
+        id: TasklistItem.id,
+        description: TasklistItem.description,
+        isCompleted: TasklistItem.isCompleted,
+        TasklistId: TasklistId,
+        position: TasklistItem.position,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [taskListItem]);
+  }, [TasklistItem]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -65,12 +65,12 @@ function UpsertTaskListItem({
     };
   }, [isActive, onClose]);
 
-  const handleSubmit = async (data: CreateTaskListItem | UpdateTaskListItem) => {
+  const handleSubmit = async (data: CreateTasklistItem | UpdateTasklistItem) => {
     try {
       if (isEditing) {
-        onUpdate?.(data as UpdateTaskListItem);
+        onUpdate?.(data as UpdateTasklistItem);
       } else {
-        onCreate?.(data as CreateTaskListItem);
+        onCreate?.(data as CreateTasklistItem);
       }
     } catch (error) {
       console.error("Error submitting task:", error);
@@ -86,7 +86,7 @@ function UpsertTaskListItem({
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      console.log(taskListItem);
+      console.log(TasklistItem);
       e.preventDefault();
       console.log("HELLO");
       form.onSubmit(handleSubmit)();
@@ -129,4 +129,4 @@ function UpsertTaskListItem({
   );
 }
 
-export default UpsertTaskListItem;
+export default UpsertTasklistItem;

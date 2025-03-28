@@ -1,15 +1,15 @@
 import { Modal } from "@mantine/core";
 import {} from "@mantine/form";
-import CreateTaskListWithCategoryForm from "./CreateTaskListWithCategoryForm";
 import { useGetAllCategories } from "../../../category/services/get-all-categories.service";
 import { useEffect } from "react";
+import CreateTasklistWithCategoryForm from "./CreateTasklistWithCategoryForm";
 
-type CreateTaskListWithCategoryModalProps = {
+type CreateTasklistWithCategoryModalProps = {
   isOpen: boolean;
   onClose: () => void;
 };
 
-function CreateTaskListWithCategoryModal({ isOpen, onClose }: CreateTaskListWithCategoryModalProps) {
+function CreateTasklistWithCategoryModal({ isOpen, onClose }: CreateTasklistWithCategoryModalProps) {
   const { data: categories, refetch } = useGetAllCategories();
 
   useEffect(() => {
@@ -33,9 +33,9 @@ function CreateTaskListWithCategoryModal({ isOpen, onClose }: CreateTaskListWith
       onClose={handleClose}
       title="Create a New Task List"
     >
-      <CreateTaskListWithCategoryForm onClose={handleClose} categories={categories || []} />
+      <CreateTasklistWithCategoryForm onClose={handleClose} categories={categories || []} />
     </Modal>
   );
 }
 
-export default CreateTaskListWithCategoryModal;
+export default CreateTasklistWithCategoryModal;

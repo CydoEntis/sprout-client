@@ -2,15 +2,15 @@ import { Button, Group } from "@mantine/core";
 import GridList from "../../../components/GridList";
 
 import { Plus } from "lucide-react";
-import { TaskList } from "../shared/tasks.types";
-import InProgressTaskListCard from "./InProgressTaskListCard";
+import { Tasklist } from "../shared/tasks.types";
+import InProgressTasklistCard from "./InProgressTasklistCard";
 
-type TaskListCardsListProps = {
+type TasklistCardsListProps = {
   onOpen: () => void;
-  taskLists: TaskList[];
+  Tasklists: Tasklist[];
 };
 
-function TaskListCardsList({ onOpen, taskLists }: TaskListCardsListProps) {
+function TasklistCardsList({ onOpen, Tasklists }: TasklistCardsListProps) {
   return (
     <>
       <Group justify="end" py={16}>
@@ -19,12 +19,12 @@ function TaskListCardsList({ onOpen, taskLists }: TaskListCardsListProps) {
         </Button>
       </Group>
       <GridList>
-        {taskLists.map((taskList) => (
-          <InProgressTaskListCard key={taskList.id} taskList={taskList} />
+        {Tasklists.map((Tasklist) => (
+          <InProgressTasklistCard key={Tasklist.id} Tasklist={Tasklist} />
         ))}
       </GridList>
     </>
   );
 }
 
-export default TaskListCardsList;
+export default TasklistCardsList;

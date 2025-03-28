@@ -1,20 +1,20 @@
 import { useDisclosure } from "@mantine/hooks";
-import UpsertTaskListItem from "../components/UpsertTaskListItem";
+import UpsertTasklistItem from "../components/UpsertTasklistItem";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import ListItem from "../components/list-item/ListItem";
-import UpdateTaskListModal from "../components/UpdateTaskListModal";
-import TaskListDetails from "../components/task-list-details/TaskListDetails";
-import { useTaskListItemHandlers } from "../hooks/useTaskListItemHandlers";
-import { TaskList } from "../shared/tasks.types";
+import UpdateTasklistModal from "../components/UpdateTasklistModal";
+import TasklistDetails from "../components/task-list-details/TasklistDetails";
+import { useTasklistItemHandlers } from "../hooks/useTasklistItemHandlers";
 import { Divider, Paper, Stack, Title } from "@mantine/core";
+import { Tasklist } from "../shared/tasks.types";
 
-type TaskListDetailsPageProps = {
-  taskList: TaskList;
+type TasklistDetailsPageProps = {
+  tasklist: Tasklist;
 };
 
-function TaskListDetailsPage({ taskList }: TaskListDetailsPageProps) {
+function TasklistDetailsPage({ tasklist }: TasklistDetailsPageProps) {
   const {
-    taskListItems,
+    TasklistItems,
     createItem,
     updateItem,
     deleteItem,
@@ -24,21 +24,19 @@ function TaskListDetailsPage({ taskList }: TaskListDetailsPageProps) {
     showUpdateItem,
     closeItem,
     editingState: { itemToUpdate, isCreating },
-  } = useTaskListItemHandlers(taskList.taskListItems);
+  } = useTasklistItemHandlers(tasklist.tasklistItems);
   const [isModalOpen, { open: openModal, close: closeModal }] = useDisclosure(false);
 
-
-  console.log("ITEMS: ", taskListItems);
   return (
     <>
-      <Title>{taskList.name}</Title>
-      <Divider my={16} size="md" color="primary" />
+      <Title>{tasklist.name}</Title>
+      {/* <Divider my={16} size="md" color={tasklist.categoryDetails.color} /> */}
 
       <DragDropContext onDragEnd={reorderItems}>
         <Droppable droppableId="task-list" direction="vertical">
           {(provided) => (
             <Stack {...provided.droppableProps} ref={provided.innerRef} gap={16}>
-              {taskListItems.map((item, index) => (
+              {tasklist.tasklistItems.map((item, index) => (
                 <Draggable key={index} draggableId={String(item.id)} index={index}>
                   {(provided) => (
                     <div
@@ -50,10 +48,10 @@ function TaskListDetailsPage({ taskList }: TaskListDetailsPageProps) {
                     >
                       <div {...provided.dragHandleProps} onDoubleClick={() => showUpdateItem(item)}>
                         {itemToUpdate?.id === item.id ? (
-                          <UpsertTaskListItem
+                          <UpsertTasklistItem
                             isActive={true}
-                            taskListId={taskList.id}
-                            taskListItem={item}
+                            TasklistId={tasklist.id}
+                            TasklistItem={item}
                             onClose={closeItem}
                             onUpdate={updateItem}
                           />
@@ -72,10 +70,10 @@ function TaskListDetailsPage({ taskList }: TaskListDetailsPageProps) {
       </DragDropContext>
     </>
     // <>
-    //   <UpdateTaskListModal onClose={closeModal} isOpen={isModalOpen} taskList={taskList} />
+    //   <UpdateTasklistModal onClose={closeModal} isOpen={isModalOpen} Tasklist={Tasklist} />
     //   <Paper bg="secondary" p={16} radius="md" mt={16} withBorder>
-    //     <TaskListDetails
-    //       taskList={taskList}
+    //     <TasklistDetails
+    //       Tasklist={Tasklist}
     //       onUpdate={function (): void {
     //         throw new Error("Function not implemented.");
     //       }}
@@ -86,11 +84,11 @@ function TaskListDetailsPage({ taskList }: TaskListDetailsPageProps) {
 
     //     {/* Show Create Task Input (Only if nothing is being edited) */}
     //     {/* {isCreating && !itemToUpdate && (
-    //       <UpsertTaskListItem
-    //         onCreate={createTaskListItemHandler}
-    //         taskListId={taskListDetails.id}
+    //       <UpsertTasklistItem
+    //         onCreate={createTasklistItemHandler}
+    //         TasklistId={TasklistDetails.id}
     //         isActive={isCreating}
-    //         onClose={closeCreateTaskListItemHandler}
+    //         onClose={closeCreateTasklistItemHandler}
     //       />
     //     )} */}
 
@@ -101,4 +99,4 @@ function TaskListDetailsPage({ taskList }: TaskListDetailsPageProps) {
   );
 }
 
-export default TaskListDetailsPage;
+export default TasklistDetailsPage;

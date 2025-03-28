@@ -6,16 +6,17 @@ import { Title } from "@mantine/core";
 import { LazyNavLinkList } from "../../lazy-components/nav-link/sidebar-nav-link/lazy-sidebar-nav-link.types";
 import { Calendar, Grid2x2Plus, Star } from "lucide-react";
 import { useGetRecentCategories } from "../category/services/get-recent-categories.service";
-import CreateTaskListWithCategoryModal from "../tasks/components/create-task-list/CreateTaskListWithCategoryModal";
+import CreateTasklistWithCategoryModal from "../tasks/components/create-task-list/CreateTasklistWithCategoryModal";
 
 function ProtectedLayout() {
   const [isSidebarOpened, { toggle: toggleSidebar }] = useDisclosure();
   const [
-    isCreateTaskListWithCategoryModalOpened,
-    { open: onOpenCreateTaskListWithCategoryModal, close: onCloseCreateTaskListWithCategoryModal },
+    isCreateTasklistWithCategoryModalOpened,
+    { open: onOpenCreateTasklistWithCategoryModal, close: onCloseCreateTasklistWithCategoryModal },
   ] = useDisclosure(false);
 
   const { data: categories, isLoading } = useGetRecentCategories();
+  console.log(categories);
 
   const navList: LazyNavLinkList[] = [
     {
@@ -52,10 +53,10 @@ function ProtectedLayout() {
           // routePattern: "/category/$categoryName",
           icon: getIconByTag(category.tag),
           iconColor: category.color,
-          childLinks: category.recentTaskLists.map((taskList) => ({
-            label: taskList.taskListName,
-            to: `/categories/${category.name.toLocaleLowerCase()}/${taskList.taskListId}`,
-            routePattern: "/categories/$categoryName/$taskListId",
+          childLinks: category.recentTasklists.map((tasklist) => ({
+            label: tasklist.tasklistName,
+            to: `/categories/${category.name.toLocaleLowerCase()}/${tasklist.tasklistId}`,
+            routePattern: "/categories/$categoryName/$tasklistId",
           })),
         })) || [],
     },
@@ -63,9 +64,9 @@ function ProtectedLayout() {
 
   return (
     <>
-      <CreateTaskListWithCategoryModal
-        isOpen={isCreateTaskListWithCategoryModalOpened}
-        onClose={onCloseCreateTaskListWithCategoryModal}
+      <CreateTasklistWithCategoryModal
+        isOpen={isCreateTasklistWithCategoryModalOpened}
+        onClose={onCloseCreateTasklistWithCategoryModal}
       />
       <LazySidebarLayout
         logo={
@@ -75,7 +76,7 @@ function ProtectedLayout() {
         }
         isSidebarOpened={isSidebarOpened}
         onToggle={toggleSidebar}
-        footer={<SidebarFooter onOpen={onOpenCreateTaskListWithCategoryModal} />}
+        footer={<SidebarFooter onOpen={onOpenCreateTasklistWithCategoryModal} />}
         navList={navList}
         isLoading={isLoading}
         navLinkColor="gray"

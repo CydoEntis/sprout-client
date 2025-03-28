@@ -3,24 +3,24 @@
 // import { DndListHandle } from "../../../DndListHandle";
 
 
-// type TaskListProps = {
-//   taskList: TaskListResponse;
+// type TasklistProps = {
+//   Tasklist: TasklistResponse;
 //   onOpenAddTask: () => void;
 // };
 
-// function TaskList({ taskList, onOpenAddTask }: TaskListProps) {
+// function Tasklist({ Tasklist, onOpenAddTask }: TasklistProps) {
 //   return (
 //     <Paper>
 //       <TaskDateRange
-//         startDate={taskList.createdAt}
-//         endDate={taskList.updatedAt}
+//         startDate={Tasklist.createdAt}
+//         endDate={Tasklist.updatedAt}
 //       />
 //       <Divider py={8} />
-//       <TaskListHeader />
+//       <TasklistHeader />
 //       <DndListHandle />
 //       <AddTaskBtn onOpenAddTask={onOpenAddTask} />
 //     </Paper>
 //   );
 // }
 
-// export default TaskList;
+// export default Tasklist;

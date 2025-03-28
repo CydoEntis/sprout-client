@@ -4,17 +4,17 @@ import { apiRequest } from "../../../../api/apiRequest";
 import endpoints from "../../../../api/endpoints";
 import { CreatedTasklistWithCategory, CreateTasklistWithCategory } from "../../shared/tasks.types";
 
-export const createCategoryWithTaskList = async (
+export const createCategoryWithTasklist = async (
   request: CreateTasklistWithCategory
 ): Promise<CreatedTasklistWithCategory> => {
-  return apiRequest<CreatedTasklistWithCategory>("post", endpoints.taskList + "/with-category", request);
+  return apiRequest<CreatedTasklistWithCategory>("post", endpoints.Tasklist + "/with-category", request);
 };
 
 export function useCreateTasklistWithCategoryMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: createCategoryWithTaskList,
+    mutationFn: createCategoryWithTasklist,
     onSuccess: (data) => {
       console.log(data);
       queryClient.invalidateQueries({ queryKey: ["categories", "list"] });

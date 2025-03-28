@@ -1,51 +1,51 @@
 // import { Paper, Title, Text, Stack, Group, Avatar } from "@mantine/core";
 // import { Plus } from "lucide-react";
-// import { TaskListDetails } from "../shared/task-list-details.types";
+// import { TasklistDetails } from "../shared/task-list-details.types";
 // import UpdateAndDeleteMenu from "../../../components/menus/UpdateAndDeleteMenu";
 // import { useParams } from "@tanstack/react-router";
 // import { useState } from "react";
-// import CreateTaskListItemButton from "../../task-list-item/components/CreateTaskListItemButton";
-// import UpsertTaskListItem from "./UpsertTaskListItem";
-// import TaskListItemList from "./TaskListItemList";
-// import TaskListItemControls from "./TaskListItemControls";
+// import CreateTasklistItemButton from "../../task-list-item/components/CreateTasklistItemButton";
+// import UpsertTasklistItem from "./UpsertTasklistItem";
+// import TasklistItemList from "./TasklistItemList";
+// import TasklistItemControls from "./TasklistItemControls";
 
-// type TaskListDetailsCardProps = {
+// type TasklistDetailsCardProps = {
 //   onOpenModal: () => void;
-//   onUpdateTaskList: () => void;
-//   onDeleteTaskList: () => void;
-//   onCreateTaskListItem: () => void;
-//   onUpdateTaskListItem: () => void;
-//   onDeleteTaskListItem: () => void;
-//   onReorderTaskListItem: () => void;
-//   onUpdateTaskListItemStatus: () => void;
+//   onUpdateTasklist: () => void;
+//   onDeleteTasklist: () => void;
+//   onCreateTasklistItem: () => void;
+//   onUpdateTasklistItem: () => void;
+//   onDeleteTasklistItem: () => void;
+//   onReorderTasklistItem: () => void;
+//   onUpdateTasklistItemStatus: () => void;
 
 //   onOpen: () => void;
-//   taskListDetails: TaskListDetails;
+//   TasklistDetails: TasklistDetails;
 // };
 
-// export type TaskListItem = {
-//   taskListItemId: number;
+// export type TasklistItem = {
+//   TasklistItemId: number;
 //   description: string;
 //   isCompleted: boolean;
 // };
 
-// function TaskListDetailsCard({ taskListDetails }: TaskListDetailsCardProps) {
-//   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName_/$taskListId" });
+// function TasklistDetailsCard({ TasklistDetails }: TasklistDetailsCardProps) {
+//   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName_/$TasklistId" });
 
-//   const [itemToEdit, setItemToEdit] = useState<TaskListItem | null>(null);
+//   const [itemToEdit, setItemToEdit] = useState<TasklistItem | null>(null);
 //   const [isCreatingTaskItem, setIsCreatingTaskItem] = useState(false);
 
-//   const deleteTaskListHandler = async () => {
-//     await deleteTaskList.mutateAsync(taskListDetails.taskListId);
+//   const deleteTasklistHandler = async () => {
+//     await deleteTasklist.mutateAsync(TasklistDetails.TasklistId);
 //     navigate({ to: `/categories/${categoryName}` });
 //   };
 
-//   const showCreateTaskListItemHandler = () => {
+//   const showCreateTasklistItemHandler = () => {
 //     setItemToEdit(null);
 //     setIsCreatingTaskItem((prevState) => !prevState);
 //   };
 
-//   const showEditTaskListItemHandler = (item: TaskListItem) => {
+//   const showEditTasklistItemHandler = (item: TasklistItem) => {
 //     setIsCreatingTaskItem(false);
 //     setItemToEdit(item);
 //   };
@@ -58,40 +58,40 @@
 //       <Paper p={16} radius="md" mt={16} withBorder>
 //         <Stack gap={2} mb={16}>
 //           <Group justify="space-between" align="center">
-//             <Title>{taskListDetails.name}</Title>
-//             <UpdateAndDeleteMenu onUpdate={onOpenUpdateTaskListModal} onDelete={deleteTaskListHandler} />
+//             <Title>{TasklistDetails.name}</Title>
+//             <UpdateAndDeleteMenu onUpdate={onOpenUpdateTasklistModal} onDelete={deleteTasklistHandler} />
 //           </Group>
-//           <Text c="dimmed">{taskListDetails.description}</Text>
-//           <TaskListItemControls />
+//           <Text c="dimmed">{TasklistDetails.description}</Text>
+//           <TasklistItemControls />
 //           <Stack mt={16} gap={4}>
 //             <Text size="xs">Members</Text>
 //             <Group justify="space-between" align="center">
 //               <Avatar.Group>
-//                 {taskListDetails.members.map((member) => (
+//                 {TasklistDetails.members.map((member) => (
 //                   <Avatar key={member.userId} color="initials" name={member.name} />
 //                 ))}
 //                 <Avatar>
 //                   <Plus size={20} />
 //                 </Avatar>
 //               </Avatar.Group>
-//               <CreateTaskListItemButton isCreating={isCreatingTaskItem} onCreate={showCreateTaskListItemHandler} />
+//               <CreateTasklistItemButton isCreating={isCreatingTaskItem} onCreate={showCreateTasklistItemHandler} />
 //             </Group>
 //           </Stack>
 //         </Stack>
 
 //         {/* Show Create Task Input (Only if nothing is being edited) */}
 //         {isCreatingTaskItem && !itemToEdit && (
-//           <UpsertTaskListItem
-//             taskListId={taskListDetails.id}
+//           <UpsertTasklistItem
+//             TasklistId={TasklistDetails.id}
 //             isActive={isCreatingTaskItem}
 //             onClose={cancelCreatingHandler}
 //           />
 //         )}
 
 //         {/* Render Task Items */}
-//         <TaskListItemList
-//           taskListItems={taskListDetails.taskListItems}
-//           onEdit={showEditTaskListItemHandler}
+//         <TasklistItemList
+//           TasklistItems={TasklistDetails.TasklistItems}
+//           onEdit={showEditTasklistItemHandler}
 //           onCancel={cancelEditingHandler}
 //           itemToEdit={itemToEdit}
 //         />
@@ -100,4 +100,4 @@
 //   );
 // }
 
-// export default TaskListDetailsCard;
+// export default TasklistDetailsCard;

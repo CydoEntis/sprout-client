@@ -1,20 +1,20 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import { TaskList } from "../../shared/tasks.types";
 import endpoints from "../../../../api/endpoints";
 import { apiRequest } from "../../../../api/apiRequest";
+import { Tasklist } from "../../shared/tasks.types";
 
-export const getTaskListDetailsById = async (id: number): Promise<TaskList> => {
-  return apiRequest<TaskList>("get", `${endpoints.taskList}/${id}`);
+export const getTasklistDetailsById = async (id: number): Promise<Tasklist> => {
+  return apiRequest<Tasklist>("get", `${endpoints.Tasklist}/${id}`);
 };
 
-export const getTaskListByIdQueryOptions = (taskListId: number) =>
+export const getTasklistByIdQueryOptions = (TasklistId: number) =>
   queryOptions({
-    queryKey: ["task-lists", taskListId],
-    queryFn: () => getTaskListDetailsById(taskListId),
-    enabled: !!taskListId,
+    queryKey: ["task-lists", TasklistId],
+    queryFn: () => getTasklistDetailsById(TasklistId),
+    enabled: !!TasklistId,
     staleTime: 0,
   });
 
-export const useGetAllTaskListsForCategory = (taskListId: number) => {
-  return useQuery(getTaskListByIdQueryOptions(taskListId));
+export const useGetAllTasklistsForCategory = (TasklistId: number) => {
+  return useQuery(getTasklistByIdQueryOptions(TasklistId));
 };
