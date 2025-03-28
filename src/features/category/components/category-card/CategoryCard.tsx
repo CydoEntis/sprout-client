@@ -1,10 +1,8 @@
 import { Title, Stack } from "@mantine/core";
-import { Category, CategoryResponse } from "../../shared/category.types";
+import { Category, CategoryWithTaskListCount } from "../../shared/category.types";
 import { useDeleteCategory } from "../../services/delete-category.service";
 import UpdateAndDeleteMenu from "../../../../lazy-components/menus/LazyEditDeleteMenu";
-import CategoryIcon from "../../../../lazy-components/icons/LazyIcon";
 
-import styles from "./category-card.module.css";
 import LazyCard from "../../../../lazy-components/card/LazyCard";
 import LazyHeader from "../../../../lazy-components/header/LazyHeader";
 import LazyText from "../../../../lazy-components/text/LazyText";
@@ -12,7 +10,7 @@ import { getIconByTag } from "../../shared/category.helpers";
 import LazyIcon from "../../../../lazy-components/icons/LazyIcon";
 
 type CategoryCard = {
-  category: CategoryResponse;
+  category: CategoryWithTaskListCount;
   onEdit: (category: Category) => void;
 };
 
@@ -20,7 +18,6 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
   const { mutateAsync: deleteCategory } = useDeleteCategory();
   const foundIcon = getIconByTag(category.tag);
 
-  console.log("Category card: ", category);
 
   return (
     <LazyCard
@@ -31,8 +28,6 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
       radius="md"
       pos="relative"
       bg="primary"
-      w={300}
-      h={200}
     >
       <Stack gap={32}>
         <LazyHeader
@@ -46,9 +41,9 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
 
         <Title size="1.25rem">{category.name}</Title>
         <LazyText
-          text={`You have ${category.totalTaskLists} ${category.totalTaskLists === 1 ? "active list" : "active lists"}`}
+          text={`You have ${category.taskListCount} ${category.taskListCount === 1 ? "active list" : "active lists"}`}
           highlightColor={category.color}
-          highlight={category.totalTaskLists}
+          highlight={category.taskListCount}
           textColor="dimmed"
         />
       </Stack>

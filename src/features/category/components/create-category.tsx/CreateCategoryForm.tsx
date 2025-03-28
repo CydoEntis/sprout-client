@@ -15,7 +15,7 @@ import { ValidColor } from "../../../../util/types/valid-color.types";
 import { validIcons, validIconTags } from "../../../../util/constants/valid-icon.constants";
 
 type CreateCategoryFormProps = {
-  onClose: () => void;
+  onClose?: () => void;
 };
 
 const CreateCategoryForm = ({ onClose }: CreateCategoryFormProps) => {
@@ -38,7 +38,7 @@ const CreateCategoryForm = ({ onClose }: CreateCategoryFormProps) => {
     try {
       await createCategory.mutateAsync(data as CreateCategory);
       form.reset();
-      onClose();
+      onClose?.();
     } catch (e) {
       handleFormErrors(e as ErrorResponse, form);
     }

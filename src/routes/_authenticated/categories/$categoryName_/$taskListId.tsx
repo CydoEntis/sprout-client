@@ -19,6 +19,7 @@ function RouteComponent() {
     from: "/_authenticated/categories/$categoryName_/$taskListId",
   });
   const { data: taskList } = useSuspenseQuery(getTaskListByIdQueryOptions(Number(taskListId)));
+  console.log(taskList);
 
   return (
     // <TaskListDetailsCard

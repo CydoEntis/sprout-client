@@ -1,6 +1,5 @@
 import LazyCard from "../../../../lazy-components/card/LazyCard";
-import LazyHeader from "../../../../lazy-components/header/LazyHeader";
-import { Flex, OptionsDropdown, Stack, Text, Title } from "@mantine/core";
+import { Flex, Stack, Text, Title } from "@mantine/core";
 import { TaskListPreview } from "../../shared/tasks.types";
 import LazyEditDeleteMenu from "../../../../lazy-components/menus/LazyEditDeleteMenu";
 import MemberList from "../../../../components/members/MemberList";
@@ -12,25 +11,32 @@ type TaskListCardProps = {
 
 function TaskListCard({ taskList }: TaskListCardProps) {
   return (
-    <LazyCard bg="primary">
-      <Stack gap={8}>
-        <LazyHeader
-          rightSection={
+    <LazyCard
+      bg="primary"
+      mih={250}
+      to={`/categories/${taskList.categoryDetail.name.toLowerCase()}/${taskList.id}`}
+      params={{ taskListId: taskList.id.toString() }}
+    >
+      <Stack gap={8} h="100%">
+        {/* Make this Stack grow to push the bottom section down */}
+        <Stack style={{ flexGrow: 1 }} h={200}>
+          <Flex justify="space-between">
+            <Title size="1.25rem">{taskList.name}</Title>
+
             <LazyRingProgress
               size={25}
               thickness={3}
               percentage={taskList.taskCompletionPercentage}
               sections={[{ value: taskList.taskCompletionPercentage, color: "lime" }]}
             />
-          }
-        >
-          <Title size="1.25rem">{taskList.name}</Title>
-        </LazyHeader>
-        <Text size="sm" c="dimmed">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Pariatur deleniti sit doloremque rem illo adipisci
-          aspernatur repellendus, atque enim velit, tempore cum. Molestias eum dolores a porro beatae delectus hic!
-        </Text>
-        <Flex justify="space-between" align="center">
+          </Flex>
+          <Text size="sm" c="dimmed">
+            {taskList.description}
+          </Text>
+        </Stack>
+
+        {/* Ensure the bottom Flex has a stable position */}
+        <Flex justify="space-between" align="center" style={{ marginTop: "auto", flexShrink: 0 }}>
           <MemberList members={taskList.members} size="sm" />
           <LazyEditDeleteMenu
             withBorder

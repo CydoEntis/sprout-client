@@ -19,7 +19,6 @@ import { Route as AuthenticatedAboutImport } from './routes/_authenticated/about
 import { Route as AuthenticatedCategoriesIndexImport } from './routes/_authenticated/categories/index'
 import { Route as AuthenticatedTaskListTaskListIdImport } from './routes/_authenticated/task-list/$taskListId'
 import { Route as AuthenticatedInviteInviteTokenImport } from './routes/_authenticated/invite/$inviteToken'
-import { Route as AuthenticatedCategoriesCreateImport } from './routes/_authenticated/categories/create'
 import { Route as AuthenticatedCategoriesCategoryNameImport } from './routes/_authenticated/categories/$categoryName'
 import { Route as AuthenticatedCategoriesCategoryNameTaskListIdImport } from './routes/_authenticated/categories/$categoryName_/$taskListId'
 import { Route as AuthenticatedAssignTaskListTaskListIdImport } from './routes/_authenticated/assign/task-list/$taskListId'
@@ -73,13 +72,6 @@ const AuthenticatedInviteInviteTokenRoute =
   AuthenticatedInviteInviteTokenImport.update({
     id: '/invite/$inviteToken',
     path: '/invite/$inviteToken',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-
-const AuthenticatedCategoriesCreateRoute =
-  AuthenticatedCategoriesCreateImport.update({
-    id: '/categories/create',
-    path: '/categories/create',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 
@@ -150,13 +142,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCategoriesCategoryNameImport
       parentRoute: typeof AuthenticatedImport
     }
-    '/_authenticated/categories/create': {
-      id: '/_authenticated/categories/create'
-      path: '/categories/create'
-      fullPath: '/categories/create'
-      preLoaderRoute: typeof AuthenticatedCategoriesCreateImport
-      parentRoute: typeof AuthenticatedImport
-    }
     '/_authenticated/invite/$inviteToken': {
       id: '/_authenticated/invite/$inviteToken'
       path: '/invite/$inviteToken'
@@ -200,7 +185,6 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteChildren {
   AuthenticatedAboutRoute: typeof AuthenticatedAboutRoute
   AuthenticatedCategoriesCategoryNameRoute: typeof AuthenticatedCategoriesCategoryNameRoute
-  AuthenticatedCategoriesCreateRoute: typeof AuthenticatedCategoriesCreateRoute
   AuthenticatedInviteInviteTokenRoute: typeof AuthenticatedInviteInviteTokenRoute
   AuthenticatedTaskListTaskListIdRoute: typeof AuthenticatedTaskListTaskListIdRoute
   AuthenticatedCategoriesIndexRoute: typeof AuthenticatedCategoriesIndexRoute
@@ -212,7 +196,6 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAboutRoute: AuthenticatedAboutRoute,
   AuthenticatedCategoriesCategoryNameRoute:
     AuthenticatedCategoriesCategoryNameRoute,
-  AuthenticatedCategoriesCreateRoute: AuthenticatedCategoriesCreateRoute,
   AuthenticatedInviteInviteTokenRoute: AuthenticatedInviteInviteTokenRoute,
   AuthenticatedTaskListTaskListIdRoute: AuthenticatedTaskListTaskListIdRoute,
   AuthenticatedCategoriesIndexRoute: AuthenticatedCategoriesIndexRoute,
@@ -233,7 +216,6 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/about': typeof AuthenticatedAboutRoute
   '/categories/$categoryName': typeof AuthenticatedCategoriesCategoryNameRoute
-  '/categories/create': typeof AuthenticatedCategoriesCreateRoute
   '/invite/$inviteToken': typeof AuthenticatedInviteInviteTokenRoute
   '/task-list/$taskListId': typeof AuthenticatedTaskListTaskListIdRoute
   '/categories': typeof AuthenticatedCategoriesIndexRoute
@@ -248,7 +230,6 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/about': typeof AuthenticatedAboutRoute
   '/categories/$categoryName': typeof AuthenticatedCategoriesCategoryNameRoute
-  '/categories/create': typeof AuthenticatedCategoriesCreateRoute
   '/invite/$inviteToken': typeof AuthenticatedInviteInviteTokenRoute
   '/task-list/$taskListId': typeof AuthenticatedTaskListTaskListIdRoute
   '/categories': typeof AuthenticatedCategoriesIndexRoute
@@ -264,7 +245,6 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/_authenticated/about': typeof AuthenticatedAboutRoute
   '/_authenticated/categories/$categoryName': typeof AuthenticatedCategoriesCategoryNameRoute
-  '/_authenticated/categories/create': typeof AuthenticatedCategoriesCreateRoute
   '/_authenticated/invite/$inviteToken': typeof AuthenticatedInviteInviteTokenRoute
   '/_authenticated/task-list/$taskListId': typeof AuthenticatedTaskListTaskListIdRoute
   '/_authenticated/categories/': typeof AuthenticatedCategoriesIndexRoute
@@ -281,7 +261,6 @@ export interface FileRouteTypes {
     | '/register'
     | '/about'
     | '/categories/$categoryName'
-    | '/categories/create'
     | '/invite/$inviteToken'
     | '/task-list/$taskListId'
     | '/categories'
@@ -295,7 +274,6 @@ export interface FileRouteTypes {
     | '/register'
     | '/about'
     | '/categories/$categoryName'
-    | '/categories/create'
     | '/invite/$inviteToken'
     | '/task-list/$taskListId'
     | '/categories'
@@ -309,7 +287,6 @@ export interface FileRouteTypes {
     | '/register'
     | '/_authenticated/about'
     | '/_authenticated/categories/$categoryName'
-    | '/_authenticated/categories/create'
     | '/_authenticated/invite/$inviteToken'
     | '/_authenticated/task-list/$taskListId'
     | '/_authenticated/categories/'
@@ -353,7 +330,6 @@ export const routeTree = rootRoute
       "children": [
         "/_authenticated/about",
         "/_authenticated/categories/$categoryName",
-        "/_authenticated/categories/create",
         "/_authenticated/invite/$inviteToken",
         "/_authenticated/task-list/$taskListId",
         "/_authenticated/categories/",
@@ -376,10 +352,6 @@ export const routeTree = rootRoute
     },
     "/_authenticated/categories/$categoryName": {
       "filePath": "_authenticated/categories/$categoryName.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/categories/create": {
-      "filePath": "_authenticated/categories/create.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/invite/$inviteToken": {

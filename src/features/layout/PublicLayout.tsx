@@ -3,15 +3,13 @@ import { Title } from "@mantine/core";
 import { useNavigate } from "@tanstack/react-router";
 import useAuthStore from "../../stores/useAuthStore";
 import LocalStorageService from "../../services/localStorage.service";
-import { logoutUser } from "../../features/auth/services/logout.service";
+import { logoutUser } from "../auth/services/logout.service";
 
-import HorizontalNavLinks from "../../features/navigation/HorizontalNavLinks";
+import HorizontalNavLinks from "../navigation/HorizontalNavLinks";
 import LazyHorizontalNavbar from "../../lazy-components/nav-bar/horizontal-navbar/LazyHorizontalNavbar";
 import LazyLayout from "../../lazy-components/layouts/horizontal-layout/LazyLayout";
 
-
-
-function Layout() {
+function PublicLayout() {
   const { user, logoutUser: logout } = useAuthStore();
   const navigate = useNavigate();
 
@@ -34,18 +32,8 @@ function Layout() {
     ></LazyHorizontalNavbar>
   );
 
-  // const navbar = (
-  //   <LazyVerticalNavbar
-  //     justify="space-between"
-  //     logo={<Title size="1.5rem">Task Garden</Title>}
-  //     navbar={
-  //       <>{user ? <VerticalNavigation.PrivateLinks onLogout={handleLogout} /> : <VerticalNavigation.PublicLinks />}</>
-  //     }
-  //     footer={<>{user ? <VerticalNavigation.Logout onLogout={handleLogout} /> : null}</>}
-  //   ></LazyVerticalNavbar>
-  // );
 
   return <LazyLayout>{navbar}</LazyLayout>;
 }
 
-export default Layout;
+export default PublicLayout;

@@ -1,12 +1,11 @@
-import { Button, Stack, Title } from "@mantine/core";
+import { Button, SimpleGrid, Stack, Title } from "@mantine/core";
 import { Plus } from "lucide-react";
-import { Category, CategoryResponse } from "../shared/category.types";
-import GridList from "../../../components/GridList";
-import CategoryCard from "./category-card/CategoryCard";
-import LazyHeader from "../../../lazy-components/header/LazyHeader";
+import { Category, CategoryWithTaskListCount } from "../../shared/category.types";
+import CategoryCard from "../category-card/CategoryCard";
+import LazyHeader from "../../../../lazy-components/header/LazyHeader";
 
 type CategoryListProps = {
-  categories: CategoryResponse[];
+  categories: CategoryWithTaskListCount[];
   onOpen: () => void;
   onEdit: (category: Category) => void;
 };
@@ -24,9 +23,9 @@ function CategoryList({ categories, onEdit, onOpen }: CategoryListProps) {
         <Title>Categories</Title>
       </LazyHeader>
 
-      <GridList>
+      <SimpleGrid cols={{ xs: 1, md: 2, lg: 4 }}>
         {categories?.map((category) => <CategoryCard key={category.id} category={category} onEdit={onEdit} />)}
-      </GridList>
+      </SimpleGrid>
     </Stack>
   );
 }

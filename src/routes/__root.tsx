@@ -4,7 +4,7 @@ import theme from "../components/theme/theme.config";
 import { jwtDecode } from "jwt-decode";
 import useAuthStore, { AuthState } from "../stores/useAuthStore";
 import { Notifications } from "@mantine/notifications";
-import Layout from "../components/layout/Layout";
+import PublicLayout from "../features/layout/PublicLayout";
 import { DecodedToken } from "../features/auth/shared/auth.types";
 import { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext } from "@tanstack/react-router";
@@ -52,7 +52,7 @@ function RootComponent() {
       <MantineProvider theme={theme}>
         <Notifications />
 
-        {isAuthenticated ? <ProtectedLayout /> : <Layout />}
+        {isAuthenticated ? <ProtectedLayout /> : <PublicLayout />}
       </MantineProvider>
     </React.Fragment>
   );
