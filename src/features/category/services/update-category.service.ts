@@ -16,6 +16,9 @@ export function useUpdateCategory() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({
+        queryKey: ["categories", "list-with-count"],
+      });
+      queryClient.invalidateQueries({
         queryKey: ["categories", "list"],
       });
 
