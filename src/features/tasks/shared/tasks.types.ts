@@ -114,8 +114,13 @@ export type UpdateTasklistItem = z.infer<typeof updateTasklistItemSchema>;
 export type UpdatedTasklistItem = CreatedTasklistItem;
 
 export type ReorderTasklistItems = {
+  tasklistId: number;
   items: TasklistItemPosition[];
 };
+
+export type ReorderedTasklistItem = {
+  tasklistId: number;
+}
 
 export type TasklistItemStatus = {
   id: number;

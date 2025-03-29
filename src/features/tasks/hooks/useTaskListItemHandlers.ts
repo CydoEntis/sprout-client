@@ -10,6 +10,8 @@ import { CreateTasklistItem, TasklistItem, UpdateTasklistItem } from "../shared/
 
 export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
   const { tasklistId } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
+
+  // Ensure state updates correctly
   const [tasklistItems, tasklistItemHandlers] = useListState(initialItems);
   const [editingState, setEditingState] = useState<{ itemToUpdate: TasklistItem | null; isCreating: boolean }>({
     itemToUpdate: null,
@@ -17,8 +19,9 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
   });
 
   useEffect(() => {
+    console.log("Initializing tasklistItems:", initialItems);
     tasklistItemHandlers.setState(initialItems);
-  }, [initialItems, tasklistItemHandlers]);
+  }, [initialItems]);
 
   const createTasklistItem = useCreateTasklistItemMutation();
   const updateTasklistItem = useUpdateTasklistItemMutation();
@@ -32,10 +35,10 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
   };
 
   const updateItem = async (updatedItem: UpdateTasklistItem) => {
-    console.log("CAlling???");
+    console.log("Updating item:", updatedItem);
     await updateTasklistItem.mutateAsync(updatedItem);
     tasklistItemHandlers.setState((prev) =>
-      prev.map((taskItem) => (taskItem.id === updatedItem.id ? updatedItem : taskItem))
+      prev.map((taskItem) => (taskItem.id === updatedItem.id ? { ...taskItem, ...updatedItem } : taskItem))
     );
   };
 
@@ -52,14 +55,29 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const reorderItems = async ({ source, destination }: any) => {
     if (!destination) return;
-    const newTasklistItems = [...tasklistItems];
-    const [movedItem] = newTasklistItems.splice(source.index, 1);
-    newTasklistItems.splice(destination.index, 0, movedItem);
 
-    tasklistItemHandlers.setState(newTasklistItems);
-    const reorderedItems = newTasklistItems.map((item, index) => ({ id: item.id, position: index }));
-    await reorderTasklistItems.mutateAsync({ TasklistId: Number(tasklistId), items: reorderedItems });
+    const reorderedItems = [...tasklistItems];
+    const [movedItem] = reorderedItems.splice(source.index, 1);
+    reorderedItems.splice(destination.index, 0, movedItem);
+
+    tasklistItemHandlers.setState(() => [...reorderedItems]);
+
+    try {
+      await reorderTasklistItems.mutateAsync({
+        tasklistId: Number(tasklistId),
+        items: reorderedItems.map((item, index) => ({ id: item.id, position: index })),
+      });
+
+      tasklistItemHandlers.setState(() => [...reorderedItems]);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      tasklistItemHandlers.setState(initialItems);
+    }
   };
+
+  useEffect(() => {
+    console.log("TasklistItems updated:", tasklistItems);
+  }, [tasklistItems]);
 
   const showCreateItem = () => setEditingState({ itemToUpdate: null, isCreating: true });
   const showUpdateItem = (item: TasklistItem) => setEditingState({ itemToUpdate: item, isCreating: false });

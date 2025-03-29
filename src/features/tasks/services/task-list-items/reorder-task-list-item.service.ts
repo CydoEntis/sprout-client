@@ -1,19 +1,20 @@
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "../../../../api/apiRequest";
 import endpoints from "../../../../api/endpoints";
-import { ReorderedTasklistItemRequest, ReorderedTasklistItemResponse } from "../../../task-list-item/shared/task-list-item.types";
+import { ReorderedTasklistItem, ReorderTasklistItems } from "../../shared/tasks.types";
 
-const reorderTasklistItems = async (request: ReorderedTasklistItemRequest): Promise<ReorderedTasklistItemResponse> => {
-  return apiRequest<ReorderedTasklistItemResponse>(
+
+const reorderTasklistItems = async (request: ReorderTasklistItems): Promise<ReorderedTasklistItem> => {
+  return apiRequest<ReorderedTasklistItem>(
     "put",
-    `${endpoints.tasklist}/${request.TasklistId}/items/reorder`,
+    `${endpoints.tasklist}/${request.tasklistId}/items/reorder`,
     request
   );
 };
 
 export function useReorderTasklistItemsMutation() {
   return useMutation({
-    mutationFn: async (request: ReorderedTasklistItemRequest): Promise<ReorderedTasklistItemResponse> => {
+    mutationFn: async (request: ReorderTasklistItems): Promise<ReorderedTasklistItem> => {
       return await reorderTasklistItems(request);
     },
   });
