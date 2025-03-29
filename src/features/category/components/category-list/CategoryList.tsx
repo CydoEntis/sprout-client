@@ -15,7 +15,7 @@ function CategoryList({ categories, onEdit, onOpen }: CategoryListProps) {
     <Stack gap={16}>
       <LazyHeader
         rightSection={
-          <Button onClick={onOpen} variant="light" leftSection={<Plus size={20} />} color="lime">
+          <Button onClick={onOpen} leftSection={<Plus size={20} />} color="lime">
             Category
           </Button>
         }

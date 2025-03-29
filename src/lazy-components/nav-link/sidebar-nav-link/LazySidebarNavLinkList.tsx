@@ -1,5 +1,5 @@
 import { NavLink, NavLinkProps, Paper, Stack, Text } from "@mantine/core";
-import { Link, useMatchRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { LazyNavLinkList } from "./lazy-sidebar-nav-link.types";
 import styles from "./lazy-side-bar-nav-link-list.module.css";
 import React, { ReactElement } from "react";

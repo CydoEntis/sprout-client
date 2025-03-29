@@ -63,6 +63,12 @@ export type CategoryWithTasklist = {
   tasklistsInfo: TasklistInfo;
 };
 
+export type Tasklist = {
+  id: number;
+  name: string;
+  description: string;
+};
+
 export type CreateTasklistWithCategory = z.infer<typeof createTasklistWithCategorySchema>;
 
 export interface CreatedTasklistWithCategory {

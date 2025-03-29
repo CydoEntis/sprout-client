@@ -5,10 +5,11 @@ import LazyHeader from "../lazy-components/header/LazyHeader";
 import { useParams } from "@tanstack/react-router";
 import LazyIcon from "../lazy-components/icons/LazyIcon";
 import { getIconByTag } from "../features/category/shared/category.helpers";
-import CreateTasklistWithCategoryModal from "../features/tasks/components/create-task-list/CreateTasklistWithCategoryModal";
 import { ValidIconTags } from "../util/types/valid-icon.types";
-import { CategoryWithTasklists } from "../features/tasks/shared/tasks.types";
+import { CategoryWithTasklists, Tasklist, TasklistInfo } from "../features/tasks/shared/tasks.types";
 import TasklistCard from "../features/tasks/components/task-card/TasklistCard";
+import UpsertTasklistModal from "../features/tasks/components/upsert-task-list/UpsertTaskListModal";
+import { useState } from "react";
 
 type CategoryTasklistPageProps = {
   categoryTasklists: CategoryWithTasklists;
@@ -16,18 +17,29 @@ type CategoryTasklistPageProps = {
 
 function CategoryTasklistPage({ categoryTasklists }: CategoryTasklistPageProps) {
   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName" });
+
   const [
-    isCreateTasklistWithCategoryModalOpened,
-    { open: onOpenCreateTasklistWithCategoryModal, close: onCloseCreateTasklistWithCategoryModal },
+    isUpsertTasklistModalOpened,
+    { open: onOpenCreateTasklistWithCategoryModal, close: onCloseUpsertTasklistModal },
   ] = useDisclosure(false);
 
-  console.log(categoryTasklists);
+  const [selectedTasklist, setSelectedTasklist] = useState<undefined | Tasklist>(undefined);
+
+  const openEditTasklistModal = (tasklist: TasklistInfo) => {
+    setSelectedTasklist({
+      id: tasklist.id,
+      name: tasklist.name,
+      description: tasklist.description,
+    });
+    onOpenCreateTasklistWithCategoryModal(); // Open the modal in edit mode
+  };
 
   return (
     <Box mt={32}>
-      <CreateTasklistWithCategoryModal
-        isOpen={isCreateTasklistWithCategoryModalOpened}
-        onClose={onCloseCreateTasklistWithCategoryModal}
+      <UpsertTasklistModal
+        isOpen={isUpsertTasklistModalOpened}
+        onClose={onCloseUpsertTasklistModal}
+        tasklist={selectedTasklist}
       />
       <LazyHeader
         leftSection={
@@ -42,7 +54,6 @@ function CategoryTasklistPage({ categoryTasklists }: CategoryTasklistPageProps) 
         rightSection={
           <Button
             onClick={onOpenCreateTasklistWithCategoryModal}
-            variant="light"
             leftSection={<Plus size={20} />}
             color="lime"
           >
@@ -56,7 +67,12 @@ function CategoryTasklistPage({ categoryTasklists }: CategoryTasklistPageProps) 
       {categoryTasklists.tasklistsInfo.length > 0 ? (
         <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} mt={32}>
           {categoryTasklists.tasklistsInfo.map((tasklist) => (
-            <TasklistCard key={tasklist.id} tasklist={tasklist} categoryName={categoryName} />
+            <TasklistCard
+              key={tasklist.id}
+              tasklist={tasklist}
+              categoryName={categoryName}
+              onEdit={() => openEditTasklistModal(tasklist)} // Pass the tasklist to edit
+            />
           ))}
         </SimpleGrid>
       ) : (

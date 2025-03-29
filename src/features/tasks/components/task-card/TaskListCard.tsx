@@ -8,9 +8,10 @@ import LazyRingProgress from "../../../../lazy-components/progress-bars/LazyRing
 type TasklistCardProps = {
   tasklist: TasklistInfo;
   categoryName: string;
+  onEdit: () => void; 
 };
 
-function TasklistCard({ tasklist, categoryName }: TasklistCardProps) {
+function TasklistCard({ tasklist, categoryName, onEdit }: TasklistCardProps) {
   return (
     <LazyCard
       bg="primary"
@@ -43,7 +44,7 @@ function TasklistCard({ tasklist, categoryName }: TasklistCardProps) {
             shadow="md"
             dropdownColor="primary"
             direction="horizontal"
-            onUpdate={() => console.log("edit")}
+            onUpdate={onEdit} 
             onDelete={() => console.log("delete")}
           />
         </Flex>
