@@ -4,8 +4,9 @@ import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import ListItem from "../components/list-item/ListItem";
 import UpdateTasklistModal from "../components/UpdateTasklistModal";
 import { useTasklistItemHandlers } from "../hooks/useTasklistItemHandlers";
-import { Divider, Paper, Stack, Title } from "@mantine/core";
+import { Button, Container, Divider, Stack, Title } from "@mantine/core";
 import { TasklistDetails } from "../shared/tasks.types";
+import { Plus } from "lucide-react";
 
 type TasklistDetailsPageProps = {
   tasklist: TasklistDetails;
@@ -13,7 +14,7 @@ type TasklistDetailsPageProps = {
 
 function TasklistDetailsPage({ tasklist }: TasklistDetailsPageProps) {
   const {
-    TasklistItems,
+    TasklistItems: tasklistItems,
     createItem,
     updateItem,
     deleteItem,
@@ -27,10 +28,13 @@ function TasklistDetailsPage({ tasklist }: TasklistDetailsPageProps) {
   const [isModalOpen, { open: openModal, close: closeModal }] = useDisclosure(false);
 
   return (
-    <>
+    
+    <Container pos="relative" mih="90vh" >
       <Title>{tasklist.name}</Title>
       <Divider my={16} size="md" color={tasklist.categoryColor} />
-
+      <Button pos="absolute" bottom={0} right={0} onClick={openModal} leftSection={<Plus size={20} />} variant="subtle" color="gray">
+        New Item
+      </Button>
       <DragDropContext onDragEnd={reorderItems}>
         <Droppable droppableId="task-list" direction="vertical">
           {(provided) => (
@@ -67,7 +71,7 @@ function TasklistDetailsPage({ tasklist }: TasklistDetailsPageProps) {
           )}
         </Droppable>
       </DragDropContext>
-    </>
+    </Container>
     // <>
     //   <UpdateTasklistModal onClose={closeModal} isOpen={isModalOpen} Tasklist={Tasklist} />
     //   <Paper bg="secondary" p={16} radius="md" mt={16} withBorder>

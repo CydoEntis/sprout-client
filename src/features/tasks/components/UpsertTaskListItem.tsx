@@ -7,8 +7,8 @@ import { createTasklistItemSchema, updateTasklistItemSchema } from "../shared/ta
 
 type UpsertTasklistItemProps = {
   isActive: boolean;
-  TasklistId: number;
-  TasklistItem?: TasklistItem;
+  tasklistId: number;
+  tasklistItem?: TasklistItem;
   onClose: () => void;
   onUpdate?: (updatedItem: UpdateTasklistItem) => void;
   onCreate?: (newItem: CreateTasklistItem) => void;
@@ -16,38 +16,38 @@ type UpsertTasklistItemProps = {
 
 function UpsertTasklistItem({
   isActive,
-  TasklistId,
-  TasklistItem,
+  tasklistId,
+  tasklistItem,
   onClose,
   onUpdate,
   onCreate,
 }: UpsertTasklistItemProps) {
   const formRef = useRef<HTMLFormElement>(null);
-  const isEditing = Boolean(TasklistItem);
+  const isEditing = Boolean(tasklistItem);
 
   const form = useForm({
     initialValues: {
-      id: TasklistItem?.id ?? null,
-      description: TasklistItem?.description ?? "",
-      isCompleted: TasklistItem?.isCompleted ?? false,
-      TasklistId: TasklistId,
-      position: TasklistItem?.position ?? 0,
+      id: tasklistItem?.id ?? null,
+      description: tasklistItem?.description ?? "",
+      isCompleted: tasklistItem?.isCompleted ?? false,
+      tasklistId: tasklistId,
+      position: tasklistItem?.position ?? 0,
     },
     validate: zodResolver(isEditing ? updateTasklistItemSchema : createTasklistItemSchema),
   });
 
   useEffect(() => {
-    if (TasklistItem) {
+    if (tasklistItem) {
       form.setValues({
-        id: TasklistItem.id,
-        description: TasklistItem.description,
-        isCompleted: TasklistItem.isCompleted,
-        TasklistId: TasklistId,
-        position: TasklistItem.position,
+        id: tasklistItem.id,
+        description: tasklistItem.description,
+        isCompleted: tasklistItem.isCompleted,
+        tasklistId: tasklistId,
+        position: tasklistItem.position,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [TasklistItem]);
+  }, [tasklistItem]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -86,7 +86,7 @@ function UpsertTasklistItem({
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      console.log(TasklistItem);
+      console.log(tasklistItem);
       e.preventDefault();
       console.log("HELLO");
       form.onSubmit(handleSubmit)();
