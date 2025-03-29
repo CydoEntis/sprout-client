@@ -17,7 +17,7 @@ const updateTasklistStatusItem = async (
   );
 };
 
-export function useUpdateTasklistStatusItemMutation() {
+export function useUpdateTasklistStatusItemMutation(tasklistId: number) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (request: UpdateTasklistItemStatusRequest): Promise<UpdateStatusTasklistItemResponse> => {
@@ -25,7 +25,7 @@ export function useUpdateTasklistStatusItemMutation() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: ["task-lists", data.TasklistId],
+        queryKey: ["task-lists", tasklistId],
       });
 
       notifications.show({

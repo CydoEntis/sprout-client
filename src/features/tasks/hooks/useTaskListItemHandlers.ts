@@ -26,7 +26,7 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
   const createTasklistItem = useCreateTasklistItemMutation();
   const updateTasklistItem = useUpdateTasklistItemMutation();
   const reorderTasklistItems = useReorderTasklistItemsMutation();
-  const updateStatusTasklistItem = useUpdateTasklistStatusItemMutation();
+  const updateStatusTasklistItem = useUpdateTasklistStatusItemMutation(Number(tasklistId));
   const deleteTasklistItem = useDeleteTasklistItemMutation();
 
   const createItem = async (newItem: CreateTasklistItem) => {
@@ -69,7 +69,7 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
       });
 
       tasklistItemHandlers.setState(() => [...reorderedItems]);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       tasklistItemHandlers.setState(initialItems);
     }
