@@ -1,6 +1,6 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
-import { Button, Container, Divider, Stack, Title, Text, Flex, Group } from "@mantine/core";
-import { Plus } from "lucide-react";
+import { Button, Stack, Title, Text, Flex, Group, Paper } from "@mantine/core";
+import { List, Plus } from "lucide-react";
 
 import ListItem from "../components/list-item/ListItem";
 import { Tasklist, TasklistDetails } from "../shared/tasks.types";
@@ -63,7 +63,7 @@ function TasklistDetailsPage({ tasklist }: TasklistDetailsPageProps) {
         tasklist={selectedTasklist}
         categoryName={categoryName}
       />
-      <Container pos="relative" mih="90vh">
+      <Paper bg="primary" p={16} radius="lg" style={{ borderBottom: `8px solid ${tasklist.categoryColor}` }} mb={16}>
         <Stack justify="space-between" gap={8}>
           <Stack gap={8}>
             <Flex justify="space-between">
@@ -81,31 +81,24 @@ function TasklistDetailsPage({ tasklist }: TasklistDetailsPageProps) {
             <Text c="dimmed">{tasklist.description}</Text>
           </Stack>
 
-          <Flex>
+          <Group justify="end" align="center">
             <TasklistMembers members={tasklist.members} size="md" />
-          </Flex>
-
-          <Flex justify="space-between" align="center">
-            {tasklist.totalTasksCount > 0 && (
-              <Group>
-                <Text c="dimmed">Completed:</Text>
-                <Text c="dimmed">
-                  {tasklist.completedTasksCount} of {tasklist.totalTasksCount}
-                </Text>
-              </Group>
-            )}
-
-            <Group ml="auto">
-              {" "}
-              {/* This ensures the button stays on the far right */}
-              <Button onClick={showCreateItem} leftSection={<Plus size={20} />} color="lime">
-                New Item
-              </Button>
-            </Group>
-          </Flex>
+          </Group>
         </Stack>
-        <Divider my={16} size="md" color={tasklist.categoryColor} />
+      </Paper>
 
+      <Paper bg="primary" p={16} radius="lg" mih="70vh" pos="relative">
+        <Flex justify="space-between" align="center" mb={24}>
+          <Group>
+            <List size={28} color="#82827F" />
+            <Text c="dimmed">
+              {tasklist.completedTasksCount} of {tasklist.totalTasksCount} items remaining
+            </Text>
+          </Group>
+          <Button onClick={showCreateItem} leftSection={<Plus size={20} />} color="lime">
+            New Item
+          </Button>
+        </Flex>
         <DragDropContext onDragEnd={reorderItems}>
           <Droppable droppableId="task-list" direction="vertical">
             {(provided) => (
@@ -145,7 +138,7 @@ function TasklistDetailsPage({ tasklist }: TasklistDetailsPageProps) {
             )}
           </Droppable>
         </DragDropContext>
-      </Container>
+      </Paper>
     </>
   );
 }

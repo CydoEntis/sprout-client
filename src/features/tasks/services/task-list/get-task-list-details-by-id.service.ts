@@ -7,14 +7,14 @@ export const getTasklistDetailsById = async (id: number): Promise<TasklistDetail
   return apiRequest<TasklistDetails>("get", `${endpoints.tasklist}/${id}`);
 };
 
-export const getTasklistByIdQueryOptions = (TasklistId: number) =>
+export const getTasklistByIdQueryOptions = (tasklistid: number) =>
   queryOptions({
-    queryKey: ["task-lists", TasklistId],
-    queryFn: () => getTasklistDetailsById(TasklistId),
-    enabled: !!TasklistId,
+    queryKey: ["task-lists", tasklistid],
+    queryFn: () => getTasklistDetailsById(tasklistid),
+    enabled: !!tasklistid,
     staleTime: 0,
   });
 
-export const useGetAllTasklistsForCategory = (TasklistId: number) => {
-  return useQuery(getTasklistByIdQueryOptions(TasklistId));
+export const useGetAllTasklistsForCategory = (tasklistid: number) => {
+  return useQuery(getTasklistByIdQueryOptions(tasklistid));
 };

@@ -21,6 +21,10 @@ export function useUpdateTasklistMutation(categoryName: string) {
         queryKey: ["task-lists", categoryName],
       });
 
+      queryClient.invalidateQueries({
+        queryKey: ["task-lists", data.tasklistId],
+      });
+
       notifications.show({
         title: "Success",
         message: data.message,
