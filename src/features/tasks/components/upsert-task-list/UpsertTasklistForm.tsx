@@ -17,15 +17,15 @@ type UpsertTasklistFormProps = {
 
 const UpsertTasklistForm = ({ onClose, tasklist }: UpsertTasklistFormProps) => {
   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName" });
-  const createTasklist = useCreateTasklistMutation();
-  const updateTasklist = useUpdateTasklistMutation();
+  const createTasklist = useCreateTasklistMutation(categoryName);
+  const updateTasklist = useUpdateTasklistMutation(categoryName);
   const { handleFormErrors } = useFormErrorHandler<CreateTasklist | UpdateTasklist>();
 
   const form = useForm<CreateTasklist | UpdateTasklist>({
     validate: zodResolver(tasklist ? updateTasklistSchema : createTasklistSchema),
     initialValues: tasklist
       ? {
-          id: tasklist.id,
+          tasklistId: tasklist.id,
           name: tasklist.name,
           description: tasklist.description,
           categoryName: categoryName,
@@ -40,8 +40,10 @@ const UpsertTasklistForm = ({ onClose, tasklist }: UpsertTasklistFormProps) => {
   const handleSubmit = async (data: CreateTasklist | UpdateTasklist) => {
     try {
       if (tasklist) {
+        console.log("Updating: ", data);
         await updateTasklist.mutateAsync(data as UpdateTasklist);
       } else {
+        console.log(data);
         await createTasklist.mutateAsync(data as CreateTasklist);
       }
       form.reset();
@@ -54,7 +56,7 @@ const UpsertTasklistForm = ({ onClose, tasklist }: UpsertTasklistFormProps) => {
   useEffect(() => {
     if (tasklist) {
       form.setValues({
-        id: tasklist.id,
+        tasklistId: tasklist.id,
         name: tasklist.name,
         description: tasklist.description,
         categoryName,
@@ -83,7 +85,7 @@ const UpsertTasklistForm = ({ onClose, tasklist }: UpsertTasklistFormProps) => {
           {...form.getInputProps("description")}
         />
         <Group gap={8} justify="end">
-          <Button type="submit"  color="lime">
+          <Button type="submit" color="lime">
             {tasklist ? "Update Task List" : "Create Task List"}
           </Button>
         </Group>

@@ -31,16 +31,17 @@ function CategoryTasklistPage({ categoryTasklists }: CategoryTasklistPageProps) 
       name: tasklist.name,
       description: tasklist.description,
     });
-    onOpenCreateTasklistWithCategoryModal(); // Open the modal in edit mode
+    onOpenCreateTasklistWithCategoryModal();
+  };
+
+  const handleClose = () => {
+    setSelectedTasklist(undefined);
+    onCloseUpsertTasklistModal();
   };
 
   return (
     <Box mt={32}>
-      <UpsertTasklistModal
-        isOpen={isUpsertTasklistModalOpened}
-        onClose={onCloseUpsertTasklistModal}
-        tasklist={selectedTasklist}
-      />
+      <UpsertTasklistModal isOpen={isUpsertTasklistModalOpened} onClose={handleClose} tasklist={selectedTasklist} />
       <LazyHeader
         leftSection={
           <LazyIcon
@@ -52,11 +53,7 @@ function CategoryTasklistPage({ categoryTasklists }: CategoryTasklistPageProps) 
           />
         }
         rightSection={
-          <Button
-            onClick={onOpenCreateTasklistWithCategoryModal}
-            leftSection={<Plus size={20} />}
-            color="lime"
-          >
+          <Button onClick={onOpenCreateTasklistWithCategoryModal} leftSection={<Plus size={20} />} color="lime">
             Task List
           </Button>
         }
@@ -71,7 +68,7 @@ function CategoryTasklistPage({ categoryTasklists }: CategoryTasklistPageProps) 
               key={tasklist.id}
               tasklist={tasklist}
               categoryName={categoryName}
-              onEdit={() => openEditTasklistModal(tasklist)} // Pass the tasklist to edit
+              onEdit={() => openEditTasklistModal(tasklist)}
             />
           ))}
         </SimpleGrid>

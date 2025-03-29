@@ -23,7 +23,7 @@ function UpsertTasklistModal({ isOpen, onClose, tasklist }: UpsertTasklistModalP
       }}
       opened={isOpen}
       onClose={handleClose}
-      title="Create a New Task List"
+      title={tasklist ? "Update Task List" : "Create Task List"}
     >
       <UpsertTasklistForm onClose={handleClose} isOpen={isOpen} tasklist={tasklist} />
     </Modal>

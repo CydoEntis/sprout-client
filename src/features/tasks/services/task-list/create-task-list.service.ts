@@ -8,7 +8,7 @@ const createTasklist = async (request: CreateTasklist): Promise<CreatedTasklist>
   return apiRequest<CreatedTasklist>("post", `${endpoints.Tasklist}`, request);
 };
 
-export function useCreateTasklistMutation() {
+export function useCreateTasklistMutation(categoryName: string) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (request: CreateTasklist): Promise<CreatedTasklist> => {
@@ -16,7 +16,7 @@ export function useCreateTasklistMutation() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: ["task-lists", data.TasklistPreview.categoryDetail.name],
+        queryKey: ["task-lists", categoryName],
       });
 
       notifications.show({

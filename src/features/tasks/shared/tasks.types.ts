@@ -11,12 +11,16 @@ import { Member, SuccessMessage } from "../../shared/shared.types";
 export type CreateTasklist = z.infer<typeof createTasklistSchema>;
 
 export type CreatedTasklist = SuccessMessage & {
-  tasklistPreview: TasklistInfo;
+  message: string;
+  tasklistId: number;
 };
 
 export type UpdateTasklist = z.infer<typeof updateTasklistSchema>;
 
-export type UpdatedTasklist = CreateTasklist;
+export type UpdatedTasklist = {
+  message: string;
+  tasklistId: number;
+};
 
 export type DeletedTasklist = SuccessMessage & {
   id: number;
