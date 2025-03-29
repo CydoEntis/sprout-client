@@ -23,7 +23,6 @@ function LazySidebarNavLinkList({ navList, childLinkProps = {}, ...rest }: LazyS
           <Stack gap={8} mt={8}>
             {list.links.map((link, linkIndex) => {
               const isParentActive = location.pathname === link.to;
-              console.log(isParentActive);
               return (
                 <div key={linkIndex}>
                   <NavLink

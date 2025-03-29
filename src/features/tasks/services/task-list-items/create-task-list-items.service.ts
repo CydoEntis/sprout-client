@@ -11,7 +11,7 @@ const createTasklistItems = async (
   console.log(TasklistId);
   console.log(newTasklistItems);
 
-  return apiRequest<CreatedTasklistItems>("post", `${endpoints.Tasklist}/${TasklistId}/items`, {
+  return apiRequest<CreatedTasklistItems>("post", `${endpoints.tasklist}/${TasklistId}/items`, {
     TasklistItems: newTasklistItems,
   });
 };

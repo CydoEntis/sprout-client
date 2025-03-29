@@ -4,7 +4,7 @@ import { apiRequest } from "../../../../api/apiRequest";
 import { TasklistDetails } from "../../shared/tasks.types";
 
 export const getTasklistDetailsById = async (id: number): Promise<TasklistDetails> => {
-  return apiRequest<TasklistDetails>("get", `${endpoints.Tasklist}/${id}`);
+  return apiRequest<TasklistDetails>("get", `${endpoints.tasklist}/${id}`);
 };
 
 export const getTasklistByIdQueryOptions = (TasklistId: number) =>

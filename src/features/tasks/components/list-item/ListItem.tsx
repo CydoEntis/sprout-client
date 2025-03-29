@@ -1,5 +1,5 @@
 import { Flex, Checkbox, ActionIcon, Text, Group } from "@mantine/core";
-import { Trash } from "lucide-react";
+import { X } from "lucide-react";
 
 import styles from "./list-item.module.css";
 import { TasklistItem } from "../../shared/tasks.types";
@@ -24,8 +24,8 @@ function ListItem({ item, onDelete, onChange }: ListItemProps) {
           {item.description}
         </Text>
       </Group>
-      <ActionIcon color="red" variant="light" onClick={() => onDelete(item.id)}>
-        <Trash size={20} />
+      <ActionIcon color="red" variant="subtle" onClick={() => onDelete(item.id)}>
+        <X size={20} />
       </ActionIcon>
     </Flex>
   );

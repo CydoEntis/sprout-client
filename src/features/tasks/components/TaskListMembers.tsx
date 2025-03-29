@@ -4,15 +4,16 @@ import { Member } from "../../shared/shared.types";
 
 type TasklistMembersProps = {
   members: Member[];
+  size: "xs" | "sm" | "md" | "lg" | "xl";
 };
 
-function TasklistMembers({ members }: TasklistMembersProps) {
+function TasklistMembers({ members, size }: TasklistMembersProps) {
   return (
     <Stack gap={4}>
       <Text size="sm" c="dimmed">
         Members:
       </Text>
-      <MemberList members={members} size="sm" />
+      <MemberList members={members} size={size} />
     </Stack>
   );
 }

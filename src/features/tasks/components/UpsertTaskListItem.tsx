@@ -86,7 +86,6 @@ function UpsertTasklistItem({
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      console.log(tasklistItem);
       e.preventDefault();
       console.log("HELLO");
       form.onSubmit(handleSubmit)();
@@ -97,15 +96,13 @@ function UpsertTasklistItem({
     }
   };
 
-  console.log(form.errors);
-  console.log(isEditing);
-
   if (!isActive) return null;
 
   return (
     <form ref={formRef} onSubmit={form.onSubmit(handleSubmit)} style={{ width: "100%" }}>
       <TextInput
         w="100%"
+        variant="filled"
         rightSectionWidth={60}
         {...form.getInputProps("description")}
         classNames={{
@@ -116,10 +113,10 @@ function UpsertTasklistItem({
         placeholder="Describe Task"
         rightSection={
           <ActionIconGroup>
-            <ActionIcon variant="light" color="lime" onClick={onConfirm}>
+            <ActionIcon variant="subtle" color="lime" onClick={onConfirm}>
               <Check size={20} />
             </ActionIcon>
-            <ActionIcon variant="light" color="red" onClick={onClose}>
+            <ActionIcon variant="subtle" color="red" onClick={onClose}>
               <X size={20} />
             </ActionIcon>
           </ActionIconGroup>

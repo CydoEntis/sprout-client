@@ -8,8 +8,8 @@ import { getIconByTag } from "../features/category/shared/category.helpers";
 import { ValidIconTags } from "../util/types/valid-icon.types";
 import { CategoryWithTasklists, Tasklist, TasklistInfo } from "../features/tasks/shared/tasks.types";
 import TasklistCard from "../features/tasks/components/task-card/TasklistCard";
-import UpsertTasklistModal from "../features/tasks/components/upsert-task-list/UpsertTaskListModal";
 import { useState } from "react";
+import UpsertTasklistModal from "../features/tasks/components/upsert-task-list/UpsertTasklistModal";
 
 type CategoryTasklistPageProps = {
   categoryTasklists: CategoryWithTasklists;

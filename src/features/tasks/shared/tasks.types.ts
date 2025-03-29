@@ -22,6 +22,18 @@ export type UpdatedTasklist = {
   tasklistId: number;
 };
 
+
+
+export type DeleteTasklistItem = {
+  tasklistId: number;
+  tasklistItemId: number;
+};
+
+
+export type DeletedTasklistItem = SuccessMessage & {
+  id: number;
+};
+
 export type DeletedTasklist = SuccessMessage & {
   id: number;
 };

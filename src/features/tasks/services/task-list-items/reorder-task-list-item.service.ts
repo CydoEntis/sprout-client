@@ -6,7 +6,7 @@ import { ReorderedTasklistItemRequest, ReorderedTasklistItemResponse } from "../
 const reorderTasklistItems = async (request: ReorderedTasklistItemRequest): Promise<ReorderedTasklistItemResponse> => {
   return apiRequest<ReorderedTasklistItemResponse>(
     "put",
-    `${endpoints.Tasklist}/${request.TasklistId}/items/reorder`,
+    `${endpoints.tasklist}/${request.TasklistId}/items/reorder`,
     request
   );
 };

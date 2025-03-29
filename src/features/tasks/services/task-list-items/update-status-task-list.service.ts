@@ -12,7 +12,7 @@ const updateTasklistStatusItem = async (
 ): Promise<UpdateStatusTasklistItemResponse> => {
   return apiRequest<UpdateStatusTasklistItemResponse>(
     "put",
-    `${endpoints.Tasklist}/${request.TasklistId}/items/status`,
+    `${endpoints.tasklist}/${request.TasklistId}/items/status`,
     request
   );
 };

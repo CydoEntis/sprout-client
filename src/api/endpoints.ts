@@ -3,7 +3,7 @@ export const baseUrl = import.meta.env.VITE_API_URL;
 const endpoints = {
   auth: "/auth",
   category: "/categories",
-  Tasklist: "/task-list",
+  tasklist: "/task-list",
   invite: "/invite",
 };
 

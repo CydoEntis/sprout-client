@@ -9,16 +9,16 @@ import { useDeleteTasklistItemMutation } from "../services/task-list-items/delet
 import { CreateTasklistItem, TasklistItem, UpdateTasklistItem } from "../shared/tasks.types";
 
 export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
-  const { TasklistId } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
-  const [TasklistItems, TasklistItemHandlers] = useListState(initialItems);
+  const { tasklistId } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
+  const [tasklistItems, tasklistItemHandlers] = useListState(initialItems);
   const [editingState, setEditingState] = useState<{ itemToUpdate: TasklistItem | null; isCreating: boolean }>({
     itemToUpdate: null,
     isCreating: false,
   });
 
   useEffect(() => {
-    TasklistItemHandlers.setState(initialItems);
-  }, [initialItems, TasklistItemHandlers]);
+    tasklistItemHandlers.setState(initialItems);
+  }, [initialItems, tasklistItemHandlers]);
 
   const createTasklistItem = useCreateTasklistItemMutation();
   const updateTasklistItem = useUpdateTasklistItemMutation();
@@ -28,37 +28,37 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
 
   const createItem = async (newItem: CreateTasklistItem) => {
     const result = await createTasklistItem.mutateAsync(newItem);
-    TasklistItemHandlers.append(result.TasklistItemDetail as TasklistItem);
+    tasklistItemHandlers.append(result.tasklistItemDetail as TasklistItem);
   };
 
   const updateItem = async (updatedItem: UpdateTasklistItem) => {
     console.log("CAlling???");
     await updateTasklistItem.mutateAsync(updatedItem);
-    TasklistItemHandlers.setState((prev) =>
+    tasklistItemHandlers.setState((prev) =>
       prev.map((taskItem) => (taskItem.id === updatedItem.id ? updatedItem : taskItem))
     );
   };
 
-  const deleteItem = async (TasklistItemId: number) => {
-    await deleteTasklistItem.mutateAsync({ TasklistId: Number(TasklistId), TasklistItemId });
-    TasklistItemHandlers.setState((prev) => prev.filter((item) => item.id !== TasklistItemId));
+  const deleteItem = async (tasklistItemId: number) => {
+    await deleteTasklistItem.mutateAsync({ tasklistId: Number(tasklistId), tasklistItemId });
+    tasklistItemHandlers.setState((prev) => prev.filter((item) => item.id !== tasklistItemId));
   };
 
   const toggleItemStatus = async (id: number, isCompleted: boolean) => {
-    TasklistItemHandlers.setState((prev) => prev.map((item) => (item.id === id ? { ...item, isCompleted } : item)));
-    await updateStatusTasklistItem.mutateAsync({ TasklistId: Number(TasklistId), id, isCompleted });
+    tasklistItemHandlers.setState((prev) => prev.map((item) => (item.id === id ? { ...item, isCompleted } : item)));
+    await updateStatusTasklistItem.mutateAsync({ TasklistId: Number(tasklistId), id, isCompleted });
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const reorderItems = async ({ source, destination }: any) => {
     if (!destination) return;
-    const newTasklistItems = [...TasklistItems];
+    const newTasklistItems = [...tasklistItems];
     const [movedItem] = newTasklistItems.splice(source.index, 1);
     newTasklistItems.splice(destination.index, 0, movedItem);
 
-    TasklistItemHandlers.setState(newTasklistItems);
+    tasklistItemHandlers.setState(newTasklistItems);
     const reorderedItems = newTasklistItems.map((item, index) => ({ id: item.id, position: index }));
-    await reorderTasklistItems.mutateAsync({ TasklistId: Number(TasklistId), items: reorderedItems });
+    await reorderTasklistItems.mutateAsync({ TasklistId: Number(tasklistId), items: reorderedItems });
   };
 
   const showCreateItem = () => setEditingState({ itemToUpdate: null, isCreating: true });
@@ -66,7 +66,7 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
   const closeItem = () => setEditingState({ itemToUpdate: null, isCreating: false });
 
   return {
-    TasklistItems,
+    tasklistItems,
     createItem,
     updateItem,
     deleteItem,

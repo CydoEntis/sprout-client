@@ -7,7 +7,7 @@ import { CreatedTasklistWithCategory, CreateTasklistWithCategory } from "../../s
 export const createCategoryWithTasklist = async (
   request: CreateTasklistWithCategory
 ): Promise<CreatedTasklistWithCategory> => {
-  return apiRequest<CreatedTasklistWithCategory>("post", endpoints.Tasklist + "/with-category", request);
+  return apiRequest<CreatedTasklistWithCategory>("post", endpoints.tasklist + "/with-category", request);
 };
 
 export function useCreateTasklistWithCategoryMutation() {

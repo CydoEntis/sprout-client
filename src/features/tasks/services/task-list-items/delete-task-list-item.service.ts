@@ -1,16 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "../../../../api/apiRequest";
 import endpoints from "../../../../api/endpoints";
+import { DeletedTasklist, DeletedTasklistItem, DeleteTasklistItem } from "../../shared/tasks.types";
 
-export type DeleteTasklistItemRequest = {
-  TasklistId: number;
-  TasklistItemId: number;
-};
-
-const deleteTasklistItem = async (request: DeleteTasklistItemRequest): Promise<DeleteTasklistItemResponse> => {
-  return apiRequest<DeleteTasklistItemResponse>(
+const deleteTasklistItem = async (request: DeleteTasklistItem): Promise<DeletedTasklistItem> => {
+  return apiRequest<DeletedTasklist>(
     "delete",
-    `${endpoints.Tasklist}/${request.TasklistId}/items/${request.TasklistItemId}`
+    `${endpoints.tasklist}/${request.tasklistId}/items/${request.tasklistItemId}`
   );
 };
 
@@ -18,12 +14,12 @@ export function useDeleteTasklistItemMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (request: DeleteTasklistItemRequest): Promise<DeleteTasklistItemResponse> => {
+    mutationFn: async (request: DeleteTasklistItem): Promise<DeletedTasklistItem> => {
       return await deleteTasklistItem(request);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: ["task-lists", data.TasklistId],
+        queryKey: ["task-lists", data.id],
       });
     },
   });

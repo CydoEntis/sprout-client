@@ -7,7 +7,7 @@ import { CreatedTasklistItem, CreateTasklistItem } from "../../shared/tasks.type
 const createTasklistItem = async (newTasklistItem: CreateTasklistItem): Promise<CreatedTasklistItem> => {
   return apiRequest<CreatedTasklistItem>(
     "post",
-    `${endpoints.Tasklist}/${newTasklistItem.TasklistId}/item`,
+    `${endpoints.tasklist}/${newTasklistItem.TasklistId}/item`,
     newTasklistItem
   );
 };

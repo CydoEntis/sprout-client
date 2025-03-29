@@ -5,7 +5,7 @@ import endpoints from "../../../../api/endpoints";
 import { CreatedTasklist, CreateTasklist } from "../../shared/tasks.types";
 
 const createTasklist = async (request: CreateTasklist): Promise<CreatedTasklist> => {
-  return apiRequest<CreatedTasklist>("post", `${endpoints.Tasklist}`, request);
+  return apiRequest<CreatedTasklist>("post", `${endpoints.tasklist}`, request);
 };
 
 export function useCreateTasklistMutation(categoryName: string) {
