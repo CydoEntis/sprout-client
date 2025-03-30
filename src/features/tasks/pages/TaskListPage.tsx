@@ -1,5 +1,5 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
-import { Button, Stack, Title, Text, Flex, Group, Paper, Pagination } from "@mantine/core";
+import { Button, Stack, Title, Text, Flex, Group, Paper, Pagination, Container, Center } from "@mantine/core";
 import { List, Plus } from "lucide-react";
 import ListItem from "../components/list-item/ListItem";
 import { TasklistDetails, TasklistItem } from "../shared/tasks.types";
@@ -96,63 +96,86 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
         </Stack>
       </Paper>
 
-      <Paper bg="primary" p={16} radius="lg" mih="70vh" pos="relative">
-        <Flex justify="space-between" align="center" mb={24}>
-          <Group>
-            <List size={28} color="#82827F" />
-            <Text c="dimmed">
-              {tasklist.completedTasksCount} of {tasklist.totalTasksCount} items remaining
-            </Text>
-          </Group>
-          <Button onClick={showCreateItem} leftSection={<Plus size={20} />} color="lime">
-            New Item
-          </Button>
-        </Flex>
+      <Paper
+        bg="primary"
+        p={16}
+        radius="lg"
+        mih="70vh"
+        pos="relative"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
+        <Stack justify="space-between" style={{ flexGrow: 1 }}>
+          <Stack>
+            <Flex justify="space-between" align="center" mb={24}>
+              <Group>
+                <List size={28} color="#82827F" />
+                <Text c="dimmed">
+                  {tasklist.completedTasksCount} of {tasklist.totalTasksCount} items completed
+                </Text>
+              </Group>
+              <Button onClick={showCreateItem} leftSection={<Plus size={20} />} color="lime">
+                New Item
+              </Button>
+            </Flex>
 
-        <DragDropContext onDragEnd={reorderItems}>
-          <Droppable droppableId="task-list" direction="vertical">
-            {(provided) => (
-              <Stack {...provided.droppableProps} ref={provided.innerRef} gap={16}>
-                {isCreating && (
-                  <UpsertTasklistItem
-                    onCreate={createItem}
-                    tasklistId={tasklist.id}
-                    isActive={isCreating}
-                    onClose={closeItem}
-                  />
-                )}
-                {tasklistItems.map((item, index) => (
-                  <Draggable key={item.id} draggableId={String(item.id)} index={index}>
-                    {(provided) => (
-                      <div ref={provided.innerRef} {...provided.draggableProps} style={provided.draggableProps.style}>
-                        <div {...provided.dragHandleProps} onDoubleClick={() => showUpdateItem(item)}>
-                          {itemToUpdate?.id === item.id ? (
-                            <UpsertTasklistItem
-                              isActive={true}
-                              tasklistId={tasklist.id}
-                              tasklistItem={item}
-                              onCreate={createItem}
-                              onClose={closeItem}
-                              onUpdate={updateItem}
-                            />
-                          ) : (
-                            <ListItem item={item} onDelete={deleteItem} onChange={toggleItemStatus} />
-                          )}
-                        </div>
-                      </div>
+            <DragDropContext onDragEnd={reorderItems}>
+              <Droppable droppableId="task-list" direction="vertical">
+                {(provided) => (
+                  <Stack {...provided.droppableProps} ref={provided.innerRef} gap={16}>
+                    {isCreating && (
+                      <UpsertTasklistItem
+                        onCreate={createItem}
+                        tasklistId={tasklist.id}
+                        isActive={isCreating}
+                        onClose={closeItem}
+                      />
                     )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </Stack>
-            )}
-          </Droppable>
-        </DragDropContext>
+                    {tasklistItems.map((item, index) => (
+                      <Draggable key={item.id} draggableId={String(item.id)} index={index}>
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            style={provided.draggableProps.style}
+                          >
+                            <div {...provided.dragHandleProps} onDoubleClick={() => showUpdateItem(item)}>
+                              {itemToUpdate?.id === item.id ? (
+                                <UpsertTasklistItem
+                                  isActive={true}
+                                  tasklistId={tasklist.id}
+                                  tasklistItem={item}
+                                  onCreate={createItem}
+                                  onClose={closeItem}
+                                  onUpdate={updateItem}
+                                />
+                              ) : (
+                                <ListItem item={item} onDelete={deleteItem} onChange={toggleItemStatus} />
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </Stack>
+                )}
+              </Droppable>
+            </DragDropContext>
+          </Stack>
 
-        {/* Mantine Pagination */}
-        <Flex justify="center" mt={16}>
-          <Pagination value={page} onChange={handlePageChange} total={paginatedItems.totalPages} />
-        </Flex>
+          <Flex justify="space-between" w="100%" align="center" style={{ marginTop: "auto" }}>
+            <Text c="dimmed">
+              {page} of {paginatedItems.totalPages}
+            </Text>
+            <Pagination
+              color="lime"
+              value={page}
+              onChange={handlePageChange}
+              total={paginatedItems.totalPages}
+              style={{ flexShrink: 0 }}
+            />
+          </Flex>
+        </Stack>
       </Paper>
     </>
   );
