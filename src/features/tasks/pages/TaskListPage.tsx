@@ -1,9 +1,8 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
-import { Button, Stack, Title, Text, Flex, Group, Paper } from "@mantine/core";
+import { Button, Stack, Title, Text, Flex, Group, Paper, Pagination } from "@mantine/core";
 import { List, Plus } from "lucide-react";
-
 import ListItem from "../components/list-item/ListItem";
-import { Tasklist, TasklistDetails } from "../shared/tasks.types";
+import { TasklistDetails, TasklistItem } from "../shared/tasks.types";
 import { useTasklistItemHandlers } from "../hooks/useTaskListItemHandlers";
 import UpsertTasklistItem from "../components/UpsertTasklistItem";
 import TasklistMembers from "../components/TasklistMembers";
@@ -12,14 +11,23 @@ import { useState } from "react";
 import UpdateTasklistModal from "../components/update-task-list/UpdateTasklistModal";
 import LazyEditDeleteMenu from "../../../lazy-components/menus/LazyEditDeleteMenu";
 import { useDeleteTasklistMutation } from "../services/task-list/delete-task-list.service";
-import { useParams } from "@tanstack/react-router";
+import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
 
 type TasklistDetailsPageProps = {
   tasklist: TasklistDetails;
+  paginatedItems: TasklistItem[];
+  pagination: { page: number; pageSize: number; totalItems: number };
 };
 
-function TasklistDetailsPage({ tasklist }: TasklistDetailsPageProps) {
+function TasklistDetailsPage({ tasklist, paginatedItems, pagination }: TasklistDetailsPageProps) {
   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
+  const searchParams = useSearch({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
+  const page = searchParams.page || 1;
+  const pageSize = searchParams.pageSize || 10;
+  const navigate = useNavigate();
+  console.log("page", page);
+  console.log("pageSize", pageSize);
+
   const deleteTasklist = useDeleteTasklistMutation();
   const {
     tasklistItems,
@@ -32,28 +40,30 @@ function TasklistDetailsPage({ tasklist }: TasklistDetailsPageProps) {
     showUpdateItem,
     closeItem,
     editingState: { itemToUpdate, isCreating },
-  } = useTasklistItemHandlers(tasklist.tasklistItems);
+  } = useTasklistItemHandlers(paginatedItems);
 
   const [isUpdateTasklistModalOpened, { open: openUpdateTasklistModal, close: closeUpdateTasklistModal }] =
     useDisclosure(false);
-  const [selectedTasklist, setSelectedTasklist] = useState<Tasklist>({
-    id: tasklist.id,
-    name: tasklist.name,
-    description: tasklist.description,
-  });
+  const [selectedTasklist, setSelectedTasklist] = useState<TasklistDetails>(tasklist);
 
   const handleDeleteTasklist = async () => {
     await deleteTasklist.mutateAsync(tasklist.id);
   };
 
   const openEditTasklistModal = (tasklist: TasklistDetails) => {
-    setSelectedTasklist({
-      id: tasklist.id,
-      name: tasklist.name,
-      description: tasklist.description,
-    });
+    setSelectedTasklist(tasklist);
     openUpdateTasklistModal();
   };
+
+  const handlePageChange = (newPage: number) => {
+    // Update the search params using navigate to change the page
+    navigate({
+      to: `/categories/${categoryName}/${tasklist.id}`,
+      search: { ...searchParams, page: newPage },
+    });
+  };
+  console.log(pagination);
+  console.log(Math.ceil(pagination.totalItems / pageSize));
 
   return (
     <>
@@ -63,6 +73,7 @@ function TasklistDetailsPage({ tasklist }: TasklistDetailsPageProps) {
         tasklist={selectedTasklist}
         categoryName={categoryName}
       />
+
       <Paper bg="primary" p={16} radius="lg" style={{ borderBottom: `8px solid ${tasklist.categoryColor}` }} mb={16}>
         <Stack justify="space-between" gap={8}>
           <Stack gap={8}>
@@ -91,14 +102,15 @@ function TasklistDetailsPage({ tasklist }: TasklistDetailsPageProps) {
         <Flex justify="space-between" align="center" mb={24}>
           <Group>
             <List size={28} color="#82827F" />
-            <Text c="dimmed">
-              {tasklist.completedTasksCount} of {tasklist.totalTasksCount} items remaining
-            </Text>
+            {/* <Text c="dimmed">
+              {paginatedItems.completedTasksCount} of {paginatedItems.totalTasksCount} items remaining
+            </Text> */}
           </Group>
           <Button onClick={showCreateItem} leftSection={<Plus size={20} />} color="lime">
             New Item
           </Button>
         </Flex>
+
         <DragDropContext onDragEnd={reorderItems}>
           <Droppable droppableId="task-list" direction="vertical">
             {(provided) => (
@@ -138,6 +150,11 @@ function TasklistDetailsPage({ tasklist }: TasklistDetailsPageProps) {
             )}
           </Droppable>
         </DragDropContext>
+
+        {/* Mantine Pagination */}
+        <Flex justify="center" mt={16}>
+          <Pagination value={page} onChange={handlePageChange} total={Math.ceil(pagination.totalItems / pageSize)} />
+        </Flex>
       </Paper>
     </>
   );
