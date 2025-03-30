@@ -12,14 +12,14 @@ import UpdateTasklistModal from "../components/update-task-list/UpdateTasklistMo
 import LazyEditDeleteMenu from "../../../lazy-components/menus/LazyEditDeleteMenu";
 import { useDeleteTasklistMutation } from "../services/task-list/delete-task-list.service";
 import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
+import { Paginated } from "../../../util/types/shared.types";
 
 type TasklistDetailsPageProps = {
   tasklist: TasklistDetails;
-  paginatedItems: TasklistItem[];
-  pagination: { page: number; pageSize: number; totalItems: number };
+  paginatedItems: Paginated<TasklistItem>;
 };
 
-function TasklistDetailsPage({ tasklist, paginatedItems, pagination }: TasklistDetailsPageProps) {
+function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPageProps) {
   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
   const searchParams = useSearch({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
   const page = searchParams.page || 1;
@@ -40,7 +40,7 @@ function TasklistDetailsPage({ tasklist, paginatedItems, pagination }: TasklistD
     showUpdateItem,
     closeItem,
     editingState: { itemToUpdate, isCreating },
-  } = useTasklistItemHandlers(paginatedItems);
+  } = useTasklistItemHandlers(paginatedItems.items);
 
   const [isUpdateTasklistModalOpened, { open: openUpdateTasklistModal, close: closeUpdateTasklistModal }] =
     useDisclosure(false);
@@ -62,8 +62,6 @@ function TasklistDetailsPage({ tasklist, paginatedItems, pagination }: TasklistD
       search: { ...searchParams, page: newPage },
     });
   };
-  console.log(pagination);
-  console.log(Math.ceil(pagination.totalItems / pageSize));
 
   return (
     <>
@@ -102,9 +100,9 @@ function TasklistDetailsPage({ tasklist, paginatedItems, pagination }: TasklistD
         <Flex justify="space-between" align="center" mb={24}>
           <Group>
             <List size={28} color="#82827F" />
-            {/* <Text c="dimmed">
-              {paginatedItems.completedTasksCount} of {paginatedItems.totalTasksCount} items remaining
-            </Text> */}
+            <Text c="dimmed">
+              {tasklist.completedTasksCount} of {tasklist.totalTasksCount} items remaining
+            </Text>
           </Group>
           <Button onClick={showCreateItem} leftSection={<Plus size={20} />} color="lime">
             New Item
@@ -153,7 +151,7 @@ function TasklistDetailsPage({ tasklist, paginatedItems, pagination }: TasklistD
 
         {/* Mantine Pagination */}
         <Flex justify="center" mt={16}>
-          <Pagination value={page} onChange={handlePageChange} total={Math.ceil(pagination.totalItems / pageSize)} />
+          <Pagination value={page} onChange={handlePageChange} total={paginatedItems.totalPages} />
         </Flex>
       </Paper>
     </>

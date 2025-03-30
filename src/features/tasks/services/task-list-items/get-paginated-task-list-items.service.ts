@@ -2,12 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import endpoints from "../../../../api/endpoints";
 import { apiRequest } from "../../../../api/apiRequest";
 import { TasklistItem } from "../../shared/tasks.types";
+import { Paginated } from "../../../../util/types/shared.types";
 
 export const getPaginatedTasklistItems = async (
   tasklistId: number,
   page: number,
   pageSize: number
-): Promise<{ items: TasklistItem[]; totalItems: number; completedTasksCount: number; totalTasksCount: number }> => {
+): Promise<Paginated<TasklistItem>> => {
   return apiRequest("get", `${endpoints.tasklist}/${tasklistId}/items`, { params: { page, pageSize } });
 };
 
