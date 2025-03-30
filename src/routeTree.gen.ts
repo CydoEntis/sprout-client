@@ -16,8 +16,11 @@ import { Route as LoginImport } from './routes/login'
 import { Route as ForgotPasswordImport } from './routes/forgot-password'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthenticatedAboutImport } from './routes/_authenticated/about'
+import { Route as AuthenticatedTodayIndexImport } from './routes/_authenticated/today/index'
 import { Route as AuthenticatedCategoriesIndexImport } from './routes/_authenticated/categories/index'
+import { Route as AuthenticatedCalendarIndexImport } from './routes/_authenticated/calendar/index'
 import { Route as AuthenticatedInviteInviteTokenImport } from './routes/_authenticated/invite/$inviteToken'
+import { Route as AuthenticatedCategoriesFavoritesImport } from './routes/_authenticated/categories/favorites'
 import { Route as AuthenticatedCategoriesCategoryNameImport } from './routes/_authenticated/categories/$categoryName'
 import { Route as AuthenticatedCategoriesCategoryNameTasklistIdImport } from './routes/_authenticated/categories/$categoryName_/$tasklistId'
 
@@ -52,6 +55,12 @@ const AuthenticatedAboutRoute = AuthenticatedAboutImport.update({
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 
+const AuthenticatedTodayIndexRoute = AuthenticatedTodayIndexImport.update({
+  id: '/today/',
+  path: '/today/',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
 const AuthenticatedCategoriesIndexRoute =
   AuthenticatedCategoriesIndexImport.update({
     id: '/categories/',
@@ -59,10 +68,25 @@ const AuthenticatedCategoriesIndexRoute =
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 
+const AuthenticatedCalendarIndexRoute = AuthenticatedCalendarIndexImport.update(
+  {
+    id: '/calendar/',
+    path: '/calendar/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any,
+)
+
 const AuthenticatedInviteInviteTokenRoute =
   AuthenticatedInviteInviteTokenImport.update({
     id: '/invite/$inviteToken',
     path: '/invite/$inviteToken',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+
+const AuthenticatedCategoriesFavoritesRoute =
+  AuthenticatedCategoriesFavoritesImport.update({
+    id: '/categories/favorites',
+    path: '/categories/favorites',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 
@@ -126,6 +150,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCategoriesCategoryNameImport
       parentRoute: typeof AuthenticatedImport
     }
+    '/_authenticated/categories/favorites': {
+      id: '/_authenticated/categories/favorites'
+      path: '/categories/favorites'
+      fullPath: '/categories/favorites'
+      preLoaderRoute: typeof AuthenticatedCategoriesFavoritesImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_authenticated/invite/$inviteToken': {
       id: '/_authenticated/invite/$inviteToken'
       path: '/invite/$inviteToken'
@@ -133,11 +164,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedInviteInviteTokenImport
       parentRoute: typeof AuthenticatedImport
     }
+    '/_authenticated/calendar/': {
+      id: '/_authenticated/calendar/'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof AuthenticatedCalendarIndexImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_authenticated/categories/': {
       id: '/_authenticated/categories/'
       path: '/categories'
       fullPath: '/categories'
       preLoaderRoute: typeof AuthenticatedCategoriesIndexImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/today/': {
+      id: '/_authenticated/today/'
+      path: '/today'
+      fullPath: '/today'
+      preLoaderRoute: typeof AuthenticatedTodayIndexImport
       parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/categories/$categoryName_/$tasklistId': {
@@ -155,8 +200,11 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteChildren {
   AuthenticatedAboutRoute: typeof AuthenticatedAboutRoute
   AuthenticatedCategoriesCategoryNameRoute: typeof AuthenticatedCategoriesCategoryNameRoute
+  AuthenticatedCategoriesFavoritesRoute: typeof AuthenticatedCategoriesFavoritesRoute
   AuthenticatedInviteInviteTokenRoute: typeof AuthenticatedInviteInviteTokenRoute
+  AuthenticatedCalendarIndexRoute: typeof AuthenticatedCalendarIndexRoute
   AuthenticatedCategoriesIndexRoute: typeof AuthenticatedCategoriesIndexRoute
+  AuthenticatedTodayIndexRoute: typeof AuthenticatedTodayIndexRoute
   AuthenticatedCategoriesCategoryNameTasklistIdRoute: typeof AuthenticatedCategoriesCategoryNameTasklistIdRoute
 }
 
@@ -164,8 +212,11 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAboutRoute: AuthenticatedAboutRoute,
   AuthenticatedCategoriesCategoryNameRoute:
     AuthenticatedCategoriesCategoryNameRoute,
+  AuthenticatedCategoriesFavoritesRoute: AuthenticatedCategoriesFavoritesRoute,
   AuthenticatedInviteInviteTokenRoute: AuthenticatedInviteInviteTokenRoute,
+  AuthenticatedCalendarIndexRoute: AuthenticatedCalendarIndexRoute,
   AuthenticatedCategoriesIndexRoute: AuthenticatedCategoriesIndexRoute,
+  AuthenticatedTodayIndexRoute: AuthenticatedTodayIndexRoute,
   AuthenticatedCategoriesCategoryNameTasklistIdRoute:
     AuthenticatedCategoriesCategoryNameTasklistIdRoute,
 }
@@ -181,8 +232,11 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/about': typeof AuthenticatedAboutRoute
   '/categories/$categoryName': typeof AuthenticatedCategoriesCategoryNameRoute
+  '/categories/favorites': typeof AuthenticatedCategoriesFavoritesRoute
   '/invite/$inviteToken': typeof AuthenticatedInviteInviteTokenRoute
+  '/calendar': typeof AuthenticatedCalendarIndexRoute
   '/categories': typeof AuthenticatedCategoriesIndexRoute
+  '/today': typeof AuthenticatedTodayIndexRoute
   '/categories/$categoryName/$tasklistId': typeof AuthenticatedCategoriesCategoryNameTasklistIdRoute
 }
 
@@ -193,8 +247,11 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/about': typeof AuthenticatedAboutRoute
   '/categories/$categoryName': typeof AuthenticatedCategoriesCategoryNameRoute
+  '/categories/favorites': typeof AuthenticatedCategoriesFavoritesRoute
   '/invite/$inviteToken': typeof AuthenticatedInviteInviteTokenRoute
+  '/calendar': typeof AuthenticatedCalendarIndexRoute
   '/categories': typeof AuthenticatedCategoriesIndexRoute
+  '/today': typeof AuthenticatedTodayIndexRoute
   '/categories/$categoryName/$tasklistId': typeof AuthenticatedCategoriesCategoryNameTasklistIdRoute
 }
 
@@ -206,8 +263,11 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/_authenticated/about': typeof AuthenticatedAboutRoute
   '/_authenticated/categories/$categoryName': typeof AuthenticatedCategoriesCategoryNameRoute
+  '/_authenticated/categories/favorites': typeof AuthenticatedCategoriesFavoritesRoute
   '/_authenticated/invite/$inviteToken': typeof AuthenticatedInviteInviteTokenRoute
+  '/_authenticated/calendar/': typeof AuthenticatedCalendarIndexRoute
   '/_authenticated/categories/': typeof AuthenticatedCategoriesIndexRoute
+  '/_authenticated/today/': typeof AuthenticatedTodayIndexRoute
   '/_authenticated/categories/$categoryName_/$tasklistId': typeof AuthenticatedCategoriesCategoryNameTasklistIdRoute
 }
 
@@ -220,8 +280,11 @@ export interface FileRouteTypes {
     | '/register'
     | '/about'
     | '/categories/$categoryName'
+    | '/categories/favorites'
     | '/invite/$inviteToken'
+    | '/calendar'
     | '/categories'
+    | '/today'
     | '/categories/$categoryName/$tasklistId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -231,8 +294,11 @@ export interface FileRouteTypes {
     | '/register'
     | '/about'
     | '/categories/$categoryName'
+    | '/categories/favorites'
     | '/invite/$inviteToken'
+    | '/calendar'
     | '/categories'
+    | '/today'
     | '/categories/$categoryName/$tasklistId'
   id:
     | '__root__'
@@ -242,8 +308,11 @@ export interface FileRouteTypes {
     | '/register'
     | '/_authenticated/about'
     | '/_authenticated/categories/$categoryName'
+    | '/_authenticated/categories/favorites'
     | '/_authenticated/invite/$inviteToken'
+    | '/_authenticated/calendar/'
     | '/_authenticated/categories/'
+    | '/_authenticated/today/'
     | '/_authenticated/categories/$categoryName_/$tasklistId'
   fileRoutesById: FileRoutesById
 }
@@ -283,8 +352,11 @@ export const routeTree = rootRoute
       "children": [
         "/_authenticated/about",
         "/_authenticated/categories/$categoryName",
+        "/_authenticated/categories/favorites",
         "/_authenticated/invite/$inviteToken",
+        "/_authenticated/calendar/",
         "/_authenticated/categories/",
+        "/_authenticated/today/",
         "/_authenticated/categories/$categoryName_/$tasklistId"
       ]
     },
@@ -305,12 +377,24 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/categories/$categoryName.tsx",
       "parent": "/_authenticated"
     },
+    "/_authenticated/categories/favorites": {
+      "filePath": "_authenticated/categories/favorites.tsx",
+      "parent": "/_authenticated"
+    },
     "/_authenticated/invite/$inviteToken": {
       "filePath": "_authenticated/invite/$inviteToken.tsx",
       "parent": "/_authenticated"
     },
+    "/_authenticated/calendar/": {
+      "filePath": "_authenticated/calendar/index.tsx",
+      "parent": "/_authenticated"
+    },
     "/_authenticated/categories/": {
       "filePath": "_authenticated/categories/index.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/today/": {
+      "filePath": "_authenticated/today/index.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/categories/$categoryName_/$tasklistId": {

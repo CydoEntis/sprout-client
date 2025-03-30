@@ -1,31 +1,17 @@
-import { AppShell, Box, Container, MantineColor, ScrollArea } from "@mantine/core";
+import { AppShell, Box, Container, ScrollArea } from "@mantine/core";
 import { Outlet } from "@tanstack/react-router";
-import React from "react";
+import { ReactNode } from "react";
 import LazyBurger from "../../burger/LazyBurger";
-import { LazyNavLinkList } from "../../nav-link/sidebar-nav-link/lazy-sidebar-nav-link.types";
-import LazySidebarNavLinkList from "../../nav-link/sidebar-nav-link/LazySidebarNavLinkList";
 
 type LazySidebarLayoutProps = {
   isSidebarOpened: boolean;
   onToggle: () => void;
-  logo?: React.ReactNode;
-  navList: LazyNavLinkList[];
-  isLoading?: boolean;
-  footer?: React.ReactNode;
-  navLinkColor?: MantineColor;
-  childActiveColor?: MantineColor;
+  logo?: ReactNode;
+  children: ReactNode;
+  footer?: ReactNode;
 };
 
-function LazySidebarLayout({
-  isSidebarOpened,
-  onToggle,
-  logo,
-  navList,
-  isLoading = false,
-  footer,
-  navLinkColor = "gray",
-  childActiveColor,
-}: LazySidebarLayoutProps) {
+function LazySidebarLayout({ isSidebarOpened, onToggle, logo, children, footer }: LazySidebarLayoutProps) {
   return (
     <AppShell
       navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !isSidebarOpened } }}
@@ -65,25 +51,7 @@ function LazySidebarLayout({
             {logo}
           </Box>
         </AppShell.Section>
-
-        <AppShell.Section p="md" grow my="md" component={ScrollArea}>
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : (
-            <LazySidebarNavLinkList
-              navList={navList || []}
-              color={navLinkColor}
-              px={12}
-              py={4}
-              childLinkProps={{
-                color: childActiveColor,
-                variant: "subtle",
-                py: 4,
-              }}
-            />
-          )}
-        </AppShell.Section>
-        <AppShell.Section style={{ borderTop: "1px solid var(--border-color)" }}>{footer}</AppShell.Section>
+        {children}
       </AppShell.Navbar>
 
       <AppShell.Main bg="secondary" style={{ paddingTop: "50px" }}>

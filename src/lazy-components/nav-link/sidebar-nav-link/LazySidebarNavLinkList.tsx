@@ -24,17 +24,14 @@ function LazySidebarNavLinkList({ navList, childLinkProps = {}, ...rest }: LazyS
 
           <Stack gap={8} mt={8}>
             {list.links.map((link, linkIndex) => {
-              // Check if any child link is active using fuzzy matching
-              const isAnyChildActive = link.childLinks?.some(
-                (childLink) => Boolean(matchRoute({ to: childLink.to, fuzzy: true })) // Use fuzzy matching for child links
+              const isAnyChildActive = link.childLinks?.some((childLink) =>
+                Boolean(matchRoute({ to: childLink.to, fuzzy: true }))
               );
 
-              // The parent should never be active if it has children
               const isParentActive = link.childLinks?.length
-                ? false // Parent should be inactive if it has children
-                : Boolean(matchRoute({ to: link.to, fuzzy: false })); // Exact match for parent link
+                ? false
+                : Boolean(matchRoute({ to: link.to, fuzzy: false }));
 
-              // If any child is active, no parent links should be active
               const isLinkActive = isAnyChildActive ? false : isParentActive;
 
               return (
@@ -62,15 +59,13 @@ function LazySidebarNavLinkList({ navList, childLinkProps = {}, ...rest }: LazyS
                     }
                     childrenOffset={28}
                     to={link.to}
-                    active={isLinkActive} // Only activate if no child is active
+                    active={isLinkActive}
                     {...rest}
                   >
                     {link.childLinks && link.childLinks.length > 0 && (
                       <Stack gap={8} py={8}>
                         {link.childLinks.map((childLink) => {
-                          const isChildActive = Boolean(
-                            matchRoute({ to: childLink.to, fuzzy: true }) // Use fuzzy matching for child links
-                          );
+                          const isChildActive = Boolean(matchRoute({ to: childLink.to, fuzzy: true }));
 
                           return (
                             <NavLink
@@ -79,7 +74,7 @@ function LazySidebarNavLinkList({ navList, childLinkProps = {}, ...rest }: LazyS
                               component={Link}
                               label={childLink.label}
                               childrenOffset={28}
-                              active={isChildActive} // Only activate the child link if it matches the route
+                              active={isChildActive}
                               to={childLink.to}
                               {...childLinkProps}
                             />
