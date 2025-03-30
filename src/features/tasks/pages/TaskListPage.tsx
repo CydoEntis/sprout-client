@@ -23,9 +23,7 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
   const searchParams = useSearch({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
   const page = searchParams.page || 1;
-  const pageSize = searchParams.pageSize || 10;
   const navigate = useNavigate();
-
 
   const deleteTasklist = useDeleteTasklistMutation();
   const {
@@ -55,7 +53,6 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
   };
 
   const handlePageChange = (newPage: number) => {
-    // Update the search params using navigate to change the page
     navigate({
       to: `/categories/${categoryName}/${tasklist.id}`,
       search: { ...searchParams, page: newPage },
@@ -166,13 +163,15 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
             <Text c="dimmed">
               {page} of {paginatedItems.totalPages}
             </Text>
-            <Pagination
-              color="lime"
-              value={page}
-              onChange={handlePageChange}
-              total={paginatedItems.totalPages}
-              style={{ flexShrink: 0 }}
-            />
+            {paginatedItems.totalPages > 1 && (
+              <Pagination
+                color="lime"
+                value={page}
+                onChange={handlePageChange}
+                total={paginatedItems.totalPages}
+                style={{ flexShrink: 0 }}
+              />
+            )}
           </Flex>
         </Stack>
       </Paper>

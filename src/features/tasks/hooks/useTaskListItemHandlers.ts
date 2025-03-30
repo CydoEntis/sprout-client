@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useListState } from "@mantine/hooks";
-import { useParams } from "@tanstack/react-router";
+import { useParams, useSearch } from "@tanstack/react-router";
 import { useCreateTasklistItemMutation } from "../services/task-list-items/create-task-list-item.service";
 import { useUpdateTasklistItemMutation } from "../services/task-list-items/update-task-list-item.service";
 import { useReorderTasklistItemsMutation } from "../services/task-list-items/reorder-task-list-item.service";
@@ -10,6 +10,7 @@ import { CreateTasklistItem, TasklistItem, UpdateTasklistItem } from "../shared/
 
 export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
   const { tasklistId } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
+  const searchParams = useSearch({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
 
   // Ensure state updates correctly
   const [tasklistItems, tasklistItemHandlers] = useListState(initialItems);
@@ -22,11 +23,11 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
     tasklistItemHandlers.setState(initialItems);
   }, [initialItems]);
 
-  const createTasklistItem = useCreateTasklistItemMutation();
-  const updateTasklistItem = useUpdateTasklistItemMutation();
-  const reorderTasklistItems = useReorderTasklistItemsMutation();
-  const updateStatusTasklistItem = useUpdateTasklistStatusItemMutation(Number(tasklistId));
-  const deleteTasklistItem = useDeleteTasklistItemMutation();
+  const createTasklistItem = useCreateTasklistItemMutation(searchParams.page || 1);
+  const updateTasklistItem = useUpdateTasklistItemMutation(searchParams.page || 1);
+  const reorderTasklistItems = useReorderTasklistItemsMutation(searchParams.page || 1);
+  const updateStatusTasklistItem = useUpdateTasklistStatusItemMutation(Number(tasklistId), searchParams.page || 1);
+  const deleteTasklistItem = useDeleteTasklistItemMutation(searchParams.page || 1);
 
   const createItem = async (newItem: CreateTasklistItem) => {
     const result = await createTasklistItem.mutateAsync(newItem);
@@ -47,7 +48,7 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
 
   const toggleItemStatus = async (id: number, isCompleted: boolean) => {
     tasklistItemHandlers.setState((prev) => prev.map((item) => (item.id === id ? { ...item, isCompleted } : item)));
-    await updateStatusTasklistItem.mutateAsync({ TasklistId: Number(tasklistId), id, isCompleted });
+    await updateStatusTasklistItem.mutateAsync({ tasklistId: Number(tasklistId), id, isCompleted });
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

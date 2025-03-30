@@ -7,12 +7,12 @@ import { CreatedTasklistItem, CreateTasklistItem } from "../../shared/tasks.type
 const createTasklistItem = async (newTasklistItem: CreateTasklistItem): Promise<CreatedTasklistItem> => {
   return apiRequest<CreatedTasklistItem>(
     "post",
-    `${endpoints.tasklist}/${newTasklistItem.TasklistId}/item`,
+    `${endpoints.tasklist}/${newTasklistItem.tasklistId}/item`,
     newTasklistItem
   );
 };
 
-export function useCreateTasklistItemMutation() {
+export function useCreateTasklistItemMutation(page: number) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (newTasklistItem: CreateTasklistItem): Promise<CreatedTasklistItem> => {
@@ -22,7 +22,11 @@ export function useCreateTasklistItemMutation() {
       console.log(data);
 
       queryClient.invalidateQueries({
-        queryKey: ["task-lists", data.TasklistId],
+        queryKey: ["task-lists", data.tasklistId],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["task-lists", data.tasklistId, page],
       });
 
       notifications.show({

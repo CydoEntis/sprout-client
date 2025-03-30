@@ -10,7 +10,7 @@ const deleteTasklistItem = async (request: DeleteTasklistItem): Promise<DeletedT
   );
 };
 
-export function useDeleteTasklistItemMutation() {
+export function useDeleteTasklistItemMutation(page: number) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -20,6 +20,10 @@ export function useDeleteTasklistItemMutation() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: ["task-lists", data.id],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["task-lists", data.id, page],
       });
     },
   });

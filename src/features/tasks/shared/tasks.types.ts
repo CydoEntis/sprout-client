@@ -22,13 +22,10 @@ export type UpdatedTasklist = {
   tasklistId: number;
 };
 
-
-
 export type DeleteTasklistItem = {
   tasklistId: number;
   tasklistItemId: number;
 };
-
 
 export type DeletedTasklistItem = SuccessMessage & {
   id: number;
@@ -113,6 +110,10 @@ export type UpdateTasklistItem = z.infer<typeof updateTasklistItemSchema>;
 
 export type UpdatedTasklistItem = CreatedTasklistItem;
 
+export type UpdateTasklistItemStatus = { tasklistId: number; id: number; isCompleted: boolean };
+
+export type UpdatedTasklistItemStatus = CreatedTasklistItem;
+
 export type ReorderTasklistItems = {
   tasklistId: number;
   items: TasklistItemPosition[];
@@ -120,7 +121,7 @@ export type ReorderTasklistItems = {
 
 export type ReorderedTasklistItem = {
   tasklistId: number;
-}
+};
 
 export type TasklistItemStatus = {
   id: number;

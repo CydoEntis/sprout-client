@@ -12,7 +12,6 @@ export const Route = createFileRoute("/_authenticated/categories/$categoryName_/
   validateSearch: (params: Record<string, string | number>) => {
     return {
       page: params.page ? parseInt(params.page as string) : 1,
-      pageSize: params.pageSize ? parseInt(params.pageSize as string) : 10,
     };
   },
   component: RouteComponent,
@@ -25,19 +24,11 @@ function RouteComponent() {
 
   const searchParams = useSearch({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
   const page = searchParams.page || 1;
-  const pageSize = searchParams.pageSize || 10;
 
   const { data: tasklist } = useSuspenseQuery(getTasklistByIdQueryOptions(Number(tasklistId)));
 
   // Fetch paginated task list items based on the `page` and `pageSize` params
-  const { data: paginatedResult } = useSuspenseQuery(
-    getPaginatedTasklistItemsQueryOptions(Number(tasklistId), page, pageSize)
-  );
+  const { data: paginatedResult } = useSuspenseQuery(getPaginatedTasklistItemsQueryOptions(Number(tasklistId), page));
 
-  return (
-    <TasklistDetailsPage
-      tasklist={tasklist}
-      paginatedItems={paginatedResult}
-    />
-  );
+  return <TasklistDetailsPage tasklist={tasklist} paginatedItems={paginatedResult} />;
 }
