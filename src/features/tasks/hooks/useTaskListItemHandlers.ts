@@ -31,7 +31,7 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
 
   const createItem = async (newItem: CreateTasklistItem) => {
     const result = await createTasklistItem.mutateAsync(newItem);
-    tasklistItemHandlers.append(result.tasklistItemDetail as TasklistItem);
+    tasklistItemHandlers.insert(0, result.tasklistItemDetail as TasklistItem);
   };
 
   const updateItem = async (updatedItem: UpdateTasklistItem) => {

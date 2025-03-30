@@ -9,8 +9,8 @@ import {
 
 const updateTasklistStatusItem = async (
   request: UpdateTasklistItemStatusRequest
-): Promise<UpdateStatusTasklistItemResponse> => {
-  return apiRequest<UpdateStatusTasklistItemResponse>(
+): Promise<void> => {
+  return apiRequest(
     "put",
     `${endpoints.tasklist}/${request.TasklistId}/items/status`,
     request

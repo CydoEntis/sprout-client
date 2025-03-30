@@ -24,6 +24,8 @@ function UpsertTasklistItem({
 }: UpsertTasklistItemProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const isEditing = Boolean(tasklistItem);
+  console.log("Is editing: ", isEditing);
+  console.log("tHE PASSED IN ITEM: ", tasklistItem);
 
   const form = useForm({
     initialValues: {
@@ -38,6 +40,7 @@ function UpsertTasklistItem({
 
   useEffect(() => {
     if (tasklistItem) {
+      console.log("task list item exists: ", tasklistItem);
       form.setValues({
         id: tasklistItem.id,
         description: tasklistItem.description,
@@ -65,18 +68,21 @@ function UpsertTasklistItem({
     };
   }, [isActive, onClose]);
 
+  console.log(form.errors);
+
   const handleSubmit = async (data: CreateTasklistItem | UpdateTasklistItem) => {
     try {
       if (isEditing) {
+        console.log("Updating: ", data);
         onUpdate?.(data as UpdateTasklistItem);
       } else {
         onCreate?.(data as CreateTasklistItem);
       }
-    } catch (error) {
-      console.error("Error submitting task:", error);
-    } finally {
+
       form.reset();
       onClose();
+    } catch (error) {
+      console.error("Error submitting task:", error);
     }
   };
 
@@ -87,10 +93,7 @@ function UpsertTasklistItem({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      console.log("HELLO");
       form.onSubmit(handleSubmit)();
-      form.reset();
-      onClose();
     } else if (e.key === "Escape") {
       onClose();
     }
@@ -105,6 +108,7 @@ function UpsertTasklistItem({
         variant="filled"
         rightSectionWidth={60}
         {...form.getInputProps("description")}
+        error={form.errors.description}
         classNames={{
           input: "input",
         }}
