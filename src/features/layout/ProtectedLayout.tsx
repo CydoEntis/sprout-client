@@ -51,6 +51,7 @@ function ProtectedLayout() {
           icon: getIconByTag(category.tag),
           iconColor: category.color,
           childLinks: category.recentTasklists.map((tasklist) => ({
+            id: tasklist.tasklistId,
             label: tasklist.tasklistName,
             to: `/categories/${category.name.toLocaleLowerCase()}/${tasklist.tasklistId}`,
             routePattern: "/categories/$categoryName/$tasklistId",

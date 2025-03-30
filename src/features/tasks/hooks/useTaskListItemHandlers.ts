@@ -19,7 +19,6 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
   });
 
   useEffect(() => {
-    console.log("Initializing tasklistItems:", initialItems);
     tasklistItemHandlers.setState(initialItems);
   }, [initialItems]);
 
@@ -35,7 +34,6 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
   };
 
   const updateItem = async (updatedItem: UpdateTasklistItem) => {
-    console.log("Updating item:", updatedItem);
     await updateTasklistItem.mutateAsync(updatedItem);
     tasklistItemHandlers.setState((prev) =>
       prev.map((taskItem) => (taskItem.id === updatedItem.id ? { ...taskItem, ...updatedItem } : taskItem))
@@ -74,10 +72,6 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
       tasklistItemHandlers.setState(initialItems);
     }
   };
-
-  useEffect(() => {
-    console.log("TasklistItems updated:", tasklistItems);
-  }, [tasklistItems]);
 
   const showCreateItem = () => setEditingState({ itemToUpdate: null, isCreating: true });
   const showUpdateItem = (item: TasklistItem) => setEditingState({ itemToUpdate: item, isCreating: false });

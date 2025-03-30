@@ -4,6 +4,7 @@ export type LazyNavLinkList = {
 };
 
 type ChildLink = {
+  id?: number | string;
   label: string;
   to: string;
   routePattern?: string;

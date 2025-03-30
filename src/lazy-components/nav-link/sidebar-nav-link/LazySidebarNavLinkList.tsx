@@ -1,15 +1,17 @@
 import { NavLink, NavLinkProps, Paper, Stack, Text } from "@mantine/core";
-import { Link } from "@tanstack/react-router";
+import { Link, useMatchRoute } from "@tanstack/react-router";
 import { LazyNavLinkList } from "./lazy-sidebar-nav-link.types";
 import styles from "./lazy-side-bar-nav-link-list.module.css";
 import React, { ReactElement } from "react";
 
 type LazySidebarNavLinkListProps = {
-  navList: LazyNavLinkList[]; // An array of nav lists
+  navList: LazyNavLinkList[];
   childLinkProps?: NavLinkProps;
 } & NavLinkProps;
 
 function LazySidebarNavLinkList({ navList, childLinkProps = {}, ...rest }: LazySidebarNavLinkListProps) {
+  const matchRoute = useMatchRoute();
+
   return (
     <Stack gap={16}>
       {navList.map((list, listIndex) => (
@@ -22,7 +24,19 @@ function LazySidebarNavLinkList({ navList, childLinkProps = {}, ...rest }: LazyS
 
           <Stack gap={8} mt={8}>
             {list.links.map((link, linkIndex) => {
-              const isParentActive = location.pathname === link.to;
+              // Check if any child link is active using fuzzy matching
+              const isAnyChildActive = link.childLinks?.some(
+                (childLink) => Boolean(matchRoute({ to: childLink.to, fuzzy: true })) // Use fuzzy matching for child links
+              );
+
+              // The parent should never be active if it has children
+              const isParentActive = link.childLinks?.length
+                ? false // Parent should be inactive if it has children
+                : Boolean(matchRoute({ to: link.to, fuzzy: false })); // Exact match for parent link
+
+              // If any child is active, no parent links should be active
+              const isLinkActive = isAnyChildActive ? false : isParentActive;
+
               return (
                 <div key={linkIndex}>
                   <NavLink
@@ -48,13 +62,15 @@ function LazySidebarNavLinkList({ navList, childLinkProps = {}, ...rest }: LazyS
                     }
                     childrenOffset={28}
                     to={link.to}
-                    active={isParentActive}
+                    active={isLinkActive} // Only activate if no child is active
                     {...rest}
                   >
                     {link.childLinks && link.childLinks.length > 0 && (
                       <Stack gap={8} py={8}>
                         {link.childLinks.map((childLink) => {
-                          const isChildActive = location.pathname === childLink.to;
+                          const isChildActive = Boolean(
+                            matchRoute({ to: childLink.to, fuzzy: true }) // Use fuzzy matching for child links
+                          );
 
                           return (
                             <NavLink
@@ -63,7 +79,7 @@ function LazySidebarNavLinkList({ navList, childLinkProps = {}, ...rest }: LazyS
                               component={Link}
                               label={childLink.label}
                               childrenOffset={28}
-                              active={isChildActive}
+                              active={isChildActive} // Only activate the child link if it matches the route
                               to={childLink.to}
                               {...childLinkProps}
                             />

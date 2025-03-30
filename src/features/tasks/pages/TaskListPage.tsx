@@ -25,8 +25,7 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
   const page = searchParams.page || 1;
   const pageSize = searchParams.pageSize || 10;
   const navigate = useNavigate();
-  console.log("page", page);
-  console.log("pageSize", pageSize);
+
 
   const deleteTasklist = useDeleteTasklistMutation();
   const {
