@@ -1,5 +1,5 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
-import { Button, Stack, Title, Text, Flex, Group, Paper, Pagination, Container, Center } from "@mantine/core";
+import { Button, Stack, Title, Text, Flex, Group, Paper, Pagination } from "@mantine/core";
 import { List, Plus } from "lucide-react";
 import ListItem from "../components/list-item/ListItem";
 import { TasklistDetails, TasklistItem } from "../shared/tasks.types";
