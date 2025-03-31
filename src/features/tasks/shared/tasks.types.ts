@@ -53,6 +53,7 @@ export type TasklistInfo = {
   totalTasksCount: number;
   completedTasksCount: number;
   taskCompletionPercentage: number;
+  isFavorited: boolean;
 };
 
 export type TasklistDetails = {
@@ -138,4 +139,9 @@ export type TasklistItem = {
   description: string;
   isCompleted: boolean;
   position: number;
+};
+
+export type FavoritedTasklist = {
+  taskListId: number;
+  isFavorited: boolean;
 };
