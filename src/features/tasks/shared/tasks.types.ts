@@ -7,6 +7,7 @@ import {
   updateTasklistSchema,
 } from "./tasks.schemas";
 import { Member, SuccessMessage } from "../../shared/shared.types";
+import { TaskListRole } from "../../invitation/shared/invite.schemas";
 
 export type CreateTasklist = z.infer<typeof createTasklistSchema>;
 
@@ -54,6 +55,7 @@ export type TasklistInfo = {
   completedTasksCount: number;
   taskCompletionPercentage: number;
   isFavorited: boolean;
+  membersRole: TaskListRole;
 };
 
 export type TasklistDetails = {
@@ -67,6 +69,7 @@ export type TasklistDetails = {
   members: Member[];
   tasklistItems: TasklistItem[];
   categoryColor: string;
+  membersRole: TaskListRole;
 };
 
 export type CategoryWithTasklist = {

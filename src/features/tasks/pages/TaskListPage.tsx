@@ -13,6 +13,8 @@ import LazyEditDeleteMenu from "../../../lazy-components/menus/LazyEditDeleteMen
 import { useDeleteTasklistMutation } from "../services/task-list/delete-task-list.service";
 import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import { Paginated } from "../../../util/types/shared.types";
+import InviteUserModal from "../../invitation/components/invite-user/InviteUserModal";
+import { TaskListRole } from "../../invitation/shared/invite.schemas";
 
 type TasklistDetailsPageProps = {
   tasklist: TasklistDetails;
@@ -20,10 +22,12 @@ type TasklistDetailsPageProps = {
 };
 
 function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPageProps) {
-  const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
+  const { categoryName, tasklistId } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
   const searchParams = useSearch({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
   const page = searchParams.page || 1;
   const navigate = useNavigate();
+
+  console.log(tasklist);
 
   const deleteTasklist = useDeleteTasklistMutation();
   const {
@@ -41,6 +45,10 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
 
   const [isUpdateTasklistModalOpened, { open: openUpdateTasklistModal, close: closeUpdateTasklistModal }] =
     useDisclosure(false);
+
+  const [isInviteMembersModalOpened, { open: openInviteMembersModal, close: closeInviteMembersModal }] =
+    useDisclosure(false);
+
   const [selectedTasklist, setSelectedTasklist] = useState<TasklistDetails>(tasklist);
 
   const handleDeleteTasklist = async () => {
@@ -68,6 +76,12 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
         categoryName={categoryName}
       />
 
+      <InviteUserModal
+        isOpen={isInviteMembersModalOpened}
+        onClose={closeInviteMembersModal}
+        tasklistId={Number(tasklistId)}
+      />
+
       <Paper bg="primary" p={16} radius="lg" style={{ borderBottom: `8px solid ${tasklist.categoryColor}` }} mb={16}>
         <Stack justify="space-between" gap={8}>
           <Stack gap={8}>
@@ -86,9 +100,19 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
             <Text c="dimmed">{tasklist.description}</Text>
           </Stack>
 
-          <Group justify="end" align="center">
+          <Flex justify="space-between" align="center">
             <TasklistMembers members={tasklist.members} size="md" />
-          </Group>
+            {tasklist.membersRole !== TaskListRole.Viewer && (
+              <Group>
+              <Button color="gray" variant="subtle" onClick={openInviteMembersModal}>
+                Invite Users
+              </Button>
+              <Button color="gray" variant="subtle" onClick={openInviteMembersModal}>
+                Manage Users
+              </Button>
+            </Group>
+            )}
+          </Flex>
         </Stack>
       </Paper>
 

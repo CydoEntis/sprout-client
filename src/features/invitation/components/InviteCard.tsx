@@ -4,6 +4,7 @@ import InviteDetails from "./InviteDetails";
 import InvitedMembers from "./InvitedMembers";
 import { Category } from "../../category/shared/category.types";
 import { useInvite } from "../hooks/useInvite";
+import AssignTasklistToCategoryForm from "./AssignTaskListToCategoryForm";
 
 // import AssignTasklistToCategoryForm from "./AssignTasklistToCategoryForm";
 
@@ -14,7 +15,7 @@ type InviteCardProps = {
 
 function InviteCard({ inviteToken, categories }: InviteCardProps) {
   const { invite, members } = useInvite(inviteToken);
-
+  console.log(invite);
   if (!invite) {
     return <div>Loading...</div>;
   }
@@ -23,9 +24,13 @@ function InviteCard({ inviteToken, categories }: InviteCardProps) {
     <Card maw={500} mx="auto" withBorder radius="md" shadow="md">
       <Stack>
         <InviteHeader inviteDate={invite.inviteDate} />
-        <InviteDetails inviter={invite.inviter} TasklistName={invite.TasklistName} />
+        <InviteDetails inviter={invite.inviter} tasklistName={invite.tasklistName} />
         <InvitedMembers members={members} />
-        {/* <AssignTasklistToCategoryForm categories={categories} inviteToken={inviteToken} /> */}
+        <AssignTasklistToCategoryForm
+          categories={categories}
+          inviteToken={inviteToken}
+          tasklistId={Number(invite.tasklistId)}
+        />
       </Stack>
     </Card>
   );

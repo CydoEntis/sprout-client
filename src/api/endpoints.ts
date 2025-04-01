@@ -4,7 +4,6 @@ const endpoints = {
   auth: "/auth",
   category: "/categories",
   tasklist: "/task-list",
-  invite: "/invite",
 };
 
 export default endpoints;

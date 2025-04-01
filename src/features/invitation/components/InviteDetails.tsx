@@ -2,10 +2,10 @@ import { Stack, Avatar, Group, Text } from "@mantine/core";
 
 type InviteDetailsProps = {
   inviter: string;
-  TasklistName: string;
+  tasklistName: string;
 };
 
-function InviteDetails({ inviter, TasklistName}: InviteDetailsProps) {
+function InviteDetails({ inviter, tasklistName}: InviteDetailsProps) {
   return (
     <Stack mt={12} justify="center" align="center">
       <Avatar color="initials" size="xl" name={inviter} />
@@ -16,7 +16,7 @@ function InviteDetails({ inviter, TasklistName}: InviteDetailsProps) {
         <Group gap={6}>
           <Text> has invited you to join </Text>
           <Text c="lime" td="underline" fw={700}>
-            {TasklistName}.
+            {tasklistName}.
           </Text>
         </Group>
       </Group>

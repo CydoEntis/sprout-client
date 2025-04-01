@@ -9,11 +9,21 @@ type AcceptInviteParams = {
   inviteToken: string;
   newCategory?: CreateCategory | null;
   categoryId?: number | null;
+  tasklistId: number;
 };
 
-const acceptInvite = async ({ inviteToken, newCategory, categoryId }: AcceptInviteParams): Promise<InviteAccepted> => {
+const acceptInvite = async ({
+  inviteToken,
+  newCategory,
+  categoryId,
+  tasklistId,
+}: AcceptInviteParams): Promise<InviteAccepted> => {
   const payload = { categoryId, newCategory };
-  return apiRequest<InviteAccepted>("post", `${endpoints.invite}/${inviteToken}/accept`, payload);
+  return apiRequest<InviteAccepted>(
+    "post",
+    `${endpoints.tasklist}/${tasklistId}/invitations/${inviteToken}/accept`,
+    payload
+  );
 };
 
 export function useAcceptInviteMutation() {

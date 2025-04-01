@@ -1,6 +1,6 @@
 import { Modal } from "@mantine/core";
 import {} from "@mantine/form";
-import CreateTasklistForm from "./CreateTaskListForm";
+import CreateTasklistForm from "./CreateTasklistForm";
 
 type CreateTasklistModalProps = {
   isOpen: boolean;

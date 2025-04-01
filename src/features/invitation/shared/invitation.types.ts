@@ -1,8 +1,10 @@
+import { z } from "zod";
 import { SuccessMessage } from "../../shared/shared.types";
+import { inviteUserSchema } from "./invite.schemas";
 
 export type DecodedInviteToken = {
-  TasklistName: string;
-  TasklistId: string;
+  tasklistName: string;
+  tasklistId: string;
   category: string;
   inviteDate: string;
   inviter: string;
@@ -11,6 +13,12 @@ export type DecodedInviteToken = {
 };
 
 export type InviteAccepted = SuccessMessage & {
-  TasklistId: number;
+  tasklistId: number;
   categoryName: string;
 };
+
+export type InvitedUser = {
+  message: string;
+};
+
+export type InviteUser = z.infer<typeof inviteUserSchema>;

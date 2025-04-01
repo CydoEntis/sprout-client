@@ -12,7 +12,7 @@ type CreateTasklistFormProps = {
 };
 
 const CreateTasklistForm = ({ categoryName, onClose }: CreateTasklistFormProps) => {
-  const createTasklist = useCreateTasklistMutation();
+  const createTasklist = useCreateTasklistMutation(categoryName);
   const { handleFormErrors } = useFormErrorHandler<CreateTasklist>();
 
   const form = useForm<CreateTasklist>({
