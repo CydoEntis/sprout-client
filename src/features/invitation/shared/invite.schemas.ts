@@ -7,7 +7,7 @@ export enum TaskListRole {
 }
 
 export const inviteUserSchema = z.object({
-  invitedUserEmail: z.string().email("Invalid email"),
+  invitedUserEmails: z.array(z.string().email("Invalid email")), // Updated to array of emails
   tasklistId: z.number(),
   role: z.nativeEnum(TaskListRole),
 });

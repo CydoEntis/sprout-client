@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Modal, Flex, Stack, TextInput, Button, Group } from "@mantine/core";
+import { Flex, Stack, TextInput, Button, Group } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { zodResolver } from "@mantine/form";
 import { createCategorySchema, updateCategorySchema } from "../shared/category.schemas";

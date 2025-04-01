@@ -13,8 +13,8 @@ import LazyEditDeleteMenu from "../../../lazy-components/menus/LazyEditDeleteMen
 import { useDeleteTasklistMutation } from "../services/task-list/delete-task-list.service";
 import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import { Paginated } from "../../../util/types/shared.types";
-import InviteUserModal from "../../invitation/components/invite-user/InviteUserModal";
 import { TaskListRole } from "../../invitation/shared/invite.schemas";
+import MembersModal from "../../invitation/components/members-modal/MembersModal";
 
 type TasklistDetailsPageProps = {
   tasklist: TasklistDetails;
@@ -76,7 +76,7 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
         categoryName={categoryName}
       />
 
-      <InviteUserModal
+      <MembersModal
         isOpen={isInviteMembersModalOpened}
         onClose={closeInviteMembersModal}
         tasklistId={Number(tasklistId)}
@@ -104,13 +104,13 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
             <TasklistMembers members={tasklist.members} size="md" />
             {tasklist.membersRole !== TaskListRole.Viewer && (
               <Group>
-              <Button color="gray" variant="subtle" onClick={openInviteMembersModal}>
-                Invite Users
-              </Button>
-              <Button color="gray" variant="subtle" onClick={openInviteMembersModal}>
-                Manage Users
-              </Button>
-            </Group>
+                <Button color="gray" variant="subtle" onClick={openInviteMembersModal}>
+                  Invite Users
+                </Button>
+                <Button color="gray" variant="subtle" onClick={openInviteMembersModal}>
+                  Manage Users
+                </Button>
+              </Group>
             )}
           </Flex>
         </Stack>
