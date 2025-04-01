@@ -19,8 +19,6 @@ function TasklistCard({ tasklist, categoryName, onEdit }: TasklistCardProps) {
   const [isFavorited, setIsFavorited] = useState(false);
   const { mutateAsync: toggleFavorite } = useFavoriteTasklistMutation();
 
-  console.log(tasklist);
-
   useEffect(() => {
     setIsFavorited(tasklist.isFavorited || false);
   }, [tasklist]);

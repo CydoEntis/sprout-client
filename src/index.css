@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 :root {
-  --primary: #1A1A1A;
+  --primary: #1a1a1a;
   --bg-color-light: #fffbf5;
   --bg-color-dark: #101214;
   --text-color-light: #181818;
@@ -50,11 +50,11 @@
 }
 
 .modal {
-  background-color: #2C2C2C !important;
+  background-color: #1A1A1A !important;
 }
 
 .input {
-  background-color: var(--primary) !important;
+  background-color: #2c2c2c !important;
   border: none !important;
   /* border: 2px solid var(--border-color) !important; */
 }
@@ -62,8 +62,6 @@
 .button,
 .notification {
   border: none !important;
-  /* border: var(--btn-border) 2px solid !important;
-  background-color: var(--btn-bg) !important; */
 }
 
 /* .card:hover {

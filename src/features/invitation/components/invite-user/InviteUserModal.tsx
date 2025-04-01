@@ -1,5 +1,5 @@
-import { Modal } from "@mantine/core";
 import InviteUserForm from "./InviteUserForm";
+import LazyModal from "../../../../lazy-components/modals/LazyModal";
 
 type InviteUserModalProps = {
   isOpen: boolean;
@@ -9,9 +9,9 @@ type InviteUserModalProps = {
 
 const InviteUserModal = ({ isOpen, onClose, tasklistId }: InviteUserModalProps) => {
   return (
-    <Modal size="lg" opened={isOpen} onClose={onClose} title="Invite a User">
+    <LazyModal size="lg" opened={isOpen} onClose={onClose} title="Invite a User">
       <InviteUserForm onClose={onClose} tasklistId={tasklistId} />
-    </Modal>
+    </LazyModal>
   );
 };
 

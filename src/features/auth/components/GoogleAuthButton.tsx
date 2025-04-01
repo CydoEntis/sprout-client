@@ -21,7 +21,6 @@ export function GoogleAuthButton(props: ButtonProps & Props) {
     <Button
       bg="secondary"
       classNames={{ root: "button" }}
-      // bg="btn"
       leftSection={<GoogleIcon />}
       variant="default"
       {...props}

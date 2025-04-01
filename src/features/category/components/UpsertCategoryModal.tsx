@@ -14,6 +14,7 @@ import { validIcons, validIconTags } from "../../../util/constants/valid-icon.co
 import { Category, CreateCategory, UpdateCategory } from "../shared/category.types";
 import { LazyValidIcon } from "../../../lazy-components/icon-picker/lazy-icon-picker.types";
 import { ValidColor } from "../../../util/types/valid-color.types";
+import LazyModal from "../../../lazy-components/modals/LazyModal";
 
 type UpsertCategoryModalProps = {
   isOpen: boolean;
@@ -92,11 +93,7 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
   };
 
   return (
-    <Modal
-      classNames={{
-        body: "modal",
-        header: "modal",
-      }}
+    <LazyModal
       size="lg"
       opened={isOpen}
       onClose={handleClose}
@@ -125,7 +122,7 @@ function UpsertCategoryModal({ isOpen, onClose, category }: UpsertCategoryModalP
           </Group>
         </Stack>
       </form>
-    </Modal>
+    </LazyModal>
   );
 }
 
