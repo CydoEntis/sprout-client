@@ -1,6 +1,84 @@
+import { useState } from "react";
+import { Group, Stack, Avatar, Text, Badge, Select, ActionIcon, Button } from "@mantine/core";
 
-function ManageMembers() {
-  return <div>ManageMembers</div>;
+import { TaskListRole } from "../../shared/invite.schemas";
+import { useGetAllMembers } from "../../services/get-all-members.service";
+import { useUpdateMemberRole } from "../../services/update-member-role.service";
+import { Settings } from "lucide-react";
+
+const roleOptions = [
+  { value: TaskListRole.Editor.toString(), label: "Editor" },
+  { value: TaskListRole.Viewer.toString(), label: "Viewer" },
+];
+
+const getBadgeColor = (role: TaskListRole) => {
+  switch (role) {
+    case TaskListRole.Owner:
+      return "lime";
+    case TaskListRole.Editor:
+      return "blue";
+    case TaskListRole.Viewer:
+      return "gray";
+    default:
+      return "gray";
+  }
+};
+
+type ManageMembersProps = {
+  tasklistId: number;
+  currentUserRole: TaskListRole;
+};
+
+function ManageMembers({ tasklistId, currentUserRole }: ManageMembersProps) {
+  const { data: members, isLoading } = useGetAllMembers(tasklistId);
+  const updateMemberRole = useUpdateMemberRole(tasklistId);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
+  console.log(members);
+
+  if (isLoading) return <Text>Loading members...</Text>;
+
+  const canEdit = currentUserRole === TaskListRole.Owner || currentUserRole === TaskListRole.Editor;
+
+  return (
+    <Stack>
+      {canEdit && (
+        <Button leftSection={<Settings size={16} />} onClick={() => setSettingsOpen((prev) => !prev)}>
+          Manage Members
+        </Button>
+      )}
+
+      {settingsOpen &&
+        members?.map((member) => (
+          <Group key={member.userId} justify="space-between">
+            <Group>
+              <Avatar size="md" name={member.name} color="initials" />
+              <Stack gap={0}>
+                <Text>{member.name}</Text>
+              </Stack>
+            </Group>
+            <Group>
+              {canEdit && member.role !== TaskListRole.Owner ? (
+                <Select
+                  data={roleOptions}
+                  value={member.role.toString()}
+                  onChange={(newRole) => {
+                    if (newRole && newRole !== TaskListRole.Owner.toString()) {
+                      updateMemberRole.mutateAsync({
+                        userId: member.userId,
+                        newRole: parseInt(newRole, 10) as TaskListRole,
+                      });
+                    }
+                  }}
+                />
+              ) : (
+                <Badge color={getBadgeColor(member.role)}>{TaskListRole[member.role]}</Badge>
+              )}
+            </Group>
+          </Group>
+        ))}
+    </Stack>
+  );
 }
 
 export default ManageMembers;

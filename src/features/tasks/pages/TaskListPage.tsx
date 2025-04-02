@@ -79,6 +79,7 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
     });
   };
 
+  console.log(tasklist)
   return (
     <>
       <UpdateTasklistModal
@@ -92,6 +93,7 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
         isOpen={isInviteMembersModalOpened}
         onClose={closeInviteMembersModal}
         tasklistId={Number(tasklistId)}
+        currentUserRole={tasklist.role}
       />
 
       <Paper bg="primary" p={16} radius="lg" style={{ borderBottom: `8px solid ${tasklist.categoryColor}` }} mb={16}>

@@ -55,7 +55,7 @@ export type TasklistInfo = {
   completedTasksCount: number;
   taskCompletionPercentage: number;
   isFavorited: boolean;
-  membersRole: TaskListRole;
+  role: TaskListRole;
 };
 
 export type TasklistDetails = {
@@ -69,7 +69,7 @@ export type TasklistDetails = {
   members: Member[];
   tasklistItems: TasklistItem[];
   categoryColor: string;
-  membersRole: TaskListRole;
+  role: TaskListRole;
 };
 
 export type CategoryWithTasklist = {
