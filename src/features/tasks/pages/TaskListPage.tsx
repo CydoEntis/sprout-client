@@ -1,6 +1,7 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { Button, Stack, Title, Text, Flex, Group, Paper, Pagination } from "@mantine/core";
 import { List, Plus } from "lucide-react";
+import { motion } from "framer-motion"; // Import Framer Motion
 import ListItem from "../components/list-item/ListItem";
 import { TasklistDetails, TasklistItem } from "../shared/tasks.types";
 import { useTasklistItemHandlers } from "../hooks/useTaskListItemHandlers";
@@ -21,13 +22,26 @@ type TasklistDetailsPageProps = {
   paginatedItems: Paginated<TasklistItem>;
 };
 
+const containerVariants = {
+  hidden: { opacity: 1 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1, // Each item will animate in with a 100ms delay
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+};
+
 function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPageProps) {
   const { categoryName, tasklistId } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
   const searchParams = useSearch({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
   const page = searchParams.page || 1;
   const navigate = useNavigate();
-
-  console.log(tasklist);
 
   const deleteTasklist = useDeleteTasklistMutation();
   const {
@@ -45,10 +59,8 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
 
   const [isUpdateTasklistModalOpened, { open: openUpdateTasklistModal, close: closeUpdateTasklistModal }] =
     useDisclosure(false);
-
   const [isInviteMembersModalOpened, { open: openInviteMembersModal, close: closeInviteMembersModal }] =
     useDisclosure(false);
-
   const [selectedTasklist, setSelectedTasklist] = useState<TasklistDetails>(tasklist);
 
   const handleDeleteTasklist = async () => {
@@ -141,43 +153,52 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
             <DragDropContext onDragEnd={reorderItems}>
               <Droppable droppableId="task-list" direction="vertical">
                 {(provided) => (
-                  <Stack {...provided.droppableProps} ref={provided.innerRef} gap={16}>
-                    {isCreating && (
-                      <UpsertTasklistItem
-                        onCreate={createItem}
-                        tasklistId={tasklist.id}
-                        isActive={isCreating}
-                        onClose={closeItem}
-                      />
-                    )}
-                    {tasklistItems.map((item, index) => (
-                      <Draggable key={item.id} draggableId={String(item.id)} index={index}>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            style={provided.draggableProps.style}
-                          >
-                            <div {...provided.dragHandleProps} onDoubleClick={() => showUpdateItem(item)}>
-                              {itemToUpdate?.id === item.id ? (
-                                <UpsertTasklistItem
-                                  isActive={true}
-                                  tasklistId={tasklist.id}
-                                  tasklistItem={item}
-                                  onCreate={createItem}
-                                  onClose={closeItem}
-                                  onUpdate={updateItem}
-                                />
-                              ) : (
-                                <ListItem item={item} onDelete={deleteItem} onChange={toggleItemStatus} />
-                              )}
-                            </div>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </Stack>
+                  <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="show"
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                  >
+                    <Stack gap={16}>
+                      {isCreating && (
+                        <UpsertTasklistItem
+                          onCreate={createItem}
+                          tasklistId={tasklist.id}
+                          isActive={isCreating}
+                          onClose={closeItem}
+                        />
+                      )}
+                      {tasklistItems.map((item, index) => (
+                        <Draggable key={item.id} draggableId={String(item.id)} index={index}>
+                          {(provided) => (
+                            <motion.div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              style={provided.draggableProps.style}
+                              variants={itemVariants}
+                            >
+                              <div {...provided.dragHandleProps} onDoubleClick={() => showUpdateItem(item)}>
+                                {itemToUpdate?.id === item.id ? (
+                                  <UpsertTasklistItem
+                                    isActive={true}
+                                    tasklistId={tasklist.id}
+                                    tasklistItem={item}
+                                    onCreate={createItem}
+                                    onClose={closeItem}
+                                    onUpdate={updateItem}
+                                  />
+                                ) : (
+                                  <ListItem item={item} onDelete={deleteItem} onChange={toggleItemStatus} />
+                                )}
+                              </div>
+                            </motion.div>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </Stack>
+                  </motion.div>
                 )}
               </Droppable>
             </DragDropContext>
