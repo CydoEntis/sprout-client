@@ -1,11 +1,6 @@
-import React from 'react'
 
-type Props = {}
-
-function ManageMembers({}: Props) {
-  return (
-    <div>ManageMembers</div>
-  )
+function ManageMembers() {
+  return <div>ManageMembers</div>;
 }
 
-export default ManageMembers
+export default ManageMembers;
