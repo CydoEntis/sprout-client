@@ -1,5 +1,6 @@
 import { Box, Button, Title, SimpleGrid } from "@mantine/core";
 import { Plus } from "lucide-react";
+import { motion } from "framer-motion";
 import { useDisclosure } from "@mantine/hooks";
 import LazyHeader from "../lazy-components/header/LazyHeader";
 import { useParams } from "@tanstack/react-router";
@@ -13,6 +14,21 @@ import UpsertTasklistModal from "../features/tasks/components/upsert-task-list/U
 
 type CategoryTasklistPageProps = {
   categoryTasklists: CategoryWithTasklists;
+};
+
+const containerVariants = {
+  hidden: { opacity: 1 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
 function CategoryTasklistPage({ categoryTasklists }: CategoryTasklistPageProps) {
@@ -62,16 +78,19 @@ function CategoryTasklistPage({ categoryTasklists }: CategoryTasklistPageProps) 
       </LazyHeader>
 
       {categoryTasklists.tasklistsInfo.length > 0 ? (
-        <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} mt={32}>
-          {categoryTasklists.tasklistsInfo.map((tasklist) => (
-            <TasklistCard
-              key={tasklist.id}
-              tasklist={tasklist}
-              categoryName={categoryName}
-              onEdit={() => openEditTasklistModal(tasklist)}
-            />
-          ))}
-        </SimpleGrid>
+        <motion.div variants={containerVariants} initial="hidden" animate="show">
+          <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} mt={32}>
+            {categoryTasklists.tasklistsInfo.map((tasklist) => (
+              <motion.div key={tasklist.id} variants={itemVariants}>
+                <TasklistCard
+                  tasklist={tasklist}
+                  categoryName={categoryName}
+                  onEdit={() => openEditTasklistModal(tasklist)}
+                />
+              </motion.div>
+            ))}
+          </SimpleGrid>
+        </motion.div>
       ) : (
         <Title ta="center" mt={32} c="dimmed">
           No task lists available
