@@ -11,7 +11,7 @@ export function useInvite(inviteToken: string) {
       try {
         const decoded = jwtDecode<DecodedInviteToken>(inviteToken);
         setInvite(decoded);
-
+        console.log("Decoded invite: ", decoded);
         const parsedMembers = decoded.members ? JSON.parse(decoded.members) : [];
         setMembers(Array.isArray(parsedMembers) ? parsedMembers : []);
       } catch (error) {

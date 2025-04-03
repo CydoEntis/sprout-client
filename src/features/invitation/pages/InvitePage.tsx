@@ -24,8 +24,10 @@ function InvitePage({ categories }: InvitePageProps) {
     }
 
     if (inviteToken && invite && user) {
+      console.log("Users email: ", user.email);
+      console.log("Email of invitee: ", invite.invitedUserEmail);
       try {
-        if (user.email !== invite.inviteeEmail) {
+        if (user.email !== invite.invitedUserEmail) {
           navigate({ to: "/categories" });
           notifications.show({
             title: "Error",
