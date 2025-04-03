@@ -5,6 +5,7 @@ import { useGetAllMembers } from "../../services/get-all-members.service";
 import { useUpdateMemberRole } from "../../services/update-member-role.service";
 import { useRemoveMember } from "../../services/remove-member.service";
 import { Settings, Trash2 } from "lucide-react";
+import useAuthStore from "../../../../stores/useAuthStore";
 
 const roleOptions = [
   { value: TaskListRole.Editor.toString(), label: "Editor" },
@@ -30,6 +31,7 @@ type ManageMembersProps = {
 };
 
 function ManageMembers({ tasklistId, currentUserRole }: ManageMembersProps) {
+  const { user } = useAuthStore();
   const { data: members, isLoading } = useGetAllMembers(tasklistId);
   const updateMemberRole = useUpdateMemberRole(tasklistId);
   const removeMember = useRemoveMember();
@@ -71,13 +73,15 @@ function ManageMembers({ tasklistId, currentUserRole }: ManageMembersProps) {
                       }
                     }}
                   />
-                  <ActionIcon
-                    color="red"
-                    variant="light"
-                    onClick={() => removeMember.mutateAsync({ tasklistId, userId: member.userId })}
-                  >
-                    <Trash2 size={18} />
-                  </ActionIcon>
+                  {member.userId !== user?.id && (
+                    <ActionIcon
+                      color="red"
+                      variant="light"
+                      onClick={() => removeMember.mutateAsync({ tasklistId, userId: member.userId })}
+                    >
+                      <Trash2 size={18} />
+                    </ActionIcon>
+                  )}
                 </>
               ) : (
                 <Badge color={getBadgeColor(member.role)}>{TaskListRole[member.role]}</Badge>
