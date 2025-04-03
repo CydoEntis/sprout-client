@@ -27,7 +27,7 @@ const containerVariants = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1, // Each item will animate in with a 100ms delay
+      staggerChildren: 0.1,
     },
   },
 };
@@ -79,7 +79,7 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
     });
   };
 
-  console.log(tasklist)
+  console.log(tasklist);
   return (
     <>
       <UpdateTasklistModal
@@ -116,7 +116,7 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
 
           <Flex justify="space-between" align="center">
             <TasklistMembers members={tasklist.members} size="md" />
-            {tasklist.membersRole !== TaskListRole.Viewer && (
+            {tasklist.role !== TaskListRole.Viewer && (
               <Group>
                 <Button color="gray" variant="subtle" onClick={openInviteMembersModal}>
                   Invite Users

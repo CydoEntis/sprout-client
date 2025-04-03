@@ -117,6 +117,7 @@ const InviteUserForm = ({ tasklistId, onClose }: InviteUserFormProps) => {
                 clearEmailErrors();
                 form.setFieldValue("invitedUserEmails", value);
               }}
+              clearable
             />
 
             <Select
