@@ -9,6 +9,7 @@ export type DecodedInviteToken = {
   inviteDate: string;
   inviter: string;
   inviterEmail: string;
+  inviteeEmail: string;
   members: string | null;
 };
 

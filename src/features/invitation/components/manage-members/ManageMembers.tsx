@@ -7,7 +7,7 @@ import { useRemoveMember } from "../../services/remove-member.service";
 import { Settings, Trash2 } from "lucide-react";
 import useAuthStore from "../../../../stores/useAuthStore";
 import { useNavigate } from "@tanstack/react-router";
-import { useTransferOwnership } from "../../services/transfer-ownership.service"; // Import the transfer ownership hook
+import { useTransferOwnership } from "../../services/transfer-ownership.service";
 
 const roleOptions = [
   { value: TaskListRole.Editor.toString(), label: "Editor" },
