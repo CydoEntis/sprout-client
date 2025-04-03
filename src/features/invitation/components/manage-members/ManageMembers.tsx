@@ -6,6 +6,8 @@ import { useUpdateMemberRole } from "../../services/update-member-role.service";
 import { useRemoveMember } from "../../services/remove-member.service";
 import { Settings, Trash2 } from "lucide-react";
 import useAuthStore from "../../../../stores/useAuthStore";
+import { useNavigate } from "@tanstack/react-router";
+import { useTransferOwnership } from "../../services/transfer-ownership.service"; // Import the transfer ownership hook
 
 const roleOptions = [
   { value: TaskListRole.Editor.toString(), label: "Editor" },
@@ -32,9 +34,11 @@ type ManageMembersProps = {
 
 function ManageMembers({ tasklistId, currentUserRole }: ManageMembersProps) {
   const { user } = useAuthStore();
+  const navigate = useNavigate();
   const { data: members, isLoading } = useGetAllMembers(tasklistId);
   const updateMemberRole = useUpdateMemberRole(tasklistId);
   const removeMember = useRemoveMember();
+  const transferOwnership = useTransferOwnership();
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   if (isLoading) return <Text>Loading members...</Text>;
@@ -89,6 +93,38 @@ function ManageMembers({ tasklistId, currentUserRole }: ManageMembersProps) {
             </Group>
           </Group>
         ))}
+
+      {currentUserRole === TaskListRole.Owner && (
+        <Select
+          label="Transfer Ownership"
+          data={members
+            ?.filter((member) => member.role !== TaskListRole.Owner)
+            .map((member) => ({
+              value: member.userId,
+              label: member.name,
+            }))}
+          onChange={(newOwnerId) => {
+            if (newOwnerId) {
+              transferOwnership.mutateAsync({ tasklistId, newOwnerId });
+            }
+          }}
+          placeholder="Select new owner"
+        />
+      )}
+
+      <Button
+        color="red"
+        variant="outline"
+        onClick={() => {
+          if (user) {
+            removeMember.mutateAsync({ tasklistId, userId: user.id }).then(() => {
+              navigate({ to: `/categories` });
+            });
+          }
+        }}
+      >
+        Leave Party
+      </Button>
     </Stack>
   );
 }
