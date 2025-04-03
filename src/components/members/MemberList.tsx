@@ -10,7 +10,7 @@ function MemberList({ members, size }: MemberListProps) {
   return (
     <Avatar.Group>
       {members.map((member) => (
-        <Avatar key={member.id} size={size} name={member.name} color="initials" />
+        <Avatar key={member.userId} size={size} name={member.name} color="initials" />
       ))}
     </Avatar.Group>
   );

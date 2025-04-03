@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Group, Stack, Avatar, Text, Badge, Select, ActionIcon, Button } from "@mantine/core";
-
 import { TaskListRole } from "../../shared/invite.schemas";
 import { useGetAllMembers } from "../../services/get-all-members.service";
 import { useUpdateMemberRole } from "../../services/update-member-role.service";
-import { Settings } from "lucide-react";
+import { useRemoveMember } from "../../services/remove-member.service";
+import { Settings, Trash2 } from "lucide-react";
 
 const roleOptions = [
   { value: TaskListRole.Editor.toString(), label: "Editor" },
@@ -32,9 +32,8 @@ type ManageMembersProps = {
 function ManageMembers({ tasklistId, currentUserRole }: ManageMembersProps) {
   const { data: members, isLoading } = useGetAllMembers(tasklistId);
   const updateMemberRole = useUpdateMemberRole(tasklistId);
+  const removeMember = useRemoveMember();
   const [settingsOpen, setSettingsOpen] = useState(false);
-
-  console.log(members);
 
   if (isLoading) return <Text>Loading members...</Text>;
 
@@ -59,18 +58,27 @@ function ManageMembers({ tasklistId, currentUserRole }: ManageMembersProps) {
             </Group>
             <Group>
               {canEdit && member.role !== TaskListRole.Owner ? (
-                <Select
-                  data={roleOptions}
-                  value={member.role.toString()}
-                  onChange={(newRole) => {
-                    if (newRole && newRole !== TaskListRole.Owner.toString()) {
-                      updateMemberRole.mutateAsync({
-                        userId: member.userId,
-                        newRole: parseInt(newRole, 10) as TaskListRole,
-                      });
-                    }
-                  }}
-                />
+                <>
+                  <Select
+                    data={roleOptions}
+                    value={member.role.toString()}
+                    onChange={(newRole) => {
+                      if (newRole && newRole !== TaskListRole.Owner.toString()) {
+                        updateMemberRole.mutateAsync({
+                          userId: member.userId,
+                          newRole: parseInt(newRole, 10) as TaskListRole,
+                        });
+                      }
+                    }}
+                  />
+                  <ActionIcon
+                    color="red"
+                    variant="light"
+                    onClick={() => removeMember.mutateAsync({ tasklistId, userId: member.userId })}
+                  >
+                    <Trash2 size={18} />
+                  </ActionIcon>
+                </>
               ) : (
                 <Badge color={getBadgeColor(member.role)}>{TaskListRole[member.role]}</Badge>
               )}

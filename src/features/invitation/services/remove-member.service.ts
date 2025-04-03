@@ -4,11 +4,12 @@ import endpoints from "../../../api/endpoints";
 import { notifications } from "@mantine/notifications";
 
 type RemoveMemberParams = {
-  memberId: number;
+  tasklistId: number;
+  userId: string;
 };
 
-const removeMember = async ({ memberId }: RemoveMemberParams): Promise<void> => {
-  return apiRequest<void>("delete", `${endpoints.tasklist}/${memberId}`);
+const removeMember = async ({ tasklistId, userId }: RemoveMemberParams): Promise<void> => {
+  return apiRequest<void>("delete", `${endpoints.tasklist}/${tasklistId}/members/${userId}`);
 };
 
 export function useRemoveMember() {
