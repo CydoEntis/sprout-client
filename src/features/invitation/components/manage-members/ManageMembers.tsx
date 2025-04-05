@@ -83,13 +83,13 @@ function ManageMembers({ tasklistId, currentUserRole }: ManageMembersProps) {
       <Divider />
 
       {sortedMembers.map((member) => (
-        <Group key={member.id} justify="space-between">
+        <Group key={member.userId} justify="space-between">
           <Group>
             <Avatar size="md" name={member.name} color="initials" />
             <Stack gap={0}>
               <Group gap={8} align="center">
                 <Text>{member.name}</Text>
-                {member.id === user?.id && (
+                {member.userId === user?.id && (
                   <Text size="xs" c="dimmed">
                     (you)
                   </Text>
@@ -117,17 +117,17 @@ function ManageMembers({ tasklistId, currentUserRole }: ManageMembersProps) {
                     onChange={(newRole) => {
                       if (newRole && newRole !== TaskListRole.Owner.toString()) {
                         updateMemberRole.mutateAsync({
-                          userId: member.id,
+                          userId: member.userId,
                           newRole: parseInt(newRole, 10),
                         });
                       }
                     }}
                   />
-                  {member.id !== user?.id && (
+                  {member.userId !== user?.id && (
                     <ActionIcon
                       color="red"
                       variant="subtle"
-                      onClick={() => removeMember.mutateAsync({ tasklistId, userId: member.id })}
+                      onClick={() => removeMember.mutateAsync({ tasklistId, userId: member.userId })}
                     >
                       <X size={18} />
                     </ActionIcon>
@@ -168,7 +168,7 @@ function ManageMembers({ tasklistId, currentUserRole }: ManageMembersProps) {
                     data={sortedMembers
                       .filter((member) => member.role !== TaskListRole.Owner)
                       .map((member) => ({
-                        value: member.id,
+                        value: member.userId,
                         label: member.name,
                       }))}
                     onChange={setNewOwnerId}

@@ -13,7 +13,7 @@ function TasklistMembers({ members, size, additionalMemberCount }: TasklistMembe
     <Stack gap={8}>
       <Avatar.Group>
         {members.map((member) => (
-          <Tooltip key={member.id} label={member.name}>
+          <Tooltip key={member.userId} label={member.name}>
             <Avatar size={size} name={member.name} color="initials" />
           </Tooltip>
         ))}

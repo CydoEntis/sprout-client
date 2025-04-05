@@ -5,7 +5,7 @@ export type SuccessMessage = {
 };
 
 export type Member = {
-  id: string;
+  userId: string;
   name: string;
   role: TaskListRole;
 };
