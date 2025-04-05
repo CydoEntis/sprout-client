@@ -10,11 +10,12 @@ type TasklistMembersProps = {
 };
 
 function TasklistMembers({ members, size, onClick, hasRole }: TasklistMembersProps) {
+  console.log(members);
   return (
     <Stack gap={8}>
       <Avatar.Group>
         {members.map((member) => (
-          <Tooltip key={member.userId} label={member.name}>
+          <Tooltip key={member.id} label={member.name}>
             <Avatar size={size} name={member.name} color="initials" />
           </Tooltip>
         ))}

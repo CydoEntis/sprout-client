@@ -67,8 +67,11 @@ export type TasklistDetails = {
   totalTasksCount: number;
   completedTasksCount: number;
   members: Member[];
+  additionalMemberCount: number;
   tasklistItems: TasklistItem[];
   categoryColor: string;
+  isFavorited: boolean;
+
   role: TaskListRole;
 };
 

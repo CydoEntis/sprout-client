@@ -27,7 +27,6 @@ function RouteComponent() {
 
   const { data: tasklist } = useSuspenseQuery(getTasklistByIdQueryOptions(Number(tasklistId)));
 
-  // Fetch paginated task list items based on the `page` and `pageSize` params
   const { data: paginatedResult } = useSuspenseQuery(getPaginatedTasklistItemsQueryOptions(Number(tasklistId), page));
 
   return <TasklistDetailsPage tasklist={tasklist} paginatedItems={paginatedResult} />;
