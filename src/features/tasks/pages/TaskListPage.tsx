@@ -59,7 +59,7 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
 
   const [isUpdateTasklistModalOpened, { open: openUpdateTasklistModal, close: closeUpdateTasklistModal }] =
     useDisclosure(false);
-  const [isInviteMembersModalOpened, { open: openInviteMembersModal, close: closeInviteMembersModal }] =
+  const [isManageMembersModalOpened, { open: openManageMembersModal, close: closeManageMembersModal }] =
     useDisclosure(false);
   const [selectedTasklist, setSelectedTasklist] = useState<TasklistDetails>(tasklist);
 
@@ -90,8 +90,8 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
       />
 
       <MembersModal
-        isOpen={isInviteMembersModalOpened}
-        onClose={closeInviteMembersModal}
+        isOpen={isManageMembersModalOpened}
+        onClose={closeManageMembersModal}
         tasklistId={Number(tasklistId)}
         currentUserRole={tasklist.role}
       />
@@ -115,17 +115,12 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
           </Stack>
 
           <Flex justify="space-between" align="center">
-            <TasklistMembers members={tasklist.members} size="md" />
-            {tasklist.role !== TaskListRole.Viewer && (
-              <Group>
-                <Button color="gray" variant="subtle" onClick={openInviteMembersModal}>
-                  Invite Users
-                </Button>
-                <Button color="gray" variant="subtle" onClick={openInviteMembersModal}>
-                  Manage Users
-                </Button>
-              </Group>
-            )}
+            <TasklistMembers
+              members={tasklist.members}
+              size="md"
+              onClick={openManageMembersModal}
+              hasRole={tasklist.role !== TaskListRole.Viewer}
+            />
           </Flex>
         </Stack>
       </Paper>

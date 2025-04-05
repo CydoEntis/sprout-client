@@ -1,19 +1,30 @@
-import { Avatar, Stack } from "@mantine/core";
+import { Avatar, Stack, Tooltip } from "@mantine/core";
 import { Member } from "../../shared/shared.types";
+import { Plus } from "lucide-react";
 
 type TasklistMembersProps = {
   members: Member[];
   size: "xs" | "sm" | "md" | "lg" | "xl";
+  onClick: () => void;
+  hasRole: boolean;
 };
 
-function TasklistMembers({ members, size }: TasklistMembersProps) {
+function TasklistMembers({ members, size, onClick, hasRole }: TasklistMembersProps) {
   return (
     <Stack gap={8}>
       <Avatar.Group>
         {members.map((member) => (
-          <Avatar key={member.id} size={size} name={member.name} color="initials" />
+          <Tooltip key={member.userId} label={member.name}>
+            <Avatar size={size} name={member.name} color="initials" />
+          </Tooltip>
         ))}
-        <Avatar>+{members.length + 1}</Avatar>
+        {hasRole && (
+          <Tooltip label="Manage members">
+            <Avatar onClick={onClick} style={{ cursor: "pointer" }}>
+              <Plus size={20} />
+            </Avatar>
+          </Tooltip>
+        )}
       </Avatar.Group>
     </Stack>
   );
