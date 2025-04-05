@@ -50,6 +50,8 @@ function ManageMembers({ tasklistId, currentUserRole }: ManageMembersProps) {
   const { user } = useAuthStore();
   const navigate = useNavigate();
   const { data: members, isLoading } = useGetAllMembers(tasklistId);
+  console.log(members);
+
   const updateMemberRole = useUpdateMemberRole(tasklistId);
   const removeMember = useRemoveMember();
   const transferOwnership = useTransferOwnership();

@@ -1,6 +1,6 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { Button, Stack, Title, Text, Flex, Group, Paper, Pagination } from "@mantine/core";
-import { List, Plus } from "lucide-react";
+import { Heart, List, Plus, Users } from "lucide-react";
 import { motion } from "framer-motion"; // Import Framer Motion
 import ListItem from "../components/list-item/ListItem";
 import { TasklistDetails, TasklistItem } from "../shared/tasks.types";
@@ -16,6 +16,7 @@ import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import { Paginated } from "../../../util/types/shared.types";
 import { TaskListRole } from "../../invitation/shared/invite.schemas";
 import MembersModal from "../../invitation/components/members-modal/MembersModal";
+import { useFavoriteTasklistMutation } from "../services/task-list/favorite-task-list.service";
 
 type TasklistDetailsPageProps = {
   tasklist: TasklistDetails;
@@ -44,6 +45,8 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
   const navigate = useNavigate();
 
   const deleteTasklist = useDeleteTasklistMutation();
+  const { mutateAsync: toggleFavorite } = useFavoriteTasklistMutation();
+
   const {
     tasklistItems,
     createItem,
@@ -79,6 +82,15 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
     });
   };
 
+  const handleFavoriteToggle = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    try {
+      await toggleFavorite(tasklist.id);
+    } catch (error) {
+      console.error("Error favoriting tasklist:", error);
+    }
+  };
+
   console.log(tasklist);
   return (
     <>
@@ -100,7 +112,15 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
         <Stack justify="space-between" gap={8}>
           <Stack gap={8}>
             <Flex justify="space-between">
-              <Title>{tasklist.name}</Title>
+              <Group gap={8}>
+                <Heart
+                  style={{ cursor: "pointer" }}
+                  fill={tasklist.isFavorited ? "#E03131" : "none"}
+                  color={tasklist.isFavorited ? "#E03131" : "gray"}
+                  onClick={handleFavoriteToggle}
+                />
+                <Title>{tasklist.name}</Title>
+              </Group>
               <LazyEditDeleteMenu
                 withBorder
                 withShadow
@@ -118,9 +138,13 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
             <TasklistMembers
               members={tasklist.members}
               size="md"
-              onClick={openManageMembersModal}
-              hasRole={tasklist.role !== TaskListRole.Viewer}
+              additionalMemberCount={tasklist.additionalMemberCount}
             />
+            {tasklist.role !== TaskListRole.Viewer && (
+              <Button variant="subtle" color="gray" onClick={openManageMembersModal} leftSection={<Users size={20} />}>
+                Manage Members
+              </Button>
+            )}
           </Flex>
         </Stack>
       </Paper>

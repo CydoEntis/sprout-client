@@ -1,15 +1,13 @@
 import { Avatar, Stack, Tooltip } from "@mantine/core";
 import { Member } from "../../shared/shared.types";
-import { Plus } from "lucide-react";
 
 type TasklistMembersProps = {
   members: Member[];
+  additionalMemberCount: number;
   size: "xs" | "sm" | "md" | "lg" | "xl";
-  onClick: () => void;
-  hasRole: boolean;
 };
 
-function TasklistMembers({ members, size, onClick, hasRole }: TasklistMembersProps) {
+function TasklistMembers({ members, size, additionalMemberCount }: TasklistMembersProps) {
   console.log(members);
   return (
     <Stack gap={8}>
@@ -19,11 +17,9 @@ function TasklistMembers({ members, size, onClick, hasRole }: TasklistMembersPro
             <Avatar size={size} name={member.name} color="initials" />
           </Tooltip>
         ))}
-        {hasRole && (
+        {additionalMemberCount > 0 && (
           <Tooltip label="Manage members">
-            <Avatar onClick={onClick} style={{ cursor: "pointer" }}>
-              <Plus size={20} />
-            </Avatar>
+            <Avatar>{additionalMemberCount}</Avatar>
           </Tooltip>
         )}
       </Avatar.Group>
