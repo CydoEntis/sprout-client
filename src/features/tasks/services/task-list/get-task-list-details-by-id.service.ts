@@ -1,20 +1,20 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import endpoints from "../../../../api/endpoints";
 import { apiRequest } from "../../../../api/apiRequest";
-import { TasklistDetails } from "../../shared/tasks.types";
+import { TaskListDetails } from "../../shared/tasks.types";
 
-export const getTasklistDetailsById = async (id: number): Promise<TasklistDetails> => {
-  return apiRequest<TasklistDetails>("get", `${endpoints.tasklist}/${id}`);
+export const getTaskListDetailsById = async (id: number): Promise<TaskListDetails> => {
+  return apiRequest<TaskListDetails>("get", `${endpoints.tasklist}/${id}`);
 };
 
-export const getTasklistByIdQueryOptions = (tasklistid: number) =>
+export const getTaskListByIdQueryOptions = (tasklistid: number) =>
   queryOptions({
     queryKey: ["task-lists", tasklistid],
-    queryFn: () => getTasklistDetailsById(tasklistid),
+    queryFn: () => getTaskListDetailsById(tasklistid),
     enabled: !!tasklistid,
     staleTime: 0,
   });
 
-export const useGetAllTasklistsForCategory = (tasklistid: number) => {
-  return useQuery(getTasklistByIdQueryOptions(tasklistid));
+export const useGetAllTaskListsForCategory = (tasklistid: number) => {
+  return useQuery(getTaskListByIdQueryOptions(tasklistid));
 };

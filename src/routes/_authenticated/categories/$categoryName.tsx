@@ -3,23 +3,23 @@ import { createFileRoute, useParams } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import LoadingSkeleton from "../../../components/loaders/LoadingSkeleton";
-import { getAllTasklistsForCategoryQueryOptions } from "../../../features/category/services/get-all-task-lists-for-category.service";
-import CategoryTasklistPage from "../../../pages/CategoryTasklistPage";
+import { getAllTaskListsForCategoryQueryOptions } from "../../../features/category/services/get-all-task-lists-for-category.service";
+import CategoryTaskListPage from "../../../pages/CategoryTasklistPage";
 
 export const Route = createFileRoute("/_authenticated/categories/$categoryName")({
   loader: async ({ context, params }) => {
     const { queryClient } = context;
-    return queryClient.ensureQueryData(getAllTasklistsForCategoryQueryOptions(params.categoryName));
+    return queryClient.ensureQueryData(getAllTaskListsForCategoryQueryOptions(params.categoryName));
   },
-  component: () => <TasklistsPreviewRoute />,
+  component: () => <TaskListsPreviewRoute />,
   pendingComponent: () => <LoadingSkeleton numberOfSkeletons={36} height={235} />,
 });
 
-function TasklistsPreviewRoute() {
+function TaskListsPreviewRoute() {
   const { categoryName } = useParams({
     from: "/_authenticated/categories/$categoryName",
   });
-  const { data: categoryTasklists } = useSuspenseQuery(getAllTasklistsForCategoryQueryOptions(categoryName));
+  const { data: categoryTaskLists } = useSuspenseQuery(getAllTaskListsForCategoryQueryOptions(categoryName));
 
-  return <CategoryTasklistPage categoryTasklists={categoryTasklists} />;
+  return <CategoryTaskListPage categoryTaskLists={categoryTaskLists} />;
 }

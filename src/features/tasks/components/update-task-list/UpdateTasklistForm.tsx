@@ -1,24 +1,24 @@
 import { Button, Group, Stack, TextInput, Textarea } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useEffect } from "react";
-import { useUpdateTasklistMutation } from "../../services/task-list/update-task-list.service";
-import { updateTasklistSchema } from "../../shared/tasks.schemas";
-import { Tasklist, UpdateTasklist } from "../../shared/tasks.types";
+import { useUpdateTaskListMutation } from "../../services/task-list/update-task-list.service";
+import { updateTaskListSchema } from "../../shared/tasks.schemas";
+import { TaskList, UpdateTaskList } from "../../shared/tasks.types";
 import useFormErrorHandler from "../../../../hooks/useFormErrorHandler";
 import { ErrorResponse } from "../../../../api/errors/errror.types";
 
-type UpdateTasklistFormProps = {
+type UpdateTaskListFormProps = {
   onClose: () => void;
-  tasklist: Tasklist;
+  tasklist: TaskList;
   categoryName: string;
 };
 
-const UpdateTasklistForm = ({ onClose, tasklist, categoryName }: UpdateTasklistFormProps) => {
-  const updateTasklist = useUpdateTasklistMutation(categoryName);
-  const { handleFormErrors } = useFormErrorHandler<UpdateTasklist>();
+const UpdateTaskListForm = ({ onClose, tasklist, categoryName }: UpdateTaskListFormProps) => {
+  const updateTaskList = useUpdateTaskListMutation(categoryName);
+  const { handleFormErrors } = useFormErrorHandler<UpdateTaskList>();
 
-  const form = useForm<UpdateTasklist>({
-    validate: zodResolver(updateTasklistSchema),
+  const form = useForm<UpdateTaskList>({
+    validate: zodResolver(updateTaskListSchema),
     initialValues: {
       tasklistId: tasklist.id,
       name: tasklist.name,
@@ -27,9 +27,9 @@ const UpdateTasklistForm = ({ onClose, tasklist, categoryName }: UpdateTasklistF
     },
   });
 
-  const handleSubmit = async (data: UpdateTasklist) => {
+  const handleSubmit = async (data: UpdateTaskList) => {
     try {
-      await updateTasklist.mutateAsync(data);
+      await updateTaskList.mutateAsync(data);
       form.reset();
       onClose();
     } catch (e) {
@@ -63,4 +63,4 @@ const UpdateTasklistForm = ({ onClose, tasklist, categoryName }: UpdateTasklistF
   );
 };
 
-export default UpdateTasklistForm;
+export default UpdateTaskListForm;

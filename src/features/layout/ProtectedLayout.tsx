@@ -1,7 +1,6 @@
 import LazySidebarLayout from "../../lazy-components/layouts/sidebar-layout/LazySidebarLayout";
 import { useDisclosure } from "@mantine/hooks";
 import { Box, NavLink, Paper, Stack, Title, Flex } from "@mantine/core";
-import CreateTasklistWithCategoryModal from "../tasks/components/create-task-list/CreateTasklistWithCategoryModal";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { Calendar, Grid2x2Plus, Heart, LogOut, Plus, Star } from "lucide-react";
 import React from "react";
@@ -9,6 +8,7 @@ import ThemeToggle from "../../components/theme/ThemeToggle";
 import useAuthStore from "../../stores/useAuthStore";
 import { logoutUser } from "../auth/services/logout.service";
 import { motion } from "framer-motion";
+import CreateTaskListWithCategoryModal from "../tasks/components/create-task-list/CreateTasklistWithCategoryModal";
 
 function ProtectedLayout() {
   const location = useLocation();
@@ -27,15 +27,15 @@ function ProtectedLayout() {
   };
 
   const [
-    isCreateTasklistWithCategoryModalOpened,
-    { open: onOpenCreateTasklistWithCategoryModal, close: onCloseCreateTasklistWithCategoryModal },
+    isCreateTaskListWithCategoryModalOpened,
+    { open: onOpenCreateTaskListWithCategoryModal, close: onCloseCreateTaskListWithCategoryModal },
   ] = useDisclosure(false);
 
   const navLinks = [
     { label: "Today", to: "/task-list/today", icon: <Star />, iconColor: "yellow" },
     { label: "Coming Up", to: "/task-list/coming-up", icon: <Calendar />, iconColor: "cyan" },
     { label: "Categories", to: "/categories", icon: <Grid2x2Plus />, iconColor: "lime" },
-    { label: "Favorites", to: "/favorites", icon: <Heart />, iconColor: "red" },
+    { label: "Favorites", to: "/task-list/favorites", icon: <Heart />, iconColor: "red" },
   ];
 
   const containerVariants = {
@@ -55,9 +55,9 @@ function ProtectedLayout() {
 
   return (
     <>
-      <CreateTasklistWithCategoryModal
-        isOpen={isCreateTasklistWithCategoryModalOpened}
-        onClose={onCloseCreateTasklistWithCategoryModal}
+      <CreateTaskListWithCategoryModal
+        isOpen={isCreateTaskListWithCategoryModalOpened}
+        onClose={onCloseCreateTaskListWithCategoryModal}
       />
       <LazySidebarLayout
         logo={
@@ -112,7 +112,7 @@ function ProtectedLayout() {
               leftSection={<Plus size={20} />}
               color="gray"
               label="New List"
-              onClick={onOpenCreateTasklistWithCategoryModal}
+              onClick={onOpenCreateTaskListWithCategoryModal}
             />
             <Box style={{ borderTop: "1px solid var(--border-color)" }} px={8} py={16}>
               <Flex justify="space-between" align="center" gap={12}>

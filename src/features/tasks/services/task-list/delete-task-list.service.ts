@@ -2,17 +2,17 @@ import { notifications } from "@mantine/notifications";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "../../../../api/apiRequest";
 import endpoints from "../../../../api/endpoints";
-import { DeletedTasklist } from "../../shared/tasks.types";
+import { DeletedTaskList } from "../../shared/tasks.types";
 
-const deleteTasklist = async (tasklistId: number): Promise<DeletedTasklist> => {
-  return apiRequest<DeletedTasklist>("delete", `${endpoints.tasklist}/${tasklistId}`);
+const deleteTaskList = async (tasklistId: number): Promise<DeletedTaskList> => {
+  return apiRequest<DeletedTaskList>("delete", `${endpoints.tasklist}/${tasklistId}`);
 };
 
-export function useDeleteTasklistMutation() {
+export function useDeleteTaskListMutation() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (tasklistId: number): Promise<DeletedTasklist> => {
-      return await deleteTasklist(tasklistId);
+    mutationFn: async (tasklistId: number): Promise<DeletedTaskList> => {
+      return await deleteTaskList(tasklistId);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({

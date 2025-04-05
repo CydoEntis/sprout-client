@@ -1,13 +1,13 @@
 import { Avatar, Stack, Tooltip } from "@mantine/core";
 import { Member } from "../../shared/shared.types";
 
-type TasklistMembersProps = {
+type TaskListMembersProps = {
   members: Member[];
   additionalMemberCount: number;
   size: "xs" | "sm" | "md" | "lg" | "xl";
 };
 
-function TasklistMembers({ members, size, additionalMemberCount }: TasklistMembersProps) {
+function TaskListMembers({ members, size, additionalMemberCount }: TaskListMembersProps) {
   console.log(members);
   return (
     <Stack gap={8}>
@@ -27,4 +27,4 @@ function TasklistMembers({ members, size, additionalMemberCount }: TasklistMembe
   );
 }
 
-export default TasklistMembers;
+export default TaskListMembers;

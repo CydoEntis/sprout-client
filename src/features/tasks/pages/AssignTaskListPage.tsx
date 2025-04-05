@@ -4,11 +4,11 @@ import { Container, Stack } from "@mantine/core";
 import CreateCategoryCard from "../../category/components/CreateCategoryCard";
 import SelectCategory from "../../category/components/SelectCategory";
 
-type AssignTasklistPageProps = {
+type AssignTaskListPageProps = {
   categories: Category[];
 };
 
-function AssignTasklistPage({ categories }: AssignTasklistPageProps) {
+function AssignTaskListPage({ categories }: AssignTaskListPageProps) {
   const [isCreatingCategory, setIsCreatingCategory] = useState(false);
 
   const toggleCreateCategory = () => {
@@ -33,4 +33,4 @@ function AssignTasklistPage({ categories }: AssignTasklistPageProps) {
   );
 }
 
-export default AssignTasklistPage;
+export default AssignTaskListPage;

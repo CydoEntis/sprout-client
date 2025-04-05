@@ -1,35 +1,35 @@
 import LazyCard from "../../../../lazy-components/card/LazyCard";
 import { Flex, Group, Stack, Text, Title } from "@mantine/core";
-import { TasklistInfo } from "../../shared/tasks.types";
+import { TaskListInfo } from "../../shared/tasks.types";
 import LazyEditDeleteMenu from "../../../../lazy-components/menus/LazyEditDeleteMenu";
 import MemberList from "../../../../components/members/MemberList";
 import LazyRingProgress from "../../../../lazy-components/progress-bars/LazyRingProgressBar";
 import LazyDate from "../../../../lazy-components/date/LazyDate";
 import { Heart } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useFavoriteTasklistMutation } from "../../services/task-list/favorite-task-list.service";
+import { useFavoriteTaskListMutation } from "../../services/task-list/favorite-task-list.service";
 
-type TasklistCardProps = {
-  tasklist: TasklistInfo;
+type TaskListCardProps = {
+  taskList: TaskListInfo;
   categoryName: string;
   onEdit: () => void;
 };
 
-function TasklistCard({ tasklist, categoryName, onEdit }: TasklistCardProps) {
+function TaskListCard({ taskList, categoryName, onEdit }: TaskListCardProps) {
   const [isFavorited, setIsFavorited] = useState(false);
-  const { mutateAsync: toggleFavorite } = useFavoriteTasklistMutation();
+  const { mutateAsync: toggleFavorite } = useFavoriteTaskListMutation();
 
   useEffect(() => {
-    setIsFavorited(tasklist.isFavorited || false);
-  }, [tasklist]);
+    setIsFavorited(taskList.isFavorited || false);
+  }, [taskList]);
 
   const handleFavoriteToggle = async (e: React.MouseEvent) => {
     e.preventDefault();
     try {
-      const response = await toggleFavorite(tasklist.id);
+      const response = await toggleFavorite(taskList.id);
       setIsFavorited(response.isFavorited);
     } catch (error) {
-      console.error("Error favoriting tasklist:", error);
+      console.error("Error favoriting taskList:", error);
     }
   };
 
@@ -37,13 +37,13 @@ function TasklistCard({ tasklist, categoryName, onEdit }: TasklistCardProps) {
     <LazyCard
       bg="primary"
       mih={150}
-      to={`/categories/${categoryName.toLowerCase()}/${tasklist.id}`}
-      params={{ tasklistId: tasklist.id.toString() }}
+      to={`/categories/${categoryName.toLowerCase()}/${taskList.id}`}
+      params={{ taskListId: taskList.id.toString() }}
     >
       <Stack gap={8} h="100%">
         <Stack style={{ flexGrow: 1 }} h={100}>
           <Flex justify="space-between">
-            <Title size="1.25rem">{tasklist.name}</Title>
+            <Title size="1.25rem">{taskList.name}</Title>
             <LazyEditDeleteMenu
               withBorder
               withShadow
@@ -55,17 +55,17 @@ function TasklistCard({ tasklist, categoryName, onEdit }: TasklistCardProps) {
             />
           </Flex>
           <Text size="sm" c="dimmed">
-            {tasklist.description}
+            {taskList.description}
           </Text>
         </Stack>
         <Flex justify="center"></Flex>
         <Flex justify="space-between" align="center" style={{ marginTop: "auto", flexShrink: 0 }}>
-          <MemberList members={tasklist.members} size="sm" />
+          <MemberList members={taskList.members} size="sm" />
           <LazyRingProgress
             size={25}
             thickness={3}
-            percentage={tasklist.taskCompletionPercentage}
-            sections={[{ value: tasklist.taskCompletionPercentage, color: "lime" }]}
+            percentage={taskList.taskCompletionPercentage}
+            sections={[{ value: taskList.taskCompletionPercentage, color: "lime" }]}
           />
         </Flex>
         <Flex justify="space-between">
@@ -73,7 +73,7 @@ function TasklistCard({ tasklist, categoryName, onEdit }: TasklistCardProps) {
             <Text c="dimmed" size="xs" fs="italic">
               Updated:
             </Text>
-            <LazyDate date={tasklist.updatedAt} size="xs" c="dimmed" fs="italic" />
+            <LazyDate date={taskList.updatedAt} size="xs" c="dimmed" fs="italic" />
           </Group>
           <Heart
             fill={isFavorited ? "#E03131" : "none"}
@@ -86,4 +86,4 @@ function TasklistCard({ tasklist, categoryName, onEdit }: TasklistCardProps) {
   );
 }
 
-export default TasklistCard;
+export default TaskListCard;

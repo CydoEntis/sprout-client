@@ -1,50 +1,50 @@
 import { z } from "zod";
 import {
-  createTasklistItemSchema,
-  createTasklistSchema,
-  createTasklistWithCategorySchema,
-  updateTasklistItemSchema,
-  updateTasklistSchema,
+  createTaskListItemSchema,
+  createTaskListSchema,
+  createTaskListWithCategorySchema,
+  updateTaskListItemSchema,
+  updateTaskListSchema,
 } from "./tasks.schemas";
 import { Member, SuccessMessage } from "../../shared/shared.types";
 import { TaskListRole } from "../../invitation/shared/invite.schemas";
 
-export type CreateTasklist = z.infer<typeof createTasklistSchema>;
+export type CreateTaskList = z.infer<typeof createTaskListSchema>;
 
-export type CreatedTasklist = SuccessMessage & {
+export type CreatedTaskList = SuccessMessage & {
   message: string;
   tasklistId: number;
 };
 
-export type UpdateTasklist = z.infer<typeof updateTasklistSchema>;
+export type UpdateTaskList = z.infer<typeof updateTaskListSchema>;
 
-export type UpdatedTasklist = {
+export type UpdatedTaskList = {
   message: string;
   tasklistId: number;
 };
 
-export type DeleteTasklistItem = {
+export type DeleteTaskListItem = {
   tasklistId: number;
   tasklistItemId: number;
 };
 
-export type DeletedTasklistItem = SuccessMessage & {
+export type DeletedTaskListItem = SuccessMessage & {
   id: number;
 };
 
-export type DeletedTasklist = SuccessMessage & {
+export type DeletedTaskList = SuccessMessage & {
   id: number;
 };
 
-export type CategoryWithTasklists = {
+export type CategoryWithTaskLists = {
   id: number;
   name: string;
   tag: string;
   color: string;
-  tasklistsInfo: TasklistInfo[];
+  tasklistsInfo: TaskListInfo[];
 };
 
-export type TasklistInfo = {
+export type TaskListInfo = {
   id: number;
   name: string;
   description: string;
@@ -58,7 +58,7 @@ export type TasklistInfo = {
   role: TaskListRole;
 };
 
-export type TasklistDetails = {
+export type TaskListDetails = {
   id: number;
   name: string;
   description: string;
@@ -68,30 +68,29 @@ export type TasklistDetails = {
   completedTasksCount: number;
   members: Member[];
   additionalMemberCount: number;
-  tasklistItems: TasklistItem[];
+  tasklistItems: TaskListItem[];
   categoryColor: string;
   isFavorited: boolean;
-
   role: TaskListRole;
 };
 
-export type CategoryWithTasklist = {
+export type CategoryWithTaskList = {
   id: number;
   name: string;
   tag: string;
   color: string;
-  tasklistsInfo: TasklistInfo;
+  tasklistsInfo: TaskListInfo;
 };
 
-export type Tasklist = {
+export type TaskList = {
   id: number;
   name: string;
   description: string;
 };
 
-export type CreateTasklistWithCategory = z.infer<typeof createTasklistWithCategorySchema>;
+export type CreateTaskListWithCategory = z.infer<typeof createTaskListWithCategorySchema>;
 
-export interface CreatedTasklistWithCategory {
+export interface CreatedTaskListWithCategory {
   categoryId: number;
   categoryName: string;
   tasklistId: number;
@@ -101,53 +100,53 @@ export interface CreatedTasklistWithCategory {
 
 // Task List Item Types
 
-export type CreateTasklistItem = z.infer<typeof createTasklistItemSchema>;
+export type CreateTaskListItem = z.infer<typeof createTaskListItemSchema>;
 
-export type CreatedTasklistItem = SuccessMessage & {
+export type CreatedTaskListItem = SuccessMessage & {
   tasklistId: number;
-  tasklistItemDetail: TasklistItem;
+  tasklistItemDetail: TaskListItem;
 };
 
-export type CreatedTasklistItems = SuccessMessage & {
+export type CreatedTaskListItems = SuccessMessage & {
   tasklistId: number;
-  tasklistItemDetails: TasklistItem[];
+  tasklistItemDetails: TaskListItem[];
 };
 
-export type UpdateTasklistItem = z.infer<typeof updateTasklistItemSchema>;
+export type UpdateTaskListItem = z.infer<typeof updateTaskListItemSchema>;
 
-export type UpdatedTasklistItem = CreatedTasklistItem;
+export type UpdatedTaskListItem = CreatedTaskListItem;
 
-export type UpdateTasklistItemStatus = { tasklistId: number; id: number; isCompleted: boolean };
+export type UpdateTaskListItemStatus = { tasklistId: number; id: number; isCompleted: boolean };
 
-export type UpdatedTasklistItemStatus = CreatedTasklistItem;
+export type UpdatedTaskListItemStatus = CreatedTaskListItem;
 
-export type ReorderTasklistItems = {
+export type ReorderTaskListItems = {
   tasklistId: number;
-  items: TasklistItemPosition[];
+  items: TaskListItemPosition[];
 };
 
-export type ReorderedTasklistItem = {
+export type ReorderedTaskListItem = {
   tasklistId: number;
 };
 
-export type TasklistItemStatus = {
+export type TaskListItemStatus = {
   id: number;
   isCompleted: boolean;
 };
 
-export type TasklistItemPosition = {
+export type TaskListItemPosition = {
   id: number;
   position: number;
 };
 
-export type TasklistItem = {
+export type TaskListItem = {
   id: number;
   description: string;
   isCompleted: boolean;
   position: number;
 };
 
-export type FavoritedTasklist = {
+export type FavoritedTaskList = {
   taskListId: number;
   isFavorited: boolean;
 };

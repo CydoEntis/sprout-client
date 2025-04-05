@@ -2,19 +2,19 @@ import { notifications } from "@mantine/notifications";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "../../../../api/apiRequest";
 import endpoints from "../../../../api/endpoints";
-import { CreatedTasklistWithCategory, CreateTasklistWithCategory } from "../../shared/tasks.types";
+import { CreatedTaskListWithCategory, CreateTaskListWithCategory } from "../../shared/tasks.types";
 
-export const createCategoryWithTasklist = async (
-  request: CreateTasklistWithCategory
-): Promise<CreatedTasklistWithCategory> => {
-  return apiRequest<CreatedTasklistWithCategory>("post", endpoints.tasklist + "/with-category", request);
+export const createCategoryWithTaskList = async (
+  request: CreateTaskListWithCategory
+): Promise<CreatedTaskListWithCategory> => {
+  return apiRequest<CreatedTaskListWithCategory>("post", endpoints.tasklist + "/with-category", request);
 };
 
-export function useCreateTasklistWithCategoryMutation() {
+export function useCreateTaskListWithCategoryMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: createCategoryWithTasklist,
+    mutationFn: createCategoryWithTaskList,
     onSuccess: (data) => {
       console.log(data);
       queryClient.invalidateQueries({ queryKey: ["categories", "list"] });

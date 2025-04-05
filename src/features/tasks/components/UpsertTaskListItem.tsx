@@ -2,26 +2,26 @@ import { useEffect, useRef } from "react";
 import { ActionIcon, ActionIconGroup, TextInput } from "@mantine/core";
 import { Check, X } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
-import { CreateTasklistItem, TasklistItem, UpdateTasklistItem } from "../shared/tasks.types";
-import { createTasklistItemSchema, updateTasklistItemSchema } from "../shared/tasks.schemas";
+import { CreateTaskListItem, TaskListItem, UpdateTaskListItem } from "../shared/tasks.types";
+import { createTaskListItemSchema, updateTaskListItemSchema } from "../shared/tasks.schemas";
 
-type UpsertTasklistItemProps = {
+type UpsertTaskListItemProps = {
   isActive: boolean;
   tasklistId: number;
-  tasklistItem?: TasklistItem;
+  tasklistItem?: TaskListItem;
   onClose: () => void;
-  onUpdate?: (updatedItem: UpdateTasklistItem) => void;
-  onCreate?: (newItem: CreateTasklistItem) => void;
+  onUpdate?: (updatedItem: UpdateTaskListItem) => void;
+  onCreate?: (newItem: CreateTaskListItem) => void;
 };
 
-function UpsertTasklistItem({
+function UpsertTaskListItem({
   isActive,
   tasklistId,
   tasklistItem,
   onClose,
   onUpdate,
   onCreate,
-}: UpsertTasklistItemProps) {
+}: UpsertTaskListItemProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const isEditing = Boolean(tasklistItem);
   console.log("Is editing: ", isEditing);
@@ -35,7 +35,7 @@ function UpsertTasklistItem({
       tasklistId: tasklistId,
       position: tasklistItem?.position ?? 0,
     },
-    validate: zodResolver(isEditing ? updateTasklistItemSchema : createTasklistItemSchema),
+    validate: zodResolver(isEditing ? updateTaskListItemSchema : createTaskListItemSchema),
   });
 
   useEffect(() => {
@@ -70,13 +70,13 @@ function UpsertTasklistItem({
 
   console.log(form.errors);
 
-  const handleSubmit = async (data: CreateTasklistItem | UpdateTasklistItem) => {
+  const handleSubmit = async (data: CreateTaskListItem | UpdateTaskListItem) => {
     try {
       if (isEditing) {
         console.log("Updating: ", data);
-        onUpdate?.(data as UpdateTasklistItem);
+        onUpdate?.(data as UpdateTaskListItem);
       } else {
-        onCreate?.(data as CreateTasklistItem);
+        onCreate?.(data as CreateTaskListItem);
       }
 
       form.reset();
@@ -130,4 +130,4 @@ function UpsertTasklistItem({
   );
 }
 
-export default UpsertTasklistItem;
+export default UpsertTaskListItem;

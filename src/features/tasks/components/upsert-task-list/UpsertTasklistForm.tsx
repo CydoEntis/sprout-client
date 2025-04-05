@@ -1,28 +1,28 @@
 import { Button, Group, Stack, TextInput, Textarea } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useEffect } from "react";
-import { useCreateTasklistMutation } from "../../services/task-list/create-task-list.service";
-import { createTasklistSchema, updateTasklistSchema } from "../../shared/tasks.schemas";
-import { CreateTasklist, Tasklist, UpdateTasklist } from "../../shared/tasks.types";
+import { useCreateTaskListMutation } from "../../services/task-list/create-task-list.service";
+import { createTaskListSchema, updateTaskListSchema } from "../../shared/tasks.schemas";
+import { CreateTaskList, TaskList, UpdateTaskList } from "../../shared/tasks.types";
 import useFormErrorHandler from "../../../../hooks/useFormErrorHandler";
 import { ErrorResponse } from "../../../../api/errors/errror.types";
-import { useUpdateTasklistMutation } from "../../services/task-list/update-task-list.service";
+import { useUpdateTaskListMutation } from "../../services/task-list/update-task-list.service";
 import { useParams } from "@tanstack/react-router";
 
-type UpsertTasklistFormProps = {
+type UpsertTaskListFormProps = {
   isOpen: boolean;
   onClose: () => void;
-  tasklist?: Tasklist;
+  tasklist?: TaskList;
 };
 
-const UpsertTasklistForm = ({ onClose, tasklist }: UpsertTasklistFormProps) => {
+const UpsertTaskListForm = ({ onClose, tasklist }: UpsertTaskListFormProps) => {
   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName" });
-  const createTasklist = useCreateTasklistMutation(categoryName);
-  const updateTasklist = useUpdateTasklistMutation(categoryName);
-  const { handleFormErrors } = useFormErrorHandler<CreateTasklist | UpdateTasklist>();
+  const createTaskList = useCreateTaskListMutation(categoryName);
+  const updateTaskList = useUpdateTaskListMutation(categoryName);
+  const { handleFormErrors } = useFormErrorHandler<CreateTaskList | UpdateTaskList>();
 
-  const form = useForm<CreateTasklist | UpdateTasklist>({
-    validate: zodResolver(tasklist ? updateTasklistSchema : createTasklistSchema),
+  const form = useForm<CreateTaskList | UpdateTaskList>({
+    validate: zodResolver(tasklist ? updateTaskListSchema : createTaskListSchema),
     initialValues: tasklist
       ? {
           tasklistId: tasklist.id,
@@ -37,14 +37,14 @@ const UpsertTasklistForm = ({ onClose, tasklist }: UpsertTasklistFormProps) => {
         },
   });
 
-  const handleSubmit = async (data: CreateTasklist | UpdateTasklist) => {
+  const handleSubmit = async (data: CreateTaskList | UpdateTaskList) => {
     try {
       if (tasklist) {
         console.log("Updating: ", data);
-        await updateTasklist.mutateAsync(data as UpdateTasklist);
+        await updateTaskList.mutateAsync(data as UpdateTaskList);
       } else {
         console.log(data);
-        await createTasklist.mutateAsync(data as CreateTasklist);
+        await createTaskList.mutateAsync(data as CreateTaskList);
       }
       form.reset();
       onClose();
@@ -94,4 +94,4 @@ const UpsertTasklistForm = ({ onClose, tasklist }: UpsertTasklistFormProps) => {
   );
 };
 
-export default UpsertTasklistForm;
+export default UpsertTaskListForm;

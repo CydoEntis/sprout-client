@@ -2,17 +2,17 @@ import { notifications } from "@mantine/notifications";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "../../../../api/apiRequest";
 import endpoints from "../../../../api/endpoints";
-import { UpdatedTasklist, UpdateTasklist } from "../../shared/tasks.types";
+import { UpdatedTaskList, UpdateTaskList } from "../../shared/tasks.types";
 
-const updateTasklist = async (updatedTasklist: UpdateTasklist): Promise<UpdatedTasklist> => {
-  return apiRequest<UpdatedTasklist>("put", `${endpoints.tasklist}`, updatedTasklist);
+const updateTaskList = async (updatedTaskList: UpdateTaskList): Promise<UpdatedTaskList> => {
+  return apiRequest<UpdatedTaskList>("put", `${endpoints.tasklist}`, updatedTaskList);
 };
 
-export function useUpdateTasklistMutation(categoryName: string) {
+export function useUpdateTaskListMutation(categoryName: string) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (updatedTasklist: UpdateTasklist): Promise<UpdatedTasklist> => {
-      return await updateTasklist(updatedTasklist);
+    mutationFn: async (updatedTaskList: UpdateTaskList): Promise<UpdatedTaskList> => {
+      return await updateTaskList(updatedTaskList);
     },
     onSuccess: (data) => {
       console.log(data);

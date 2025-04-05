@@ -8,11 +8,11 @@ import {
   Text,
 } from "@mantine/core";
 import { CalendarCheck, Check } from "lucide-react";
-import TasklistCard from "./TasklistCard";
+import TaskListCard from "./TaskListCard";
 
-function CompletedTasklistCard() {
+function CompletedTaskListCard() {
   return (
-    <TasklistCard borderPos="left" color="cyan" >
+    <TaskListCard borderPos="left" color="cyan" >
       <Flex justify="space-between" pb={16}>
         <Group>
           <Stack gap={4}>
@@ -65,8 +65,8 @@ function CompletedTasklistCard() {
           </Avatar.Group>
         </Group>
       </Flex>
-    </TasklistCard>
+    </TaskListCard>
   );
 }
 
-export default CompletedTasklistCard;
+export default CompletedTaskListCard;

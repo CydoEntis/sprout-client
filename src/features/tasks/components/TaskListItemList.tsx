@@ -1,34 +1,34 @@
 // import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 // import { Stack } from "@mantine/core";
-// import { TasklistItemDetail } from "../shared/task-list-details.types";
-// import UpsertTasklistItem from "./UpsertTasklistItem";
-// import { TasklistItem } from "./TasklistDetailsCard";
+// import { TaskListItemDetail } from "../shared/task-list-details.types";
+// import UpsertTaskListItem from "./UpsertTaskListItem";
+// import { TaskListItem } from "./TaskListDetailsCard";
 // import ListItem from "./list-item/ListItem";
 // import { useListState } from "@mantine/hooks";
-// import { useReorderTasklistItemsMutation } from "../services/task-list-items/reorder-task-list-item.service";
+// import { useReorderTaskListItemsMutation } from "../services/task-list-items/reorder-task-list-item.service";
 // import { useParams } from "@tanstack/react-router";
-// import { useUpdateTasklistStatusItemMutation } from "../services/task-list-items/update-status-task-list.service";
-// import { DeleteTasklistItemRequest, useDeleteTasklistItemMutation } from "../services/task-list-items/delete-task-list-item.service";
+// import { useUpdateTaskListStatusItemMutation } from "../services/task-list-items/update-status-task-list.service";
+// import { DeleteTaskListItemRequest, useDeleteTaskListItemMutation } from "../services/task-list-items/delete-task-list-item.service";
 
-// type TasklistItemListProps = {
-//   TasklistItems: TasklistItemDetail[];
-//   onEdit: (item: TasklistItem) => void;
-//   itemToEdit: TasklistItem | null;
+// type TaskListItemListProps = {
+//   TaskListItems: TaskListItemDetail[];
+//   onEdit: (item: TaskListItem) => void;
+//   itemToEdit: TaskListItem | null;
 //   onCancel: () => void;
 // };
 
-// function TasklistItemList({ TasklistItems, onEdit, onCancel: onClose, itemToEdit }: TasklistItemListProps) {
+// function TaskListItemList({ TaskListItems, onEdit, onCancel: onClose, itemToEdit }: TaskListItemListProps) {
 //   const { tasklistId } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
-//   const [state, handlers] = useListState(TasklistItems);
-//   const reorderTasklistItems = useReorderTasklistItemsMutation();
-//   const updateStatusTasklistItem = useUpdateTasklistStatusItemMutation();
-//   const deleteTasklistItem = useDeleteTasklistItemMutation();
+//   const [state, handlers] = useListState(TaskListItems);
+//   const reorderTaskListItems = useReorderTaskListItemsMutation();
+//   const updateStatusTaskListItem = useUpdateTaskListStatusItemMutation();
+//   const deleteTaskListItem = useDeleteTaskListItemMutation();
 
-//   const handleTasklistItemCreation = (newItem: TasklistItemDetail) => {
+//   const handleTaskListItemCreation = (newItem: TaskListItemDetail) => {
 //     handlers.append(newItem);
 //   };
 
-//   const updateTasklistItemHandler = (updatedItem: TasklistItem) => {
+//   const updateTaskListItemHandler = (updatedItem: TaskListItem) => {
 //     handlers.setState((prev) => prev.map((task) => (task.id === updatedItem.id ? updatedItem : task)));
 //   };
 
@@ -47,8 +47,8 @@
 //       position: index,
 //     }));
 
-//     await reorderTasklistItems.mutateAsync({
-//       TasklistId: Number(tasklistId),
+//     await reorderTaskListItems.mutateAsync({
+//       TaskListId: Number(tasklistId),
 //       items: reorderedItems,
 //     });
 //   };
@@ -56,14 +56,14 @@
 //   const handleStatusChange = async (id: number, isCompleted: boolean) => {
 //     handlers.setState((prev) => prev.map((item) => (item.id === id ? { ...item, isCompleted } : item)));
 
-//     await updateStatusTasklistItem.mutateAsync({
+//     await updateStatusTaskListItem.mutateAsync({
 //       id,
 //       isCompleted,
 //     });
 //   };
 
-//   const handleTasklistItemDeletion = async (tasklistItemId: number) => {
-//     await deleteTasklistItem.mutateAsync(tasklistItemId);
+//   const handleTaskListItemDeletion = async (tasklistItemId: number) => {
+//     await deleteTaskListItem.mutateAsync(tasklistItemId);
 
 //     handlers.setState((prev) => prev.filter((item) => item.id !== tasklistItemId));
 //   };
@@ -85,17 +85,17 @@
 //                   >
 //                     <div {...provided.dragHandleProps} onDoubleClick={() => onEdit(item)}>
 //                       {itemToEdit?.id === item.id ? (
-//                         <UpsertTasklistItem
+//                         <UpsertTaskListItem
 //                           isActive={true}
-//                           TasklistId={item.id}
-//                           TasklistItem={item}
+//                           TaskListId={item.id}
+//                           TaskListItem={item}
 //                           onClose={onClose}
-//                           onUpdate={updateTasklistItemHandler}
+//                           onUpdate={updateTaskListItemHandler}
 //                         />
 //                       ) : (
 //                         <ListItem
 //                           item={item}
-//                           onDelete={() => handleTasklistItemDeletion(item.id)}
+//                           onDelete={() => handleTaskListItemDeletion(item.id)}
 //                           onChange={handleStatusChange}
 //                         />
 //                       )}
@@ -112,4 +112,4 @@
 //   );
 // }
 
-// export default TasklistItemList;
+// export default TaskListItemList;

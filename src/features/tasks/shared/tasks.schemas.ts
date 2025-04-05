@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Task List Schemas
-export const createTasklistSchema = z.object({
+export const createTaskListSchema = z.object({
   name: z
     .string()
     .min(3, "Title must be at least 3 characters long.")
@@ -13,12 +13,12 @@ export const createTasklistSchema = z.object({
   categoryName: z.string().min(1, "Category name is required"),
 });
 
-export const updateTasklistSchema = createTasklistSchema.extend({
+export const updateTaskListSchema = createTaskListSchema.extend({
   tasklistId: z.number().min(1, "Task list ID is required"),
   categoryName: z.string().min(1, "Category is required"),
 });
 
-export const createTasklistWithCategorySchema = z
+export const createTaskListWithCategorySchema = z
   .object({
     tasklistName: z.string().min(1, "Task list name is required"),
     tasklistDescription: z.string().optional(),
@@ -68,7 +68,7 @@ export const createTasklistWithCategorySchema = z
   );
 
 // Task List Item Schemas
-export const createTasklistItemSchema = z.object({
+export const createTaskListItemSchema = z.object({
   description: z
     .string()
     .min(5, "Description must be at least 5 characters long.")
@@ -76,7 +76,7 @@ export const createTasklistItemSchema = z.object({
   tasklistId: z.number().min(1, "Task list ID is required"),
 });
 
-export const updateTasklistItemSchema = createTasklistItemSchema.extend({
+export const updateTaskListItemSchema = createTaskListItemSchema.extend({
   id: z.number().min(1, "Task list item ID is required"),
   isCompleted: z.boolean(),
   position: z.number(),

@@ -1,21 +1,20 @@
 import { Modal } from "@mantine/core";
 import {} from "@mantine/form";
-import CreateTasklistForm from "./CreateTasklistForm";
+import CreateTaskListForm from "./CreateTasklistForm";
 
-type CreateTasklistModalProps = {
+type CreateTaskListModalProps = {
   isOpen: boolean;
   onClose: () => void;
 };
 
-function CreateTasklistModal({ isOpen, onClose }: CreateTasklistModalProps) {
-
+function CreateTaskListModal({ isOpen, onClose }: CreateTaskListModalProps) {
   const handleClose = () => {
     onClose();
   };
 
   return (
     <Modal
-    size="lg"
+      size="lg"
       classNames={{
         body: "modal",
         header: "modal",
@@ -24,9 +23,9 @@ function CreateTasklistModal({ isOpen, onClose }: CreateTasklistModalProps) {
       onClose={handleClose}
       title="Create a New Task List"
     >
-      <CreateTasklistForm onClose={handleClose} categoryName={"test"} />
+      <CreateTaskListForm onClose={handleClose} categoryName={"test"} />
     </Modal>
   );
 }
 
-export default CreateTasklistModal;
+export default CreateTaskListModal;

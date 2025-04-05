@@ -1,16 +1,16 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
-import { useDeleteTasklistMutation } from "../services/task-list/delete-task-list.service";
-import { TasklistDetails } from "../../task-list-details/shared/task-list-details.types";
+import { useDeleteTaskListMutation } from "../services/task-list/delete-task-list.service";
+import { TaskListDetails } from "../../task-list-details/shared/task-list-details.types";
 
-export function useTasklistHandlers(TasklistDetails: TasklistDetails) {
+export function useTaskListHandlers(TaskListDetails: TaskListDetails) {
   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
   const navigate = useNavigate();
-  const deleteTasklist = useDeleteTasklistMutation();
+  const deleteTaskList = useDeleteTaskListMutation();
 
-  const onDeleteTasklist = async () => {
-    await deleteTasklist.mutateAsync(TasklistDetails.id);
+  const onDeleteTaskList = async () => {
+    await deleteTaskList.mutateAsync(TaskListDetails.id);
     navigate({ to: `/categories/${categoryName}` });
   };
 
-  return { onDeleteTasklist };
+  return { onDeleteTaskList };
 }

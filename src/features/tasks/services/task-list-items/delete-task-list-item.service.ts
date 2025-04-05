@@ -1,21 +1,21 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "../../../../api/apiRequest";
 import endpoints from "../../../../api/endpoints";
-import { DeletedTasklist, DeletedTasklistItem, DeleteTasklistItem } from "../../shared/tasks.types";
+import { DeletedTaskList, DeletedTaskListItem, DeleteTaskListItem } from "../../shared/tasks.types";
 
-const deleteTasklistItem = async (request: DeleteTasklistItem): Promise<DeletedTasklistItem> => {
-  return apiRequest<DeletedTasklist>(
+const deleteTaskListItem = async (request: DeleteTaskListItem): Promise<DeletedTaskListItem> => {
+  return apiRequest<DeletedTaskList>(
     "delete",
     `${endpoints.tasklist}/${request.tasklistId}/items/${request.tasklistItemId}`
   );
 };
 
-export function useDeleteTasklistItemMutation(page: number) {
+export function useDeleteTaskListItemMutation(page: number) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (request: DeleteTasklistItem): Promise<DeletedTasklistItem> => {
-      return await deleteTasklistItem(request);
+    mutationFn: async (request: DeleteTaskListItem): Promise<DeletedTaskListItem> => {
+      return await deleteTaskListItem(request);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({

@@ -8,23 +8,23 @@ import { validColors } from "../../../../util/constants/valid-colors.constants";
 import { validIcons, validIconTags } from "../../../../util/constants/valid-icon.constants";
 import { Category } from "../../../category/shared/category.types";
 import LazyFadeInAnimation from "../../../../lazy-components/animations/LazyFadeInAnimation";
-import { createTasklistWithCategorySchema } from "../../shared/tasks.schemas";
-import { CreateTasklistWithCategory } from "../../shared/tasks.types";
-import { useCreateTasklistWithCategoryMutation } from "../../services/task-list/create-task-list-with-category.service";
+import { createTaskListWithCategorySchema } from "../../shared/tasks.schemas";
+import { CreateTaskListWithCategory } from "../../shared/tasks.types";
+import { useCreateTaskListWithCategoryMutation } from "../../services/task-list/create-task-list-with-category.service";
 
-export type CreateTasklistWithCategoryFormProps = {
+export type CreateTaskListWithCategoryFormProps = {
   categories: Category[];
   onClose: () => void;
 };
 
-const CreateTasklistWithCategoryForm = ({ categories, onClose }: CreateTasklistWithCategoryFormProps) => {
-  const createCategoryWithTasklist = useCreateTasklistWithCategoryMutation();
+const CreateTaskListWithCategoryForm = ({ categories, onClose }: CreateTaskListWithCategoryFormProps) => {
+  const createCategoryWithTaskList = useCreateTaskListWithCategoryMutation();
   const [createNewCategory, setCreateNewCategory] = useState(false);
   const [selectedColor, setSelectedColor] = useState(validColors[0]);
   const [selectedIcon, setSelectedIcon] = useState(validIcons[0]);
 
-  const form = useForm<CreateTasklistWithCategory>({
-    validate: zodResolver(createTasklistWithCategorySchema),
+  const form = useForm<CreateTaskListWithCategory>({
+    validate: zodResolver(createTaskListWithCategorySchema),
     initialValues: {
       categoryName: "",
       categoryTag: validIconTags[0],
@@ -35,9 +35,9 @@ const CreateTasklistWithCategoryForm = ({ categories, onClose }: CreateTasklistW
     },
   });
 
-  const handleSubmit = async (data: CreateTasklistWithCategory) => {
+  const handleSubmit = async (data: CreateTaskListWithCategory) => {
     try {
-      const payload: CreateTasklistWithCategory = createNewCategory
+      const payload: CreateTaskListWithCategory = createNewCategory
         ? {
             categoryName: data.categoryName!,
             categoryTag: validIcons[0].tag as (typeof validIconTags)[number],
@@ -51,7 +51,7 @@ const CreateTasklistWithCategoryForm = ({ categories, onClose }: CreateTasklistW
             tasklistDescription: data.tasklistDescription,
           };
 
-      await createCategoryWithTasklist.mutateAsync(payload);
+      await createCategoryWithTaskList.mutateAsync(payload);
       form.reset();
       onClose();
     } catch (e) {
@@ -140,4 +140,4 @@ const CreateTasklistWithCategoryForm = ({ categories, onClose }: CreateTasklistW
   );
 };
 
-export default CreateTasklistWithCategoryForm;
+export default CreateTaskListWithCategoryForm;

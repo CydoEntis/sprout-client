@@ -1,12 +1,12 @@
 import { Group, Stack, Text } from "@mantine/core";
 import LazyRingProgress from "../../../lazy-components/progress-bars/LazyRingProgressBar";
 
-type TasklistProgressProps = {
+type TaskListProgressProps = {
   count: number;
   percentage: number;
 };
 
-function TasklistProgress({ count, percentage }: TasklistProgressProps) {
+function TaskListProgress({ count, percentage }: TaskListProgressProps) {
   console.log(count);
   return (
     <Group>
@@ -36,4 +36,4 @@ function TasklistProgress({ count, percentage }: TasklistProgressProps) {
   );
 }
 
-export default TasklistProgress;
+export default TaskListProgress;

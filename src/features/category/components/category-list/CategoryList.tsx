@@ -1,12 +1,12 @@
 import { Button, SimpleGrid, Stack, Title } from "@mantine/core";
 import { Plus } from "lucide-react";
 import { motion } from "framer-motion";
-import { Category, CategoryWithTasklistCount } from "../../shared/category.types";
+import { Category, CategoryWithTaskListCount } from "../../shared/category.types";
 import CategoryCard from "../category-card/CategoryCard";
 import LazyHeader from "../../../../lazy-components/header/LazyHeader";
 
 type CategoryListProps = {
-  categories: CategoryWithTasklistCount[];
+  categories: CategoryWithTaskListCount[];
   onOpen: () => void;
   onEdit: (category: Category) => void;
 };

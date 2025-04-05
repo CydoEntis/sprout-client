@@ -1,12 +1,12 @@
 import { Button } from "@mantine/core";
 import { Minus, Plus } from "lucide-react";
 
-type CreateTasklistItemButtonProps = {
+type CreateTaskListItemButtonProps = {
   isCreating: boolean;
   onCreate: () => void;
 };
 
-function CreateTasklistItemButton({ isCreating, onCreate }: CreateTasklistItemButtonProps) {
+function CreateTaskListItemButton({ isCreating, onCreate }: CreateTaskListItemButtonProps) {
   return (
     <Button
       variant="subtle"
@@ -19,4 +19,4 @@ function CreateTasklistItemButton({ isCreating, onCreate }: CreateTasklistItemBu
   );
 }
 
-export default CreateTasklistItemButton;
+export default CreateTaskListItemButton;

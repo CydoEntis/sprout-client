@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "../../../../api/apiRequest";
 import endpoints from "../../../../api/endpoints";
-import { ReorderedTasklistItem, ReorderTasklistItems } from "../../shared/tasks.types";
+import { ReorderedTaskListItem, ReorderTaskListItems } from "../../shared/tasks.types";
 
-const reorderTasklistItems = async (request: ReorderTasklistItems): Promise<ReorderedTasklistItem> => {
-  return apiRequest<ReorderedTasklistItem>("put", `${endpoints.tasklist}/${request.tasklistId}/items/reorder`, request);
+const reorderTaskListItems = async (request: ReorderTaskListItems): Promise<ReorderedTaskListItem> => {
+  return apiRequest<ReorderedTaskListItem>("put", `${endpoints.tasklist}/${request.tasklistId}/items/reorder`, request);
 };
 
-export function useReorderTasklistItemsMutation(page: number) {
+export function useReorderTaskListItemsMutation(page: number) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (request: ReorderTasklistItems): Promise<ReorderedTasklistItem> => {
-      return await reorderTasklistItems(request);
+    mutationFn: async (request: ReorderTaskListItems): Promise<ReorderedTaskListItem> => {
+      return await reorderTaskListItems(request);
     },
     onSuccess: (data) => {
       console.log(data);

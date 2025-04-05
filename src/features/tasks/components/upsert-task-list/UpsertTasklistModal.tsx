@@ -1,15 +1,15 @@
 import { Modal } from "@mantine/core";
 import {} from "@mantine/form";
-import UpsertTasklistForm from "./UpsertTasklistForm";
-import { Tasklist } from "../../shared/tasks.types";
+import UpsertTaskListForm from "./UpsertTaskListForm";
+import { TaskList } from "../../shared/tasks.types";
 
-type UpsertTasklistModalProps = {
+type UpsertTaskListModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  tasklist?: Tasklist;
+  tasklist?: TaskList;
 };
 
-function UpsertTasklistModal({ isOpen, onClose, tasklist }: UpsertTasklistModalProps) {
+function UpsertTaskListModal({ isOpen, onClose, tasklist }: UpsertTaskListModalProps) {
   const handleClose = () => {
     onClose();
   };
@@ -25,9 +25,9 @@ function UpsertTasklistModal({ isOpen, onClose, tasklist }: UpsertTasklistModalP
       onClose={handleClose}
       title={tasklist ? "Update Task List" : "Create Task List"}
     >
-      <UpsertTasklistForm onClose={handleClose} isOpen={isOpen} tasklist={tasklist} />
+      <UpsertTaskListForm onClose={handleClose} isOpen={isOpen} tasklist={tasklist} />
     </Modal>
   );
 }
 
-export default UpsertTasklistModal;
+export default UpsertTaskListModal;

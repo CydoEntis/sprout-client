@@ -7,7 +7,7 @@ type Props = {
   onManageMembers: () => void;
 };
 
-function TasklistMembers({ members, onManageMembers }: Props) {
+function TaskListMembers({ members, onManageMembers }: Props) {
   return (
     <Stack mt={16} gap={4}>
       <Text size="xs">Members</Text>
@@ -23,4 +23,4 @@ function TasklistMembers({ members, onManageMembers }: Props) {
   );
 }
 
-export default TasklistMembers;
+export default TaskListMembers;

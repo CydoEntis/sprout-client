@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { useListState } from "@mantine/hooks";
 import { useParams, useSearch } from "@tanstack/react-router";
-import { useCreateTasklistItemMutation } from "../services/task-list-items/create-task-list-item.service";
-import { useUpdateTasklistItemMutation } from "../services/task-list-items/update-task-list-item.service";
-import { useReorderTasklistItemsMutation } from "../services/task-list-items/reorder-task-list-item.service";
-import { useUpdateTasklistStatusItemMutation } from "../services/task-list-items/update-status-task-list.service";
-import { useDeleteTasklistItemMutation } from "../services/task-list-items/delete-task-list-item.service";
-import { CreateTasklistItem, TasklistItem, UpdateTasklistItem } from "../shared/tasks.types";
+import { useCreateTaskListItemMutation } from "../services/task-list-items/create-task-list-item.service";
+import { useUpdateTaskListItemMutation } from "../services/task-list-items/update-task-list-item.service";
+import { useReorderTaskListItemsMutation } from "../services/task-list-items/reorder-task-list-item.service";
+import { useUpdateTaskListStatusItemMutation } from "../services/task-list-items/update-status-task-list.service";
+import { useDeleteTaskListItemMutation } from "../services/task-list-items/delete-task-list-item.service";
+import { CreateTaskListItem, TaskListItem, UpdateTaskListItem } from "../shared/tasks.types";
 
-export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
+export function useTaskListItemHandlers(initialItems: TaskListItem[]) {
   const { tasklistId } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
   const searchParams = useSearch({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
 
   // Ensure state updates correctly
   const [tasklistItems, tasklistItemHandlers] = useListState(initialItems);
-  const [editingState, setEditingState] = useState<{ itemToUpdate: TasklistItem | null; isCreating: boolean }>({
+  const [editingState, setEditingState] = useState<{ itemToUpdate: TaskListItem | null; isCreating: boolean }>({
     itemToUpdate: null,
     isCreating: false,
   });
@@ -23,32 +23,32 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
     tasklistItemHandlers.setState(initialItems);
   }, [initialItems]);
 
-  const createTasklistItem = useCreateTasklistItemMutation(searchParams.page || 1);
-  const updateTasklistItem = useUpdateTasklistItemMutation(searchParams.page || 1);
-  const reorderTasklistItems = useReorderTasklistItemsMutation(searchParams.page || 1);
-  const updateStatusTasklistItem = useUpdateTasklistStatusItemMutation(Number(tasklistId), searchParams.page || 1);
-  const deleteTasklistItem = useDeleteTasklistItemMutation(searchParams.page || 1);
+  const createTaskListItem = useCreateTaskListItemMutation(searchParams.page || 1);
+  const updateTaskListItem = useUpdateTaskListItemMutation(searchParams.page || 1);
+  const reorderTaskListItems = useReorderTaskListItemsMutation(searchParams.page || 1);
+  const updateStatusTaskListItem = useUpdateTaskListStatusItemMutation(Number(tasklistId), searchParams.page || 1);
+  const deleteTaskListItem = useDeleteTaskListItemMutation(searchParams.page || 1);
 
-  const createItem = async (newItem: CreateTasklistItem) => {
-    const result = await createTasklistItem.mutateAsync(newItem);
-    tasklistItemHandlers.insert(0, result.tasklistItemDetail as TasklistItem);
+  const createItem = async (newItem: CreateTaskListItem) => {
+    const result = await createTaskListItem.mutateAsync(newItem);
+    tasklistItemHandlers.insert(0, result.tasklistItemDetail as TaskListItem);
   };
 
-  const updateItem = async (updatedItem: UpdateTasklistItem) => {
-    await updateTasklistItem.mutateAsync(updatedItem);
+  const updateItem = async (updatedItem: UpdateTaskListItem) => {
+    await updateTaskListItem.mutateAsync(updatedItem);
     tasklistItemHandlers.setState((prev) =>
       prev.map((taskItem) => (taskItem.id === updatedItem.id ? { ...taskItem, ...updatedItem } : taskItem))
     );
   };
 
   const deleteItem = async (tasklistItemId: number) => {
-    await deleteTasklistItem.mutateAsync({ tasklistId: Number(tasklistId), tasklistItemId });
+    await deleteTaskListItem.mutateAsync({ tasklistId: Number(tasklistId), tasklistItemId });
     tasklistItemHandlers.setState((prev) => prev.filter((item) => item.id !== tasklistItemId));
   };
 
   const toggleItemStatus = async (id: number, isCompleted: boolean) => {
     tasklistItemHandlers.setState((prev) => prev.map((item) => (item.id === id ? { ...item, isCompleted } : item)));
-    await updateStatusTasklistItem.mutateAsync({ tasklistId: Number(tasklistId), id, isCompleted });
+    await updateStatusTaskListItem.mutateAsync({ tasklistId: Number(tasklistId), id, isCompleted });
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -62,7 +62,7 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
     tasklistItemHandlers.setState(() => [...reorderedItems]);
 
     try {
-      await reorderTasklistItems.mutateAsync({
+      await reorderTaskListItems.mutateAsync({
         tasklistId: Number(tasklistId),
         items: reorderedItems.map((item, index) => ({ id: item.id, position: index })),
       });
@@ -75,7 +75,7 @@ export function useTasklistItemHandlers(initialItems: TasklistItem[]) {
   };
 
   const showCreateItem = () => setEditingState({ itemToUpdate: null, isCreating: true });
-  const showUpdateItem = (item: TasklistItem) => setEditingState({ itemToUpdate: item, isCreating: false });
+  const showUpdateItem = (item: TaskListItem) => setEditingState({ itemToUpdate: item, isCreating: false });
   const closeItem = () => setEditingState({ itemToUpdate: null, isCreating: false });
 
   return {

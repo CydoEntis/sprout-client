@@ -13,40 +13,40 @@ import {
 } from "@mantine/core";
 import { Check, Edit, Plus, Trash, X } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
-import { createTasklistItemSchema } from "../../shared/tasks.schemas";
-import { CreateTasklistItem } from "../../shared/tasks.types";
-import { useCreateTasklistItemsMutation } from "../../services/task-list-items/create-task-list-items.service";
+import { createTaskListItemSchema } from "../../shared/tasks.schemas";
+import { CreateTaskListItem } from "../../shared/tasks.types";
+import { useCreateTaskListItemsMutation } from "../../services/task-list-items/create-task-list-items.service";
 import useFormErrorHandler from "../../../../hooks/useFormErrorHandler";
 import { ErrorResponse } from "../../../../api/errors/errror.types";
 
-type CreateTasklistItemsFormProps = {
+type CreateTaskListItemsFormProps = {
   tasklistId: number;
 };
 
-function CreateTasklistItemsForm({ tasklistId }: CreateTasklistItemsFormProps) {
-  const [TasklistItems, setTasklistItems] = useState<CreateTasklistItem[]>([]);
+function CreateTaskListItemsForm({ tasklistId }: CreateTaskListItemsFormProps) {
+  const [TaskListItems, setTaskListItems] = useState<CreateTaskListItem[]>([]);
   const [isEditing, setIsEditing] = useState<number | null>(null);
   const [newTaskDescription, setNewTaskDescription] = useState("");
   const [editErrors, setEditErrors] = useState<{ [key: number]: string }>({});
-  const { handleFormErrors } = useFormErrorHandler<CreateTasklistItem>();
+  const { handleFormErrors } = useFormErrorHandler<CreateTaskListItem>();
 
-  const form = useForm<CreateTasklistItem>({
+  const form = useForm<CreateTaskListItem>({
     initialValues: {
       description: "",
       tasklistId: tasklistId,
     },
-    validate: zodResolver(createTasklistItemSchema),
+    validate: zodResolver(createTaskListItemSchema),
   });
 
-  const createTasklistItems = useCreateTasklistItemsMutation();
+  const createTaskListItems = useCreateTaskListItemsMutation();
 
   const handleSubmit = async () => {
     try {
-      await createTasklistItems.mutateAsync({
+      await createTaskListItems.mutateAsync({
         tasklistId,
-        newTasklistItems: TasklistItems,
+        newTaskListItems: TaskListItems,
       });
-      setTasklistItems([]);
+      setTaskListItems([]);
       form.reset();
       setNewTaskDescription("");
     } catch (e) {
@@ -71,21 +71,21 @@ function CreateTasklistItemsForm({ tasklistId }: CreateTasklistItemsFormProps) {
       form.clearErrors();
     }
 
-    const newItem: CreateTasklistItem = {
+    const newItem: CreateTaskListItem = {
       description: newTaskDescription,
       tasklistId: tasklistId,
     };
-    setTasklistItems((prev) => [...prev, newItem]);
+    setTaskListItems((prev) => [...prev, newItem]);
     setNewTaskDescription("");
   };
 
   const handleDeleteItem = (index: number) => {
-    setTasklistItems((prev) => prev.filter((_, i) => i !== index));
+    setTaskListItems((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleEditItem = (index: number) => {
     setIsEditing(index);
-    form.setValues({ description: TasklistItems[index].description });
+    form.setValues({ description: TaskListItems[index].description });
     setEditErrors((prev) => ({ ...prev, [index]: "" }));
   };
 
@@ -103,9 +103,9 @@ function CreateTasklistItemsForm({ tasklistId }: CreateTasklistItemsFormProps) {
         return;
       }
 
-      const updatedItems = [...TasklistItems];
+      const updatedItems = [...TaskListItems];
       updatedItems[isEditing].description = description;
-      setTasklistItems(updatedItems);
+      setTaskListItems(updatedItems);
 
       setIsEditing(null);
       setEditErrors((prev) => ({ ...prev, [isEditing!]: "" }));
@@ -165,13 +165,13 @@ function CreateTasklistItemsForm({ tasklistId }: CreateTasklistItemsFormProps) {
       </form>
 
       <Divider label="Task List Items" labelPosition="center" my={16} />
-      {TasklistItems.length === 0 ? (
+      {TaskListItems.length === 0 ? (
         <Text my={16} size="sm" c="dimmed" ta="center">
           You haven't added any items yet.
         </Text>
       ) : (
         <Stack gap={8}>
-          {TasklistItems.map((item, index) => (
+          {TaskListItems.map((item, index) => (
             <div key={index}>
               {isEditing === index ? (
                 <TextInput
@@ -219,7 +219,7 @@ function CreateTasklistItemsForm({ tasklistId }: CreateTasklistItemsFormProps) {
         </Stack>
       )}
 
-      {TasklistItems.length > 0 ? (
+      {TaskListItems.length > 0 ? (
         <Stack gap={24} mt={8}>
           <Group justify="end" align="center" gap={8} w="100%">
             <Button onClick={handleSubmit} fullWidth variant="light" color="lime" w="20%">
@@ -232,4 +232,4 @@ function CreateTasklistItemsForm({ tasklistId }: CreateTasklistItemsFormProps) {
   );
 }
 
-export default CreateTasklistItemsForm;
+export default CreateTaskListItemsForm;

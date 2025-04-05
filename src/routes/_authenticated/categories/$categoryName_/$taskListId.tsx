@@ -1,13 +1,13 @@
 import { createFileRoute, useParams, useSearch } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getTasklistByIdQueryOptions } from "../../../../features/tasks/services/task-list/get-task-list-details-by-id.service";
-import TasklistDetailsPage from "../../../../features/tasks/pages/TaskListPage";
-import { getPaginatedTasklistItemsQueryOptions } from "../../../../features/tasks/services/task-list-items/get-paginated-task-list-items.service";
+import { getTaskListByIdQueryOptions } from "../../../../features/tasks/services/task-list/get-task-list-details-by-id.service";
+import TaskListDetailsPage from "../../../../features/tasks/pages/TaskListPage";
+import { getPaginatedTaskListItemsQueryOptions } from "../../../../features/tasks/services/task-list-items/get-paginated-task-list-items.service";
 
 export const Route = createFileRoute("/_authenticated/categories/$categoryName_/$tasklistId")({
   loader: async ({ context, params }) => {
     const { queryClient } = context;
-    return queryClient.ensureQueryData(getTasklistByIdQueryOptions(Number(params.tasklistId)));
+    return queryClient.ensureQueryData(getTaskListByIdQueryOptions(Number(params.tasklistId)));
   },
   validateSearch: (params: Record<string, string | number>) => {
     return {
@@ -25,9 +25,9 @@ function RouteComponent() {
   const searchParams = useSearch({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
   const page = searchParams.page || 1;
 
-  const { data: tasklist } = useSuspenseQuery(getTasklistByIdQueryOptions(Number(tasklistId)));
+  const { data: tasklist } = useSuspenseQuery(getTaskListByIdQueryOptions(Number(tasklistId)));
 
-  const { data: paginatedResult } = useSuspenseQuery(getPaginatedTasklistItemsQueryOptions(Number(tasklistId), page));
+  const { data: paginatedResult } = useSuspenseQuery(getPaginatedTaskListItemsQueryOptions(Number(tasklistId), page));
 
-  return <TasklistDetailsPage tasklist={tasklist} paginatedItems={paginatedResult} />;
+  return <TaskListDetailsPage tasklist={tasklist} paginatedItems={paginatedResult} />;
 }

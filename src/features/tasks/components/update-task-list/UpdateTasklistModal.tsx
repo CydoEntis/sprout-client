@@ -1,15 +1,15 @@
 import { Modal } from "@mantine/core";
-import UpdateTasklistForm from "./UpdateTasklistForm";
-import { Tasklist } from "../../shared/tasks.types";
+import UpdateTaskListForm from "./UpdateTaskListForm";
+import { TaskList } from "../../shared/tasks.types";
 
-type UpdateTasklistModalProps = {
+type UpdateTaskListModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  tasklist: Tasklist;
+  tasklist: TaskList;
   categoryName: string;
 };
 
-function UpdateTasklistModal({ isOpen, onClose, tasklist, categoryName }: UpdateTasklistModalProps) {
+function UpdateTaskListModal({ isOpen, onClose, tasklist, categoryName }: UpdateTaskListModalProps) {
   return (
     <Modal
       size="lg"
@@ -18,9 +18,9 @@ function UpdateTasklistModal({ isOpen, onClose, tasklist, categoryName }: Update
       onClose={onClose}
       title="Update Task List"
     >
-      <UpdateTasklistForm onClose={onClose} tasklist={tasklist} categoryName={categoryName} />
+      <UpdateTaskListForm onClose={onClose} tasklist={tasklist} categoryName={categoryName} />
     </Modal>
   );
 }
 
-export default UpdateTasklistModal;
+export default UpdateTaskListModal;

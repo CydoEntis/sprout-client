@@ -2,10 +2,10 @@ import { Flex, Checkbox, ActionIcon, Text, Group } from "@mantine/core";
 import { X } from "lucide-react";
 
 import styles from "./list-item.module.css";
-import { TasklistItem } from "../../shared/tasks.types";
+import { TaskListItem } from "../../shared/tasks.types";
 
 type ListItemProps = {
-  item: TasklistItem;
+  item: TaskListItem;
   onDelete: (id: number) => void;
   onChange: (id: number, isCompleted: boolean) => void;
 };

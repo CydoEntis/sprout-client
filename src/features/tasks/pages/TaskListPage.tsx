@@ -3,24 +3,25 @@ import { Button, Stack, Title, Text, Flex, Group, Paper, Pagination } from "@man
 import { Heart, List, Plus, Users } from "lucide-react";
 import { motion } from "framer-motion"; // Import Framer Motion
 import ListItem from "../components/list-item/ListItem";
-import { TasklistDetails, TasklistItem } from "../shared/tasks.types";
-import { useTasklistItemHandlers } from "../hooks/useTaskListItemHandlers";
-import UpsertTasklistItem from "../components/UpsertTasklistItem";
-import TasklistMembers from "../components/TasklistMembers";
+import { TaskListDetails, TaskListItem } from "../shared/tasks.types";
+import { useTaskListItemHandlers } from "../hooks/useTaskListItemHandlers";
+
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
-import UpdateTasklistModal from "../components/update-task-list/UpdateTasklistModal";
 import LazyEditDeleteMenu from "../../../lazy-components/menus/LazyEditDeleteMenu";
-import { useDeleteTasklistMutation } from "../services/task-list/delete-task-list.service";
+import { useDeleteTaskListMutation } from "../services/task-list/delete-task-list.service";
 import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import { Paginated } from "../../../util/types/shared.types";
 import { TaskListRole } from "../../invitation/shared/invite.schemas";
 import MembersModal from "../../invitation/components/members-modal/MembersModal";
-import { useFavoriteTasklistMutation } from "../services/task-list/favorite-task-list.service";
+import { useFavoriteTaskListMutation } from "../services/task-list/favorite-task-list.service";
+import UpsertTaskListItem from "../components/UpsertTasklistItem";
+import TaskListMembers from "../components/TasklistMembers";
+import UpdateTaskListModal from "../components/UpdateTaskListModal";
 
-type TasklistDetailsPageProps = {
-  tasklist: TasklistDetails;
-  paginatedItems: Paginated<TasklistItem>;
+type TaskListDetailsPageProps = {
+  tasklist: TaskListDetails;
+  paginatedItems: Paginated<TaskListItem>;
 };
 
 const containerVariants = {
@@ -38,14 +39,14 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.3 } },
 };
 
-function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPageProps) {
+function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPageProps) {
   const { categoryName, tasklistId } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
   const searchParams = useSearch({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
   const page = searchParams.page || 1;
   const navigate = useNavigate();
 
-  const deleteTasklist = useDeleteTasklistMutation();
-  const { mutateAsync: toggleFavorite } = useFavoriteTasklistMutation();
+  const deleteTaskList = useDeleteTaskListMutation();
+  const { mutateAsync: toggleFavorite } = useFavoriteTaskListMutation();
 
   const {
     tasklistItems,
@@ -58,21 +59,21 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
     showUpdateItem,
     closeItem,
     editingState: { itemToUpdate, isCreating },
-  } = useTasklistItemHandlers(paginatedItems.items);
+  } = useTaskListItemHandlers(paginatedItems.items);
 
-  const [isUpdateTasklistModalOpened, { open: openUpdateTasklistModal, close: closeUpdateTasklistModal }] =
+  const [isUpdateTaskListModalOpened, { open: openUpdateTaskListModal, close: closeUpdateTaskListModal }] =
     useDisclosure(false);
   const [isManageMembersModalOpened, { open: openManageMembersModal, close: closeManageMembersModal }] =
     useDisclosure(false);
-  const [selectedTasklist, setSelectedTasklist] = useState<TasklistDetails>(tasklist);
+  const [selectedTaskList, setSelectedTaskList] = useState<TaskListDetails>(tasklist);
 
-  const handleDeleteTasklist = async () => {
-    await deleteTasklist.mutateAsync(tasklist.id);
+  const handleDeleteTaskList = async () => {
+    await deleteTaskList.mutateAsync(tasklist.id);
   };
 
-  const openEditTasklistModal = (tasklist: TasklistDetails) => {
-    setSelectedTasklist(tasklist);
-    openUpdateTasklistModal();
+  const openEditTaskListModal = (tasklist: TaskListDetails) => {
+    setSelectedTaskList(tasklist);
+    openUpdateTaskListModal();
   };
 
   const handlePageChange = (newPage: number) => {
@@ -94,10 +95,10 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
   console.log(tasklist);
   return (
     <>
-      <UpdateTasklistModal
-        isOpen={isUpdateTasklistModalOpened}
-        onClose={closeUpdateTasklistModal}
-        tasklist={selectedTasklist}
+      <UpdateTaskListModal
+        isOpen={isUpdateTaskListModalOpened}
+        onClose={closeUpdateTaskListModal}
+        taskList={selectedTaskList}
         categoryName={categoryName}
       />
 
@@ -127,15 +128,15 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
                 shadow="md"
                 dropdownColor="primary"
                 direction="vertical"
-                onUpdate={() => openEditTasklistModal(tasklist)}
-                onDelete={handleDeleteTasklist}
+                onUpdate={() => openEditTaskListModal(tasklist)}
+                onDelete={handleDeleteTaskList}
               />
             </Flex>
             <Text c="dimmed">{tasklist.description}</Text>
           </Stack>
 
           <Flex justify="space-between" align="center">
-            <TasklistMembers
+            <TaskListMembers
               members={tasklist.members}
               size="md"
               additionalMemberCount={tasklist.additionalMemberCount}
@@ -183,7 +184,7 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
                   >
                     <Stack gap={16}>
                       {isCreating && (
-                        <UpsertTasklistItem
+                        <UpsertTaskListItem
                           onCreate={createItem}
                           tasklistId={tasklist.id}
                           isActive={isCreating}
@@ -201,7 +202,7 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
                             >
                               <div {...provided.dragHandleProps} onDoubleClick={() => showUpdateItem(item)}>
                                 {itemToUpdate?.id === item.id ? (
-                                  <UpsertTasklistItem
+                                  <UpsertTaskListItem
                                     isActive={true}
                                     tasklistId={tasklist.id}
                                     tasklistItem={item}
@@ -245,4 +246,4 @@ function TasklistDetailsPage({ tasklist, paginatedItems }: TasklistDetailsPagePr
   );
 }
 
-export default TasklistDetailsPage;
+export default TaskListDetailsPage;

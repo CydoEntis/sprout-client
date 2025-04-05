@@ -14,25 +14,25 @@ export type Category = {
   color: ValidColor;
 };
 
-export type TasklistMetadata = {
+export type TaskListMetadata = {
   tasklistId: number;
   tasklistName: string;
 };
 
-export type PaginatedCategoriesWithTasklistCount = {
-  items: CategoryWithTasklistCount[];
+export type PaginatedCategoriesWithTaskListCount = {
+  items: CategoryWithTaskListCount[];
   page: number;
   pageSize: number;
   totalRecords: number;
   totalPages: number;
 };
 
-export type CategoryAndRecentTasklists = Category & {
-  recentTasklists: TasklistMetadata[];
+export type CategoryAndRecentTaskLists = Category & {
+  recentTaskLists: TaskListMetadata[];
 };
 
-export type CategoryWithTasklistCount = Category & {
-  totalTasklists: number;
+export type CategoryWithTaskListCount = Category & {
+  totalTaskLists: number;
 };
 
 export type CreatedCategory = {

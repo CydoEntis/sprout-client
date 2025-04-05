@@ -15,13 +15,13 @@ import { validIcons, validIconTags } from "../../../util/constants/valid-icon.co
 import { LazyValidIcon } from "../../../lazy-components/icon-picker/lazy-icon-picker.types";
 import { ValidColor } from "../../../util/types/valid-color.types";
 
-type AssignTasklistToCategoryFormProps = {
+type AssignTaskListToCategoryFormProps = {
   categories: Category[];
   inviteToken: string;
   tasklistId: number;
 };
 
-function AssignTasklistToCategoryForm({ inviteToken, categories, tasklistId }: AssignTasklistToCategoryFormProps) {
+function AssignTaskListToCategoryForm({ inviteToken, categories, tasklistId }: AssignTaskListToCategoryFormProps) {
   const [isCreatingCategory, setIsCreatingCategory] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState<LazyValidIcon>(validIcons[0]);
   const [selectedColor, setSelectedColor] = useState<ValidColor>(validColors[0]);
@@ -164,4 +164,4 @@ function AssignTasklistToCategoryForm({ inviteToken, categories, tasklistId }: A
   );
 }
 
-export default AssignTasklistToCategoryForm;
+export default AssignTaskListToCategoryForm;
