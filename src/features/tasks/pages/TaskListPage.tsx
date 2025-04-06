@@ -1,8 +1,7 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { Button, Stack, Title, Text, Flex, Group, Paper, Pagination } from "@mantine/core";
 import { Heart, List, Plus, Users } from "lucide-react";
-import { motion } from "framer-motion"; // Import Framer Motion
-import ListItem from "../components/list-item/ListItem";
+import { motion } from "framer-motion"; //
 import { TaskListDetails, TaskListItem } from "../shared/tasks.types";
 import { useTaskListItemHandlers } from "../hooks/useTaskListItemHandlers";
 
@@ -13,11 +12,12 @@ import { useDeleteTaskListMutation } from "../services/task-list/delete-task-lis
 import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import { Paginated } from "../../../util/types/shared.types";
 import { TaskListRole } from "../../invitation/shared/invite.schemas";
-import MembersModal from "../../invitation/components/members-modal/MembersModal";
 import { useFavoriteTaskListMutation } from "../services/task-list/favorite-task-list.service";
 import UpsertTaskListItem from "../components/UpsertTasklistItem";
 import TaskListMembers from "../components/TasklistMembers";
 import UpdateTaskListModal from "../components/UpdateTaskListModal";
+import MembersModal from "../../invitation/members-modal/MembersModal";
+import ListItem from "../list-item/ListItem";
 
 type TaskListDetailsPageProps = {
   tasklist: TaskListDetails;

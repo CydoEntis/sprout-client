@@ -9,19 +9,19 @@ type AcceptInviteParams = {
   inviteToken: string;
   newCategory?: CreateCategory | null;
   categoryId?: number | null;
-  tasklistId: number;
+  taskListId: number;
 };
 
 const acceptInvite = async ({
   inviteToken,
   newCategory,
   categoryId,
-  tasklistId,
+  taskListId,
 }: AcceptInviteParams): Promise<InviteAccepted> => {
   const payload = { categoryId, newCategory };
   return apiRequest<InviteAccepted>(
     "post",
-    `${endpoints.tasklist}/${tasklistId}/invitations/${inviteToken}/accept`,
+    `${endpoints.tasklist}/${taskListId}/invitations/${inviteToken}/accept`,
     payload
   );
 };

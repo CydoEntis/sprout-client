@@ -3,8 +3,8 @@ import { SuccessMessage } from "../../shared/shared.types";
 import { inviteUserSchema } from "./invite.schemas";
 
 export type DecodedInviteToken = {
-  tasklistName: string;
-  tasklistId: string;
+  taskListName: string;
+  taskListId: string;
   category: string;
   inviteDate: string;
   inviter: string;
@@ -14,7 +14,7 @@ export type DecodedInviteToken = {
 };
 
 export type InviteAccepted = SuccessMessage & {
-  tasklistId: number;
+  taskListId: number;
   categoryName: string;
 };
 

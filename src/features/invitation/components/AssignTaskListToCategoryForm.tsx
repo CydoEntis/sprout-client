@@ -18,10 +18,10 @@ import { ValidColor } from "../../../util/types/valid-color.types";
 type AssignTaskListToCategoryFormProps = {
   categories: Category[];
   inviteToken: string;
-  tasklistId: number;
+  taskListId: number;
 };
 
-function AssignTaskListToCategoryForm({ inviteToken, categories, tasklistId }: AssignTaskListToCategoryFormProps) {
+function AssignTaskListToCategoryForm({ inviteToken, categories, taskListId }: AssignTaskListToCategoryFormProps) {
   const [isCreatingCategory, setIsCreatingCategory] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState<LazyValidIcon>(validIcons[0]);
   const [selectedColor, setSelectedColor] = useState<ValidColor>(validColors[0]);
@@ -76,7 +76,7 @@ function AssignTaskListToCategoryForm({ inviteToken, categories, tasklistId }: A
           inviteToken,
           categoryId: null,
           newCategory: data as CreateCategory,
-          tasklistId: tasklistId,
+          taskListId: taskListId,
         });
       } else {
         const selectedCategory = data as SelectCategory;
@@ -84,11 +84,11 @@ function AssignTaskListToCategoryForm({ inviteToken, categories, tasklistId }: A
           inviteToken,
           categoryId: selectedCategory.id,
           newCategory: null,
-          tasklistId: tasklistId,
+          taskListId: taskListId,
         });
       }
 
-      navigate({ to: `/categories/${response.categoryName.toLowerCase()}/${response.tasklistId}` });
+      navigate({ to: `/categories/${response.categoryName.toLowerCase()}/${response.taskListId}` });
     } else {
       console.log("Form has errors:", result.errors);
     }

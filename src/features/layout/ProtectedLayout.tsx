@@ -8,7 +8,7 @@ import ThemeToggle from "../../components/theme/ThemeToggle";
 import useAuthStore from "../../stores/useAuthStore";
 import { logoutUser } from "../auth/services/logout.service";
 import { motion } from "framer-motion";
-import CreateTaskListWithCategoryModal from "../tasks/components/create-task-list/CreateTaskListWithCategoryModal";
+import CreateTaskListWithCategoryModal from "../tasks/create-task-list-with-category/CreateTaskListWithCategoryModal";
 
 function ProtectedLayout() {
   const location = useLocation();
