@@ -1,5 +1,5 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
-import { Button, Stack, Title, Text, Flex, Group, Paper, Pagination } from "@mantine/core";
+import { Button, Stack, Title, Text, Flex, Group, Paper, Pagination, Switch, Divider } from "@mantine/core";
 import { Heart, List, Plus, Users } from "lucide-react";
 import { motion } from "framer-motion"; //
 import { TaskListDetails, TaskListItem } from "../shared/tasks.types";
@@ -92,6 +92,7 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
     }
   };
 
+  const [canRemove, setCanRemove] = useState(false);
   return (
     <>
       <UpdateTaskListModal
@@ -171,18 +172,21 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
       >
         <Stack justify="space-between" style={{ flexGrow: 1 }}>
           <Stack>
-            <Flex justify="space-between" align="center" mb={24}>
-              <Group>
-                <List size={28} color="#82827F" />
-                <Text c="dimmed">
-                  {tasklist.completedTasksCount} of {tasklist.totalTasksCount} items completed
-                </Text>
-              </Group>
+            <Flex justify="space-between" align="start">
+              <Stack gap={16}>
+                <Group>
+                  <List size={28} color="#82827F" />
+                  <Text c="dimmed">
+                    {tasklist.completedTasksCount} of {tasklist.totalTasksCount} items completed
+                  </Text>
+                </Group>
+                <Switch label="Remove Items" color="lime" onChange={(e) => setCanRemove(e.currentTarget.checked)} />
+              </Stack>
               <Button onClick={showCreateItem} leftSection={<Plus size={20} />} color="lime">
                 New Item
               </Button>
             </Flex>
-
+            <Divider />
             <DragDropContext onDragEnd={reorderItems}>
               <Droppable droppableId="task-list" direction="vertical">
                 {(provided) => (
@@ -222,7 +226,12 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
                                     onUpdate={updateItem}
                                   />
                                 ) : (
-                                  <ListItem item={item} onDelete={deleteItem} onChange={toggleItemStatus} />
+                                  <ListItem
+                                    item={item}
+                                    onDelete={deleteItem}
+                                    onChange={toggleItemStatus}
+                                    canRemove={canRemove}
+                                  />
                                 )}
                               </div>
                             </motion.div>

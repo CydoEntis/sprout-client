@@ -8,9 +8,10 @@ type ListItemProps = {
   item: TaskListItem;
   onDelete: (id: number) => void;
   onChange: (id: number, isCompleted: boolean) => void;
+  canRemove: boolean;
 };
 
-function ListItem({ item, onDelete, onChange }: ListItemProps) {
+function ListItem({ item, onDelete, onChange, canRemove }: ListItemProps) {
   return (
     <Flex justify="space-between">
       <Group>
@@ -24,9 +25,11 @@ function ListItem({ item, onDelete, onChange }: ListItemProps) {
           {item.description}
         </Text>
       </Group>
-      <ActionIcon color="red" variant="subtle" onClick={() => onDelete(item.id)}>
-        <X size={20} />
-      </ActionIcon>
+      {canRemove && (
+        <ActionIcon color="red" variant="subtle" onClick={() => onDelete(item.id)}>
+          <X size={20} />
+        </ActionIcon>
+      )}
     </Flex>
   );
 }
