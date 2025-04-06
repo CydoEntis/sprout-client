@@ -72,6 +72,19 @@ export type CategoryWithTaskList = {
   taskListOverviews: TaskListOverview[];
 };
 
+export type FavoritedTaskList = {
+  taskListId: number;
+  categoryName: string;
+  name: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+  members: Member[];
+  remainingMembers: number;
+  taskCompletionPercentage: number;
+  isFavorited: boolean;
+};
+
 export type TaskList = {
   id: number;
   name: string;
@@ -136,7 +149,7 @@ export type TaskListItem = {
   position: number;
 };
 
-export type FavoritedTaskList = {
+export type FavoriteTaskList = {
   taskListId: number;
   isFavorited: boolean;
 };

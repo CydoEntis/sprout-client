@@ -1,13 +1,9 @@
-// src/pages/FavoritedTaskListsPage.tsx
 import { Box, Title, SimpleGrid } from "@mantine/core";
 import { motion } from "framer-motion";
-import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
-import UpsertTaskListModal from "../upsert-task-list/UpsertTasklistModal";
 
-import TaskListCard from "../task-card/TaskListCard";
 import LazyHeader from "../../../../lazy-components/header/LazyHeader";
-import { TaskListInfo, TaskList, TaskListOverview } from "../../shared/tasks.types";
+import { FavoritedTaskList } from "../../shared/tasks.types";
+import FavoritedTaskListCard from "./FavoritedTaskListCard";
 
 const containerVariants = {
   hidden: { opacity: 1 },
@@ -22,7 +18,7 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
-type FavoritedTaskListsPageProps = { favoritedTaskLists: TaskListOverview[] };
+type FavoritedTaskListsPageProps = { favoritedTaskLists: FavoritedTaskList[] };
 
 const FavoritedTaskListsPage = ({ favoritedTaskLists }: FavoritedTaskListsPageProps) => {
   console.log(favoritedTaskLists);
@@ -35,8 +31,8 @@ const FavoritedTaskListsPage = ({ favoritedTaskLists }: FavoritedTaskListsPagePr
       <motion.div variants={containerVariants} initial="hidden" animate="show">
         <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} mt={32}>
           {favoritedTaskLists.map((taskList) => (
-            <motion.div key={taskList.id} variants={itemVariants}>
-              <TaskListCard taskList={taskList} categoryName="" />
+            <motion.div key={taskList.taskListId} variants={itemVariants}>
+              <FavoritedTaskListCard favoritedTaskList={taskList} />
             </motion.div>
           ))}
         </SimpleGrid>

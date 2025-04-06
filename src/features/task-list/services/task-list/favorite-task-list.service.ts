@@ -2,9 +2,9 @@ import { notifications } from "@mantine/notifications";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "../../../../api/apiRequest";
 import endpoints from "../../../../api/endpoints";
-import { FavoritedTaskList } from "../../shared/tasks.types";
+import { FavoriteTaskList } from "../../shared/tasks.types";
 
-const favoriteTaskList = async (taskListId: number): Promise<FavoritedTaskList> => {
+const favoriteTaskList = async (taskListId: number): Promise<FavoriteTaskList> => {
   return apiRequest("put", `${endpoints.tasklist}/${taskListId}/favorite`);
 };
 
@@ -12,7 +12,7 @@ export function useFavoriteTaskListMutation(categoryName: string) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (taskListId: number): Promise<FavoritedTaskList> => {
+    mutationFn: async (taskListId: number): Promise<FavoriteTaskList> => {
       return await favoriteTaskList(taskListId);
     },
     onSuccess: (data) => {
