@@ -8,7 +8,7 @@ const favoriteTaskList = async (taskListId: number): Promise<FavoritedTaskList> 
   return apiRequest("put", `${endpoints.tasklist}/${taskListId}/favorite`);
 };
 
-export function useFavoriteTaskListMutation() {
+export function useFavoriteTaskListMutation(categoryName: string) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -16,6 +16,12 @@ export function useFavoriteTaskListMutation() {
       return await favoriteTaskList(taskListId);
     },
     onSuccess: (data) => {
+      console.log(data);
+
+      queryClient.invalidateQueries({
+        queryKey: ["task-lists", categoryName.toLowerCase()],
+      });
+
       queryClient.invalidateQueries({
         queryKey: ["task-lists", data.taskListId],
       });

@@ -1,37 +1,23 @@
-import { Flex, Group, Stack, Text, Title } from "@mantine/core";
+import { Flex, Progress, Stack, Text, Title } from "@mantine/core";
 
-import { Heart } from "lucide-react";
-import { useState, useEffect } from "react";
-import { TaskListInfo } from "../../shared/tasks.types";
-import MemberList from "../../../../components/members/MemberList";
 import LazyCard from "../../../../lazy-components/card/LazyCard";
-import LazyDate from "../../../../lazy-components/date/LazyDate";
-import LazyEditDeleteMenu from "../../../../lazy-components/menus/LazyEditDeleteMenu";
-import LazyRingProgress from "../../../../lazy-components/progress-bars/LazyRingProgressBar";
+
 import { useFavoriteTaskListMutation } from "../../services/task-list/favorite-task-list.service";
+import TaskListMembers from "../task-list-members/TaskListMembers";
+import { TaskListOverview } from "../../shared/tasks.types";
+import { Heart } from "lucide-react";
 
 type TaskListCardProps = {
-  taskList: TaskListInfo;
+  taskList: TaskListOverview;
   categoryName: string;
-  onEdit: () => void;
 };
 
-function TaskListCard({ taskList, categoryName, onEdit }: TaskListCardProps) {
-  const [isFavorited, setIsFavorited] = useState(false);
-  const { mutateAsync: toggleFavorite } = useFavoriteTaskListMutation();
-
-  useEffect(() => {
-    setIsFavorited(taskList.isFavorited || false);
-  }, [taskList]);
+function TaskListCard({ taskList, categoryName }: TaskListCardProps) {
+  const { mutateAsync: toggleFavorite } = useFavoriteTaskListMutation(categoryName);
 
   const handleFavoriteToggle = async (e: React.MouseEvent) => {
     e.preventDefault();
-    try {
-      const response = await toggleFavorite(taskList.id);
-      setIsFavorited(response.isFavorited);
-    } catch (error) {
-      console.error("Error favoriting taskList:", error);
-    }
+    await toggleFavorite(taskList.id);
   };
 
   return (
@@ -48,43 +34,36 @@ function TaskListCard({ taskList, categoryName, onEdit }: TaskListCardProps) {
         <Stack style={{ flexGrow: 1 }} h={100}>
           <Flex justify="space-between">
             <Title size="1.25rem">{taskList.name}</Title>
-            <LazyEditDeleteMenu
-              withBorder
-              withShadow
-              shadow="md"
-              dropdownColor="primary.9"
-              direction="vertical"
-              onUpdate={onEdit}
-              onDelete={() => console.log("delete")}
+            <Heart
+              fill={taskList.isFavorited ? "#E03131" : "none"}
+              color={taskList.isFavorited ? "#E03131" : "gray"}
+              onClick={handleFavoriteToggle}
             />
           </Flex>
           <Text size="sm" c="dimmed">
             {taskList.description}
           </Text>
         </Stack>
+
         <Flex justify="center"></Flex>
-        <Flex justify="space-between" align="center" style={{ marginTop: "auto", flexShrink: 0 }}>
-          <MemberList members={taskList.members} size="sm" />
-          <LazyRingProgress
-            size={25}
-            thickness={3}
-            percentage={taskList.taskCompletionPercentage}
-            sections={[{ value: taskList.taskCompletionPercentage, color: "lime" }]}
-          />
-        </Flex>
-        <Flex justify="space-between">
-          <Group gap={4}>
-            <Text c="dimmed" size="xs" fs="italic">
-              Updated:
+        <Stack gap={4} style={{ marginTop: "auto", flexShrink: 0 }}>
+          <Text size="xs" c="dimmed">
+            Members
+          </Text>
+          <TaskListMembers members={taskList.members} size="sm" additionalMemberCount={taskList.remainingMembers} />
+        </Stack>
+
+        <Stack gap={8}>
+          <Progress color="lime" value={taskList.taskCompletionPercentage} w="100%" />
+          <Flex justify="space-between">
+            <Text c="dimmed" size="xs">
+              You have completed
             </Text>
-            <LazyDate date={taskList.updatedAt} size="xs" c="dimmed" fs="italic" />
-          </Group>
-          <Heart
-            fill={isFavorited ? "#E03131" : "none"}
-            color={isFavorited ? "#E03131" : "gray"}
-            onClick={handleFavoriteToggle}
-          />
-        </Flex>
+            <Text c="dimmed" size="xs">
+              {taskList.taskCompletionPercentage}%
+            </Text>
+          </Flex>
+        </Stack>
       </Stack>
     </LazyCard>
   );

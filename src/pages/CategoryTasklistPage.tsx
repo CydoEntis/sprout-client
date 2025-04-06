@@ -10,10 +10,10 @@ import { ValidIconTags } from "../util/types/valid-icon.types";
 import { useState } from "react";
 import TaskListCard from "../features/task-list/components/task-card/TaskListCard";
 import UpsertTaskListModal from "../features/task-list/components/upsert-task-list/UpsertTasklistModal";
-import { CategoryWithTaskLists, TaskList, TaskListInfo } from "../features/task-list/shared/tasks.types";
+import { CategoryWithTaskList, TaskList } from "../features/task-list/shared/tasks.types";
 
 type CategoryTaskListPageProps = {
-  categoryTaskLists: CategoryWithTaskLists;
+  categoryTaskLists: CategoryWithTaskList;
 };
 
 const containerVariants = {
@@ -41,15 +41,6 @@ function CategoryTaskListPage({ categoryTaskLists }: CategoryTaskListPageProps) 
 
   const [selectedTaskList, setSelectedTaskList] = useState<undefined | TaskList>(undefined);
 
-  const openEditTaskListModal = (tasklist: TaskListInfo) => {
-    setSelectedTaskList({
-      id: tasklist.id,
-      name: tasklist.name,
-      description: tasklist.description,
-    });
-    onOpenCreateTaskListWithCategoryModal();
-  };
-
   const handleClose = () => {
     setSelectedTaskList(undefined);
     onCloseUpsertTaskListModal();
@@ -61,11 +52,11 @@ function CategoryTaskListPage({ categoryTaskLists }: CategoryTaskListPageProps) 
       <LazyHeader
         leftSection={
           <LazyIcon
-            icon={getIconByTag(categoryTaskLists.tag as ValidIconTags)}
+            icon={getIconByTag(categoryTaskLists.categoryName as ValidIconTags)}
             size="xl"
             iconColor="white"
             hasBackground
-            backgroundColor={categoryTaskLists.color}
+            backgroundColor={categoryTaskLists.categoryColor}
           />
         }
         rightSection={
@@ -77,16 +68,12 @@ function CategoryTaskListPage({ categoryTaskLists }: CategoryTaskListPageProps) 
         <Title>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</Title>
       </LazyHeader>
 
-      {categoryTaskLists.taskListsInfo.length > 0 ? (
+      {categoryTaskLists.taskListOverviews.length > 0 ? (
         <motion.div variants={containerVariants} initial="hidden" animate="show">
-          <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} mt={32}>
-            {categoryTaskLists.taskListsInfo.map((taskList) => (
+          <SimpleGrid cols={{ base: 1, md: 2, lg: 4 }} mt={32}>
+            {categoryTaskLists.taskListOverviews.map((taskList) => (
               <motion.div key={taskList.id} variants={itemVariants}>
-                <TaskListCard
-                  taskList={taskList}
-                  categoryName={categoryName}
-                  onEdit={() => openEditTaskListModal(taskList)}
-                />
+                <TaskListCard taskList={taskList} categoryName={categoryName} />
               </motion.div>
             ))}
           </SimpleGrid>

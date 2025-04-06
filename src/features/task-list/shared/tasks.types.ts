@@ -36,26 +36,16 @@ export type DeletedTaskList = SuccessMessage & {
   id: number;
 };
 
-export type CategoryWithTaskLists = {
-  id: number;
-  name: string;
-  tag: string;
-  color: string;
-  taskListsInfo: TaskListInfo[];
-};
-
-export type TaskListInfo = {
+export type TaskListOverview = {
   id: number;
   name: string;
   description: string;
   createdAt: Date;
   updatedAt: Date;
   members: Member[];
-  totalTasksCount: number;
-  completedTasksCount: number;
+  remainingMembers: number;
   taskCompletionPercentage: number;
   isFavorited: boolean;
-  role: TaskListRole;
 };
 
 export type TaskListDetails = {
@@ -75,11 +65,11 @@ export type TaskListDetails = {
 };
 
 export type CategoryWithTaskList = {
-  id: number;
-  name: string;
-  tag: string;
-  color: string;
-  taskListsInfo: TaskListInfo;
+  categoryId: number;
+  categoryName: string;
+  categoryTag: string;
+  categoryColor: string;
+  taskListOverviews: TaskListOverview[];
 };
 
 export type TaskList = {
