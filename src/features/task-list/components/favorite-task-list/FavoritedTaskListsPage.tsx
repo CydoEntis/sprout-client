@@ -7,7 +7,7 @@ import UpsertTaskListModal from "../upsert-task-list/UpsertTasklistModal";
 
 import TaskListCard from "../task-card/TaskListCard";
 import LazyHeader from "../../../../lazy-components/header/LazyHeader";
-import { TaskListInfo, TaskList } from "../../shared/tasks.types";
+import { TaskListInfo, TaskList, TaskListOverview } from "../../shared/tasks.types";
 
 const containerVariants = {
   hidden: { opacity: 1 },
@@ -22,34 +22,12 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
-type FavoritedTaskListsPageProps = { favoritedTaskLists: TaskListInfo[] };
+type FavoritedTaskListsPageProps = { favoritedTaskLists: TaskListOverview[] };
 
 const FavoritedTaskListsPage = ({ favoritedTaskLists }: FavoritedTaskListsPageProps) => {
-  const [
-    isUpsertTaskListModalOpened,
-    { open: onOpenCreateTaskListWithCategoryModal, close: onCloseUpsertTaskListModal },
-  ] = useDisclosure(false);
-
-  const handleClose = () => {
-    setSelectedTaskList(undefined);
-    onCloseUpsertTaskListModal();
-  };
-
-  const [selectedTaskList, setSelectedTaskList] = useState<undefined | TaskList>(undefined);
-
-  const openEditTaskListModal = (tasklist: TaskListInfo) => {
-    setSelectedTaskList({
-      id: tasklist.id,
-      name: tasklist.name,
-      description: tasklist.description,
-    });
-    onOpenCreateTaskListWithCategoryModal();
-  };
-
+  console.log(favoritedTaskLists);
   return (
     <Box mt={32}>
-      <UpsertTaskListModal isOpen={isUpsertTaskListModalOpened} onClose={handleClose} tasklist={selectedTaskList} />
-
       <LazyHeader>
         <Title>Favorited Task Lists</Title>
       </LazyHeader>
@@ -58,7 +36,7 @@ const FavoritedTaskListsPage = ({ favoritedTaskLists }: FavoritedTaskListsPagePr
         <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} mt={32}>
           {favoritedTaskLists.map((taskList) => (
             <motion.div key={taskList.id} variants={itemVariants}>
-              <TaskListCard taskList={taskList} onEdit={() => openEditTaskListModal(taskList)} categoryName={"test"} />
+              <TaskListCard taskList={taskList} categoryName="" />
             </motion.div>
           ))}
         </SimpleGrid>

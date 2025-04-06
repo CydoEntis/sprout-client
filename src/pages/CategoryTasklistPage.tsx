@@ -33,7 +33,7 @@ const itemVariants = {
 
 function CategoryTaskListPage({ categoryTaskLists }: CategoryTaskListPageProps) {
   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName" });
-
+  console.log(categoryTaskLists);
   const [
     isUpsertTaskListModalOpened,
     { open: onOpenCreateTaskListWithCategoryModal, close: onCloseUpsertTaskListModal },
@@ -52,7 +52,7 @@ function CategoryTaskListPage({ categoryTaskLists }: CategoryTaskListPageProps) 
       <LazyHeader
         leftSection={
           <LazyIcon
-            icon={getIconByTag(categoryTaskLists.categoryName as ValidIconTags)}
+            icon={getIconByTag(categoryTaskLists.categoryTag as ValidIconTags)}
             size="xl"
             iconColor="white"
             hasBackground

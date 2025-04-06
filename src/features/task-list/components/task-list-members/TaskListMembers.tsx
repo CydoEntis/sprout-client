@@ -8,7 +8,6 @@ type TaskListMembersProps = {
 };
 
 function TaskListMembers({ members, size, additionalMemberCount }: TaskListMembersProps) {
-  console.log(members);
   return (
     <Stack gap={8}>
       <Avatar.Group>

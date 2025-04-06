@@ -46,7 +46,7 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
   const navigate = useNavigate();
 
   const deleteTaskList = useDeleteTaskListMutation();
-  const { mutateAsync: toggleFavorite } = useFavoriteTaskListMutation();
+  const { mutateAsync: toggleFavorite } = useFavoriteTaskListMutation(categoryName);
 
   const {
     tasklistItems,
@@ -92,7 +92,6 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
     }
   };
 
-  console.log(tasklist);
   return (
     <>
       <UpdateTaskListModal
