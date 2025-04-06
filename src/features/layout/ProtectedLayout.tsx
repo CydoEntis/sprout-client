@@ -8,7 +8,7 @@ import ThemeToggle from "../../components/theme/ThemeToggle";
 import useAuthStore from "../../stores/useAuthStore";
 import { logoutUser } from "../auth/services/logout.service";
 import { motion } from "framer-motion";
-import CreateTaskListWithCategoryModal from "../tasks/components/create-task-list/CreateTasklistWithCategoryModal";
+import CreateTaskListWithCategoryModal from "../tasks/components/create-task-list/CreateTaskListWithCategoryModal";
 
 function ProtectedLayout() {
   const location = useLocation();
@@ -61,7 +61,7 @@ function ProtectedLayout() {
       />
       <LazySidebarLayout
         logo={
-          <Title size="1.45rem" c="white">
+          <Title size="1.45rem">
             Task Garden
           </Title>
         }

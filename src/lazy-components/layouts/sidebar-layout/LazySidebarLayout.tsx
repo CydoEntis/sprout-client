@@ -1,4 +1,4 @@
-import { AppShell, Box, Container, ScrollArea } from "@mantine/core";
+import { AppShell, Box, Container } from "@mantine/core";
 import { Outlet } from "@tanstack/react-router";
 import { ReactNode } from "react";
 import LazyBurger from "../../burger/LazyBurger";
@@ -11,7 +11,7 @@ type LazySidebarLayoutProps = {
   footer?: ReactNode;
 };
 
-function LazySidebarLayout({ isSidebarOpened, onToggle, logo, children, footer }: LazySidebarLayoutProps) {
+function LazySidebarLayout({ isSidebarOpened, onToggle, logo, children }: LazySidebarLayoutProps) {
   return (
     <AppShell
       navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !isSidebarOpened } }}
@@ -34,7 +34,7 @@ function LazySidebarLayout({ isSidebarOpened, onToggle, logo, children, footer }
         />
       )}
 
-      <AppShell.Navbar bg="primary">
+      <AppShell.Navbar bg="primary.5">
         <AppShell.Section>
           {isSidebarOpened && (
             <LazyBurger
@@ -54,7 +54,7 @@ function LazySidebarLayout({ isSidebarOpened, onToggle, logo, children, footer }
         {children}
       </AppShell.Navbar>
 
-      <AppShell.Main bg="secondary" style={{ paddingTop: "50px" }}>
+      <AppShell.Main bg="secondary.3" style={{ paddingTop: "50px" }}>
         <Container size="xl">
           <Outlet />
         </Container>
