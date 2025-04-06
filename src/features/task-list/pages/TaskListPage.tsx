@@ -1,7 +1,7 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { Button, Stack, Title, Text, Flex, Group, Paper, Pagination, Switch, Divider } from "@mantine/core";
 import { Heart, List, Plus, Users } from "lucide-react";
-import { motion } from "framer-motion"; //
+import { motion } from "framer-motion";
 import { TaskListDetails, TaskListItem } from "../shared/tasks.types";
 import { useTaskListItemHandlers } from "../hooks/useTaskListItemHandlers";
 
@@ -209,13 +209,8 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
                       {tasklistItems.map((item, index) => (
                         <Draggable key={item.id} draggableId={String(item.id)} index={index}>
                           {(provided) => (
-                            <motion.div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              style={provided.draggableProps.style}
-                              variants={itemVariants}
-                            >
-                              <div {...provided.dragHandleProps} onDoubleClick={() => showUpdateItem(item)}>
+                            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                              <motion.div variants={itemVariants} onDoubleClick={() => showUpdateItem(item)}>
                                 {itemToUpdate?.id === item.id ? (
                                   <UpsertTaskListItem
                                     isActive={true}
@@ -233,8 +228,8 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
                                     canRemove={canRemove}
                                   />
                                 )}
-                              </div>
-                            </motion.div>
+                              </motion.div>
+                            </div>
                           )}
                         </Draggable>
                       ))}

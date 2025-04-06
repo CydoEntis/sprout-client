@@ -1,20 +1,23 @@
 import { Flex, Checkbox, ActionIcon, Text, Group } from "@mantine/core";
-import { X } from "lucide-react";
-
+import { GripVertical, X } from "lucide-react";
 import styles from "./list-item.module.css";
 import { TaskListItem } from "../../shared/tasks.types";
+import { DraggableProvidedDragHandleProps } from "@hello-pangea/dnd";
 
 type ListItemProps = {
   item: TaskListItem;
   onDelete: (id: number) => void;
   onChange: (id: number, isCompleted: boolean) => void;
   canRemove: boolean;
+  dragHandleProps?: DraggableProvidedDragHandleProps | null;
 };
 
-function ListItem({ item, onDelete, onChange, canRemove }: ListItemProps) {
+function ListItem({ item, onDelete, onChange, canRemove, dragHandleProps }: ListItemProps) {
   return (
-    <Flex justify="space-between">
+    <Flex justify="space-between" align="center">
       <Group>
+        <GripVertical size={20} color="#888" {...dragHandleProps} style={{ cursor: "grab" }} />
+
         <Checkbox
           checked={item.isCompleted}
           onChange={(event) => onChange(item.id, event.currentTarget.checked)}
