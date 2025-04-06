@@ -1,8 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-
-import { getFavoritedTaskListsQueryOptions } from "../../../features/tasks/services/task-list/get-favorite-task-list.service";
-import FavoritedTaskListsPage from "../../../features/tasks/favorite-task-list/FavoritedTaskListsPage";
+import FavoritedTaskListsPage from "../../../features/task-list/components/favorite-task-list/FavoritedTaskListsPage";
+import { getFavoritedTaskListsQueryOptions } from "../../../features/task-list/services/task-list/get-favorite-task-list.service";
 
 export const Route = createFileRoute("/_authenticated/task-list/favorites")({
   loader: async ({ context }) => {

@@ -4,7 +4,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 
 import LoadingSkeleton from "../../../components/loaders/LoadingSkeleton";
 import { getAllTaskListsForCategoryQueryOptions } from "../../../features/category/services/get-all-task-lists-for-category.service";
-import CategoryTaskListPage from "../../../pages/CategoryTasklistPage";
+import CategoryTaskListPage from "../../../pages/CategoryTaskListPage";
 
 export const Route = createFileRoute("/_authenticated/categories/$categoryName")({
   loader: async ({ context, params }) => {

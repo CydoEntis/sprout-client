@@ -22,7 +22,7 @@ function UpdateTaskListModal({ isOpen, onClose, taskList, categoryName }: Update
   const form = useForm<UpdateTaskList>({
     validate: zodResolver(updateTaskListSchema),
     initialValues: {
-      tasklistId: taskList.id,
+      taskListId: taskList.id,
       name: taskList.name,
       description: taskList.description,
       categoryName: categoryName,
@@ -30,7 +30,7 @@ function UpdateTaskListModal({ isOpen, onClose, taskList, categoryName }: Update
   });
 
   useEffect(() => {
-    form.setValues({ tasklistId: taskList.id, name: taskList.name, description: taskList.description });
+    form.setValues({ taskListId: taskList.id, name: taskList.name, description: taskList.description });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskList]);
 

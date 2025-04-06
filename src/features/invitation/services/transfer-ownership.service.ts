@@ -3,16 +3,16 @@ import { notifications } from "@mantine/notifications";
 import { apiRequest } from "../../../api/apiRequest";
 import endpoints from "../../../api/endpoints";
 
-const transferOwnership = async (tasklistId: number, newOwnerId: string): Promise<void> => {
-  return apiRequest<void>("put", `${endpoints.tasklist}/${tasklistId}/transfer-ownership/${newOwnerId}`);
+const transferOwnership = async (taskListId: number, newOwnerId: string): Promise<void> => {
+  return apiRequest<void>("put", `${endpoints.tasklist}/${taskListId}/transfer-ownership/${newOwnerId}`);
 };
 
 export function useTransferOwnership() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ tasklistId, newOwnerId }: { tasklistId: number; newOwnerId: string }) =>
-      transferOwnership(tasklistId, newOwnerId),
+    mutationFn: async ({ taskListId, newOwnerId }: { taskListId: number; newOwnerId: string }) =>
+      transferOwnership(taskListId, newOwnerId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["task-list-members"] });
 

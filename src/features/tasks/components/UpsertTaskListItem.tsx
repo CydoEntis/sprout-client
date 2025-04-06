@@ -2,12 +2,12 @@ import { useEffect, useRef } from "react";
 import { ActionIcon, ActionIconGroup, TextInput } from "@mantine/core";
 import { Check, X } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
-import { CreateTaskListItem, TaskListItem, UpdateTaskListItem } from "../shared/tasks.types";
-import { createTaskListItemSchema, updateTaskListItemSchema } from "../shared/tasks.schemas";
+import { updateTaskListItemSchema, createTaskListItemSchema } from "../../task-list/shared/tasks.schemas";
+import { TaskListItem, UpdateTaskListItem, CreateTaskListItem } from "../../task-list/shared/tasks.types";
 
 type UpsertTaskListItemProps = {
   isActive: boolean;
-  tasklistId: number;
+  taskListId: number;
   tasklistItem?: TaskListItem;
   onClose: () => void;
   onUpdate?: (updatedItem: UpdateTaskListItem) => void;
@@ -16,7 +16,7 @@ type UpsertTaskListItemProps = {
 
 function UpsertTaskListItem({
   isActive,
-  tasklistId,
+  taskListId,
   tasklistItem,
   onClose,
   onUpdate,
@@ -32,7 +32,7 @@ function UpsertTaskListItem({
       id: tasklistItem?.id ?? null,
       description: tasklistItem?.description ?? "",
       isCompleted: tasklistItem?.isCompleted ?? false,
-      tasklistId: tasklistId,
+      taskListId: taskListId,
       position: tasklistItem?.position ?? 0,
     },
     validate: zodResolver(isEditing ? updateTaskListItemSchema : createTaskListItemSchema),
@@ -45,7 +45,7 @@ function UpsertTaskListItem({
         id: tasklistItem.id,
         description: tasklistItem.description,
         isCompleted: tasklistItem.isCompleted,
-        tasklistId: tasklistId,
+        taskListId: taskListId,
         position: tasklistItem.position,
       });
     }

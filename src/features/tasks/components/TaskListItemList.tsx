@@ -18,7 +18,7 @@
 // };
 
 // function TaskListItemList({ TaskListItems, onEdit, onCancel: onClose, itemToEdit }: TaskListItemListProps) {
-//   const { tasklistId } = useParams({ from: "/_authenticated/categories/$categoryName_/$tasklistId" });
+//   const { taskListId } = useParams({ from: "/_authenticated/categories/$categoryName_/$taskListId" });
 //   const [state, handlers] = useListState(TaskListItems);
 //   const reorderTaskListItems = useReorderTaskListItemsMutation();
 //   const updateStatusTaskListItem = useUpdateTaskListStatusItemMutation();
@@ -48,7 +48,7 @@
 //     }));
 
 //     await reorderTaskListItems.mutateAsync({
-//       TaskListId: Number(tasklistId),
+//       TaskListId: Number(taskListId),
 //       items: reorderedItems,
 //     });
 //   };

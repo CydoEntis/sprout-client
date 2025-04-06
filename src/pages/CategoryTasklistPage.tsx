@@ -7,10 +7,10 @@ import { useParams } from "@tanstack/react-router";
 import LazyIcon from "../lazy-components/icons/LazyIcon";
 import { getIconByTag } from "../features/category/shared/category.helpers";
 import { ValidIconTags } from "../util/types/valid-icon.types";
-import { CategoryWithTaskLists, TaskList, TaskListInfo } from "../features/tasks/shared/tasks.types";
 import { useState } from "react";
-import TaskListCard from "../features/tasks/task-card/TaskListCard";
-import UpsertTaskListModal from "../features/tasks/upsert-task-list/UpsertTasklistModal";
+import TaskListCard from "../features/task-list/components/task-card/TaskListCard";
+import UpsertTaskListModal from "../features/task-list/components/upsert-task-list/UpsertTasklistModal";
+import { CategoryWithTaskLists, TaskList, TaskListInfo } from "../features/task-list/shared/tasks.types";
 
 type CategoryTaskListPageProps = {
   categoryTaskLists: CategoryWithTaskLists;
@@ -77,10 +77,10 @@ function CategoryTaskListPage({ categoryTaskLists }: CategoryTaskListPageProps) 
         <Title>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</Title>
       </LazyHeader>
 
-      {categoryTaskLists.tasklistsInfo.length > 0 ? (
+      {categoryTaskLists.taskListsInfo.length > 0 ? (
         <motion.div variants={containerVariants} initial="hidden" animate="show">
           <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} mt={32}>
-            {categoryTaskLists.tasklistsInfo.map((taskList) => (
+            {categoryTaskLists.taskListsInfo.map((taskList) => (
               <motion.div key={taskList.id} variants={itemVariants}>
                 <TaskListCard
                   taskList={taskList}

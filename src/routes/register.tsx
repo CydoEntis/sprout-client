@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import RegisterForm from "../features/auth/components/RegisterForm";
 import { z } from "zod";
+import RegisterForm from "../features/auth/components/register-form/RegisterForm";
 
 export const Route = createFileRoute("/register")({
   component: RouteComponent,

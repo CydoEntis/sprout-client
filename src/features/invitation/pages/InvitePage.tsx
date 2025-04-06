@@ -1,10 +1,10 @@
 import { useParams, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
-import InviteCard from "../components/InviteCard";
 import useAuthStore from "../../../stores/useAuthStore";
 import { Category } from "../../category/shared/category.types";
 import { useInvite } from "../hooks/useInvite";
 import { notifications } from "@mantine/notifications";
+import Invite from "../components/invite/Invite";
 
 type InvitePageProps = { categories: Category[] };
 
@@ -51,7 +51,7 @@ function InvitePage({ categories }: InvitePageProps) {
     return <div>Loading...</div>;
   }
 
-  return <InviteCard categories={categories} inviteToken={inviteToken} />;
+  return <Invite categories={categories} inviteToken={inviteToken} />;
 }
 
 export default InvitePage;

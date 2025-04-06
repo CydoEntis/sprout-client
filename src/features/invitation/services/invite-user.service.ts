@@ -5,7 +5,7 @@ import { notifications } from "@mantine/notifications";
 import { InviteUser, InvitedUser } from "../shared/invitation.types";
 
 const inviteUser = async (params: InviteUser): Promise<InvitedUser> => {
-  return apiRequest<InvitedUser>("post", `${endpoints.tasklist}/${params.tasklistId}/invite`, params);
+  return apiRequest<InvitedUser>("post", `${endpoints.tasklist}/${params.taskListId}/invite`, params);
 };
 
 export function useInviteUserMutation() {

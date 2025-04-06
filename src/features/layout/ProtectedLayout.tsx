@@ -8,7 +8,7 @@ import ThemeToggle from "../../components/theme/ThemeToggle";
 import useAuthStore from "../../stores/useAuthStore";
 import { logoutUser } from "../auth/services/logout.service";
 import { motion } from "framer-motion";
-import CreateTaskListWithCategoryModal from "../tasks/create-task-list-with-category/CreateTaskListWithCategoryModal";
+import CreateTaskListWithCategoryModal from "../task-list/components/create-task-list-with-category/CreateTaskListWithCategoryModal";
 
 function ProtectedLayout() {
   const location = useLocation();
@@ -60,11 +60,7 @@ function ProtectedLayout() {
         onClose={onCloseCreateTaskListWithCategoryModal}
       />
       <LazySidebarLayout
-        logo={
-          <Title size="1.45rem">
-            Task Garden
-          </Title>
-        }
+        logo={<Title size="1.45rem">Task Garden</Title>}
         isSidebarOpened={isSidebarOpened}
         onToggle={toggleSidebar}
       >
@@ -79,7 +75,7 @@ function ProtectedLayout() {
                       fontSize: "1.25rem",
                       marginBottom: "12px",
                     }}
-                    color="inverse"
+                    color="inverse.7"
                     component={Link}
                     label={label}
                     leftSection={
@@ -110,7 +106,7 @@ function ProtectedLayout() {
                 fontSize: "1.25rem",
               }}
               leftSection={<Plus size={20} />}
-              color="inverse"
+              color="inverse.7"
               label="New List"
               onClick={onOpenCreateTaskListWithCategoryModal}
             />
@@ -122,7 +118,7 @@ function ProtectedLayout() {
                     fontSize: "1.25rem",
                   }}
                   leftSection={<LogOut size={20} />}
-                  color="inverse"
+                  color="inverse.7"
                   label="Logout"
                   onClick={handleLogout}
                 />

@@ -15,7 +15,7 @@ export type Category = {
 };
 
 export type TaskListMetadata = {
-  tasklistId: number;
+  taskListId: number;
   tasklistName: string;
 };
 
