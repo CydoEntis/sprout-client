@@ -1,13 +1,13 @@
 import { Title, Stack } from "@mantine/core";
 import { Category, CategoryWithTaskListCount } from "../../shared/category.types";
 import { useDeleteCategory } from "../../services/delete-category.service";
-import UpdateAndDeleteMenu from "../../../../lazy-components/menus/LazyEditDeleteMenu";
 
 import LazyCard from "../../../../lazy-components/card/LazyCard";
 import LazyHeader from "../../../../lazy-components/header/LazyHeader";
 import LazyText from "../../../../lazy-components/text/LazyText";
 import { getIconByTag } from "../../shared/category.helpers";
 import LazyIcon from "../../../../lazy-components/icons/LazyIcon";
+import LazyEditDeleteMenu from "../../../../lazy-components/menus/LazyEditDeleteMenu";
 
 type CategoryCard = {
   category: CategoryWithTaskListCount;
@@ -25,8 +25,8 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
       shadow="md"
       p="md"
       radius="md"
+      bg="primary.9"
       pos="relative"
-      bg="primary"
     >
       <Stack gap={32}>
         <LazyHeader
@@ -34,7 +34,15 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
           justify="space-between"
           leftSection={<LazyIcon icon={foundIcon} size="md" hasBackground backgroundColor={category.color} />}
           rightSection={
-            <UpdateAndDeleteMenu onUpdate={() => onEdit(category)} onDelete={() => deleteCategory(category.id)} />
+            <LazyEditDeleteMenu
+              withBorder
+              withShadow
+              shadow="md"
+              dropdownColor="primary.5"
+              direction="vertical"
+              onUpdate={() => onEdit(category)}
+              onDelete={() => deleteCategory(category.id)}
+            />
           }
         ></LazyHeader>
 

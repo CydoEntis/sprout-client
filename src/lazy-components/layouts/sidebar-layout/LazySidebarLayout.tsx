@@ -34,7 +34,7 @@ function LazySidebarLayout({ isSidebarOpened, onToggle, logo, children }: LazySi
         />
       )}
 
-      <AppShell.Navbar bg="primary.5">
+      <AppShell.Navbar bg="primary.9">
         <AppShell.Section>
           {isSidebarOpened && (
             <LazyBurger
@@ -54,7 +54,7 @@ function LazySidebarLayout({ isSidebarOpened, onToggle, logo, children }: LazySi
         {children}
       </AppShell.Navbar>
 
-      <AppShell.Main bg="secondary.3" style={{ paddingTop: "50px" }}>
+      <AppShell.Main bg="secondary.9" style={{ paddingTop: "50px" }}>
         <Container size="xl">
           <Outlet />
         </Container>

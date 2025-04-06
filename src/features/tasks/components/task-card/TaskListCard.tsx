@@ -35,7 +35,10 @@ function TaskListCard({ taskList, categoryName, onEdit }: TaskListCardProps) {
 
   return (
     <LazyCard
-      bg="primary"
+      shadow="md"
+      p="md"
+      radius="md"
+      bg="primary.9"
       mih={150}
       to={`/categories/${categoryName.toLowerCase()}/${taskList.id}`}
       params={{ taskListId: taskList.id.toString() }}

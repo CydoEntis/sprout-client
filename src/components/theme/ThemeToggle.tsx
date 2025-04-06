@@ -10,7 +10,7 @@ function ThemeToggle() {
     <ActionIcon
       onClick={() => setColorScheme(isLightMode ? "dark" : "light")}
       variant="default"
-      bg="primary.5"
+      bg="primary.9"
       size="lg"
       aria-label="Toggle color scheme"
       classNames={{ 

@@ -79,7 +79,7 @@ function ProtectedLayout() {
                       fontSize: "1.25rem",
                       marginBottom: "12px",
                     }}
-                    color="gray"
+                    color="inverse"
                     component={Link}
                     label={label}
                     leftSection={
@@ -110,7 +110,7 @@ function ProtectedLayout() {
                 fontSize: "1.25rem",
               }}
               leftSection={<Plus size={20} />}
-              color="gray"
+              color="inverse"
               label="New List"
               onClick={onOpenCreateTaskListWithCategoryModal}
             />
@@ -122,7 +122,7 @@ function ProtectedLayout() {
                     fontSize: "1.25rem",
                   }}
                   leftSection={<LogOut size={20} />}
-                  color="gray"
+                  color="inverse"
                   label="Logout"
                   onClick={handleLogout}
                 />

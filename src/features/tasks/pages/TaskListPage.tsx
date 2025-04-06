@@ -109,7 +109,14 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
         currentUserRole={tasklist.role}
       />
 
-      <Paper bg="primary" p={16} radius="lg" style={{ borderBottom: `8px solid ${tasklist.categoryColor}` }} mb={16}>
+      <Paper
+        bg="primary.9"
+        p={16}
+        radius="lg"
+        style={{ borderBottom: `8px solid ${tasklist.categoryColor}` }}
+        mb={16}
+        shadow="md"
+      >
         <Stack justify="space-between" gap={8}>
           <Stack gap={8}>
             <Flex justify="space-between">
@@ -126,7 +133,7 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
                 withBorder
                 withShadow
                 shadow="md"
-                dropdownColor="primary"
+                dropdownColor="primary.5"
                 direction="vertical"
                 onUpdate={() => openEditTaskListModal(tasklist)}
                 onDelete={handleDeleteTaskList}
@@ -151,7 +158,8 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
       </Paper>
 
       <Paper
-        bg="primary"
+        shadow="md"
+        bg="primary.9"
         p={16}
         radius="lg"
         mih="70vh"
