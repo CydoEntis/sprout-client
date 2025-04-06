@@ -51,8 +51,8 @@ function TaskListCard({ taskList, categoryName, onEdit }: TaskListCardProps) {
               withBorder
               withShadow
               shadow="md"
-              dropdownColor="primary"
-              direction="horizontal"
+              dropdownColor="primary.9"
+              direction="vertical"
               onUpdate={onEdit}
               onDelete={() => console.log("delete")}
             />

@@ -38,7 +38,7 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
               withBorder
               withShadow
               shadow="md"
-              dropdownColor="primary.5"
+              dropdownColor="primary.9"
               direction="vertical"
               onUpdate={() => onEdit(category)}
               onDelete={() => deleteCategory(category.id)}

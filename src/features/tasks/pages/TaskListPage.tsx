@@ -133,7 +133,7 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
                 withBorder
                 withShadow
                 shadow="md"
-                dropdownColor="primary.5"
+                dropdownColor="primary.9"
                 direction="vertical"
                 onUpdate={() => openEditTaskListModal(tasklist)}
                 onDelete={handleDeleteTaskList}
