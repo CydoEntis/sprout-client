@@ -147,6 +147,7 @@ export type TaskListItem = {
   description: string;
   isCompleted: boolean;
   position: number;
+  dueDate?: string | null;
 };
 
 export type FavoriteTaskList = {

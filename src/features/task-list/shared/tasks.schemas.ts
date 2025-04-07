@@ -74,6 +74,7 @@ export const createTaskListItemSchema = z.object({
     .min(5, "Description must be at least 5 characters long.")
     .max(100, "Description must be at most 100 characters long."),
   taskListId: z.number().min(1, "Task list ID is required"),
+  dueDate: z.date().nullable().optional(), // ✅ Add this
 });
 
 export const updateTaskListItemSchema = createTaskListItemSchema.extend({

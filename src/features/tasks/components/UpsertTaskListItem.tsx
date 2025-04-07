@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
-import { ActionIcon, ActionIconGroup, TextInput } from "@mantine/core";
+import { ActionIcon, ActionIconGroup, Flex, TextInput } from "@mantine/core";
+import { DateInput } from "@mantine/dates";
 import { Check, X } from "lucide-react";
 import { useForm, zodResolver } from "@mantine/form";
 import { updateTaskListItemSchema, createTaskListItemSchema } from "../../task-list/shared/tasks.schemas";
@@ -24,8 +25,6 @@ function UpsertTaskListItem({
 }: UpsertTaskListItemProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const isEditing = Boolean(tasklistItem);
-  console.log("Is editing: ", isEditing);
-  console.log("tHE PASSED IN ITEM: ", tasklistItem);
 
   const form = useForm({
     initialValues: {
@@ -34,19 +33,20 @@ function UpsertTaskListItem({
       isCompleted: tasklistItem?.isCompleted ?? false,
       taskListId: taskListId,
       position: tasklistItem?.position ?? 0,
+      dueDate: tasklistItem?.dueDate ? new Date(tasklistItem.dueDate) : null,
     },
     validate: zodResolver(isEditing ? updateTaskListItemSchema : createTaskListItemSchema),
   });
 
   useEffect(() => {
     if (tasklistItem) {
-      console.log("task list item exists: ", tasklistItem);
       form.setValues({
         id: tasklistItem.id,
         description: tasklistItem.description,
         isCompleted: tasklistItem.isCompleted,
         taskListId: taskListId,
         position: tasklistItem.position,
+        dueDate: tasklistItem.dueDate ? new Date(tasklistItem.dueDate) : null,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,15 +68,17 @@ function UpsertTaskListItem({
     };
   }, [isActive, onClose]);
 
-  console.log(form.errors);
-
   const handleSubmit = async (data: CreateTaskListItem | UpdateTaskListItem) => {
+    const payload = {
+      ...data,
+      dueDate: data.dueDate ? new Date(data.dueDate).toISOString() : null,
+    };
+
     try {
       if (isEditing) {
-        console.log("Updating: ", data);
-        onUpdate?.(data as UpdateTaskListItem);
+        onUpdate?.(payload as UpdateTaskListItem);
       } else {
-        onCreate?.(data as CreateTaskListItem);
+        onCreate?.(payload as CreateTaskListItem);
       }
 
       form.reset();
@@ -103,29 +105,38 @@ function UpsertTaskListItem({
 
   return (
     <form ref={formRef} onSubmit={form.onSubmit(handleSubmit)} style={{ width: "100%" }}>
-      <TextInput
-        w="100%"
-        variant="filled"
-        rightSectionWidth={60}
-        {...form.getInputProps("description")}
-        error={form.errors.description}
-        classNames={{
-          input: "input",
-        }}
-        autoFocus
-        onKeyDown={handleKeyDown}
-        placeholder="Describe Task"
-        rightSection={
-          <ActionIconGroup>
-            <ActionIcon variant="subtle" color="lime" onClick={onConfirm}>
-              <Check size={20} />
-            </ActionIcon>
-            <ActionIcon variant="subtle" color="red" onClick={onClose}>
-              <X size={20} />
-            </ActionIcon>
-          </ActionIconGroup>
-        }
-      />
+      <Flex gap="xs" align="center">
+        <TextInput
+          classNames={{
+            input: "input",
+          }}
+          w="100%"
+          variant="filled"
+          rightSectionWidth={60}
+          {...form.getInputProps("description")}
+          error={form.errors.description}
+          autoFocus
+          onKeyDown={handleKeyDown}
+          placeholder="Describe Task"
+        />
+        <DateInput
+          classNames={{
+            input: "input",
+          }}
+          clearable
+          value={form.values.dueDate}
+          onChange={(date) => form.setFieldValue("dueDate", date)}
+          placeholder="Optional due date"
+        />
+        <ActionIconGroup>
+          <ActionIcon variant="subtle" color="lime" onClick={onConfirm}>
+            <Check size={20} />
+          </ActionIcon>
+          <ActionIcon variant="subtle" color="red" onClick={onClose}>
+            <X size={20} />
+          </ActionIcon>
+        </ActionIconGroup>
+      </Flex>
     </form>
   );
 }
