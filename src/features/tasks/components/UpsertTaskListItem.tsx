@@ -54,7 +54,15 @@ function UpsertTaskListItem({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (formRef.current && !formRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+
+      const isInsideForm = formRef.current?.contains(target);
+
+      const isInsideDatePicker =
+        !!document.querySelector(".mantine-DatePicker-dropdown")?.contains(target) ||
+        !!document.querySelector(".mantine-Popover-dropdown")?.contains(target);
+
+      if (!isInsideForm && !isInsideDatePicker) {
         onClose();
       }
     };
