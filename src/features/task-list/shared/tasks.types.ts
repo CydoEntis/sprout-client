@@ -154,3 +154,15 @@ export type FavoriteTaskList = {
   taskListId: number;
   isFavorited: boolean;
 };
+
+export interface DueTodayTaskListItem {
+  id: number;
+  description: string | null;
+  dueDate: Date;
+  isCompleted: boolean;
+  taskListId: number;
+  taskListName: string;
+  categoryName: string;
+  categoryColor: string;
+  categoryTag: string;
+}
