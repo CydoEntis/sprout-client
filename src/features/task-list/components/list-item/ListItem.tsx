@@ -1,8 +1,9 @@
-import { Flex, Checkbox, ActionIcon, Text, Group } from "@mantine/core";
-import { GripVertical, X } from "lucide-react";
+import { Flex, Checkbox, ActionIcon, Text, Group, Badge } from "@mantine/core";
+import { Calendar, GripVertical, X } from "lucide-react";
 import styles from "./list-item.module.css";
 import { TaskListItem } from "../../shared/tasks.types";
 import { DraggableProvidedDragHandleProps } from "@hello-pangea/dnd";
+import LazyDate from "../../../../lazy-components/date/LazyDate";
 
 type ListItemProps = {
   item: TaskListItem;
@@ -13,6 +14,7 @@ type ListItemProps = {
 };
 
 function ListItem({ item, onDelete, onChange, canRemove, dragHandleProps }: ListItemProps) {
+  console.log(item);
   return (
     <Flex justify="space-between" align="center">
       <Group>
@@ -28,11 +30,18 @@ function ListItem({ item, onDelete, onChange, canRemove, dragHandleProps }: List
           {item.description}
         </Text>
       </Group>
-      {canRemove && (
-        <ActionIcon color="red" variant="subtle" onClick={() => onDelete(item.id)}>
-          <X size={20} />
-        </ActionIcon>
-      )}
+      <Group>
+        {item.dueDate && (
+          <Badge color="red" variant="outline">
+            <LazyDate leftSection={<Calendar size={14} />} size="xs" date={new Date(item.dueDate)} />
+          </Badge>
+        )}
+        {canRemove && (
+          <ActionIcon color="red" variant="subtle" onClick={() => onDelete(item.id)}>
+            <X size={20} />
+          </ActionIcon>
+        )}
+      </Group>
     </Flex>
   );
 }
