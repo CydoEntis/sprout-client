@@ -16,9 +16,9 @@ import { Route as LoginImport } from './routes/login'
 import { Route as ForgotPasswordImport } from './routes/forgot-password'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthenticatedAboutImport } from './routes/_authenticated/about'
-import { Route as AuthenticatedTodayIndexImport } from './routes/_authenticated/today/index'
 import { Route as AuthenticatedCategoriesIndexImport } from './routes/_authenticated/categories/index'
 import { Route as AuthenticatedCalendarIndexImport } from './routes/_authenticated/calendar/index'
+import { Route as AuthenticatedTaskListTodayImport } from './routes/_authenticated/task-list/today'
 import { Route as AuthenticatedTaskListFavoritesImport } from './routes/_authenticated/task-list/favorites'
 import { Route as AuthenticatedInviteInviteTokenImport } from './routes/_authenticated/invite/$inviteToken'
 import { Route as AuthenticatedCategoriesFavoritesImport } from './routes/_authenticated/categories/favorites'
@@ -56,12 +56,6 @@ const AuthenticatedAboutRoute = AuthenticatedAboutImport.update({
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 
-const AuthenticatedTodayIndexRoute = AuthenticatedTodayIndexImport.update({
-  id: '/today/',
-  path: '/today/',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-
 const AuthenticatedCategoriesIndexRoute =
   AuthenticatedCategoriesIndexImport.update({
     id: '/categories/',
@@ -73,6 +67,14 @@ const AuthenticatedCalendarIndexRoute = AuthenticatedCalendarIndexImport.update(
   {
     id: '/calendar/',
     path: '/calendar/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any,
+)
+
+const AuthenticatedTaskListTodayRoute = AuthenticatedTaskListTodayImport.update(
+  {
+    id: '/task-list/today',
+    path: '/task-list/today',
     getParentRoute: () => AuthenticatedRoute,
   } as any,
 )
@@ -179,6 +181,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTaskListFavoritesImport
       parentRoute: typeof AuthenticatedImport
     }
+    '/_authenticated/task-list/today': {
+      id: '/_authenticated/task-list/today'
+      path: '/task-list/today'
+      fullPath: '/task-list/today'
+      preLoaderRoute: typeof AuthenticatedTaskListTodayImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_authenticated/calendar/': {
       id: '/_authenticated/calendar/'
       path: '/calendar'
@@ -191,13 +200,6 @@ declare module '@tanstack/react-router' {
       path: '/categories'
       fullPath: '/categories'
       preLoaderRoute: typeof AuthenticatedCategoriesIndexImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/today/': {
-      id: '/_authenticated/today/'
-      path: '/today'
-      fullPath: '/today'
-      preLoaderRoute: typeof AuthenticatedTodayIndexImport
       parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/categories/$categoryName_/$taskListId': {
@@ -218,9 +220,9 @@ interface AuthenticatedRouteChildren {
   AuthenticatedCategoriesFavoritesRoute: typeof AuthenticatedCategoriesFavoritesRoute
   AuthenticatedInviteInviteTokenRoute: typeof AuthenticatedInviteInviteTokenRoute
   AuthenticatedTaskListFavoritesRoute: typeof AuthenticatedTaskListFavoritesRoute
+  AuthenticatedTaskListTodayRoute: typeof AuthenticatedTaskListTodayRoute
   AuthenticatedCalendarIndexRoute: typeof AuthenticatedCalendarIndexRoute
   AuthenticatedCategoriesIndexRoute: typeof AuthenticatedCategoriesIndexRoute
-  AuthenticatedTodayIndexRoute: typeof AuthenticatedTodayIndexRoute
   AuthenticatedCategoriesCategoryNameTaskListIdRoute: typeof AuthenticatedCategoriesCategoryNameTaskListIdRoute
 }
 
@@ -231,9 +233,9 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedCategoriesFavoritesRoute: AuthenticatedCategoriesFavoritesRoute,
   AuthenticatedInviteInviteTokenRoute: AuthenticatedInviteInviteTokenRoute,
   AuthenticatedTaskListFavoritesRoute: AuthenticatedTaskListFavoritesRoute,
+  AuthenticatedTaskListTodayRoute: AuthenticatedTaskListTodayRoute,
   AuthenticatedCalendarIndexRoute: AuthenticatedCalendarIndexRoute,
   AuthenticatedCategoriesIndexRoute: AuthenticatedCategoriesIndexRoute,
-  AuthenticatedTodayIndexRoute: AuthenticatedTodayIndexRoute,
   AuthenticatedCategoriesCategoryNameTaskListIdRoute:
     AuthenticatedCategoriesCategoryNameTaskListIdRoute,
 }
@@ -252,9 +254,9 @@ export interface FileRoutesByFullPath {
   '/categories/favorites': typeof AuthenticatedCategoriesFavoritesRoute
   '/invite/$inviteToken': typeof AuthenticatedInviteInviteTokenRoute
   '/task-list/favorites': typeof AuthenticatedTaskListFavoritesRoute
+  '/task-list/today': typeof AuthenticatedTaskListTodayRoute
   '/calendar': typeof AuthenticatedCalendarIndexRoute
   '/categories': typeof AuthenticatedCategoriesIndexRoute
-  '/today': typeof AuthenticatedTodayIndexRoute
   '/categories/$categoryName/$taskListId': typeof AuthenticatedCategoriesCategoryNameTaskListIdRoute
 }
 
@@ -268,9 +270,9 @@ export interface FileRoutesByTo {
   '/categories/favorites': typeof AuthenticatedCategoriesFavoritesRoute
   '/invite/$inviteToken': typeof AuthenticatedInviteInviteTokenRoute
   '/task-list/favorites': typeof AuthenticatedTaskListFavoritesRoute
+  '/task-list/today': typeof AuthenticatedTaskListTodayRoute
   '/calendar': typeof AuthenticatedCalendarIndexRoute
   '/categories': typeof AuthenticatedCategoriesIndexRoute
-  '/today': typeof AuthenticatedTodayIndexRoute
   '/categories/$categoryName/$taskListId': typeof AuthenticatedCategoriesCategoryNameTaskListIdRoute
 }
 
@@ -285,9 +287,9 @@ export interface FileRoutesById {
   '/_authenticated/categories/favorites': typeof AuthenticatedCategoriesFavoritesRoute
   '/_authenticated/invite/$inviteToken': typeof AuthenticatedInviteInviteTokenRoute
   '/_authenticated/task-list/favorites': typeof AuthenticatedTaskListFavoritesRoute
+  '/_authenticated/task-list/today': typeof AuthenticatedTaskListTodayRoute
   '/_authenticated/calendar/': typeof AuthenticatedCalendarIndexRoute
   '/_authenticated/categories/': typeof AuthenticatedCategoriesIndexRoute
-  '/_authenticated/today/': typeof AuthenticatedTodayIndexRoute
   '/_authenticated/categories/$categoryName_/$taskListId': typeof AuthenticatedCategoriesCategoryNameTaskListIdRoute
 }
 
@@ -303,9 +305,9 @@ export interface FileRouteTypes {
     | '/categories/favorites'
     | '/invite/$inviteToken'
     | '/task-list/favorites'
+    | '/task-list/today'
     | '/calendar'
     | '/categories'
-    | '/today'
     | '/categories/$categoryName/$taskListId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -318,9 +320,9 @@ export interface FileRouteTypes {
     | '/categories/favorites'
     | '/invite/$inviteToken'
     | '/task-list/favorites'
+    | '/task-list/today'
     | '/calendar'
     | '/categories'
-    | '/today'
     | '/categories/$categoryName/$taskListId'
   id:
     | '__root__'
@@ -333,9 +335,9 @@ export interface FileRouteTypes {
     | '/_authenticated/categories/favorites'
     | '/_authenticated/invite/$inviteToken'
     | '/_authenticated/task-list/favorites'
+    | '/_authenticated/task-list/today'
     | '/_authenticated/calendar/'
     | '/_authenticated/categories/'
-    | '/_authenticated/today/'
     | '/_authenticated/categories/$categoryName_/$taskListId'
   fileRoutesById: FileRoutesById
 }
@@ -378,9 +380,9 @@ export const routeTree = rootRoute
         "/_authenticated/categories/favorites",
         "/_authenticated/invite/$inviteToken",
         "/_authenticated/task-list/favorites",
+        "/_authenticated/task-list/today",
         "/_authenticated/calendar/",
         "/_authenticated/categories/",
-        "/_authenticated/today/",
         "/_authenticated/categories/$categoryName_/$taskListId"
       ]
     },
@@ -413,16 +415,16 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/task-list/favorites.tsx",
       "parent": "/_authenticated"
     },
+    "/_authenticated/task-list/today": {
+      "filePath": "_authenticated/task-list/today.tsx",
+      "parent": "/_authenticated"
+    },
     "/_authenticated/calendar/": {
       "filePath": "_authenticated/calendar/index.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/categories/": {
       "filePath": "_authenticated/categories/index.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/today/": {
-      "filePath": "_authenticated/today/index.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/categories/$categoryName_/$taskListId": {
