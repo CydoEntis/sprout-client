@@ -23,6 +23,10 @@ export function useUpdateTaskListStatusItemMutation(taskListId: number, page: nu
         queryKey: ["task-lists", data.taskListId, page],
       });
 
+      queryClient.invalidateQueries({
+        queryKey: ["task-lists", data.taskListId, page],
+      });
+
       notifications.show({
         title: "Success",
         message: data.message,

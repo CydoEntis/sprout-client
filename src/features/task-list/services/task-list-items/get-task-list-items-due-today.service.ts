@@ -4,21 +4,18 @@ import { apiRequest } from "../../../../api/apiRequest";
 import endpoints from "../../../../api/endpoints";
 import { ItemsDuePerCategory } from "../../shared/tasks.types";
 
-export const getTaskListItemsDueToday = async (
-  page: number,
-  pageSize = 20
-): Promise<Paginated<ItemsDuePerCategory>> => {
+export const getTaskListItemsDueToday = async (page: number): Promise<Paginated<ItemsDuePerCategory>> => {
   return apiRequest<Paginated<ItemsDuePerCategory>>("get", `${endpoints.tasklist}/today`, {
-    params: { page, pageSize },
+    params: { page },
   });
 };
 
-export const getTaskListItemsDueTodayQueryOptions = (page: number, pageSize = 20) => ({
-  queryKey: ["task-list", "today", page, pageSize],
-  queryFn: () => getTaskListItemsDueToday(page, pageSize),
+export const getTaskListItemsDueTodayQueryOptions = (page: number) => ({
+  queryKey: ["task-list", "today", page],
+  queryFn: () => getTaskListItemsDueToday(page),
   staleTime: 0,
 });
 
-export const useTaskListItemsDueToday = (page: number, pageSize = 20) => {
-  return useQuery(getTaskListItemsDueTodayQueryOptions(page, pageSize));
+export const useTaskListItemsDueToday = (page: number) => {
+  return useQuery(getTaskListItemsDueTodayQueryOptions(page));
 };
