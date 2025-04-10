@@ -2,13 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { Paginated } from "../../../../util/types/shared.types";
 import { apiRequest } from "../../../../api/apiRequest";
 import endpoints from "../../../../api/endpoints";
-import { DueTodayTaskListItem } from "../../shared/tasks.types";
+import { ItemsDuePerCategory } from "../../shared/tasks.types";
 
 export const getTaskListItemsDueToday = async (
   page: number,
   pageSize = 20
-): Promise<Paginated<DueTodayTaskListItem>> => {
-  return apiRequest<Paginated<DueTodayTaskListItem>>("get", `${endpoints.tasklist}/today`, {
+): Promise<Paginated<ItemsDuePerCategory>> => {
+  return apiRequest<Paginated<ItemsDuePerCategory>>("get", `${endpoints.tasklist}/today`, {
     params: { page, pageSize },
   });
 };
