@@ -22,9 +22,8 @@ export function useUpdateTaskListStatusItemMutation(taskListId: number, page: nu
       queryClient.invalidateQueries({
         queryKey: ["task-lists", data.taskListId, page],
       });
-
       queryClient.invalidateQueries({
-        queryKey: ["task-lists", data.taskListId, page],
+        queryKey: ["task-list", "today", page],
       });
 
       notifications.show({
