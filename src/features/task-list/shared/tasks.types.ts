@@ -168,5 +168,6 @@ export type ItemsDuePerCategory = {
   categoryName: string;
   categoryColor: string;
   categoryTag: string;
+  dueCount: number;
   items: DueTodayTaskListItem[];
 };

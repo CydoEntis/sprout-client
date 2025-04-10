@@ -8,6 +8,7 @@ import { ValidIconTags } from "../../../util/types/valid-icon.types";
 import { Title, Checkbox, Text, Group, Paper, Stack, Divider } from "@mantine/core";
 import { useUpdateTaskListStatusItemMutation } from "../../../features/task-list/services/task-list-items/update-status-task-list.service";
 import { Star } from "lucide-react";
+import LazyText from "../../../lazy-components/text/LazyText";
 
 export const Route = createFileRoute("/_authenticated/task-list/today")({
   validateSearch: (params: Record<string, string | number>) => {
@@ -40,18 +41,15 @@ function RouteComponent() {
 
   return (
     <>
-      <Paper
-        bg="primary.9"
-        p={16}
-        radius="lg"
-        mb={16}
-        shadow="md"
-      >
+      <Paper bg="primary.9" p={16} radius="lg" mb={16} shadow="md">
         <Stack justify="space-between" gap={8}>
           <Stack gap={8}>
             <Group gap={8}>
               <LazyIcon size="xl" iconColor="white" hasBackground backgroundColor="yellow" icon={<Star />} />
+              <Stack gap={0}>
               <Title>Due Today</Title>
+              <Text size="sm" c="dimmed">Make sure you complete all tasks due today</Text>
+              </Stack>
             </Group>
           </Stack>
         </Stack>
@@ -80,7 +78,15 @@ function RouteComponent() {
                   />
                 }
               >
-                <Title>{category.categoryName.charAt(0).toUpperCase() + category.categoryName.slice(1)}</Title>
+                <Stack gap={0}>
+                  <Title>{category.categoryName.charAt(0).toUpperCase() + category.categoryName.slice(1)}</Title>
+                  <LazyText
+                    c="dimmed"
+                    text={`You have ${category.dueCount} items due today`}
+                    highlight={category.dueCount}
+                    highlightColor={category.categoryColor}
+                  />
+                </Stack>
               </LazyHeader>
               <Divider c="inverse" size="md" />
             </Stack>
