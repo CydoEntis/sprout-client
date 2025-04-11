@@ -1,9 +1,7 @@
-import { Button, SimpleGrid, Stack, Title } from "@mantine/core";
-import { Plus } from "lucide-react";
+import { SimpleGrid, Stack } from "@mantine/core";
 import { motion } from "framer-motion";
 import { Category, CategoryWithTaskListCount } from "../../shared/category.types";
 import CategoryCard from "../category-card/CategoryCard";
-import LazyHeader from "../../../../lazy-components/header/LazyHeader";
 
 type CategoryListProps = {
   categories: CategoryWithTaskListCount[];
@@ -26,19 +24,9 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
-function CategoryList({ categories, onEdit, onOpen }: CategoryListProps) {
+function CategoryList({ categories, onEdit }: CategoryListProps) {
   return (
     <Stack gap={16}>
-      <LazyHeader
-        rightSection={
-          <Button onClick={onOpen} leftSection={<Plus size={20} />} color="lime">
-            Category
-          </Button>
-        }
-      >
-        <Title>Categories</Title>
-      </LazyHeader>
-
       <motion.div variants={containerVariants} initial="hidden" animate="show">
         <SimpleGrid cols={{ xs: 1, md: 2, lg: 4 }}>
           {categories?.map((category) => (

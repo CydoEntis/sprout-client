@@ -1,19 +1,22 @@
-import { Box, Button, Title, SimpleGrid } from "@mantine/core";
+import { Box, Button, Title, SimpleGrid, Pagination } from "@mantine/core";
 import { Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { useDisclosure } from "@mantine/hooks";
 import LazyHeader from "../lazy-components/header/LazyHeader";
-import { useParams } from "@tanstack/react-router";
+import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import LazyIcon from "../lazy-components/icons/LazyIcon";
 import { getIconByTag } from "../features/category/shared/category.helpers";
 import { ValidIconTags } from "../util/types/valid-icon.types";
 import { useState } from "react";
 import TaskListCard from "../features/task-list/components/task-card/TaskListCard";
 import UpsertTaskListModal from "../features/task-list/components/upsert-task-list/UpsertTasklistModal";
-import { CategoryWithTaskList, TaskList } from "../features/task-list/shared/tasks.types";
+import { TaskList, TaskListOverview } from "../features/task-list/shared/tasks.types";
+import { Paginated } from "../util/types/shared.types";
+import { Category } from "../features/category/shared/category.types";
 
 type CategoryTaskListPageProps = {
-  categoryTaskLists: CategoryWithTaskList;
+  taskLists: Paginated<TaskListOverview>;
+  category: Category;
 };
 
 const containerVariants = {
@@ -31,9 +34,8 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
-function CategoryTaskListPage({ categoryTaskLists }: CategoryTaskListPageProps) {
+function CategoryTaskListPage({ taskLists, category }: CategoryTaskListPageProps) {
   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName" });
-  console.log(categoryTaskLists);
   const [
     isUpsertTaskListModalOpened,
     { open: onOpenCreateTaskListWithCategoryModal, close: onCloseUpsertTaskListModal },
@@ -46,17 +48,28 @@ function CategoryTaskListPage({ categoryTaskLists }: CategoryTaskListPageProps) 
     onCloseUpsertTaskListModal();
   };
 
+  const searchParams = useSearch({ from: "/_authenticated/categories/$categoryName" });
+  const page = searchParams.page || 1;
+  const navigate = useNavigate();
+
+  const handlePageChange = (newPage: number) => {
+    navigate({
+      to: `/categories/${categoryName}`,
+      search: { ...searchParams, page: newPage },
+    });
+  };
+
   return (
     <Box mt={32}>
       <UpsertTaskListModal isOpen={isUpsertTaskListModalOpened} onClose={handleClose} tasklist={selectedTaskList} />
       <LazyHeader
         leftSection={
           <LazyIcon
-            icon={getIconByTag(categoryTaskLists.categoryTag as ValidIconTags)}
+            icon={getIconByTag(category.tag as ValidIconTags)}
             size="xl"
             iconColor="white"
             hasBackground
-            backgroundColor={categoryTaskLists.categoryColor}
+            backgroundColor={category.color}
           />
         }
         rightSection={
@@ -68,10 +81,10 @@ function CategoryTaskListPage({ categoryTaskLists }: CategoryTaskListPageProps) 
         <Title>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</Title>
       </LazyHeader>
 
-      {categoryTaskLists.taskListOverviews.length > 0 ? (
+      {taskLists.items.length > 0 ? (
         <motion.div variants={containerVariants} initial="hidden" animate="show">
           <SimpleGrid cols={{ base: 1, md: 2, lg: 4 }} mt={32}>
-            {categoryTaskLists.taskListOverviews.map((taskList) => (
+            {taskLists.items.map((taskList) => (
               <motion.div key={taskList.id} variants={itemVariants}>
                 <TaskListCard taskList={taskList} categoryName={categoryName} />
               </motion.div>
@@ -82,6 +95,15 @@ function CategoryTaskListPage({ categoryTaskLists }: CategoryTaskListPageProps) 
         <Title ta="center" mt={32} c="dimmed">
           No task lists available
         </Title>
+      )}
+      {taskLists.totalPages > 1 && (
+        <Pagination
+          color="lime"
+          value={page}
+          onChange={handlePageChange}
+          total={taskLists.totalPages}
+          style={{ flexShrink: 0 }}
+        />
       )}
     </Box>
   );

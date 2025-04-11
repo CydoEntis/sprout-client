@@ -9,3 +9,11 @@ export type Paginated<T> = {
   nextPage?: number | null;
   previousPage?: number | null;
 };
+
+export type PaginationParams = {
+  page?: number;
+  pageSize?: number;
+  search?: string;
+  sortBy?: string;
+  sortDirection?: string;
+};

@@ -64,13 +64,6 @@ export type TaskListDetails = {
   role: TaskListRole;
 };
 
-export type CategoryWithTaskList = {
-  categoryId: number;
-  categoryName: string;
-  categoryTag: string;
-  categoryColor: string;
-  taskListOverviews: TaskListOverview[];
-};
 
 export type FavoritedTaskList = {
   taskListId: number;
