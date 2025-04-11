@@ -1,6 +1,6 @@
 import { createFileRoute, useSearch } from "@tanstack/react-router";
-import { getTaskListItemsDueTodayQueryOptions } from "../../../features/task-list/services/task-list-items/get-task-list-items-due-today.service";
 import { useSuspenseQuery } from "@tanstack/react-query";
+
 import LazyHeader from "../../../lazy-components/header/LazyHeader";
 import LazyIcon from "../../../lazy-components/icons/LazyIcon";
 import { getIconByTag } from "../../../features/category/shared/category.helpers";
@@ -9,6 +9,7 @@ import { Title, Checkbox, Text, Group, Paper, Stack, Divider } from "@mantine/co
 import { useUpdateTaskListStatusItemMutation } from "../../../features/task-list/services/task-list-items/update-status-task-list.service";
 import { Star } from "lucide-react";
 import LazyText from "../../../lazy-components/text/LazyText";
+import { getTaskListItemsDueByDateQueryOptions } from "../../../features/task-list/services/task-list-items/get-task-list-items-due-today.service";
 
 export const Route = createFileRoute("/_authenticated/task-list/today")({
   validateSearch: (params: Record<string, string | number>) => {
@@ -21,11 +22,12 @@ export const Route = createFileRoute("/_authenticated/task-list/today")({
 
 function RouteComponent() {
   const { page } = useSearch({ from: "/_authenticated/task-list/today" });
-  const { data: dueToday } = useSuspenseQuery(getTaskListItemsDueTodayQueryOptions(page));
+
+  const today = new Date().toISOString().split("T")[0];
+
+  const { data: dueToday } = useSuspenseQuery(getTaskListItemsDueByDateQueryOptions(today, page));
 
   const { mutateAsync: toggleStatus } = useUpdateTaskListStatusItemMutation(0, page);
-
-  console.log(dueToday);
 
   const onChange = async (itemId: number, taskListId: number, isCompleted: boolean) => {
     try {
@@ -47,8 +49,10 @@ function RouteComponent() {
             <Group gap={8}>
               <LazyIcon size="xl" iconColor="white" hasBackground backgroundColor="yellow" icon={<Star />} />
               <Stack gap={0}>
-              <Title>Due Today</Title>
-              <Text size="sm" c="dimmed">Make sure you complete all tasks due today</Text>
+                <Title>Due Today</Title>
+                <Text size="sm" c="dimmed">
+                  Make sure you complete all tasks due today
+                </Text>
               </Stack>
             </Group>
           </Stack>
@@ -65,8 +69,8 @@ function RouteComponent() {
         style={{ display: "flex", flexDirection: "column" }}
       >
         {dueToday.items.map((category) => (
-          <Stack gap={16} mb={32}>
-            <Stack key={category.categoryId} gap={16}>
+          <Stack gap={16} mb={32} key={category.categoryId}>
+            <Stack gap={16}>
               <LazyHeader
                 leftSection={
                   <LazyIcon

@@ -1,11 +1,12 @@
 import { Group, GroupProps, Text, TextProps } from "@mantine/core";
 
 // Helper function to format date
-const formatDate = (date: Date, format: "us" | "eu") => {
+const formatDate = (date: Date | string, format: "us" | "eu") => {
   const dateObj = new Date(date);
-  const month = dateObj.toLocaleString("default", { month: "short" });
-  const day = dateObj.getDate();
-  const year = dateObj.getFullYear();
+
+  const month = dateObj.toLocaleString("default", { month: "short", timeZone: "UTC" });
+  const day = dateObj.getUTCDate();
+  const year = dateObj.getUTCFullYear();
 
   const getDaySuffix = (day: number) => {
     if (day >= 11 && day <= 13) return "th";
@@ -29,7 +30,7 @@ const formatDate = (date: Date, format: "us" | "eu") => {
     return `${day}${getDaySuffix(day)} ${month}, ${year}`;
   }
 
-  return date.toString();
+  return dateObj.toUTCString();
 };
 
 type LazyDateProps = {

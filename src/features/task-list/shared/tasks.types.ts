@@ -163,6 +163,7 @@ export type DueTodayTaskListItem = {
   isCompleted: boolean;
   dueDate: Date;
 };
+
 export type ItemsDuePerCategory = {
   categoryId: number;
   categoryName: string;
@@ -170,4 +171,35 @@ export type ItemsDuePerCategory = {
   categoryTag: string;
   dueCount: number;
   items: DueTodayTaskListItem[];
+};
+
+export type ItemsDueThisWeek = {
+  categoryId: number;
+  categoryName: string;
+  categoryColor: string;
+  categoryTag: string;
+  dueCount: number;
+  items: DueTodayTaskListItem[];
+};
+
+export type DueTaskListItem = {
+  id: number;
+  taskListId: number;
+  taskListName: string;
+  description: string | null;
+  isCompleted: boolean;
+  dueDate: Date;
+};
+
+export type ItemsDueByCategory = {
+  categoryId: number;
+  categoryName: string;
+  categoryColor: string;
+  categoryTag: string;
+  items: DueTaskListItem[];
+};
+
+export type TaskListItemsDueThisWeekByCategory = {
+  date: Date;
+  categories: ItemsDueThisWeek[];
 };
