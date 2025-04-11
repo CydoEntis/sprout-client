@@ -1,19 +1,21 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { apiRequest } from "../../../../api/apiRequest";
 import endpoints from "../../../../api/endpoints";
-import { TaskListInfo } from "../../shared/tasks.types";
+import { Paginated, PaginationParams } from "../../../../util/types/shared.types";
+import { FavoritedTaskList } from "../../shared/tasks.types";
 
-export const getFavoritedTaskLists = async (): Promise<TaskListInfo[]> => {
-  return apiRequest<TaskListInfo[]>("get", `${endpoints.tasklist}/favorites`);
+export const getFavoritedTaskLists = async (params: PaginationParams): Promise<Paginated<FavoritedTaskList>> => {
+  const queryParams = new URLSearchParams(params as Record<string, string>);
+  return apiRequest("get", `${endpoints.tasklist}/favorites?${queryParams.toString()}`);
 };
 
-export const getFavoritedTaskListsQueryOptions = () =>
+export const getFavoritedTaskListsQueryOptions = (params: PaginationParams) =>
   queryOptions({
-    queryKey: ["task-lists", "favorites"],
-    queryFn: getFavoritedTaskLists,
+    queryKey: ["task-lists", "favorites", params],
+    queryFn: () => getFavoritedTaskLists(params),
     staleTime: 1000 * 60 * 5,
   });
 
-export const useGetFavoritedTaskLists = () => {
-  return useQuery(getFavoritedTaskListsQueryOptions());
+export const useGetFavoritedTaskLists = (params: PaginationParams) => {
+  return useQuery(getFavoritedTaskListsQueryOptions(params));
 };
