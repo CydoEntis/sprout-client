@@ -1,8 +1,8 @@
 import LazySidebarLayout from "../../lazy-components/layouts/sidebar-layout/LazySidebarLayout";
 import { useDisclosure } from "@mantine/hooks";
-import { Box, NavLink, Paper, Stack, Title, Flex } from "@mantine/core";
+import { Box, NavLink, Paper, Stack, Title, Flex, Group } from "@mantine/core";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
-import { Calendar, Grid2x2Plus, Heart, LogOut, Plus, Star } from "lucide-react";
+import { Calendar, Grid2x2Plus, Heart, LogOut, Plus, Sprout, Star } from "lucide-react";
 import React from "react";
 import ThemeToggle from "../../components/theme/ThemeToggle";
 import useAuthStore from "../../stores/useAuthStore";
@@ -10,6 +10,7 @@ import { logoutUser } from "../auth/services/logout.service";
 import { motion } from "framer-motion";
 import CreateTaskListWithCategoryModal from "../task-list/components/create-task-list-with-category/CreateTaskListWithCategoryModal";
 import localStorageService from "../../services/localStorage.service";
+import LazyIcon from "../../lazy-components/icons/LazyIcon";
 
 function ProtectedLayout() {
   const location = useLocation();
@@ -62,7 +63,12 @@ function ProtectedLayout() {
         onClose={onCloseCreateTaskListWithCategoryModal}
       />
       <LazySidebarLayout
-        logo={<Title size="1.45rem">Task Garden</Title>}
+        logo={
+          <Group gap={8} align="center ">
+            <LazyIcon icon={<Sprout color="#A9E34B" />} backgroundColor="lime" />
+            <Title size="1.45rem">Sprout</Title>
+          </Group>
+        }
         isSidebarOpened={isSidebarOpened}
         onToggle={toggleSidebar}
       >
