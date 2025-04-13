@@ -54,7 +54,7 @@ function LazySidebarLayout({ isSidebarOpened, onToggle, logo, children }: LazySi
         {children}
       </AppShell.Navbar>
 
-      <AppShell.Main bg="secondary.9" style={{ paddingTop: "50px" }}>
+      <AppShell.Main bg="secondary.9" pt={25}>
         <Container size="xl">
           <Outlet />
         </Container>
