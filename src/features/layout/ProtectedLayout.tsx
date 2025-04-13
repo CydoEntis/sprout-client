@@ -112,7 +112,7 @@ function ProtectedLayout() {
               label="New List"
               onClick={onOpenCreateTaskListWithCategoryModal}
             />
-            <Box style={{ borderTop: "1px solid var(--border-color)" }} px={8} py={16}>
+            <Box style={{ borderTop: "2px solid var(--secondary)" }} px={8} py={16}>
               <Flex justify="space-between" align="center" gap={12}>
                 <NavLink
                   style={{

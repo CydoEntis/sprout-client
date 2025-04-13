@@ -18,7 +18,7 @@ const primaryLight = [
 
 const secondaryLight = [
   "#181818", "#313131", "#4A4A4A", "#636363", "#7C7C7C",
-  "#959595", "#AEAEAE", "#C7C7C7", "#E0E0E0", "#F9F9F9"
+  "#959595", "#AEAEAE", "#C7C7C7", "#E0E0E0", "#EDEDED" //"#F6F4F5"//"#F9F9F9"
 ] as const;
 
 // const primaryDark = [

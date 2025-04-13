@@ -3,19 +3,17 @@ import { Outlet } from "@tanstack/react-router";
 import { LazyLayoutProps } from "../layout.types";
 import { useDisclosure } from "@mantine/hooks";
 
-import styles from "./lazy-horizontal-layout.module.css";
-
 function LazyLayout({ children }: LazyLayoutProps) {
   const [opened, { toggle }] = useDisclosure();
 
   return (
     <AppShell padding="md" navbar={{ width: 300, breakpoint: "sm", collapsed: { desktop: true, mobile: !opened } }}>
-      <AppShell.Header bg="primary" withBorder={false}>
+      <AppShell.Header bg="primary.9" withBorder={false}>
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
         <Container size="md">{children}</Container>
       </AppShell.Header>
 
-      <AppShell.Main pt={`calc(${rem(60)} + var(--mantine-spacing-md))`}>
+      <AppShell.Main bg="secondary.9" pt={`calc(${rem(60)} + var(--mantine-spacing-md))`}>
         <Container size="md" pt={32}>
           <Outlet />
         </Container>
