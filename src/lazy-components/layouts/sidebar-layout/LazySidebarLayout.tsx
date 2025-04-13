@@ -15,7 +15,7 @@ function LazySidebarLayout({ isSidebarOpened, onToggle, logo, children }: LazySi
   return (
     <AppShell
       navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !isSidebarOpened } }}
-      padding="md"
+      padding={{ base: 0, sm: 0, md: "xs" }}  
       withBorder={false}
     >
       {!isSidebarOpened && (

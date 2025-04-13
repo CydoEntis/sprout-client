@@ -15,9 +15,9 @@ import { TaskListRole } from "../../invitation/shared/invite.schemas";
 import { useFavoriteTaskListMutation } from "../services/task-list/favorite-task-list.service";
 import UpdateTaskListModal from "../components/update-task-list/UpdateTasklistModal";
 import MembersModal from "../../invitation/components/members-modal/MembersModal";
-import UpsertTaskListItem from "../../tasks/components/UpsertTasklistItem";
 import ListItem from "../components/list-item/ListItem";
 import TaskListMembers from "../components/task-list-members/TaskListMembers";
+import UpsertTaskListItem from "../../tasks/components/UpsertTaskListItem";
 
 type TaskListDetailsPageProps = {
   tasklist: TaskListDetails;
@@ -166,7 +166,7 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
         bg="primary.9"
         p={16}
         radius="lg"
-        mih="70vh"
+        mih="83vh"
         pos="relative"
         style={{ display: "flex", flexDirection: "column" }}
       >

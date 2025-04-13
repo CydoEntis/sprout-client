@@ -1,4 +1,5 @@
 import { Flex, Checkbox, ActionIcon, Text, Group, Badge } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { Calendar, GripVertical, X } from "lucide-react";
 import styles from "./list-item.module.css";
 import { TaskListItem } from "../../shared/tasks.types";
@@ -14,10 +15,11 @@ type ListItemProps = {
 };
 
 function ListItem({ item, onDelete, onChange, canRemove, dragHandleProps }: ListItemProps) {
-  console.log(item);
+  const isMobile = useMediaQuery("(max-width: 425px)");
+
   return (
-    <Flex justify="space-between" align="center">
-      <Group>
+    <Flex justify="space-between" align="center" wrap="wrap" gap="sm">
+      <Flex align="center" gap="xs" style={{ flex: 1, minWidth: 0 }}>
         <GripVertical size={20} color="#888" {...dragHandleProps} style={{ cursor: "grab" }} />
 
         <Checkbox
@@ -26,12 +28,23 @@ function ListItem({ item, onDelete, onChange, canRemove, dragHandleProps }: List
           color="lime"
           size="md"
         />
-        <Text size="lg" className={item.isCompleted ? styles.completed : ""}>
+
+        <Text
+          size="sm"
+          className={item.isCompleted ? styles.completed : ""}
+          style={{
+            wordBreak: "break-word",
+            overflowWrap: "anywhere",
+            flex: 1,
+            minWidth: 0,
+          }}
+        >
           {item.description}
         </Text>
-      </Group>
-      <Group>
-        {item.dueDate && (
+      </Flex>
+
+      <Group gap="xs">
+        {!isMobile && item.dueDate && (
           <Badge color="red" variant="outline">
             <LazyDate leftSection={<Calendar size={14} />} size="xs" date={new Date(item.dueDate)} />
           </Badge>
