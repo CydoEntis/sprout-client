@@ -6,9 +6,8 @@ import CategoriesPage from "../../../features/category/pages/CategoriesPage";
 import { PaginationParams } from "../../../util/types/shared.types";
 
 export const Route = createFileRoute("/_authenticated/categories/")({
-  loaderDeps: ({ search: { page, pageSize, search, sortBy, sortDirection } }) => ({
+  loaderDeps: ({ search: { page, search, sortBy, sortDirection } }) => ({
     page,
-    pageSize,
     search,
     sortBy,
     sortDirection,
@@ -16,7 +15,6 @@ export const Route = createFileRoute("/_authenticated/categories/")({
   validateSearch: (search: Record<string, string | number>): PaginationParams => {
     return {
       page: search.page ? parseInt(search.page as string) : 1,
-      pageSize: search.pageSize ? parseInt(search.pageSize as string) : 1,
       search: typeof search.search === "string" ? search.search : "",
       sortBy: (search.sortBy as string) || "createdAt",
       sortDirection: (search.sortDirection as string) || "desc",
@@ -35,7 +33,6 @@ function CategoriesRoute() {
 
   const { data } = useSuspenseQuery(getCategoriesWithTaskListCountQueryOptions(searchParams));
   console.log(data);
-
 
   return <CategoriesPage paginatedCategories={data} />;
 }

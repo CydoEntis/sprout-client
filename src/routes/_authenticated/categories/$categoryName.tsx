@@ -4,13 +4,12 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import LoadingSkeleton from "../../../components/loaders/LoadingSkeleton";
 import { getAllTaskListsForCategoryQueryOptions } from "../../../features/category/services/get-all-task-lists-for-category.service";
 import { getCategoryQueryOptions } from "../../../features/category/services/get-category.service";
-import CategoryTaskListPage from "../../../pages/CategoryTaskListPage";
 import { PaginationParams } from "../../../util/types/shared.types";
+import CategoryTaskListPage from "../../../pages/CategoryTasklistPage";
 
 export const Route = createFileRoute("/_authenticated/categories/$categoryName")({
-  loaderDeps: ({ search: { page, pageSize, search, sortBy, sortDirection } }) => ({
+  loaderDeps: ({ search: { page, search, sortBy, sortDirection } }) => ({
     page,
-    pageSize,
     search,
     sortBy,
     sortDirection,
@@ -27,7 +26,6 @@ export const Route = createFileRoute("/_authenticated/categories/$categoryName")
   validateSearch: (search: Record<string, string | number>): PaginationParams => {
     return {
       page: search.page ? parseInt(search.page as string) : 1,
-      pageSize: search.pageSize ? parseInt(search.pageSize as string) : 1,
       search: typeof search.search === "string" ? search.search : "",
       sortBy: (search.sortBy as string) || "createdAt",
       sortDirection: (search.sortDirection as string) || "desc",

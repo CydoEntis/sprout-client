@@ -1,8 +1,7 @@
-import { Box, Button, Title, SimpleGrid, Pagination } from "@mantine/core";
+import { Box, Button, Title, SimpleGrid, Pagination, Paper, Flex, Stack } from "@mantine/core";
 import { Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { useDisclosure } from "@mantine/hooks";
-import LazyHeader from "../lazy-components/header/LazyHeader";
 import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import LazyIcon from "../lazy-components/icons/LazyIcon";
 import { getIconByTag } from "../features/category/shared/category.helpers";
@@ -13,6 +12,9 @@ import UpsertTaskListModal from "../features/task-list/components/upsert-task-li
 import { TaskList, TaskListOverview } from "../features/task-list/shared/tasks.types";
 import { Paginated } from "../util/types/shared.types";
 import { Category } from "../features/category/shared/category.types";
+import LazyText from "../lazy-components/text/LazyText";
+import PageHeader from "../components/header/PageHeader";
+import FilterSortControls from "../features/auth/components/controls/FilterSortControls";
 
 type CategoryTaskListPageProps = {
   taskLists: Paginated<TaskListOverview>;
@@ -60,51 +62,72 @@ function CategoryTaskListPage({ taskLists, category }: CategoryTaskListPageProps
   };
 
   return (
-    <Box mt={32}>
+    <Box h="95vh">
       <UpsertTaskListModal isOpen={isUpsertTaskListModalOpened} onClose={handleClose} tasklist={selectedTaskList} />
-      <LazyHeader
-        leftSection={
-          <LazyIcon
-            icon={getIconByTag(category.tag as ValidIconTags)}
-            size="xl"
-            iconColor="white"
-            hasBackground
-            backgroundColor={category.color}
-          />
-        }
-        rightSection={
-          <Button onClick={onOpenCreateTaskListWithCategoryModal} leftSection={<Plus size={20} />} color="lime">
-            Task List
-          </Button>
-        }
-      >
-        <Title>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</Title>
-      </LazyHeader>
+      <Flex direction="column" justify="space-between" h="100%">
+        <Stack gap={16} style={{ flexGrow: 1 }}>
+          <Paper bg="primary.9" p={16} radius="md">
+            <PageHeader
+              leftSection={
+                <LazyIcon
+                  icon={getIconByTag(category.tag as ValidIconTags)}
+                  size="xl"
+                  iconColor="white"
+                  hasBackground
+                  backgroundColor={category.color}
+                />
+              }
+              rightSection={
+                <Button onClick={onOpenCreateTaskListWithCategoryModal} leftSection={<Plus size={20} />} color="lime">
+                  Task List
+                </Button>
+              }
+            >
+              <Title>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</Title>
+            </PageHeader>
+            <Stack mb="md" gap="8">
+              <FilterSortControls
+                route="/categories/$categoryName"
+                searchParams={searchParams}
+                sortByOptions={[
+                  { value: "createdAt", label: "Created At" },
+                  { value: "name", label: "Name" },
+                  { value: "favorited", label: "Favorited" },
+                ]}
+              />
+            </Stack>
+          </Paper>
 
-      {taskLists.items.length > 0 ? (
-        <motion.div variants={containerVariants} initial="hidden" animate="show">
-          <SimpleGrid cols={{ base: 1, md: 2, lg: 4 }} mt={32}>
-            {taskLists.items.map((taskList) => (
-              <motion.div key={taskList.id} variants={itemVariants}>
-                <TaskListCard taskList={taskList} categoryName={categoryName} />
-              </motion.div>
-            ))}
-          </SimpleGrid>
-        </motion.div>
-      ) : (
-        <Title ta="center" mt={32} c="dimmed">
-          No task lists available
-        </Title>
-      )}
-      {taskLists.totalPages > 1 && (
-        <Pagination
-          color="lime"
-          value={page}
-          onChange={handlePageChange}
-          total={taskLists.totalPages}
-          style={{ flexShrink: 0 }}
-        />
-      )}
+          {taskLists.items.length > 0 ? (
+            <motion.div variants={containerVariants} initial="hidden" animate="show">
+              <SimpleGrid cols={{ base: 1, md: 2, lg: 4 }} mt={32}>
+                {taskLists.items.map((taskList) => (
+                  <motion.div key={taskList.id} variants={itemVariants}>
+                    <TaskListCard taskList={taskList} categoryName={categoryName} />
+                  </motion.div>
+                ))}
+              </SimpleGrid>
+            </motion.div>
+          ) : (
+            <Title ta="center" mt={32} c="dimmed">
+              No task lists available
+            </Title>
+          )}
+        </Stack>
+        {taskLists.totalPages > 1 && (
+          <Paper bg="primary.9" p={16} radius="md">
+            <Flex justify="space-between" align="center">
+              <LazyText
+                text={`page ${page} of ${taskLists.totalPages}`}
+                highlight={page}
+                highlightColor="lime"
+                c="gray"
+              />
+              <Pagination color="lime" value={page} onChange={handlePageChange} total={taskLists.totalPages} />
+            </Flex>
+          </Paper>
+        )}
+      </Flex>
     </Box>
   );
 }
