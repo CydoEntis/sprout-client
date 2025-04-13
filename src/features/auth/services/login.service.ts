@@ -14,9 +14,12 @@ const loginUser = async (credentials: LoginRequest): Promise<AuthenticatedRespon
 export function useLogin() {
   return useMutation({
     mutationFn: async (credentials: LoginRequest): Promise<AuthenticatedResponse> => {
+      console.log(credentials);
       return await loginUser(credentials);
     },
     onSuccess: (data) => {
+      console.log(data);
+
       const decodedToken = jwtDecode<DecodedToken>(data.accessToken);
 
       const taskGarden = {

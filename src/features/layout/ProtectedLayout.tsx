@@ -9,6 +9,7 @@ import useAuthStore from "../../stores/useAuthStore";
 import { logoutUser } from "../auth/services/logout.service";
 import { motion } from "framer-motion";
 import CreateTaskListWithCategoryModal from "../task-list/components/create-task-list-with-category/CreateTaskListWithCategoryModal";
+import localStorageService from "../../services/localStorage.service";
 
 function ProtectedLayout() {
   const location = useLocation();
@@ -20,6 +21,7 @@ function ProtectedLayout() {
     try {
       await logoutUser();
       logoutClient();
+      localStorageService.removeItem("taskgarden");
       navigate({ to: "/login" });
     } catch (error) {
       console.error("Logout failed:", error);

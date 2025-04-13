@@ -20,7 +20,7 @@ function AuthCard({ title, anchorLabel, anchorText, to, children }: AuthCardProp
         width: "100%",
       }}
     >
-      <LazyCard bg="primary" shadow="md" p={32} pt={30} maw={520} w="100%">
+      <LazyCard bg="primary.9" shadow="md" p={32} pt={30} maw={520} w="100%">
         <Title ta="center">{title}</Title>
         <Text c="dimmed" size="sm" ta="center" mt={5}>
           {anchorLabel}{" "}

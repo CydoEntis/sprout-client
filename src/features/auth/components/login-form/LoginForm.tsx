@@ -41,8 +41,8 @@ function LoginForm() {
       handleAuthFormErrors(err as ErrorResponse, form);
     }
   }
-
-  async function handleDemoUserLogin() {
+  async function handleDemoUserLogin(event: React.MouseEvent) {
+    event.preventDefault(); 
     try {
       await login({
         email: demoEmail,
@@ -82,7 +82,6 @@ function LoginForm() {
                 type="button"
                 w="100%"
                 radius="xl"
-                variant="light"
                 color="lime"
                 onClick={handleDemoUserLogin}
                 loading={isPending || isPendingGoogle}
@@ -94,7 +93,6 @@ function LoginForm() {
                 type="button"
                 w="100%"
                 radius="xl"
-                variant="light"
                 color="lime"
                 onClick={handleDemoUserLogin}
                 loading={isPending || isPendingGoogle}
@@ -138,7 +136,6 @@ function LoginForm() {
             <Button
               w="100%"
               color="lime"
-              variant="light"
               type="submit"
               loading={isPending || isPendingGoogle}
               disabled={isPending || isPendingGoogle}
