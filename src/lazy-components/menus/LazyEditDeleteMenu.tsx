@@ -39,7 +39,6 @@ function LazyEditDeleteMenu({
             e.preventDefault();
             e.stopPropagation();
           }}
-          variant="subtle"
           color="inverse"
         >
           {direction === "horizontal" ? <MoreHorizontal size={20} /> : <MoreVertical size={20} />}

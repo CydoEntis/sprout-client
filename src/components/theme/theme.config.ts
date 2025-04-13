@@ -72,8 +72,8 @@ const theme = createTheme({
     }),
     inverse: virtualColor({
       name: "inverse",
-      light: "primaryDark",
-      dark: "primaryLight",
+      light: "primaryDark.9",
+      dark: "primaryLight.9",
     }),
   },
   fontFamily: "Poppins, sans-serif",

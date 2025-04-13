@@ -1,7 +1,7 @@
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import { Button, Pagination, Title, Stack, Paper, Flex, Box } from "@mantine/core";
-import {  Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 
 import { Category, PaginatedCategoriesWithTaskListCount } from "../shared/category.types";
@@ -9,6 +9,7 @@ import UpsertCategoryModal from "../components/upsert-category/UpsertCategoryMod
 import CategoryList from "../components/category-list/CategoryList";
 import PageHeader from "../../../components/header/PageHeader";
 import FilterSortControls from "../../auth/components/controls/FilterSortControls";
+import LazyText from "../../../lazy-components/text/LazyText";
 
 type CategoriesPageProps = {
   paginatedCategories: PaginatedCategoriesWithTaskListCount;
@@ -45,7 +46,7 @@ function CategoriesPage({ paginatedCategories }: CategoriesPageProps) {
   };
 
   return (
-    <Box h="95vh" >
+    <Box h="95vh">
       <Flex direction="column" justify="space-between" h="100%">
         <Stack gap={16} style={{ flexGrow: 1 }}>
           <UpsertCategoryModal isOpen={isCategoryModalOpened} onClose={closeCategoryModalHandler} category={category} />
@@ -83,7 +84,21 @@ function CategoriesPage({ paginatedCategories }: CategoriesPageProps) {
 
         {paginatedCategories.totalPages > 1 && (
           <Paper bg="primary.9" p={16} radius="md">
-            <Pagination color="lime" value={page} onChange={handlePageChange} total={paginatedCategories.totalPages} />
+            <Flex justify="space-between" align="center">
+              <LazyText
+                text={`page ${page} of ${paginatedCategories.totalPages}`}
+                highlight={page}
+                highlightColor="lime"
+                c="gray"
+              />
+
+              <Pagination
+                color="lime"
+                value={page}
+                onChange={handlePageChange}
+                total={paginatedCategories.totalPages}
+              />
+            </Flex>
           </Paper>
         )}
       </Flex>
