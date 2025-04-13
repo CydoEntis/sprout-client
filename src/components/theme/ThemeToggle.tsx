@@ -9,13 +9,13 @@ function ThemeToggle() {
   return (
     <ActionIcon
       onClick={() => setColorScheme(isLightMode ? "dark" : "light")}
-      variant="default"
-      bg="primary.9"
+      c="inverse"
+      color="secondary.9"
       size="lg"
       aria-label="Toggle color scheme"
-      classNames={{ 
+      classNames={{
         root: "button",
-       }}
+      }}
     >
       {isLightMode ? <Moon size={16} /> : <Sun size={16} />}
     </ActionIcon>
