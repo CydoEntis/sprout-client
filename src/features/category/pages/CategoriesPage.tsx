@@ -46,7 +46,7 @@ function CategoriesPage({ paginatedCategories }: CategoriesPageProps) {
   };
 
   return (
-    <Box h="95vh">
+    <Box mih="95vh">
       <Flex direction="column" justify="space-between" h="100%">
         <Stack gap={16} style={{ flexGrow: 1 }}>
           <UpsertCategoryModal isOpen={isCategoryModalOpened} onClose={closeCategoryModalHandler} category={category} />
