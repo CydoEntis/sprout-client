@@ -1,11 +1,11 @@
 import { Button, Stack, Select, TagsInput, Flex, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
-
 import { z } from "zod";
 import { useState } from "react";
 import { useInviteUserMutation } from "../../services/invite-user.service";
 import { InviteUser } from "../../shared/invitation.types";
 import { TaskListRole } from "../../shared/invite.schemas";
+import { useMediaQuery } from "@mantine/hooks";
 
 const emailSchema = z.string().email("Invalid email address");
 
@@ -32,6 +32,8 @@ const InviteUserForm = ({ taskListId, onClose }: InviteUserFormProps) => {
     },
     validate: undefined,
   });
+
+  const isMobile = useMediaQuery("(max-width: 425px)");
 
   const clearEmailErrors = () => {
     if (emailError) {
@@ -85,7 +87,7 @@ const InviteUserForm = ({ taskListId, onClose }: InviteUserFormProps) => {
     <form onSubmit={form.onSubmit(handleSubmit)} style={{ padding: "1rem 0" }}>
       <Stack gap={16}>
         <Flex w="100%" gap={8} align="start" direction="column">
-          <Flex w="100%" gap={8} align="end">
+          <Flex w="100%" gap={8} align="end" direction={isMobile ? "column" : "row"}>
             <TagsInput
               classNames={{
                 input: "input",
@@ -126,9 +128,12 @@ const InviteUserForm = ({ taskListId, onClose }: InviteUserFormProps) => {
               placeholder="Select a role"
               value={String(form.values.role)}
               onChange={(value) => form.setFieldValue("role", Number(value))}
+              style={{
+                width: isMobile ? "100%" : "auto",
+              }}
             />
 
-            <Button type="submit" color="lime" w="25%">
+            <Button type="submit" color="lime" style={{ width: isMobile ? "100%" : "25%" }}>
               Invite
             </Button>
           </Flex>

@@ -22,6 +22,7 @@ import { useRemoveMember } from "../../services/remove-member.service";
 import { useTransferOwnership } from "../../services/transfer-ownership.service";
 import { useUpdateMemberRole } from "../../services/update-member-role.service";
 import { TaskListRole } from "../../shared/invite.schemas";
+import { useMediaQuery } from "@mantine/hooks"; // Import useMediaQuery
 
 const roleOptions = [
   { value: TaskListRole.Editor.toString(), label: "Editor" },
@@ -50,8 +51,6 @@ function ManageMembers({ taskListId, currentUserRole }: ManageMembersProps) {
   const { user } = useAuthStore();
   const navigate = useNavigate();
   const { data: members, isLoading } = useGetAllMembers(taskListId);
-  console.log(members);
-
   const updateMemberRole = useUpdateMemberRole(taskListId);
   const removeMember = useRemoveMember();
   const transferOwnership = useTransferOwnership();
@@ -59,6 +58,9 @@ function ManageMembers({ taskListId, currentUserRole }: ManageMembersProps) {
   const [confirmLeave, setConfirmLeave] = useState(false);
   const [transferMode, setTransferMode] = useState(false);
   const [newOwnerId, setNewOwnerId] = useState<string | null>(null);
+
+  // Detect mobile screens
+  const isMobile = useMediaQuery("(max-width: 425px)");
 
   if (isLoading) return <Text>Loading members...</Text>;
 
@@ -83,12 +85,12 @@ function ManageMembers({ taskListId, currentUserRole }: ManageMembersProps) {
       <Divider />
 
       {sortedMembers.map((member) => (
-        <Group key={member.userId} justify="space-between">
-          <Group>
-            <Avatar size="md" name={member.name} color="initials" />
+        <Group key={member.userId} justify="space-between" align="center" style={{ width: "100%" }}>
+          <Group style={{ flex: 1 }} align="center">
+            <Avatar size={isMobile ? "sm" : "md"} name={member.name} color="initials" />
             <Stack gap={0}>
               <Group gap={8} align="center">
-                <Text>{member.name}</Text>
+                <Text size={isMobile ? "xs" : "md"}>{member.name}</Text>
                 {member.userId === user?.id && (
                   <Text size="xs" c="dimmed">
                     (you)
@@ -98,9 +100,11 @@ function ManageMembers({ taskListId, currentUserRole }: ManageMembersProps) {
             </Stack>
           </Group>
 
-          <Group>
+          <Group align="center" gap={8}>
             {(!editMode || member.role === TaskListRole.Owner) && (
-              <Badge color={getBadgeColor(member.role)}>{TaskListRole[member.role]}</Badge>
+              <Badge color={getBadgeColor(member.role)} size={isMobile ? "xs" : "sm"}>
+                {TaskListRole[member.role]}
+              </Badge>
             )}
 
             {editMode && canEdit && member.role !== TaskListRole.Owner && (
@@ -122,6 +126,7 @@ function ManageMembers({ taskListId, currentUserRole }: ManageMembersProps) {
                         });
                       }
                     }}
+                    size={isMobile ? "xs" : "sm"}
                   />
                   {member.userId !== user?.id && (
                     <ActionIcon
@@ -173,6 +178,7 @@ function ManageMembers({ taskListId, currentUserRole }: ManageMembersProps) {
                       }))}
                     onChange={setNewOwnerId}
                     placeholder="Select new owner"
+                    size={isMobile ? "xs" : "sm"}
                   />
                   <Group>
                     <Button

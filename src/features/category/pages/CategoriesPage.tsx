@@ -1,4 +1,4 @@
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { useState } from "react";
 import { Button, Pagination, Title, Stack, Paper, Flex, Box } from "@mantine/core";
 import { Plus } from "lucide-react";
@@ -45,6 +45,9 @@ function CategoriesPage({ paginatedCategories }: CategoriesPageProps) {
     });
   };
 
+  const isMobile = useMediaQuery("(max-width: 425px)");
+
+
   return (
     <Box mih="95vh">
       <Flex direction="column" justify="space-between" h="100%">
@@ -53,9 +56,10 @@ function CategoriesPage({ paginatedCategories }: CategoriesPageProps) {
 
           <Paper bg="primary.9" p={16} radius="md">
             <PageHeader
+              wrap="wrap"
               mb={16}
               rightSection={
-                <Button onClick={onOpenCategoryModal} leftSection={<Plus size={20} />} color="lime">
+                <Button  fullWidth={isMobile} onClick={onOpenCategoryModal} leftSection={<Plus size={20} />} color="lime">
                   Category
                 </Button>
               }

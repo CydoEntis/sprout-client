@@ -1,11 +1,11 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
-import { Button, Stack, Title, Text, Flex, Group, Paper, Pagination, Switch, Divider } from "@mantine/core";
-import { Heart, List, Plus, Users } from "lucide-react";
+import { Button, Stack, Text, Flex, Group, Paper, Pagination, Switch, Divider } from "@mantine/core";
+import { Heart, Plus, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import { TaskListDetails, TaskListItem } from "../shared/tasks.types";
 import { useTaskListItemHandlers } from "../hooks/useTaskListItemHandlers";
 
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { useState } from "react";
 import LazyEditDeleteMenu from "../../../lazy-components/menus/LazyEditDeleteMenu";
 import { useDeleteTaskListMutation } from "../services/task-list/delete-task-list.service";
@@ -93,6 +93,9 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
   };
 
   const [canRemove, setCanRemove] = useState(false);
+
+  const isMobile = useMediaQuery("(max-width: 425px)");
+
   return (
     <>
       <UpdateTaskListModal
@@ -124,15 +127,16 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
         <Stack justify="space-between" gap={8}>
           <Stack gap={8}>
             <Flex justify="space-between">
-              <Group gap={8}>
+              <Text size="2rem" fw={700}>
+                {tasklist.name}{" "}
                 <Heart
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", verticalAlign: "middle" }}
+                  size={20}
                   fill={tasklist.isFavorited ? "#E03131" : "none"}
                   color={tasklist.isFavorited ? "#E03131" : "gray"}
                   onClick={handleFavoriteToggle}
                 />
-                <Title>{tasklist.name}</Title>
-              </Group>
+              </Text>
               <LazyEditDeleteMenu
                 withBorder
                 withShadow
@@ -154,7 +158,7 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
             />
             {tasklist.role !== TaskListRole.Viewer && (
               <Button variant="subtle" color="gray" onClick={openManageMembersModal} leftSection={<Users size={20} />}>
-                Manage Members
+                Members
               </Button>
             )}
           </Flex>
@@ -175,15 +179,14 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
             <Flex justify="space-between" align="start">
               <Stack gap={16}>
                 <Group>
-                  <List size={28} color="#82827F" />
-                  <Text c="dimmed">
-                    {tasklist.completedTasksCount} of {tasklist.totalTasksCount} items completed
+                  <Text c="dimmed" size={isMobile ? "sm" : "md"}>
+                    {tasklist.completedTasksCount} of {tasklist.totalTasksCount} complete
                   </Text>
                 </Group>
-                <Switch label="Remove Items" color="lime" onChange={(e) => setCanRemove(e.currentTarget.checked)} />
+                <Switch label="Remove" color="lime" onChange={(e) => setCanRemove(e.currentTarget.checked)} />
               </Stack>
               <Button onClick={showCreateItem} leftSection={<Plus size={20} />} color="lime">
-                New Item
+                Item
               </Button>
             </Flex>
             <Divider />

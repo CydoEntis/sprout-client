@@ -1,4 +1,5 @@
-import { Flex, FlexProps, Text } from "@mantine/core";
+import { Flex, FlexProps, Text, Box } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import React from "react";
 
 type PageHeaderProps = {
@@ -8,25 +9,25 @@ type PageHeaderProps = {
   textAlign?: React.CSSProperties["textAlign"];
 } & FlexProps;
 
-function PageHeader({
-  leftSection,
-  rightSection,
-  children,
-  textAlign = "left",
-  align = "center",
-  justify = "center",
-  w = "100%",
-  h = "auto",
-  gap = 8,
-  ...rest
-}: PageHeaderProps) {
+function PageHeader({ leftSection, rightSection, children, textAlign = "left", ...rest }: PageHeaderProps) {
+  const isMobile = useMediaQuery("(max-width: 425px)");
+
   return (
-    <Flex justify={justify} align={align} w={w} h={h} gap={gap} {...rest}>
-      {leftSection && <div>{leftSection}</div>}
+    <Flex
+      direction={isMobile ? "column" : "row"}
+      justify={isMobile ? "flex-start" : "space-between"}
+      align={isMobile ? "stretch" : "center"}
+      w="100%"
+      gap={isMobile ? "sm" : "md"}
+      {...rest}
+    >
+      <Box>{leftSection}</Box>
 
-      <div style={{ flex: 1, textAlign }}>{typeof children === "string" ? <Text>{children}</Text> : children}</div>
+      <Box style={{ flex: 1, textAlign }}>
+        {typeof children === "string" ? <Text size="lg">{children}</Text> : children}
+      </Box>
 
-      {rightSection && <div>{rightSection}</div>}
+      {rightSection && <Box>{rightSection}</Box>}
     </Flex>
   );
 }

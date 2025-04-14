@@ -1,6 +1,7 @@
-import { Group, TextInput, ActionIcon, Select } from "@mantine/core";
+import { Group, TextInput, ActionIcon, Select, Box } from "@mantine/core";
 import { Search as SearchIcon, ArrowDownNarrowWide, ArrowUpNarrowWide } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
+import { useMediaQuery } from "@mantine/hooks";
 
 type FilterSortControlsProps = {
   route: string;
@@ -11,6 +12,7 @@ type FilterSortControlsProps = {
 
 const FilterSortControls = ({ route, searchParams, sortByOptions }: FilterSortControlsProps) => {
   const navigate = useNavigate();
+  const isMobile = useMediaQuery("(max-width: 425px)");
 
   const updateSearchParams = (updates: Partial<typeof searchParams>) => {
     navigate({
@@ -31,28 +33,31 @@ const FilterSortControls = ({ route, searchParams, sortByOptions }: FilterSortCo
   };
 
   return (
-    <Group justify="end" gap={16} align="end">
-      <TextInput
-        w={300}
-        classNames={{ input: "input" }}
-        label="Search"
-        placeholder="Search..."
-        leftSection={<SearchIcon size={16} />}
-        value={searchParams.search || ""}
-        onChange={(e) => handleSearchChange(e.currentTarget.value)}
-      />
-      <Select
-        w={150}
-        classNames={{ input: "input" }}
-        label="Sort by"
-        data={sortByOptions}
-        value={searchParams.sortBy || ""}
-        onChange={handleSortByChange}
-      />
+    <Group w="100%" justify={isMobile ? "start" : "flex-end"} align="end" wrap="wrap" gap="sm">
+      <Box w={isMobile ? "100%" : 300}>
+        <TextInput
+          w="100%"
+          label="Search"
+          placeholder="Search..."
+          leftSection={<SearchIcon size={16} />}
+          value={searchParams.search || ""}
+          onChange={(e) => handleSearchChange(e.currentTarget.value)}
+        />
+      </Box>
 
-      <ActionIcon onClick={toggleSortDirection} size="lg" c="inverse" color="secondary.9">
-        {searchParams.sortDirection === "asc" ? <ArrowUpNarrowWide size={20} /> : <ArrowDownNarrowWide size={20} />}
-      </ActionIcon>
+      <Group align="end" gap="sm" wrap="nowrap">
+        <Select
+          w={isMobile ? "100%" : 150}
+          label="Sort by"
+          data={sortByOptions}
+          value={searchParams.sortBy || ""}
+          onChange={handleSortByChange}
+        />
+
+        <ActionIcon onClick={toggleSortDirection} size="lg" c="inverse" color="secondary.9" mt={isMobile ? 22 : 0}>
+          {searchParams.sortDirection === "asc" ? <ArrowUpNarrowWide size={20} /> : <ArrowDownNarrowWide size={20} />}
+        </ActionIcon>
+      </Group>
     </Group>
   );
 };

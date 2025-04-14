@@ -1,7 +1,7 @@
 import { Box, Button, Title, SimpleGrid, Pagination, Paper, Flex, Stack } from "@mantine/core";
 import { Plus } from "lucide-react";
 import { motion } from "framer-motion";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import LazyIcon from "../lazy-components/icons/LazyIcon";
 import { getIconByTag } from "../features/category/shared/category.helpers";
@@ -54,6 +54,8 @@ function CategoryTaskListPage({ taskLists, category }: CategoryTaskListPageProps
   const page = searchParams.page || 1;
   const navigate = useNavigate();
 
+  const isMobile = useMediaQuery("(max-width: 425px)");
+
   const handlePageChange = (newPage: number) => {
     navigate({
       to: `/categories/${categoryName}`,
@@ -78,7 +80,12 @@ function CategoryTaskListPage({ taskLists, category }: CategoryTaskListPageProps
                 />
               }
               rightSection={
-                <Button onClick={onOpenCreateTaskListWithCategoryModal} leftSection={<Plus size={20} />} color="lime">
+                <Button
+                  onClick={onOpenCreateTaskListWithCategoryModal}
+                  leftSection={<Plus size={20} />}
+                  color="lime"
+                  fullWidth={isMobile}
+                >
                   Task List
                 </Button>
               }
