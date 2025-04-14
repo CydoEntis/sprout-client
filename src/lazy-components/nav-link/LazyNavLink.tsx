@@ -20,7 +20,7 @@ function LazyNavLink({
   onClick,
   active,
 }: LazyNavLinkProps) {
-  const linkClasses = `${className} ${active ? activeClassName : ""}`.trim(); // Use passed-in active state
+  const linkClasses = `${className} ${active ? activeClassName : ""}`.trim(); 
 
   return to ? (
     <LazyLink to={to} className={linkClasses} params={params}>

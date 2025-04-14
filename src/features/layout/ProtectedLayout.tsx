@@ -1,7 +1,7 @@
 import LazySidebarLayout from "../../lazy-components/layouts/sidebar-layout/LazySidebarLayout";
 import { useDisclosure } from "@mantine/hooks";
 import { Box, NavLink, Paper, Stack, Title, Flex, Group } from "@mantine/core";
-import { Link, useLocation, useNavigate } from "@tanstack/react-router";
+import { Link, useMatchRoute, useNavigate } from "@tanstack/react-router";
 import { Calendar, Grid2x2Plus, Heart, LogOut, Plus, Sprout, Star } from "lucide-react";
 import React from "react";
 import ThemeToggle from "../../components/theme/ThemeToggle";
@@ -13,9 +13,9 @@ import localStorageService from "../../services/localStorage.service";
 import LazyIcon from "../../lazy-components/icons/LazyIcon";
 
 function ProtectedLayout() {
-  const location = useLocation();
   const [isSidebarOpened, { toggle: toggleSidebar }] = useDisclosure();
   const navigate = useNavigate();
+  const matchRoute = useMatchRoute();
   const { logoutUser: logoutClient } = useAuthStore();
 
   const handleLogout = async () => {
@@ -64,7 +64,7 @@ function ProtectedLayout() {
       />
       <LazySidebarLayout
         logo={
-          <Group gap={8} align="center ">
+          <Group gap={8} align="center">
             <LazyIcon icon={<Sprout color="#A9E34B" />} backgroundColor="lime" />
             <Title size="1.45rem">Sprout</Title>
           </Group>
@@ -83,7 +83,7 @@ function ProtectedLayout() {
                       fontSize: "1.25rem",
                       marginBottom: "12px",
                     }}
-                    color="inverse.7"
+                    color="gray.6"
                     component={Link}
                     label={label}
                     leftSection={
@@ -101,7 +101,7 @@ function ProtectedLayout() {
                     }
                     childrenOffset={28}
                     to={to}
-                    active={location.pathname === to}
+                    active={Boolean(matchRoute({ to, fuzzy: true }))}
                   />
                 </motion.div>
               ))}
@@ -114,7 +114,7 @@ function ProtectedLayout() {
                 fontSize: "1.25rem",
               }}
               leftSection={<Plus size={20} />}
-              color="inverse.7"
+              color="inverse"
               label="New List"
               onClick={onOpenCreateTaskListWithCategoryModal}
             />
@@ -126,7 +126,7 @@ function ProtectedLayout() {
                     fontSize: "1.25rem",
                   }}
                   leftSection={<LogOut size={20} />}
-                  color="inverse.7"
+                  color="inverse"
                   label="Logout"
                   onClick={handleLogout}
                 />

@@ -18,7 +18,7 @@ function LazySidebarLayout({ isSidebarOpened, onToggle, logo, children }: LazySi
       padding={{ base: 0, sm: 0, md: "xs" }}
       withBorder={false}
     >
-      <AppShell.Header>
+      <AppShell.Header bg="primary.9">
         <Flex h="100%" justify="space-between" align="center" px={16}>
           {logo}
           <Burger opened={isSidebarOpened} onClick={onToggle} hiddenFrom="sm" size="sm" />

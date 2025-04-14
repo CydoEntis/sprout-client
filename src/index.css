@@ -54,8 +54,8 @@ body {
   color: #FFF;
 }
 
-:focus {
+/* :focus {
   outline: 2px solid var(--accent) !important;
   border: 1px solid var(--accent) !important;
   outline-offset: 2px;
-}
+} */

@@ -36,6 +36,9 @@ const FilterSortControls = ({ route, searchParams, sortByOptions }: FilterSortCo
     <Group w="100%" justify={isMobile ? "start" : "flex-end"} align="end" wrap="wrap" gap="sm">
       <Box w={isMobile ? "100%" : 300}>
         <TextInput
+          classNames={{
+            input: "input",
+          }}
           w="100%"
           label="Search"
           placeholder="Search..."
@@ -47,6 +50,9 @@ const FilterSortControls = ({ route, searchParams, sortByOptions }: FilterSortCo
 
       <Group align="end" gap="sm" wrap="nowrap">
         <Select
+          classNames={{
+            input: "input",
+          }}
           w={isMobile ? "100%" : 150}
           label="Sort by"
           data={sortByOptions}

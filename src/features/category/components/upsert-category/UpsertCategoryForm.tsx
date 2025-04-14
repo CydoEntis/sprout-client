@@ -102,7 +102,7 @@ function UpsertCategoryForm({ category, onClose }: UpsertCategoryForm) {
           />
         </Flex>
         <Group align="center" justify="end" gap={8}>
-          <Button type="submit" variant="light" color="lime">
+          <Button type="submit"  color="lime">
             {isEditing ? "Update Category" : "Create Category"}
           </Button>
         </Group>
