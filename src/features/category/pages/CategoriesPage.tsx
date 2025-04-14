@@ -1,7 +1,7 @@
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { useState } from "react";
 import { Button, Pagination, Title, Stack, Paper, Flex, Box } from "@mantine/core";
-import { Plus } from "lucide-react";
+import { Grid2X2, Plus } from "lucide-react";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 
 import { Category, PaginatedCategoriesWithTaskListCount } from "../shared/category.types";
@@ -10,6 +10,7 @@ import CategoryList from "../components/category-list/CategoryList";
 import PageHeader from "../../../components/header/PageHeader";
 import FilterSortControls from "../../auth/components/controls/FilterSortControls";
 import LazyText from "../../../lazy-components/text/LazyText";
+import LazyIcon from "../../../lazy-components/icons/LazyIcon";
 
 type CategoriesPageProps = {
   paginatedCategories: PaginatedCategoriesWithTaskListCount;
@@ -47,19 +48,24 @@ function CategoriesPage({ paginatedCategories }: CategoriesPageProps) {
 
   const isMobile = useMediaQuery("(max-width: 425px)");
 
-
   return (
-    <Box mih="calc(95vh - 65px)" >
+    <Box mih="calc(95vh - 65px)">
       <Flex direction="column" justify="space-between" h="100%">
         <Stack gap={16} style={{ flexGrow: 1 }}>
           <UpsertCategoryModal isOpen={isCategoryModalOpened} onClose={closeCategoryModalHandler} category={category} />
 
           <Paper bg="primary.9" p={16} radius="md">
             <PageHeader
+              leftSection={<LazyIcon icon={<Grid2X2 />} size="xl" hasBackground backgroundColor="lime" />}
               wrap="wrap"
               mb={16}
               rightSection={
-                <Button  fullWidth={isMobile} onClick={onOpenCategoryModal} leftSection={<Plus size={20} />} color="lime">
+                <Button
+                  fullWidth={isMobile}
+                  onClick={onOpenCategoryModal}
+                  leftSection={<Plus size={20} />}
+                  color="lime"
+                >
                   Category
                 </Button>
               }
