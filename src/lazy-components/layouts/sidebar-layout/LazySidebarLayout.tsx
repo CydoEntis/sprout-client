@@ -1,7 +1,6 @@
-import { AppShell, Box, Container } from "@mantine/core";
+import { AppShell, Burger, Container, Flex } from "@mantine/core";
 import { Outlet } from "@tanstack/react-router";
 import { ReactNode } from "react";
-import LazyBurger from "../../burger/LazyBurger";
 
 type LazySidebarLayoutProps = {
   isSidebarOpened: boolean;
@@ -14,49 +13,22 @@ type LazySidebarLayoutProps = {
 function LazySidebarLayout({ isSidebarOpened, onToggle, logo, children }: LazySidebarLayoutProps) {
   return (
     <AppShell
+      header={{ height: 65 }}
       navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !isSidebarOpened } }}
       padding={{ base: 0, sm: 0, md: "xs" }}
       withBorder={false}
-      h="100%"
     >
-      {!isSidebarOpened && (
-        <LazyBurger
-          pos="fixed"
-          top={10}
-          left={10}
-          p={5}
-          style={{ zIndex: 1000 }}
-          burgerProps={{
-            opened: isSidebarOpened,
-            onClick: onToggle,
-            hiddenFrom: "sm",
-            size: "sm",
-          }}
-        />
-      )}
+      <AppShell.Header>
+        <Flex h="100%" justify="space-between" align="center" px={16}>
+          {logo}
+          <Burger opened={isSidebarOpened} onClick={onToggle} hiddenFrom="sm" size="sm" />
+        </Flex>
+      </AppShell.Header>
 
-      <AppShell.Navbar bg="primary.9">
-        <AppShell.Section>
-          {isSidebarOpened && (
-            <LazyBurger
-              p={5}
-              burgerProps={{
-                opened: isSidebarOpened,
-                onClick: onToggle,
-                hiddenFrom: "sm",
-                size: "sm",
-              }}
-            />
-          )}
-          <Box px={16} pt={16}>
-            {logo}
-          </Box>
-        </AppShell.Section>
-        {children}
-      </AppShell.Navbar>
+      <AppShell.Navbar bg="primary.9">{children}</AppShell.Navbar>
 
-      <AppShell.Main py={25}>
-        <Container size="xl" >
+      <AppShell.Main py={25} h="100%">
+        <Container size="xl" pt={60}>
           <Outlet />
         </Container>
       </AppShell.Main>

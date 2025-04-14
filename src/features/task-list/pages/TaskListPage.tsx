@@ -1,5 +1,5 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
-import { Button, Stack, Text, Flex, Group, Paper, Pagination, Switch, Divider } from "@mantine/core";
+import { Button, Stack, Text, Flex, Group, Paper, Pagination, Switch, Divider, Box } from "@mantine/core";
 import { Heart, Plus, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import { TaskListDetails, TaskListItem } from "../shared/tasks.types";
@@ -97,7 +97,7 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
   const isMobile = useMediaQuery("(max-width: 425px)");
 
   return (
-    <>
+    <Box mih="calc(95vh - 65px)">
       <UpdateTaskListModal
         isOpen={isUpdateTaskListModalOpened}
         onClose={closeUpdateTaskListModal}
@@ -170,7 +170,7 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
         bg="primary.9"
         p={16}
         radius="lg"
-        mih="83vh"
+        mih="78vh"
         pos="relative"
         style={{ display: "flex", flexDirection: "column" }}
       >
@@ -260,7 +260,7 @@ function TaskListDetailsPage({ tasklist, paginatedItems }: TaskListDetailsPagePr
           </Flex>
         </Stack>
       </Paper>
-    </>
+    </Box>
   );
 }
 

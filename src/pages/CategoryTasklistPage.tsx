@@ -64,7 +64,7 @@ function CategoryTaskListPage({ taskLists, category }: CategoryTaskListPageProps
   };
 
   return (
-    <Box h="95vh">
+    <Box mih="calc(95vh - 65px)">
       <UpsertTaskListModal isOpen={isUpsertTaskListModalOpened} onClose={handleClose} tasklist={selectedTaskList} />
       <Flex direction="column" justify="space-between" h="100%">
         <Stack gap={16} style={{ flexGrow: 1 }}>

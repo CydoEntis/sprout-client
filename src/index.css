@@ -14,7 +14,6 @@
   --secondary: #2c2c2c;
 }
 
-
 body {
   background-color: var(--secondary) !important;
 }
@@ -49,3 +48,4 @@ body {
   background-color: var(--primary) !important;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+

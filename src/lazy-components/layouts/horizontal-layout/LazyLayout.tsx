@@ -1,22 +1,44 @@
-import { AppShell, Burger, Container, rem } from "@mantine/core";
+import { AppShell, Burger, Container, Flex, rem } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { Outlet } from "@tanstack/react-router";
-import { LazyLayoutProps } from "../layout.types";
-import { useDisclosure } from "@mantine/hooks";
 
-function LazyLayout({ children }: LazyLayoutProps) {
-  const [opened, { toggle }] = useDisclosure();
+export type LazyLayoutProps = {
+  children?: React.ReactNode;
+  isSidebarOpened: boolean;
+  onToggle: () => void;
+  navbar: React.ReactNode;
+};
+
+function LazyLayout({ children, isSidebarOpened, onToggle, navbar }: LazyLayoutProps) {
+  const isMobile = useMediaQuery("(max-width: 425px)");
 
   return (
-    <AppShell padding="md" navbar={{ width: 300, breakpoint: "sm", collapsed: { desktop: true, mobile: !opened } }}>
+    <AppShell
+      header={{ height: 65 }}
+      navbar={{
+        width: isMobile ? 300 : 0,
+        breakpoint: "sm",
+        collapsed: { mobile: !isSidebarOpened },
+      }}
+      padding={{ base: 0, sm: 0, md: "xs" }}
+    >
       <AppShell.Header bg="primary.9" withBorder={false}>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-        <Container size="md">{children}</Container>
+        <Container size="md" py={8}>
+          <Flex justify="space-between" align="center">
+            {children}
+            {isMobile && <Burger opened={isSidebarOpened} onClick={onToggle} hiddenFrom="sm" size="sm" />}
+          </Flex>
+        </Container>
       </AppShell.Header>
 
+      {isMobile && (
+        <AppShell.Navbar bg="primary.9" p={16} hidden={!isSidebarOpened}>
+          {navbar}
+        </AppShell.Navbar>
+      )}
+
       <AppShell.Main bg="secondary.9" pt={`calc(${rem(60)} + var(--mantine-spacing-md))`}>
-        <Container size="md" pt={32}>
-          <Outlet />
-        </Container>
+        <Outlet />
       </AppShell.Main>
     </AppShell>
   );

@@ -1,39 +1,75 @@
-import { Title } from "@mantine/core";
+import { Flex, Stack, Title } from "@mantine/core";
+import { useRouterState } from "@tanstack/react-router";
 
-import { useNavigate } from "@tanstack/react-router";
-import useAuthStore from "../../stores/useAuthStore";
-import LocalStorageService from "../../services/localStorage.service";
-import { logoutUser } from "../auth/services/logout.service";
-
-import HorizontalNavLinks from "../navigation/HorizontalNavLinks";
-import LazyHorizontalNavbar from "../../lazy-components/nav-bar/horizontal-navbar/LazyHorizontalNavbar";
 import LazyLayout from "../../lazy-components/layouts/horizontal-layout/LazyLayout";
+import LazyNavLink from "../../lazy-components/nav-link/LazyNavLink";
+import ThemeToggle from "../../components/theme/ThemeToggle";
+import LazyIcon from "../../lazy-components/icons/LazyIcon";
+import { Sprout } from "lucide-react";
+
+import styles from "./layout.module.css";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 
 function PublicLayout() {
-  const { user, logoutUser: logout } = useAuthStore();
-  const navigate = useNavigate();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isMobile = useMediaQuery("(max-width: 425px)");
+  const [isSidebarOpened, { toggle: toggleSidebar }] = useDisclosure();
 
-  const handleLogout = async () => {
-    try {
-      await logoutUser();
-      logout();
-      LocalStorageService.removeItem("taskgarden");
-      navigate({ to: "/login" });
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
-
-  const navbar = (
-    <LazyHorizontalNavbar
-      justify="space-between"
-      logo={<Title size="1.5rem">Task Garden</Title>}
-      navbar={<>{user ? <HorizontalNavLinks.Private onLogout={handleLogout} /> : <HorizontalNavLinks.Public />}</>}
-    ></LazyHorizontalNavbar>
+  return (
+    <LazyLayout
+      isSidebarOpened={isSidebarOpened}
+      onToggle={toggleSidebar}
+      navbar={
+        <Stack gap={16}>
+          <LazyNavLink
+            to="/login"
+            className={styles.navlink}
+            activeClassName={styles.active}
+            active={pathname === "/login"}
+          >
+            Login
+          </LazyNavLink>
+          <LazyNavLink
+            to="/register"
+            className={styles.navlink}
+            activeClassName={styles.active}
+            active={pathname === "/register"}
+          >
+            Register
+          </LazyNavLink>
+          <ThemeToggle />
+        </Stack>
+      }
+    >
+      <Flex direction="row" justify="space-between" align="center" gap={8} style={{ width: "100%" }}>
+        <Flex gap={8} align="center" direction="row">
+          <LazyIcon icon={<Sprout color="#A9E34B" />} backgroundColor="lime" />
+          <Title size="1.45rem">Sprout</Title>
+        </Flex>
+        {!isMobile && (
+          <Flex gap={8} direction="row" align="flex-end">
+            <LazyNavLink
+              to="/login"
+              className={styles.navlink}
+              activeClassName={styles.active}
+              active={pathname === "/login"}
+            >
+              Login
+            </LazyNavLink>
+            <LazyNavLink
+              to="/register"
+              className={styles.navlink}
+              activeClassName={styles.active}
+              active={pathname === "/register"}
+            >
+              Register
+            </LazyNavLink>
+            <ThemeToggle />
+          </Flex>
+        )}
+      </Flex>
+    </LazyLayout>
   );
-
-
-  return <LazyLayout>{navbar}</LazyLayout>;
 }
 
 export default PublicLayout;
