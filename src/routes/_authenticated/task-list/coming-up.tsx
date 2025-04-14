@@ -3,22 +3,38 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Paper, Stack, Group, Title, Text, Divider, Checkbox, Accordion, Badge } from "@mantine/core";
 import { Calendar, Star } from "lucide-react";
 
+import LoadingSkeleton from "../../../components/loaders/LoadingSkeleton";
 import LazyHeader from "../../../lazy-components/header/LazyHeader";
 import LazyIcon from "../../../lazy-components/icons/LazyIcon";
 import LazyText from "../../../lazy-components/text/LazyText";
-import { getIconByTag } from "../../../features/category/shared/category.helpers";
-import { ValidIconTags } from "../../../util/types/valid-icon.types";
-import { useUpdateTaskListStatusItemMutation } from "../../../features/task-list/services/task-list-items/update-status-task-list.service";
-import { getTaskListItemsDueForTheWeekQueryOptions } from "../../../features/task-list/services/task-list-items/get-task-list-items-due-for-the-week.service";
 import LazyDate from "../../../lazy-components/date/LazyDate";
 
+import { useUpdateTaskListStatusItemMutation } from "../../../features/task-list/services/task-list-items/update-status-task-list.service";
+import { getTaskListItemsDueForTheWeekQueryOptions } from "../../../features/task-list/services/task-list-items/get-task-list-items-due-for-the-week.service";
+import { PaginationParams } from "../../../util/types/shared.types";
+import FilterSortControls from "../../../features/auth/components/controls/FilterSortControls";
+
 export const Route = createFileRoute("/_authenticated/task-list/coming-up")({
-  validateSearch: (params: Record<string, string | number>) => {
+  loaderDeps: ({ search: { page, search, sortBy, sortDirection } }) => ({
+    page,
+    search,
+    sortBy,
+    sortDirection,
+  }),
+  loader: async ({ context, deps }) => {
+    const { queryClient } = context;
+    await queryClient.ensureQueryData(getTaskListItemsDueForTheWeekQueryOptions(deps));
+  },
+  validateSearch: (params: Record<string, string | number>): PaginationParams => {
     return {
       page: params.page ? parseInt(params.page as string) : 1,
+      search: typeof params.search === "string" ? params.search : "",
+      sortBy: (params.sortBy as string) || "date",
+      sortDirection: (params.sortDirection as string) || "asc",
     };
   },
   component: RouteComponent,
+  pendingComponent: () => <LoadingSkeleton numberOfSkeletons={12} height={160} />,
 });
 
 function getColorByDaysAway(date: Date): string {
@@ -33,11 +49,10 @@ function getColorByDaysAway(date: Date): string {
 }
 
 function RouteComponent() {
-  const { page } = useSearch({ from: "/_authenticated/task-list/coming-up" });
+  const searchParams = useSearch({ from: "/_authenticated/task-list/coming-up" });
 
-  const { data: dueForWeek } = useSuspenseQuery(getTaskListItemsDueForTheWeekQueryOptions(page));
-
-  const { mutateAsync: toggleStatus } = useUpdateTaskListStatusItemMutation(0, page);
+  const { data: dueForWeek } = useSuspenseQuery(getTaskListItemsDueForTheWeekQueryOptions(searchParams));
+  const { mutateAsync: toggleStatus } = useUpdateTaskListStatusItemMutation(0, searchParams.page!);
 
   const onChange = async (itemId: number, taskListId: number, isCompleted: boolean) => {
     try {
@@ -64,6 +79,15 @@ function RouteComponent() {
               </Stack>
             </Group>
           </Stack>
+          <FilterSortControls
+            route="/task-list/coming-up"
+            searchParams={searchParams}
+            sortByOptions={[
+              { value: "duedate", label: "Due Date" },
+              { value: "description", label: "Description" },
+              { value: "completed", label: "Completed" },
+            ]}
+          />
         </Stack>
       </Paper>
 

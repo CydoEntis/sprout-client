@@ -1,23 +1,26 @@
-import { useQuery } from "@tanstack/react-query";
-import { Paginated } from "../../../../util/types/shared.types";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 import { apiRequest } from "../../../../api/apiRequest";
 import endpoints from "../../../../api/endpoints";
+import { Paginated, PaginationParams } from "../../../../util/types/shared.types";
 import { TaskListItemsDueThisWeekByCategory } from "../../shared/tasks.types";
 
 export const getTaskListItemsDueForTheWeek = async (
-  page: number
+  params: PaginationParams
 ): Promise<Paginated<TaskListItemsDueThisWeekByCategory>> => {
-  return apiRequest<Paginated<TaskListItemsDueThisWeekByCategory>>("get", `${endpoints.tasklist}/coming-up`, {
-    params: { page },
-  });
+  const queryParams = new URLSearchParams(params as Record<string, string>);
+  return apiRequest<Paginated<TaskListItemsDueThisWeekByCategory>>(
+    "get",
+    `${endpoints.tasklist}/coming-up?${queryParams.toString()}`
+  );
 };
 
-export const getTaskListItemsDueForTheWeekQueryOptions = (page: number) => ({
-  queryKey: ["task-list", "coming-up", page],
-  queryFn: () => getTaskListItemsDueForTheWeek(page),
-  staleTime: 0,
-});
+export const getTaskListItemsDueForTheWeekQueryOptions = (params: PaginationParams) =>
+  queryOptions({
+    queryKey: ["task-list", "coming-up", params],
+    queryFn: () => getTaskListItemsDueForTheWeek(params),
+    staleTime: 0,
+  });
 
-export const useTaskListItemsDueForTheWeek = (page: number) => {
-  return useQuery(getTaskListItemsDueForTheWeekQueryOptions(page));
+export const useTaskListItemsDueForTheWeek = (params: PaginationParams) => {
+  return useQuery(getTaskListItemsDueForTheWeekQueryOptions(params));
 };
