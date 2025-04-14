@@ -1,4 +1,4 @@
-import { createFileRoute, useSearch } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import LazyHeader from "../../../lazy-components/header/LazyHeader";
 import LazyIcon from "../../../lazy-components/icons/LazyIcon";
@@ -11,6 +11,7 @@ import LazyText from "../../../lazy-components/text/LazyText";
 import { getTaskListItemsDueByDateQueryOptions } from "../../../features/task-list/services/task-list-items/get-task-list-items-due-today.service";
 import FilterSortControls from "../../../features/auth/components/controls/FilterSortControls";
 import { PaginationParams } from "../../../util/types/shared.types";
+import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/_authenticated/task-list/today")({
   loaderDeps: ({ search: { page, search, sortBy, sortDirection } }) => ({
@@ -36,8 +37,23 @@ export const Route = createFileRoute("/_authenticated/task-list/today")({
   component: RouteComponent,
 });
 
+const containerVariants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+};
+
 function RouteComponent() {
   const searchParams = useSearch({ from: "/_authenticated/task-list/today" });
+  const navigate = useNavigate();
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -57,10 +73,11 @@ function RouteComponent() {
     }
   };
 
-  // Handle Pagination
   const handlePageChange = (newPage: number) => {
-    // Update the page in the search params
-    searchParams.page = newPage;
+    navigate({
+      to: "/task-list/today",
+      search: { ...searchParams, page: newPage },
+    });
   };
 
   return (
@@ -88,60 +105,69 @@ function RouteComponent() {
         />
       </Paper>
 
-      <Stack gap={16}>
-        {dueToday.items.map((category) => (
-          <Paper
-            shadow="md"
-            bg="primary.9"
-            p={16}
-            radius="lg"
-            pos="relative"
-            style={{ display: "flex", flexDirection: "column" }}
-          >
-            <Stack gap={16} mb={32} key={category.categoryId}>
-              <Stack gap={16}>
-                <LazyHeader
-                  leftSection={
-                    <LazyIcon
-                      icon={getIconByTag(category.categoryTag as ValidIconTags)}
-                      size="xl"
-                      iconColor="white"
-                      hasBackground
-                      backgroundColor={category.categoryColor}
-                    />
-                  }
-                >
-                  <Stack gap={0}>
-                    <Title>{category.categoryName.charAt(0).toUpperCase() + category.categoryName.slice(1)}</Title>
-                    <LazyText
-                      c="dimmed"
-                      text={`You have ${category.dueCount} items due today`}
-                      highlight={category.dueCount}
-                      highlightColor={category.categoryColor}
-                    />
+      <motion.div variants={containerVariants} initial="hidden" animate="show">
+        <Stack gap={16}>
+          {dueToday.items.map((category) => (
+            <motion.div key={category.categoryId} variants={itemVariants}>
+              <Paper
+                shadow="md"
+                bg="primary.9"
+                p={16}
+                radius="lg"
+                pos="relative"
+                style={{ display: "flex", flexDirection: "column" }}
+              >
+                <Stack gap={16} mb={32}>
+                  <Stack gap={16}>
+                    <LazyHeader
+                      leftSection={
+                        <LazyIcon
+                          icon={getIconByTag(category.categoryTag as ValidIconTags)}
+                          size="xl"
+                          iconColor="white"
+                          hasBackground
+                          backgroundColor={category.categoryColor}
+                        />
+                      }
+                    >
+                      <Stack gap={0}>
+                        <Title>{category.categoryName.charAt(0).toUpperCase() + category.categoryName.slice(1)}</Title>
+                        <LazyText
+                          c="dimmed"
+                          text={`You have ${category.dueCount} items due today`}
+                          highlight={category.dueCount}
+                          highlightColor={category.categoryColor}
+                        />
+                      </Stack>
+                    </LazyHeader>
+                    <Divider c="inverse" size="md" />
                   </Stack>
-                </LazyHeader>
-                <Divider c="inverse" size="md" />
-              </Stack>
-              <Stack gap={8}>
-                {category.items.map((item) => (
-                  <Group key={item.id}>
-                    <Checkbox
-                      checked={item.isCompleted}
-                      onChange={(event) => onChange(item.id, item.taskListId, event.currentTarget.checked)}
-                      color="lime"
-                      size="md"
-                    />
-                    <Text size="lg" style={{ textDecoration: item.isCompleted ? "line-through" : "none" }}>
-                      {item.description}
-                    </Text>
-                  </Group>
-                ))}
-              </Stack>
-            </Stack>
-          </Paper>
-        ))}
-      </Stack>
+                  <Stack gap={8}>
+                    {category.items.map((item) => (
+                      <Group key={item.id}>
+                        <Checkbox
+                          checked={item.isCompleted}
+                          onChange={(event) => onChange(item.id, item.taskListId, event.currentTarget.checked)}
+                          color="lime"
+                          size="md"
+                        />
+                        <Text
+                          size="lg"
+                          style={{
+                            textDecoration: item.isCompleted ? "line-through" : "none",
+                          }}
+                        >
+                          {item.description}
+                        </Text>
+                      </Group>
+                    ))}
+                  </Stack>
+                </Stack>
+              </Paper>
+            </motion.div>
+          ))}
+        </Stack>
+      </motion.div>
 
       {dueToday.totalPages > 1 && (
         <Paper bg="primary.9" p={16} radius="md" mt={32}>

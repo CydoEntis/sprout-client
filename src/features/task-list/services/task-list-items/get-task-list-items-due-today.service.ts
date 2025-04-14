@@ -14,9 +14,9 @@ export const getTaskListItemsDueByDate = async (
       date,
     })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .filter(([_, v]) => v !== undefined) // Remove undefined values
+      .filter(([_, v]) => v !== undefined) 
       .reduce<Record<string, string>>((acc, [key, value]) => {
-        acc[key] = String(value); // Convert all values to strings
+        acc[key] = String(value);
         return acc;
       }, {})
   );

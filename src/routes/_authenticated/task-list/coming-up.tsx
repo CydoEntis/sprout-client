@@ -1,6 +1,6 @@
-import { createFileRoute, useSearch } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Paper, Stack, Group, Title, Text, Divider, Checkbox, Accordion, Badge } from "@mantine/core";
+import { Paper, Stack, Group, Title, Text, Divider, Checkbox, Badge, Pagination, Flex } from "@mantine/core";
 import { Calendar, Star } from "lucide-react";
 
 import LoadingSkeleton from "../../../components/loaders/LoadingSkeleton";
@@ -41,7 +41,6 @@ function getColorByDaysAway(date: Date): string {
   const now = new Date();
   const diffTime = date.getTime() - now.getTime();
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
   if (diffDays <= 1) return "red";
   if (diffDays <= 3) return "orange";
   if (diffDays <= 5) return "yellow";
@@ -50,6 +49,7 @@ function getColorByDaysAway(date: Date): string {
 
 function RouteComponent() {
   const searchParams = useSearch({ from: "/_authenticated/task-list/coming-up" });
+  const navigate = useNavigate();
 
   const { data: dueForWeek } = useSuspenseQuery(getTaskListItemsDueForTheWeekQueryOptions(searchParams));
   const { mutateAsync: toggleStatus } = useUpdateTaskListStatusItemMutation(0, searchParams.page!);
@@ -64,6 +64,13 @@ function RouteComponent() {
     } catch (error) {
       console.error("Error updating task list item status:", error);
     }
+  };
+
+  const handlePageChange = (newPage: number) => {
+    navigate({
+      to: "/task-list/coming-up",
+      search: { ...searchParams, page: newPage },
+    });
   };
 
   return (
@@ -91,67 +98,77 @@ function RouteComponent() {
         </Stack>
       </Paper>
 
-      <Accordion radius="lg" variant="separated" defaultValue={dueForWeek.items[0]?.date.toString()}>
-        {dueForWeek.items.map((item) => {
-          const totalTasks = item.categories.reduce((count, category) => count + category.items.length, 0);
-          const urgencyColor = getColorByDaysAway(new Date(item.date));
+      {dueForWeek.items.map((item) => {
+        const totalTasks = item.categories.reduce((count, category) => count + category.items.length, 0);
+        const urgencyColor = getColorByDaysAway(new Date(item.date));
 
-          return (
-            <Accordion.Item py={7} bg="primary.9" key={item.date.toString()} value={item.date.toString()}>
-              <Accordion.Control icon={<LazyIcon size="sm" icon={<Calendar />} backgroundColor={urgencyColor} />}>
-                <Stack gap={0} w="100%">
-                  <LazyDate date={item.date} format="us" />
-                  <LazyText
-                    size="sm"
-                    c="dimmed"
-                    text={`${totalTasks} task${totalTasks === 1 ? "" : "s"} due`}
-                    highlight={totalTasks}
-                    highlightColor={urgencyColor}
-                  />
+        return (
+          <Paper key={item.date.toString()} bg="primary.9" p={16} radius="md" mb={24} shadow="sm">
+            <Group align="center" mb={8}>
+              <LazyIcon size="md" icon={<Calendar />} backgroundColor={urgencyColor} />
+              <Stack gap={0}>
+                <LazyDate date={item.date} format="us" />
+                <LazyText
+                  size="sm"
+                  c="dimmed"
+                  text={`${totalTasks} task${totalTasks === 1 ? "" : "s"} due`}
+                  highlight={totalTasks}
+                  highlightColor={urgencyColor}
+                />
+              </Stack>
+            </Group>
+
+            {item.categories.map((category) => (
+              <Stack key={category.categoryId} gap={12} mt={16}>
+                <Divider c="inverse" size="md" />
+                <LazyHeader>
+                  <Badge variant="outline" color={category.categoryColor}>
+                    {category.categoryName.charAt(0).toUpperCase() + category.categoryName.slice(1)}
+                  </Badge>
+                </LazyHeader>
+
+                <Stack gap={8}>
+                  {category.items.map((task) => (
+                    <Group key={task.id}>
+                      <Checkbox
+                        checked={task.isCompleted}
+                        onChange={(event) => onChange(task.id, task.taskListId, event.currentTarget.checked)}
+                        color="lime"
+                        size="md"
+                      />
+                      <Text
+                        size="lg"
+                        style={{ textDecoration: task.isCompleted ? "line-through" : "none" }}
+                      >
+                        {task.description}
+                      </Text>
+                    </Group>
+                  ))}
                 </Stack>
-              </Accordion.Control>
+              </Stack>
+            ))}
+          </Paper>
+        );
+      })}
 
-              <Accordion.Panel>
-                {item.categories.map((category) => (
-                  <Stack gap={16} mb={32} key={category.categoryId}>
-                    <Divider c="inverse" size="md" />
-                    <Stack gap={16}>
-                      <LazyHeader>
-                        <Stack gap={0}>
-                          <Badge variant="outline" color={category.categoryColor}>
-                            {category.categoryName.charAt(0).toUpperCase() + category.categoryName.slice(1)}
-                          </Badge>
-                        </Stack>
-                      </LazyHeader>
-                    </Stack>
-
-                    <Stack gap={8}>
-                      {category.items.map((task) => (
-                        <Group key={task.id}>
-                          <Checkbox
-                            checked={task.isCompleted}
-                            onChange={(event) => onChange(task.id, task.taskListId, event.currentTarget.checked)}
-                            color="lime"
-                            size="md"
-                          />
-                          <Text
-                            size="lg"
-                            style={{
-                              textDecoration: task.isCompleted ? "line-through" : "none",
-                            }}
-                          >
-                            {task.description}
-                          </Text>
-                        </Group>
-                      ))}
-                    </Stack>
-                  </Stack>
-                ))}
-              </Accordion.Panel>
-            </Accordion.Item>
-          );
-        })}
-      </Accordion>
+      {dueForWeek.totalPages > 1 && (
+        <Paper bg="primary.9" p={16} radius="md" mt={32}>
+          <Flex justify="space-between" align="center">
+            <LazyText
+              text={`page ${searchParams.page} of ${dueForWeek.totalPages}`}
+              highlight={searchParams.page}
+              highlightColor="lime"
+              c="gray"
+            />
+            <Pagination
+              color="lime"
+              value={searchParams.page}
+              onChange={handlePageChange}
+              total={dueForWeek.totalPages}
+            />
+          </Flex>
+        </Paper>
+      )}
     </>
   );
 }
