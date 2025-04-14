@@ -122,7 +122,7 @@ function CategoryTaskListPage({ taskLists, category }: CategoryTaskListPageProps
           )}
         </Stack>
         {taskLists.totalPages > 1 && (
-          <Paper bg="primary.9" p={16} radius="md">
+          <Paper bg="primary.9" p={16} radius="md" mt={32}>
             <Flex justify="space-between" align="center">
               <LazyText
                 text={`page ${page} of ${taskLists.totalPages}`}

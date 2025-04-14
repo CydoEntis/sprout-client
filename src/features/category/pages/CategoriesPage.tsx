@@ -49,7 +49,7 @@ function CategoriesPage({ paginatedCategories }: CategoriesPageProps) {
 
 
   return (
-    <Box mih="calc(95vh - 65px)" style={{ border: "1px solid red" }}>
+    <Box mih="calc(95vh - 65px)" >
       <Flex direction="column" justify="space-between" h="100%">
         <Stack gap={16} style={{ flexGrow: 1 }}>
           <UpsertCategoryModal isOpen={isCategoryModalOpened} onClose={closeCategoryModalHandler} category={category} />
@@ -87,7 +87,7 @@ function CategoriesPage({ paginatedCategories }: CategoriesPageProps) {
         </Stack>
 
         {paginatedCategories.totalPages > 1 && (
-          <Paper bg="primary.9" p={16} radius="md">
+          <Paper bg="primary.9" p={16} radius="md" mt={32}>
             <Flex justify="space-between" align="center">
               <LazyText
                 text={`page ${page} of ${paginatedCategories.totalPages}`}

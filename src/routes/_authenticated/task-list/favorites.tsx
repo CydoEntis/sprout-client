@@ -7,9 +7,8 @@ import FavoritedTaskListsPage from "../../../features/task-list/components/favor
 import { PaginationParams } from "../../../util/types/shared.types";
 
 export const Route = createFileRoute("/_authenticated/task-list/favorites")({
-  loaderDeps: ({ search: { page, pageSize, search, sortBy, sortDirection } }) => ({
+  loaderDeps: ({ search: { page, search, sortBy, sortDirection } }) => ({
     page,
-    pageSize,
     search,
     sortBy,
     sortDirection,
@@ -22,7 +21,6 @@ export const Route = createFileRoute("/_authenticated/task-list/favorites")({
   validateSearch: (search: Record<string, string | number>): PaginationParams => {
     return {
       page: search.page ? parseInt(search.page as string) : 1,
-      pageSize: search.pageSize ? parseInt(search.pageSize as string) : 1,
       search: typeof search.search === "string" ? search.search : "",
       sortBy: (search.sortBy as string) || "createdAt",
       sortDirection: (search.sortDirection as string) || "desc",
@@ -34,8 +32,6 @@ export const Route = createFileRoute("/_authenticated/task-list/favorites")({
 
 function FavoritedTaskListsRoute() {
   const searchParams = useSearch({ from: "/_authenticated/task-list/favorites" });
-  console.log(searchParams.pageSize)
   const { data: taskLists } = useSuspenseQuery(getFavoritedTaskListsQueryOptions(searchParams));
-  console.log(taskLists);
   return <FavoritedTaskListsPage favoritedTaskLists={taskLists} />;
 }
