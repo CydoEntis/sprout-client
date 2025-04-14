@@ -55,7 +55,7 @@ const FavoritedTaskListsPage = ({ favoritedTaskLists }: FavoritedTaskListsPagePr
 
             <Stack mb="md" gap="8">
               <FilterSortControls
-                route="/categories/$categoryName"
+                route="/task-list/favorites"
                 searchParams={searchParams}
                 sortByOptions={[
                   { value: "createdAt", label: "Created At" },
