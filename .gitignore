@@ -25,3 +25,7 @@ dist-ssr
 
 .env
 /certs
+
+/ssl
+Dockerfile
+.dockerignore
