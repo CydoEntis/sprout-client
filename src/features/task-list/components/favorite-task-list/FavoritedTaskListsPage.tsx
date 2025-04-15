@@ -1,15 +1,16 @@
-import { Box, Flex, Paper, Title, SimpleGrid, Pagination, Stack } from "@mantine/core";
+import { Box, Flex, Paper, Title, SimpleGrid, Pagination, Stack, Skeleton } from "@mantine/core";
 import { motion } from "framer-motion";
 import { useSearch, useNavigate } from "@tanstack/react-router";
 
 import { FavoritedTaskList } from "../../shared/tasks.types";
-import { Paginated } from "../../../../util/types/shared.types";
 import FavoritedTaskListCard from "./FavoritedTaskListCard";
 import PageHeader from "../../../../components/header/PageHeader";
 import LazyText from "../../../../lazy-components/text/LazyText";
 import FilterSortControls from "../../../auth/components/controls/FilterSortControls";
 import LazyIcon from "../../../../lazy-components/icons/LazyIcon";
 import { Heart } from "lucide-react";
+import { useGetFavoritedTaskLists } from "../../services/task-list/get-favorite-task-list.service";
+import LoadingSkeleton from "../../../../components/loaders/LoadingSkeleton";
 
 const containerVariants = {
   hidden: { opacity: 1 },
@@ -24,14 +25,12 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
-type FavoritedTaskListsPageProps = {
-  favoritedTaskLists: Paginated<FavoritedTaskList>;
-};
-
-const FavoritedTaskListsPage = ({ favoritedTaskLists }: FavoritedTaskListsPageProps) => {
+const FavoritedTaskListsPage = () => {
   const searchParams = useSearch({ from: "/_authenticated/task-list/favorites" });
   const page = searchParams.page || 1;
   const navigate = useNavigate();
+
+  const { data: paginatedFavorites, isLoading, isFetching } = useGetFavoritedTaskLists(searchParams);
 
   const handlePageChange = (newPage: number) => {
     navigate({
@@ -65,28 +64,34 @@ const FavoritedTaskListsPage = ({ favoritedTaskLists }: FavoritedTaskListsPagePr
               />
             </Stack>
           </Paper>
-
-          <motion.div variants={containerVariants} initial="hidden" animate="show">
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} mt={16}>
-              {favoritedTaskLists.items.map((taskList) => (
-                <motion.div key={taskList.taskListId} variants={itemVariants}>
-                  <FavoritedTaskListCard favoritedTaskList={taskList} />
-                </motion.div>
-              ))}
-            </SimpleGrid>
-          </motion.div>
+          {isLoading || isFetching ? (
+            <>
+              <LoadingSkeleton numberOfSkeletons={16} height={190} />
+              <Skeleton height={64} />
+            </>
+          ) : (
+            <motion.div variants={containerVariants} initial="hidden" animate="show">
+              <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} mt={16}>
+                {paginatedFavorites?.items.map((taskList: FavoritedTaskList) => (
+                  <motion.div key={taskList.taskListId} variants={itemVariants}>
+                    <FavoritedTaskListCard favoritedTaskList={taskList} />
+                  </motion.div>
+                ))}
+              </SimpleGrid>
+            </motion.div>
+          )}
         </Stack>
 
-        {favoritedTaskLists.totalPages > 1 && (
+        {!isLoading && !isFetching && paginatedFavorites?.totalPages && paginatedFavorites.totalPages > 1 && (
           <Paper bg="primary.9" p={16} radius="md" mt={32}>
             <Flex justify="space-between" align="center">
               <LazyText
-                text={`page ${page} of ${favoritedTaskLists.totalPages}`}
+                text={`page ${page} of ${paginatedFavorites.totalPages}`}
                 highlight={page}
                 highlightColor="lime"
                 c="gray"
               />
-              <Pagination color="lime" value={page} onChange={handlePageChange} total={favoritedTaskLists.totalPages} />
+              <Pagination color="lime" value={page} onChange={handlePageChange} total={paginatedFavorites.totalPages} />
             </Flex>
           </Paper>
         )}

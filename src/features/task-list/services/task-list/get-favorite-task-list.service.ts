@@ -5,6 +5,8 @@ import { Paginated, PaginationParams } from "../../../../util/types/shared.types
 import { FavoritedTaskList } from "../../shared/tasks.types";
 
 export const getFavoritedTaskLists = async (params: PaginationParams): Promise<Paginated<FavoritedTaskList>> => {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   const queryParams = new URLSearchParams(params as Record<string, string>);
   return apiRequest("get", `${endpoints.tasklist}/favorites?${queryParams.toString()}`);
 };

@@ -8,6 +8,8 @@ const getAllTaskListsForCategory = async (
   categoryName: string,
   params: PaginationParams
 ): Promise<Paginated<TaskListOverview>> => {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   const queryParams = new URLSearchParams(params as Record<string, string>);
   return apiRequest<Paginated<TaskListOverview>>(
     "get",

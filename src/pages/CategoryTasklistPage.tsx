@@ -1,4 +1,4 @@
-import { Box, Button, Title, SimpleGrid, Pagination, Paper, Flex, Stack } from "@mantine/core";
+import { Box, Button, Title, SimpleGrid, Pagination, Paper, Flex, Stack, Skeleton } from "@mantine/core";
 import { Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
@@ -10,14 +10,14 @@ import { useState } from "react";
 import TaskListCard from "../features/task-list/components/task-card/TaskListCard";
 import UpsertTaskListModal from "../features/task-list/components/upsert-task-list/UpsertTasklistModal";
 import { TaskList, TaskListOverview } from "../features/task-list/shared/tasks.types";
-import { Paginated } from "../util/types/shared.types";
 import { Category } from "../features/category/shared/category.types";
 import LazyText from "../lazy-components/text/LazyText";
 import PageHeader from "../components/header/PageHeader";
 import FilterSortControls from "../features/auth/components/controls/FilterSortControls";
+import { useGetAllTaskListsForCategory } from "../features/category/services/get-all-task-lists-for-category.service";
+import LoadingSkeleton from "../components/loaders/LoadingSkeleton";
 
 type CategoryTaskListPageProps = {
-  taskLists: Paginated<TaskListOverview>;
   category: Category;
 };
 
@@ -36,8 +36,13 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
-function CategoryTaskListPage({ taskLists, category }: CategoryTaskListPageProps) {
+function CategoryTaskListPage({ category }: CategoryTaskListPageProps) {
   const { categoryName } = useParams({ from: "/_authenticated/categories/$categoryName" });
+
+  const searchParams = useSearch({ from: "/_authenticated/categories/$categoryName" });
+  const page = searchParams.page || 1;
+  const navigate = useNavigate();
+
   const [
     isUpsertTaskListModalOpened,
     { open: onOpenCreateTaskListWithCategoryModal, close: onCloseUpsertTaskListModal },
@@ -45,14 +50,12 @@ function CategoryTaskListPage({ taskLists, category }: CategoryTaskListPageProps
 
   const [selectedTaskList, setSelectedTaskList] = useState<undefined | TaskList>(undefined);
 
+  const { data: paginatedTaskLists, isLoading, isFetching } = useGetAllTaskListsForCategory(categoryName, searchParams);
+
   const handleClose = () => {
     setSelectedTaskList(undefined);
     onCloseUpsertTaskListModal();
   };
-
-  const searchParams = useSearch({ from: "/_authenticated/categories/$categoryName" });
-  const page = searchParams.page || 1;
-  const navigate = useNavigate();
 
   const isMobile = useMediaQuery("(max-width: 425px)");
 
@@ -105,32 +108,33 @@ function CategoryTaskListPage({ taskLists, category }: CategoryTaskListPageProps
             </Stack>
           </Paper>
 
-          {taskLists.items.length > 0 ? (
+          {isLoading || isFetching ? (
+            <>
+              <LoadingSkeleton numberOfSkeletons={16} height={190} />
+              <Skeleton height={64} />
+            </>
+          ) : (
             <motion.div variants={containerVariants} initial="hidden" animate="show">
-              <SimpleGrid cols={{ base: 1, md: 2, lg: 4 }} mt={32}>
-                {taskLists.items.map((taskList) => (
+              <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} mt={16}>
+                {paginatedTaskLists?.items.map((taskList: TaskListOverview) => (
                   <motion.div key={taskList.id} variants={itemVariants}>
                     <TaskListCard taskList={taskList} categoryName={categoryName} />
                   </motion.div>
                 ))}
               </SimpleGrid>
             </motion.div>
-          ) : (
-            <Title ta="center" mt={32} c="dimmed">
-              No task lists available
-            </Title>
           )}
         </Stack>
-        {taskLists.totalPages > 1 && (
+        {!isLoading && !isFetching && paginatedTaskLists?.totalPages && paginatedTaskLists.totalPages > 1 && (
           <Paper bg="primary.9" p={16} radius="md" mt={32}>
             <Flex justify="space-between" align="center">
               <LazyText
-                text={`page ${page} of ${taskLists.totalPages}`}
+                text={`page ${page} of ${paginatedTaskLists.totalPages}`}
                 highlight={page}
                 highlightColor="lime"
                 c="gray"
               />
-              <Pagination color="lime" value={page} onChange={handlePageChange} total={taskLists.totalPages} />
+              <Pagination color="lime" value={page} onChange={handlePageChange} total={paginatedTaskLists.totalPages} />
             </Flex>
           </Paper>
         )}

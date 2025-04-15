@@ -1,27 +1,16 @@
-import { createFileRoute, useParams, useSearch } from "@tanstack/react-router";
+import { createFileRoute, useParams } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import LoadingSkeleton from "../../../components/loaders/LoadingSkeleton";
-import { getAllTaskListsForCategoryQueryOptions } from "../../../features/category/services/get-all-task-lists-for-category.service";
 import { getCategoryQueryOptions } from "../../../features/category/services/get-category.service";
 import { PaginationParams } from "../../../util/types/shared.types";
 import CategoryTaskListPage from "../../../pages/CategoryTasklistPage";
 
 export const Route = createFileRoute("/_authenticated/categories/$categoryName")({
-  loaderDeps: ({ search: { page, search, sortBy, sortDirection } }) => ({
-    page,
-    search,
-    sortBy,
-    sortDirection,
-  }),
-  loader: async ({ context, params, deps }) => {
+  loader: async ({ context, params }) => {
     const { queryClient } = context;
     const categoryName = params.categoryName;
 
-    await Promise.all([
-      queryClient.ensureQueryData(getAllTaskListsForCategoryQueryOptions(categoryName, deps)),
-      queryClient.ensureQueryData(getCategoryQueryOptions(categoryName)),
-    ]);
+    await Promise.all([queryClient.ensureQueryData(getCategoryQueryOptions(categoryName))]);
   },
   validateSearch: (search: Record<string, string | number>): PaginationParams => {
     return {
@@ -32,7 +21,6 @@ export const Route = createFileRoute("/_authenticated/categories/$categoryName")
     };
   },
   component: () => <TaskListsPreviewRoute />,
-  pendingComponent: () => <LoadingSkeleton numberOfSkeletons={36} height={235} />,
 });
 
 function TaskListsPreviewRoute() {
@@ -40,12 +28,7 @@ function TaskListsPreviewRoute() {
     from: "/_authenticated/categories/$categoryName",
   });
 
-  const searchParams = useSearch({ from: "/_authenticated/categories/$categoryName" });
-
-  const { data: taskLists } = useSuspenseQuery(getAllTaskListsForCategoryQueryOptions(categoryName, searchParams));
   const { data: category } = useSuspenseQuery(getCategoryQueryOptions(categoryName));
 
-  console.log(taskLists);
-
-  return <CategoryTaskListPage taskLists={taskLists} category={category} />;
+  return <CategoryTaskListPage category={category} />;
 }

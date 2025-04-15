@@ -1,6 +1,6 @@
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { useState } from "react";
-import { Button, Pagination, Title, Stack, Paper, Flex, Box } from "@mantine/core";
+import { Button, Pagination, Title, Stack, Paper, Flex, Box, Skeleton } from "@mantine/core";
 import { Grid2X2, Plus } from "lucide-react";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 
@@ -85,23 +85,24 @@ function CategoriesPage() {
           </Paper>
 
           {isLoading || isFetching ? (
-            <LoadingSkeleton numberOfSkeletons={16} height={190} />
+            <>
+              <LoadingSkeleton numberOfSkeletons={16} height={190} />
+              <Skeleton  height={64} />
+            </>
           ) : (
             <CategoryList
-              categories={paginatedCategories?.items || []} 
+              categories={paginatedCategories?.items || []}
               onOpen={openCategoryCreateModalHandler}
               onEdit={openCategoryEditModalHandler}
-              isLoading={isFetching && !isLoading}
             />
           )}
         </Stack>
 
-        {/* Handle case when paginatedCategories is undefined */}
-        {paginatedCategories?.totalPages && paginatedCategories.totalPages > 1 && (
+        {!isLoading && !isFetching && paginatedCategories?.totalPages && paginatedCategories.totalPages > 1 && (
           <Paper bg="primary.9" p={16} radius="md" mt={32}>
             <Flex justify="space-between" align="center">
               <LazyText
-                text={`page ${page} of ${paginatedCategories?.totalPages}`} // Optional chaining for safety
+                text={`page ${page} of ${paginatedCategories?.totalPages}`}
                 highlight={page}
                 highlightColor="lime"
                 c="gray"
@@ -111,7 +112,7 @@ function CategoriesPage() {
                 color="lime"
                 value={page}
                 onChange={handlePageChange}
-                total={paginatedCategories?.totalPages || 1} // Fallback value for totalPages
+                total={paginatedCategories?.totalPages || 1}
               />
             </Flex>
           </Paper>

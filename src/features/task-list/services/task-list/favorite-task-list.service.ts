@@ -5,6 +5,7 @@ import endpoints from "../../../../api/endpoints";
 import { FavoriteTaskList } from "../../shared/tasks.types";
 
 const favoriteTaskList = async (taskListId: number): Promise<FavoriteTaskList> => {
+  
   return apiRequest("put", `${endpoints.tasklist}/${taskListId}/favorite`);
 };
 
