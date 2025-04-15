@@ -125,19 +125,28 @@ function CategoryTaskListPage({ category }: CategoryTaskListPageProps) {
             </motion.div>
           )}
         </Stack>
-        {!isLoading && !isFetching && paginatedTaskLists?.totalPages && paginatedTaskLists.totalPages > 1 && (
-          <Paper bg="primary.9" p={16} radius="md" mt={32}>
-            <Flex justify="space-between" align="center">
-              <LazyText
-                text={`page ${page} of ${paginatedTaskLists.totalPages}`}
-                highlight={page}
-                highlightColor="lime"
-                c="gray"
-              />
-              <Pagination color="lime" value={page} onChange={handlePageChange} total={paginatedTaskLists.totalPages} />
-            </Flex>
-          </Paper>
-        )}
+        {!isLoading &&
+          !isFetching &&
+          paginatedTaskLists &&
+          paginatedTaskLists.totalPages > 0 &&
+          paginatedTaskLists.items.length > 0 && (
+            <Paper bg="primary.9" p={16} radius="md" mt={32}>
+              <Flex justify="space-between" align="center">
+                <LazyText
+                  text={`page ${page} of ${paginatedTaskLists.totalPages}`}
+                  highlight={page}
+                  highlightColor="lime"
+                  c="gray"
+                />
+                <Pagination
+                  color="lime"
+                  value={page}
+                  onChange={handlePageChange}
+                  total={paginatedTaskLists.totalPages}
+                />
+              </Flex>
+            </Paper>
+          )}
       </Flex>
     </Box>
   );

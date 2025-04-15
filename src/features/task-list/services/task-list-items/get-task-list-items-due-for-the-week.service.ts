@@ -7,6 +7,8 @@ import { TaskListItemsDueThisWeekByCategory } from "../../shared/tasks.types";
 export const getTaskListItemsDueForTheWeek = async (
   params: PaginationParams
 ): Promise<Paginated<TaskListItemsDueThisWeekByCategory>> => {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   const queryParams = new URLSearchParams(params as Record<string, string>);
   return apiRequest<Paginated<TaskListItemsDueThisWeekByCategory>>(
     "get",
