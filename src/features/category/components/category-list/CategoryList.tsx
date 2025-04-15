@@ -28,7 +28,7 @@ function CategoryList({ categories, onEdit }: CategoryListProps) {
   return (
     <Stack gap={16}>
       <motion.div variants={containerVariants} initial="hidden" animate="show">
-        <SimpleGrid  cols={{ xs: 1, md: 2, lg: 4 }}>
+        <SimpleGrid cols={{ xs: 1, md: 2, lg: 4 }}>
           {categories?.map((category) => (
             <motion.div key={category.id} variants={itemVariants}>
               <CategoryCard category={category} onEdit={onEdit} />

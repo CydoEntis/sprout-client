@@ -4,25 +4,26 @@ import { Button, Pagination, Title, Stack, Paper, Flex, Box } from "@mantine/cor
 import { Grid2X2, Plus } from "lucide-react";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 
-import { Category, PaginatedCategoriesWithTaskListCount } from "../shared/category.types";
+import { Category } from "../shared/category.types";
+import { useGetCategoriesWithTaskListCount } from "../services/get-categories-with-task-list-count.service";
 import UpsertCategoryModal from "../components/upsert-category/UpsertCategoryModal";
 import CategoryList from "../components/category-list/CategoryList";
 import PageHeader from "../../../components/header/PageHeader";
 import FilterSortControls from "../../auth/components/controls/FilterSortControls";
 import LazyText from "../../../lazy-components/text/LazyText";
 import LazyIcon from "../../../lazy-components/icons/LazyIcon";
+import LoadingSkeleton from "../../../components/loaders/LoadingSkeleton";
 
-type CategoriesPageProps = {
-  paginatedCategories: PaginatedCategoriesWithTaskListCount;
-};
-
-function CategoriesPage({ paginatedCategories }: CategoriesPageProps) {
+function CategoriesPage() {
   const [isCategoryModalOpened, { open: onOpenCategoryModal, close: onCloseCategoryModal }] = useDisclosure(false);
   const [category, setCategory] = useState<Category | undefined>(undefined);
 
   const searchParams = useSearch({ from: "/_authenticated/categories/" });
   const navigate = useNavigate();
   const page = searchParams.page || 1;
+  const isMobile = useMediaQuery("(max-width: 425px)");
+
+  const { data: paginatedCategories, isLoading, isFetching } = useGetCategoriesWithTaskListCount(searchParams);
 
   const openCategoryCreateModalHandler = () => {
     setCategory(undefined);
@@ -46,8 +47,6 @@ function CategoriesPage({ paginatedCategories }: CategoriesPageProps) {
     });
   };
 
-  const isMobile = useMediaQuery("(max-width: 425px)");
-
   return (
     <Box mih="calc(95vh - 65px)">
       <Flex direction="column" justify="space-between" h="100%">
@@ -62,7 +61,7 @@ function CategoriesPage({ paginatedCategories }: CategoriesPageProps) {
               rightSection={
                 <Button
                   fullWidth={isMobile}
-                  onClick={onOpenCategoryModal}
+                  onClick={openCategoryCreateModalHandler}
                   leftSection={<Plus size={20} />}
                   color="lime"
                 >
@@ -85,18 +84,24 @@ function CategoriesPage({ paginatedCategories }: CategoriesPageProps) {
             </Stack>
           </Paper>
 
-          <CategoryList
-            categories={paginatedCategories.items}
-            onOpen={openCategoryCreateModalHandler}
-            onEdit={openCategoryEditModalHandler}
-          />
+          {isLoading || isFetching ? (
+            <LoadingSkeleton numberOfSkeletons={16} height={190} />
+          ) : (
+            <CategoryList
+              categories={paginatedCategories?.items || []} 
+              onOpen={openCategoryCreateModalHandler}
+              onEdit={openCategoryEditModalHandler}
+              isLoading={isFetching && !isLoading}
+            />
+          )}
         </Stack>
 
-        {paginatedCategories.totalPages > 1 && (
+        {/* Handle case when paginatedCategories is undefined */}
+        {paginatedCategories?.totalPages && paginatedCategories.totalPages > 1 && (
           <Paper bg="primary.9" p={16} radius="md" mt={32}>
             <Flex justify="space-between" align="center">
               <LazyText
-                text={`page ${page} of ${paginatedCategories.totalPages}`}
+                text={`page ${page} of ${paginatedCategories?.totalPages}`} // Optional chaining for safety
                 highlight={page}
                 highlightColor="lime"
                 c="gray"
@@ -106,7 +111,7 @@ function CategoriesPage({ paginatedCategories }: CategoriesPageProps) {
                 color="lime"
                 value={page}
                 onChange={handlePageChange}
-                total={paginatedCategories.totalPages}
+                total={paginatedCategories?.totalPages || 1} // Fallback value for totalPages
               />
             </Flex>
           </Paper>

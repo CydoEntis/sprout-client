@@ -7,6 +7,8 @@ import { PaginationParams } from "../../../util/types/shared.types";
 const getCategoriesWithTaskListCount = async (
   params: PaginationParams
 ): Promise<PaginatedCategoriesWithTaskListCount> => {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   const queryParams = new URLSearchParams(params as Record<string, string>);
   return apiRequest<PaginatedCategoriesWithTaskListCount>(
     "get",
