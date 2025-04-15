@@ -8,13 +8,15 @@ export const getTaskListItemsDueByDate = async (
   date: string,
   params: PaginationParams
 ): Promise<Paginated<ItemsDuePerCategory>> => {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   const queryParams = new URLSearchParams(
     Object.entries({
       ...params,
       date,
     })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .filter(([_, v]) => v !== undefined) 
+      .filter(([_, v]) => v !== undefined)
       .reduce<Record<string, string>>((acc, [key, value]) => {
         acc[key] = String(value);
         return acc;

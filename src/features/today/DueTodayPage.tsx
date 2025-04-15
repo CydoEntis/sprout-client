@@ -4,18 +4,18 @@ import { Star } from "lucide-react";
 import LazyIcon from "../../lazy-components/icons/LazyIcon";
 import LazyText from "../../lazy-components/text/LazyText";
 import FilterSortControls from "../auth/components/controls/FilterSortControls";
-import { useTaskListItemsDueForTheWeek } from "../task-list/services/task-list-items/get-task-list-items-due-for-the-week.service";
+import { useTaskListItemsDueByDate } from "../task-list/services/task-list-items/get-task-list-items-due-today.service";
 import { useUpdateTaskListStatusItemMutation } from "../task-list/services/task-list-items/update-status-task-list.service";
-import ComingUpList from "./ComingUpList";
+import DueTodayList from "./DueTodayList";
 
-function ComingUpPage() {
-  const searchParams = useSearch({ from: "/_authenticated/task-list/coming-up" });
+function DueTodayPage() {
+  const searchParams = useSearch({ from: "/_authenticated/task-list/today" });
   const navigate = useNavigate();
 
-  const { data: paginatedDueForWeek, isLoading, isFetching } = useTaskListItemsDueForTheWeek(searchParams);
-  const { mutateAsync: toggleStatus } = useUpdateTaskListStatusItemMutation(0, searchParams.page!);
+  const today = new Date().toISOString().split("T")[0];
+  const { data: paginatedDueToday, isLoading, isFetching } = useTaskListItemsDueByDate(today, searchParams);
 
-  console.log(paginatedDueForWeek);
+  const { mutateAsync: toggleStatus } = useUpdateTaskListStatusItemMutation(0, searchParams.page!);
 
   const onChange = async (itemId: number, taskListId: number, isCompleted: boolean) => {
     try {
@@ -31,7 +31,7 @@ function ComingUpPage() {
 
   const handlePageChange = (newPage: number) => {
     navigate({
-      to: "/task-list/coming-up",
+      to: "/task-list/today",
       search: { ...searchParams, page: newPage },
     });
   };
@@ -39,26 +39,26 @@ function ComingUpPage() {
   return (
     <>
       <Paper bg="primary.9" p={16} radius="lg" mb={16} shadow="md">
-        <Stack justify="space-between" gap={8}>
-          <Stack gap={8}>
-            <Group gap={8}>
-              <LazyIcon size="xl" iconColor="white" hasBackground backgroundColor="yellow" icon={<Star />} />
-              <Stack gap={0}>
-                <Title>Coming Up</Title>
-                <Text>Tasks that are due for the week</Text>
-              </Stack>
-            </Group>
-          </Stack>
-          <FilterSortControls
-            route="/task-list/coming-up"
-            searchParams={searchParams}
-            sortByOptions={[
-              { value: "duedate", label: "Due Date" },
-              { value: "description", label: "Description" },
-              { value: "completed", label: "Completed" },
-            ]}
-          />
+        <Stack gap={8}>
+          <Group gap={8}>
+            <LazyIcon size="xl" iconColor="white" hasBackground backgroundColor="yellow" icon={<Star />} />
+            <Stack gap={0}>
+              <Title>Due Today</Title>
+              <Text size="sm" c="dimmed">
+                Make sure you complete all tasks due today
+              </Text>
+            </Stack>
+          </Group>
         </Stack>
+        <FilterSortControls
+          route="/task-list/today"
+          searchParams={searchParams}
+          sortByOptions={[
+            { value: "duedate", label: "Due Date" },
+            { value: "description", label: "Description" },
+            { value: "completed", label: "Completed" },
+          ]}
+        />
       </Paper>
 
       {isLoading || isFetching ? (
@@ -69,14 +69,14 @@ function ComingUpPage() {
           <Skeleton height={64} />
         </Stack>
       ) : (
-        <ComingUpList items={paginatedDueForWeek?.items || []} onChange={onChange} />
+        <DueTodayList items={paginatedDueToday?.items || []} onChange={onChange} />
       )}
 
-      {!isLoading && !isFetching && paginatedDueForWeek?.totalPages && paginatedDueForWeek.totalPages > 1 && (
+      {!isLoading && !isFetching && paginatedDueToday?.totalPages && paginatedDueToday.totalPages > 1 && (
         <Paper bg="primary.9" p={16} radius="md" mt={32}>
           <Flex justify="space-between" align="center">
             <LazyText
-              text={`page ${searchParams.page} of ${paginatedDueForWeek.totalPages}`}
+              text={`page ${searchParams.page} of ${paginatedDueToday.totalPages}`}
               highlight={searchParams.page}
               highlightColor="lime"
               c="gray"
@@ -85,7 +85,7 @@ function ComingUpPage() {
               color="lime"
               value={searchParams.page}
               onChange={handlePageChange}
-              total={paginatedDueForWeek.totalPages}
+              total={paginatedDueToday.totalPages}
             />
           </Flex>
         </Paper>
@@ -94,4 +94,4 @@ function ComingUpPage() {
   );
 }
 
-export default ComingUpPage;
+export default DueTodayPage;
