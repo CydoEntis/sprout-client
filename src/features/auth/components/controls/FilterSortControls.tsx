@@ -28,7 +28,6 @@ const FilterSortControls = ({ route, searchParams, sortByOptions }: FilterSortCo
 
   const handleSearchChange = (value: string) => {
     setDebouncedSearch(value);
-    updateSearchParams({ search: value, page: 1 });
   };
 
   const handleSortByChange = (value: string | null) => {

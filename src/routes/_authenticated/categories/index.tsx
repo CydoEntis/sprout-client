@@ -6,12 +6,12 @@ import CategoriesPage from "../../../features/category/pages/CategoriesPage";
 import { PaginationParams } from "../../../util/types/shared.types";
 
 export const Route = createFileRoute("/_authenticated/categories/")({
-  loaderDeps: ({ search: { page, search, sortBy, sortDirection } }) => ({
-    page,
-    search,
-    sortBy,
-    sortDirection,
-  }),
+  // loaderDeps: ({ search: { page, search, sortBy, sortDirection } }) => ({
+  //   page,
+  //   search,
+  //   sortBy,
+  //   sortDirection,
+  // }),
   validateSearch: (search: Record<string, string | number>): PaginationParams => {
     return {
       page: search.page ? parseInt(search.page as string) : 1,
@@ -20,19 +20,19 @@ export const Route = createFileRoute("/_authenticated/categories/")({
       sortDirection: (search.sortDirection as string) || "desc",
     };
   },
-  loader: async ({ context, deps }) => {
-    const { queryClient } = context;
-    return queryClient.ensureQueryData(getCategoriesWithTaskListCountQueryOptions(deps));
-  },
+  // loader: async ({ context, deps }) => {
+  //   const { queryClient } = context;
+  //   return queryClient.ensureQueryData(getCategoriesWithTaskListCountQueryOptions(deps));
+  // },
   component: CategoriesRoute,
-  pendingComponent: () => <LoadingSkeleton numberOfSkeletons={36} height={130} />,
+  // pendingComponent: () => <LoadingSkeleton numberOfSkeletons={36} height={130} />,
 });
 
 function CategoriesRoute() {
-  const searchParams = useSearch({ from: "/_authenticated/categories/" });
+  // const searchParams = useSearch({ from: "/_authenticated/categories/" });
 
-  const { data } = useSuspenseQuery(getCategoriesWithTaskListCountQueryOptions(searchParams));
-  console.log(data);
+  // const { data } = useSuspenseQuery(getCategoriesWithTaskListCountQueryOptions(searchParams));
+  // console.log(data);
 
-  return <CategoriesPage paginatedCategories={data} />;
+  return <CategoriesPage />;
 }
