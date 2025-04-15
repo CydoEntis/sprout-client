@@ -2,7 +2,7 @@ import { notifications } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import { jwtDecode } from "jwt-decode";
 import { apiRequest } from "../../../api/apiRequest";
-import endpoints from "../../../api/endpoints";
+import endpoints, { baseUrl } from "../../../api/endpoints";
 import localStorageService from "../../../services/localStorage.service";
 import useAuthStore from "../../../stores/useAuthStore";
 import { AuthenticatedResponse, DecodedToken, LoginRequest } from "../shared/auth.types";
@@ -15,6 +15,7 @@ export function useLogin() {
   return useMutation({
     mutationFn: async (credentials: LoginRequest): Promise<AuthenticatedResponse> => {
       console.log(credentials);
+      console.log(baseUrl);
       return await loginUser(credentials);
     },
     onSuccess: (data) => {
