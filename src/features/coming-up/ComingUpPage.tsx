@@ -5,17 +5,16 @@ import LazyIcon from "../../lazy-components/icons/LazyIcon";
 import LazyText from "../../lazy-components/text/LazyText";
 import FilterSortControls from "../auth/components/controls/FilterSortControls";
 import { useTaskListItemsDueForTheWeek } from "../task-list/services/task-list-items/get-task-list-items-due-for-the-week.service";
-import { useUpdateTaskListStatusItemMutation } from "../task-list/services/task-list-items/update-status-task-list.service";
+
 import ComingUpList from "./ComingUpList";
+import { useUpdateTaskListStatusItemForComingUp } from "../task-list/services/task-list-items/update-task-list-item-status-coming-up.service";
 
 function ComingUpPage() {
   const searchParams = useSearch({ from: "/_authenticated/task-list/coming-up" });
   const navigate = useNavigate();
 
   const { data: paginatedDueForWeek, isLoading, isFetching } = useTaskListItemsDueForTheWeek(searchParams);
-  const { mutateAsync: toggleStatus } = useUpdateTaskListStatusItemMutation(0, searchParams.page!);
-
-  console.log(paginatedDueForWeek);
+  const { mutateAsync: toggleStatus } = useUpdateTaskListStatusItemForComingUp();
 
   const onChange = async (itemId: number, taskListId: number, isCompleted: boolean) => {
     try {

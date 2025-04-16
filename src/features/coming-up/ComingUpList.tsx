@@ -17,14 +17,12 @@ function getColorByDaysAway(date: Date): string {
 }
 
 function ComingUpList({ items, onChange }: ComingUpListProps) {
-  console.log(items);
 
   return (
     <>
       {items.map((item) => {
         const totalTasks = item.categories.reduce((count, category) => count + category.items.length, 0);
         const urgencyColor = getColorByDaysAway(new Date(item.date));
-        console.log(item);
         return (
           <ComingUpCard
             key={item.date.toString()}

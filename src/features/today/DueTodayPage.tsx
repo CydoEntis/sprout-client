@@ -5,8 +5,10 @@ import LazyIcon from "../../lazy-components/icons/LazyIcon";
 import LazyText from "../../lazy-components/text/LazyText";
 import FilterSortControls from "../auth/components/controls/FilterSortControls";
 import { useTaskListItemsDueByDate } from "../task-list/services/task-list-items/get-task-list-items-due-today.service";
-import { useUpdateTaskListStatusItemMutation } from "../task-list/services/task-list-items/update-status-task-list.service";
+
 import DueTodayList from "./DueTodayList";
+import { useUpdateTaskListStatusItemMutation } from "../task-list/services/task-list-items/update-status-task-list.service";
+
 
 function DueTodayPage() {
   const searchParams = useSearch({ from: "/_authenticated/task-list/today" });
@@ -15,7 +17,7 @@ function DueTodayPage() {
   const today = new Date().toISOString().split("T")[0];
   const { data: paginatedDueToday, isLoading, isFetching } = useTaskListItemsDueByDate(today, searchParams);
 
-  const { mutateAsync: toggleStatus } = useUpdateTaskListStatusItemMutation(0, searchParams.page!);
+  const { mutateAsync: toggleStatus } = useUpdateTaskListStatusItemMutation();
 
   const onChange = async (itemId: number, taskListId: number, isCompleted: boolean) => {
     try {

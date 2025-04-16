@@ -14,7 +14,6 @@ type ComingUpCardProps = {
 };
 
 function ComingUpCard({ item, urgencyColor, totalTasks, onChange }: ComingUpCardProps) {
-  console.log(item);
 
   return (
     <Paper key={item.date.toString()} bg="primary.9" p={16} radius="md" mb={24} shadow="sm">

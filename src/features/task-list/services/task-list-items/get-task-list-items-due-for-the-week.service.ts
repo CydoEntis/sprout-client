@@ -18,7 +18,7 @@ export const getTaskListItemsDueForTheWeek = async (
 
 export const getTaskListItemsDueForTheWeekQueryOptions = (params: PaginationParams) =>
   queryOptions({
-    queryKey: ["task-list", "coming-up", params],
+    queryKey: ["task-list", "coming-up"],
     queryFn: () => getTaskListItemsDueForTheWeek(params),
     staleTime: 0,
   });
