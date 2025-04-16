@@ -1,16 +1,16 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { apiRequest } from "../../../api/apiRequest";
 import endpoints from "../../../api/endpoints";
-import { PaginatedCategoriesWithTaskListCount } from "../shared/category.types";
-import { PaginationParams } from "../../../util/types/shared.types";
+import { Paginated, PaginationParams } from "../../../util/types/shared.types";
+import { CategoryWithTaskListCount } from "../shared/category.types";
 
 const getCategoriesWithTaskListCount = async (
   params: PaginationParams
-): Promise<PaginatedCategoriesWithTaskListCount> => {
+): Promise<Paginated<CategoryWithTaskListCount>> => {
   await new Promise((resolve) => setTimeout(resolve, 3000));
 
   const queryParams = new URLSearchParams(params as Record<string, string>);
-  return apiRequest<PaginatedCategoriesWithTaskListCount>(
+  return apiRequest<Paginated<CategoryWithTaskListCount>>(
     "get",
     `${endpoints.category}/details?${queryParams.toString()}`
   );

@@ -65,6 +65,7 @@ export type TaskListDetails = {
 };
 
 
+
 export type FavoritedTaskList = {
   taskListId: number;
   categoryName: string;

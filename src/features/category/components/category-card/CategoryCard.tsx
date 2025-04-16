@@ -8,6 +8,7 @@ import LazyText from "../../../../lazy-components/text/LazyText";
 import { getIconByTag } from "../../shared/category.helpers";
 import LazyIcon from "../../../../lazy-components/icons/LazyIcon";
 import LazyEditDeleteMenu from "../../../../lazy-components/menus/LazyEditDeleteMenu";
+import { validIconTags } from "../../../../util/constants/valid-icon.constants";
 
 type CategoryCard = {
   category: CategoryWithTaskListCount;
@@ -40,7 +41,12 @@ function CategoryCard({ category, onEdit }: CategoryCard) {
               shadow="md"
               dropdownColor="primary.9"
               direction="vertical"
-              onUpdate={() => onEdit(category)}
+              onUpdate={() => onEdit({
+                id: category.id,
+                name: category.name,
+                tag: category.tag as (typeof validIconTags)[number],
+                color: category.color
+              })}
               onDelete={() => deleteCategory(category.id)}
             />
           }
